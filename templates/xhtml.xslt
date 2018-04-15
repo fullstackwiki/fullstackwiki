@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="/style/default.css" />
 		<title><xsl:value-of select="//title" /> | WebDev.docs</title>
 		<!-- the search runner will use this id= to get the src attribute -->
-		<script id="search-runner-script" type="application/ecmascript" src="style/search-runner.js"></script>
+		<script id="search-runner-script" type="application/ecmascript" src="/style/search-runner.js"></script>
 	</head>
 	<body class="">
 		<div id="skip-link">
@@ -30,8 +30,8 @@
 				<li><a href="/tools/index.xhtml">Tools</a></li>
 				<li><a href="/about/index.xhtml">About</a></li>
 			</ul>
-			<form id="searchform">
-				<input type="search" id="search" placeholder="Search..." />
+			<form id="searchform" action="/index.xhtml">
+				<input type="search" name="q" id="search" placeholder="Search..." />
 			</form>
 		</header>
 		<main id="#main-content">

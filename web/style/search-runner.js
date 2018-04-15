@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			head.appendChild(s);
 			// <script type="application/ecmascript" src="./search-index.js" />
 			var s = document.createElement('script');
-			s.src = "search-index.js";
+			s.src = document.getElementById('search-runner-script').getAttribute('src') + "/../../search-index.js";
 			s.type = 'application/ecmascript';
 			s.onload = runSearch;
 			head.appendChild(s);
@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			runSearch();
 		}
 	}
-	window.searchIndexLoaded = runSearch;
 	function runSearch(){
 		if(typeof lunr!=='function') return;
 		if(typeof searchIndex!=='object') return;

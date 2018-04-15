@@ -22,7 +22,7 @@ HTML := $(MD_HTML) $(shell find web -name '**.html')
 XHTML := $(patsubst %.html,%.xhtml,$(HTML))
 INDEXES = \
 	web/http/http-headers.json \
-	web/http/http-headers.html \
+	web/http/http-headers.xhtml \
 	web/search-index.js \
 
 all: html $(INDEXES)
@@ -53,7 +53,6 @@ web/search-index.js: web/http/headers/*.html
 	cat /dev/null > $@
 	echo 'var searchIndex = ' >> $@
 	$(NODEJS) bin/lunr-index.js $^ >> $@
-	echo ';if(typeof searchIndexLoaded=="function") searchIndexLoaded();' >> $@
 
 .PHONY: all html clean
 

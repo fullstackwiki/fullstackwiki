@@ -26,18 +26,46 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
+	<xsl:template name="rewrite-uriref">
+		<xsl:param name="uriref"/>
+		<xsl:if test="starts-with(., '/')">
+			<xsl:value-of select="$root" />
+		</xsl:if>
+		<xsl:call-template name="string-replace-suffix">
+			<xsl:with-param name="text" select="."/>
+			<xsl:with-param name="search" select="'.html'"/>
+			<xsl:with-param name="replacement" select="'.xhtml'"/>
+	 </xsl:call-template>
+	</xsl:template>
 	
 	<!-- Rewrite authority-relative link targets to be relative -->
 	<xsl:template match="@href">
 		<xsl:attribute name="href">
-			<xsl:if test="starts-with(., '/')">
-				<xsl:value-of select="$root" />
-			</xsl:if>
-			<xsl:call-template name="string-replace-suffix">
-				<xsl:with-param name="text" select="."/>
-				<xsl:with-param name="search" select="'.html'"/>
-				<xsl:with-param name="replacement" select="'.xhtml'"/>
-		 </xsl:call-template>
+			<xsl:call-template name="rewrite-uriref">
+				<xsl:with-param name="uriref" select="."/>
+			</xsl:call-template>
+		</xsl:attribute>
+	</xsl:template>
+	<xsl:template match="@target">
+		<xsl:attribute name="target">
+			<xsl:call-template name="rewrite-uriref">
+				<xsl:with-param name="uriref" select="."/>
+			</xsl:call-template>
+		</xsl:attribute>
+	</xsl:template>
+	<xsl:template match="@action">
+		<xsl:attribute name="action">
+			<xsl:call-template name="rewrite-uriref">
+				<xsl:with-param name="uriref" select="."/>
+			</xsl:call-template>
+		</xsl:attribute>
+	</xsl:template>
+	<xsl:template match="@src">
+		<xsl:attribute name="src">
+			<xsl:call-template name="rewrite-uriref">
+				<xsl:with-param name="uriref" select="."/>
+			</xsl:call-template>
 		</xsl:attribute>
 	</xsl:template>
 </xsl:stylesheet>
