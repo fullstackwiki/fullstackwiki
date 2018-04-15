@@ -12,8 +12,51 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 html, body {
 	margin: 0;
 	padding: 0;
+	height: 100%;
 	background: #F6F5F0;
 }
+
+html {
+	box-sizing: border-box;
+	font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+	font-weight: normal;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+img {
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
+	-ms-interpolation-mode: bicubic;
+}
+
+textarea {
+	height: auto;
+	min-height: 50px;
+	border-radius: 3px;
+}
+
+select {
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: 3px;
+}
+
 
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
 	margin: 0;
