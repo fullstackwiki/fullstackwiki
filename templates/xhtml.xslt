@@ -6,7 +6,7 @@
 	>
   <xsl:output method="xml"/>
   <xsl:template match="/">
-  <!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">-->
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" version="XHTML+RDFa 1.0" dir="ltr">
 	<head profile="http://www.w3.org/1999/xhtml/vocab">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,6 +33,10 @@
 			<form id="searchform" action="/index.xhtml">
 				<input type="search" name="q" id="search" placeholder="Search..." />
 			</form>
+			<div id="search-results">
+				<div class="search-results-header">Search Results</div>
+				<table><tbody id="search-results-list"></tbody></table>
+			</div>
 		</header>
 		<main id="#main-content">
 			<xsl:apply-templates select="//html:main/*"/>
@@ -55,13 +59,4 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="html:a">
-		<!-- Modify the target of links to reflect the new filename extension -->
-		<a>
-			<xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
-			<xsl:copy>
-				<xsl:apply-templates select="@*|node()"/>
-			</xsl:copy>
-		</a>
-	</xsl:template>
 </xsl:stylesheet>

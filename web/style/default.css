@@ -322,6 +322,7 @@ header, main, .breadcrumbs {
 	padding: 20px;
 	margin: 0 auto;
 	clear: both;
+	position: relative;
 }
 
 header ul {
@@ -353,6 +354,36 @@ header form {
 	padding: 0;
 }
 
+header form input[type="search"] {
+	position: absolute;
+	top: 22px;
+	right: 16px;
+	width: 200px;
+	z-index: 3;
+	margin: 0;
+	padding: 0.2em 0.5em;
+	border-radius: 20px;
+}
+
+header #search-results {
+	/* script will unhide box as appropriate */
+	display: none;
+	position: absolute;
+	top: 14px;
+	right: 10px;
+	width: 600px;
+	z-index: 2;
+	background: white;
+	box-shadow: 0 0 7px rgba(0,0,0,0.25);
+}
+header .search-results-header {
+	line-height: 20px;
+	padding: 8px;
+}
+header #search-results table {
+	margin: 0;
+}
+
 /* Theme styles - body & footer */
 
 main {
@@ -368,13 +399,6 @@ nav h1, nav a {
 	margin: 1em 1em 0 0;
 	padding: 0;
 	float: left;
-}
-
-input[type="search"] {
-	margin: 0;
-	padding: 0.2em 0.5em;
-	float: right;
-	border-radius: 20px;
 }
 
 .breadcrumbs {

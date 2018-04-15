@@ -11,13 +11,19 @@ var documents = files.map(function(v){
 	var wae = WAE();
 	var parsed = wae.parse(body);
 	var data = parsed.rdfa['HTTP-Header'] && parsed.rdfa['HTTP-Header'][0];
-	return data;
+	return {
+		id: v,
+		label: data['HTTP-Header-name'],
+		description: data['HTTP-Header-description'],
+		direction: data['HTTP-Header-direction'],
+	};
 });
 
 var idx = lunr(function () {
-	this.ref('HTTP-Header-name');
-	this.field('HTTP-Header-direction');
-	this.field('HTTP-Header-description');
+	this.ref('id');
+	this.field('label');
+	this.field('description');
+	this.field('direction');
 	documents.forEach(function (doc) {
 		console.error(doc);
 		this.add(doc);
