@@ -20,8 +20,12 @@ MD_HTML := $(patsubst %.md,%.html,$(MD))
 # List of all HTML files from above HTML lists
 HTML := $(MD_HTML) $(shell find web -name '**.html')
 XHTML := $(patsubst %.html,%.xhtml,$(HTML))
+INDEXES = \
+	web/http/http-headers.json \
+	web/http/http-headers.html \
+	web/search-index.js \
 
-all: html web/http/http-headers.xhtml
+all: html $(INDEXES)
 
 html: $(XHTML)
 
@@ -45,7 +49,13 @@ web/http/http-headers.json:
 web/http/http-headers.html: web/http/headers/*.html
 	$(NODEJS) bin/list-http-headers.js $^ > $@
 
+web/search-index.js: web/http/headers/*.html
+	cat /dev/null > $@
+	echo 'var searchIndex = ' >> $@
+	$(NODEJS) bin/lunr-index.js $^ >> $@
+	echo ';if(typeof searchIndexLoaded=="function") searchIndexLoaded();' >> $@
+
 .PHONY: all html clean
 
 clean:
-	rm -f $(MD_HTML) $(XHTML)
+	rm -f $(MD_HTML) $(XHTML) $(INDEXES)

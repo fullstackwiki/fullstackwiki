@@ -18,7 +18,7 @@
 		<xsl:param name="replacement"/>
 		<xsl:choose>
 			<xsl:when test="$search = substring($text, string-length($text) - string-length($search) + 1)">
-				<xsl:value-of select="substring($text, string-length($text) - string-length($search) + 1)"/>
+				<xsl:value-of select="substring($text, 0, string-length($text) - string-length($search) + 1)"/>
 				<xsl:value-of select="$replacement"/>
 			</xsl:when>
 			<xsl:otherwise>
@@ -36,7 +36,7 @@
 			<xsl:call-template name="string-replace-suffix">
 				<xsl:with-param name="text" select="."/>
 				<xsl:with-param name="search" select="'.html'"/>
-				<xsl:with-param name="replace" select="'.xhtml'"/>
+				<xsl:with-param name="replacement" select="'.xhtml'"/>
 		 </xsl:call-template>
 		</xsl:attribute>
 	</xsl:template>
