@@ -1,0 +1,381 @@
+
+/* Basic element styles */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+	tab-size: 3;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	background: #F6F5F0;
+}
+
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+
+p {
+	margin-bottom: 1rem;
+	font-size: inherit;
+	line-height: 1.6;
+	text-rendering: optimizeLegibility;
+}
+
+em, i {
+	font-style: italic;
+	line-height: inherit;
+}
+
+strong, b {
+	font-weight: bold;
+	line-height: inherit;
+}
+
+small {
+	font-size: 80%;
+	line-height: inherit;
+}
+
+
+h1 {
+	font-size: 1.5rem;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+h2 {
+	font-size: 1.25rem;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+h3 {
+	font-size: 1.1875rem;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+h4 {
+	font-size: 1.125rem;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+h5 {
+	font-size: 1.0625rem;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+h6 {
+	font-size: 1rem;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+a {
+	line-height: inherit;
+	color: #2ba6cb;
+	/*text-decoration: none;*/
+	cursor: pointer;
+}
+a:hover, a:focus {
+	color: #258faf;
+}
+a img {
+	border: 0;
+}
+
+hr {
+	clear: both;
+	max-width: 62.5rem;
+	height: 0;
+	margin: 1.25rem auto;
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 1px solid #cacaca;
+	border-left: 0;
+}
+
+ul, ol, dl {
+	margin-bottom: 1rem;
+	list-style-position: outside;
+	line-height: 1.6;
+}
+
+li {
+	font-size: inherit;
+}
+
+ul {
+	margin-left: 1.25rem;
+	list-style-type: disc;
+}
+
+ol {
+	margin-left: 1.25rem;
+}
+
+ul ul, ol ul, ul ol, ol ol {
+	margin-left: 1.25rem;
+	margin-bottom: 0;
+}
+
+dl {
+	margin-bottom: 1rem;
+}
+dl dt {
+	margin-bottom: 0.3rem;
+	font-weight: bold;
+}
+
+blockquote {
+	margin: 0 0 1rem;
+	padding: 0.5625rem 1.25rem 0 1.1875rem;
+	border-left: 1px solid #cacaca;
+}
+blockquote, blockquote p {
+	line-height: 1.6;
+	color: #8a8a8a;
+}
+
+cite {
+	display: block;
+	font-size: 0.8125rem;
+	color: #8a8a8a;
+}
+cite:before {
+	content: "— ";
+}
+
+abbr, abbr[title] {
+	border-bottom: 1px dotted #0a0a0a;
+	cursor: help;
+	text-decoration: none;
+}
+
+figure {
+	margin: 0;
+}
+
+code {
+	padding: 0.125rem 0.3125rem 0.0625rem;
+	border: 1px solid #cacaca;
+	background-color: #e6e6e6;
+	font-family: Consolas, "Liberation Mono", Courier, monospace;
+	font-weight: normal;
+	color: #0a0a0a;
+}
+
+kbd {
+	margin: 0;
+	padding: 0.125rem 0.25rem 0;
+	background-color: #e6e6e6;
+	font-family: Consolas, "Liberation Mono", Courier, monospace;
+	color: #0a0a0a;
+	border-radius: 3px;
+}
+
+
+p {
+	margin-bottom: 1em;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-bottom: 1rem;
+	border-radius: 3px;
+}
+table thead,
+table tbody,
+table tfoot {
+	border: 1px solid #f1f1f1;
+	background-color: #fefefe;
+}
+table caption {
+	padding: 0.5rem 0.625rem 0.625rem;
+	font-weight: bold;
+}
+table thead {
+	background: #f8f8f8;
+	color: #0a0a0a;
+}
+table tfoot {
+	background: #f1f1f1;
+	color: #0a0a0a;
+}
+table thead tr,
+table tfoot tr {
+	background: transparent;
+}
+table thead th,
+table thead td,
+table tfoot th,
+table tfoot td {
+	padding: 0.5rem 0.625rem 0.625rem;
+	font-weight: bold;
+	text-align: left;
+}
+table tbody th,
+table tbody td {
+	padding: 0.5rem 0.625rem 0.625rem;
+}
+table tbody tr:nth-child(even) {
+	border-bottom: 0;
+	background-color: #f1f1f1;
+}
+table.unstriped tbody {
+	background-color: #fefefe;
+}
+table.unstriped tbody tr {
+	border-bottom: 0;
+	border-bottom: 1px solid #f1f1f1;
+	background-color: #fefefe;
+}
+
+/* Theme styles - header */
+
+#skip-link {
+	text-align: center;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+#skip-link a {
+	background: #064771;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+	color: white;
+	padding: 3px 20px 8px;
+	text-decoration: none;
+	border-radius: 0px 0px 10px 10px;
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px);
+	overflow: hidden;
+	height: 1px;
+}
+#skip-link a:active,
+#skip-link a:focus {
+	position: static !important;
+	clip: auto;
+	overflow: visible;
+	height: auto;
+}
+
+header, main, .breadcrumbs {
+	max-width: 960px;
+	padding: 20px;
+	margin: 0 auto;
+	clear: both;
+}
+
+header ul {
+	margin: 0;
+	padding: 0;
+}
+
+header ul li {
+	list-style-image: none;
+	list-style-type: none;
+	float: left;
+	margin: 0 1em 0 0;
+	padding: 0;
+}
+
+header ul li h1 {
+	font-size: 100%;
+	font-weight: bold;
+}
+
+header ul li a,
+header ul li :link {
+	color: black;
+}
+
+header form {
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+
+/* Theme styles - body & footer */
+
+main {
+	padding: 22px;
+	margin-bottom: 35px;
+	background-color: #fcfcfa;
+	border: solid 1px #e2e0d8;
+	border-radius: 5px;
+}
+
+nav h1, nav a {
+	font-size: 14pt;
+	margin: 1em 1em 0 0;
+	padding: 0;
+	float: left;
+}
+
+input[type="search"] {
+	margin: 0;
+	padding: 0.2em 0.5em;
+	float: right;
+	border-radius: 20px;
+}
+
+.breadcrumbs {
+	max-width: 960px;
+	margin: 0 auto;
+	list-style-image: none;
+	list-style-type: none;
+	padding: 10px;
+	margin-bottom: -1px;
+	font-size: 13px;
+	line-height: 20px;
+	color: #586069;
+	background-color: #f1f8ff;
+	border: 1px solid #c8e1ff;
+	border-radius: 3px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.breadcrumbs > li {
+	list-style: none;
+	float: left;
+	position: relative;
+	margin: 0;
+}
+.breadcrumbs > li:first-child {
+	margin-left: 1em;
+	border-left: solid 2px #ded8c9;
+}
+
+.breadcrumbs > li:first-child > a {
+	padding-left: 1em;
+	box-shadow: 0 1px #f7f1e0 inset, 0 -1px #f7f1e0 inset, 1px 0 #f7f1e0 inset;
+}
+.breadcrumbs > li > a {
+	padding: .6em 1.5em .6em .4em;
+	margin-left: -1px;
+	box-shadow: 0 1px hsla(0,0%,100%,.5) inset, 0 -1px hsla(0,0%,100%,.8) inset;
+}
+.breadcrumbs > li > a, ol.breadcrumbs > li:not(:last-child) > a::before {
+	border: 1px solid #ded8c9;
+	border-width: 1px 0;
+	background-color: #F0EBDD;
+}
+.breadcrumbs > li:not(:last-child)::after {
+	content: "/"
+}
