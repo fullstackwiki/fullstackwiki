@@ -213,11 +213,25 @@ figure {
 	margin: 0;
 }
 
+pre {
+	display: block;
+	margin-bottom: 1em;
+	padding: 10px;
+	background-color: white;
+	border: 1px dotted #9b9689;
+	font-family: Consolas, Monaco, 'Andale Mono', monospace;
+	overflow-x: auto;
+}
+pre code {
+	border: none;
+	background: none;
+	padding: 0;
+}
+
 code {
-	padding: 0.125rem 0.3125rem 0.0625rem;
 	border: 1px solid #cacaca;
 	background-color: #e6e6e6;
-	font-family: Consolas, "Liberation Mono", Courier, monospace;
+	font-family: Consolas, Monaco, 'Andale Mono', monospace;
 	font-weight: normal;
 	color: #0a0a0a;
 }
@@ -394,28 +408,25 @@ main {
 	border-radius: 5px;
 }
 
-nav h1, nav a {
-	font-size: 14pt;
-	margin: 1em 1em 0 0;
-	padding: 0;
-	float: left;
-}
-
 .breadcrumbs {
 	max-width: 960px;
 	margin: 0 auto;
 	list-style-image: none;
 	list-style-type: none;
 	padding: 10px;
-	margin-bottom: -1px;
 	font-size: 13px;
 	line-height: 20px;
 	color: #586069;
-	background-color: #f1f8ff;
-	border: 1px solid #c8e1ff;
+	background-color: #f3f5f7;
+	border: 1px solid #d2d7de;
 	border-radius: 3px;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
+}
+.breadcrumbs::after {
+	clear: both;
+	display: inline-block;
+	content: " ";
 }
 
 .breadcrumbs > li {
@@ -426,7 +437,7 @@ nav h1, nav a {
 }
 .breadcrumbs > li:first-child {
 	margin-left: 1em;
-	border-left: solid 2px #ded8c9;
+	/* border-left: solid 2px #ded8c9; */
 }
 
 .breadcrumbs > li:first-child > a {
@@ -443,6 +454,8 @@ nav h1, nav a {
 	border-width: 1px 0;
 	background-color: #F0EBDD;
 }
-.breadcrumbs > li:not(:last-child)::after {
-	content: "/"
+.breadcrumbs > li::after {
+	content: "/";
+	padding-right: 0.3em;
+	padding-left: 0.4em;
 }

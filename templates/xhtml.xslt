@@ -38,6 +38,13 @@
 				<table><tbody id="search-results-list"></tbody></table>
 			</div>
 		</header>
+		<nav><ol class="breadcrumbs">
+			<li><a href="">Docs</a></li>
+			<li><a href="">HTTP</a></li>
+			<li><a href="">Headers</a></li>
+			<li><a href="">Message</a></li>
+			<li><a href="">Request</a></li>
+		</ol></nav>
 		<main id="#main-content">
 			<xsl:apply-templates select="//html:main/*"/>
 		</main>

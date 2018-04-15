@@ -1,2 +1,3 @@
 /node_modules/
 *.xhtml
+/web/search-index.js
