@@ -1,11 +1,16 @@
-var WAE = require('web-auto-extractor').default
+var parse = require('rdfa-parser')
 var fs = require('fs');
+var path = require('path');
 
 var files = process.argv.slice(2);
-var results = files.map(function(v){
+var triples = [];
+files.forEach(function(v){
 	var body = fs.readFileSync(v);
-	var wae = WAE();
-	var parsed = wae.parse(body);
-	return parsed;
+	var fullpath = encodeURI(path.resolve(v));
+	if(fullpath[0]!='/') fullpath = '/' + fullpath;
+	var uri = 'file://'+fullpath;
+	var parsed = parse.parseRDFa(body, uri);
+	for (var i = 0; i < parsed.length; i++) {
+		console.log(parsed[i].toString());
+	}
 });
-console.log(JSON.stringify(results, null, "\t"));
