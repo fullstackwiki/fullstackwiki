@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="http://fullstack.wiki/ns/"
+	>
+	<head>
+		<meta charset="UTF-8" />
+		<title>ALPN</title>
+		<meta name="description" content="Used by user agents to specify response media types that are acceptable."/>
+		<link rel="up" href="http-headers.xhtml"/>
+	</head>
+	<body>
+		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<w:http-header name="ALPN">
+				<li>Request</li>
+			</w:http-header>
+			<h1>ALPN</h1>
+			<p>Used by user agents to specify response media types that are acceptable.</p>
+			<h2>Overview table</h2>
+			<dl>
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">ALPN</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Both</dd>
+				<dt>Description</dt>
+				<dd property="HTTP-Header-description">Indicate the intended protocol of a CONNECT request</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="http://httpwg.org/specs/rfc7639.html">RFC 7639</a></dd>
+			</dl>
+			<p>Features:</p>
+			<h2>Syntax</h2>
+<pre><code>
+ALPN            = 1#protocol-id
+protocol-id     = token ; percent-encoded ALPN protocol identifier
+</code></pre>
+
+			<h2>Examples</h2>
+<pre><code>
+CONNECT www.example.com HTTP/1.1
+Host: www.example.com
+ALPN: h2, http%2F1.1
+</code></pre>
+		</main>
+	</body>
+</html>

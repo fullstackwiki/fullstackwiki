@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <xsl:stylesheet
 	version="1.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:w="http://fullstack.wiki/ns/"
 	>
   <xsl:output method="xml"/>
   <xsl:template match="/">
@@ -38,13 +40,6 @@
 				<table><tbody id="search-results-list"></tbody></table>
 			</div>
 		</header>
-		<nav><ol class="breadcrumbs">
-			<li><a href="">Docs</a></li>
-			<li><a href="">HTTP</a></li>
-			<li><a href="">Headers</a></li>
-			<li><a href="">Message</a></li>
-			<li><a href="">Request</a></li>
-		</ol></nav>
 		<main id="#main-content">
 			<xsl:apply-templates select="//html:main/*"/>
 		</main>
@@ -64,6 +59,14 @@
 		<xsl:copy>
 			<xsl:apply-templates select="node()"/>
 		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="w:http-header">
+		<nav><ol class="breadcrumbs">
+			<li><a href="/http/index.html">HTTP</a></li>
+			<li><a href="/http/http-headers.html">Headers</a></li>
+			<xsl:apply-templates select="node()"/>
+		</ol></nav>
 	</xsl:template>
 
 </xsl:stylesheet>

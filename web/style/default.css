@@ -331,7 +331,7 @@ table.unstriped tbody tr {
 	height: auto;
 }
 
-header, main, .breadcrumbs {
+header, main {
 	max-width: 960px;
 	padding: 20px;
 	margin: 0 auto;
@@ -409,19 +409,12 @@ main {
 }
 
 .breadcrumbs {
-	max-width: 960px;
-	margin: 0 auto;
+	margin: 0;
+	padding: 0;
 	list-style-image: none;
 	list-style-type: none;
-	padding: 10px;
 	font-size: 13px;
 	line-height: 20px;
-	color: #586069;
-	background-color: #f3f5f7;
-	border: 1px solid #d2d7de;
-	border-radius: 3px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
 }
 .breadcrumbs::after {
 	clear: both;
@@ -434,25 +427,6 @@ main {
 	float: left;
 	position: relative;
 	margin: 0;
-}
-.breadcrumbs > li:first-child {
-	margin-left: 1em;
-	/* border-left: solid 2px #ded8c9; */
-}
-
-.breadcrumbs > li:first-child > a {
-	padding-left: 1em;
-	box-shadow: 0 1px #f7f1e0 inset, 0 -1px #f7f1e0 inset, 1px 0 #f7f1e0 inset;
-}
-.breadcrumbs > li > a {
-	padding: .6em 1.5em .6em .4em;
-	margin-left: -1px;
-	box-shadow: 0 1px hsla(0,0%,100%,.5) inset, 0 -1px hsla(0,0%,100%,.8) inset;
-}
-.breadcrumbs > li > a, ol.breadcrumbs > li:not(:last-child) > a::before {
-	border: 1px solid #ded8c9;
-	border-width: 1px 0;
-	background-color: #F0EBDD;
 }
 .breadcrumbs > li::after {
 	content: "/";
