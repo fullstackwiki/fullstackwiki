@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 		<!--<base><xsl:attribute name="href"><xsl:value-of select="$root" /></xsl:attribute></base>-->
 		<link rel="stylesheet" href="/style/default.css" />
-		<title><xsl:value-of select="//title" /> | WebDev.docs</title>
+		<title><xsl:value-of select="//title" /> | Fullstack.wiki</title>
 		<!-- the search runner will use this id= to get the src attribute -->
 		<script id="search-runner-script" type="application/ecmascript" src="/style/search-runner.js"></script>
 	</head>
@@ -25,7 +25,7 @@
 		</div>
 		<header>
 			<ul>
-				<li><h1><a href="/index.xhtml">WebDev.docs</a></h1></li>
+				<li><h1><a href="/index.xhtml">Fullstack.wiki</a></h1></li>
 				<li><a href="/protocols/index.xhtml">Protocols</a></li>
 				<li><a href="/media_types/index.xhtml">Media Types</a></li>
 				<li><a href="/vocabularies/index.xhtml">Vocabularies</a></li>

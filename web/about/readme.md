@@ -1,9 +1,9 @@
 
-# WebDev.docs
+# Fullstack.wiki
 
 ## Charter
 
-WebDev.docs is a repository of documentation for how to build reliable, accessible, cross-platform Web applications.
+Fullstack.wiki is a repository of documentation for how to build reliable, accessible, cross-platform Web applications.
 
 This repository includes all the broad categories of content:
 
@@ -16,13 +16,13 @@ This repository includes all the broad categories of content:
 
 ## Principles
 
-* Don't document things just because they exist.
+* Document techniques for building reliable, accessible, cross-platform Web applications.
+* Centrally document how to implement tbe standards, cross referencing the relevant documents.
 * Keep things simple.
+* Only document best practices, not everything you can possibly do.
 * Document implementation status by each platform.
 * Inform users how to degrade on platforms that don't support the feature.
-* Document techniques for building reliable, accessible, cross-platform Web applications.
-* Emphasize security and practices that fail safely when only partially implemented.
-* Centrally document how to implement standards.
+* Emphasize security and defense in depth.
 * Keep accessibility, UX, and security notes in-line as essential requirements, not as separate sections.
 
 
@@ -31,18 +31,15 @@ This repository includes all the broad categories of content:
 Install Node.js
 Install submodules
 Install NPM packages
-run `make html`
-
-
-## Topics covered
-
-See <web/toc.md>
+run `make`
 
 
 ## Technical features for building the documentation
 
 * Convert plaintext RFCs to HTML
 * Host other specifications as HTML
+* Extract RDF data from HTML pages
+* Build indexes from RDF data
 * Provide a page describing each feature
 * Provide examples on how to use each feature
 * Provide implementation status of features by different implementations
