@@ -17,21 +17,29 @@ This repository includes all the broad categories of content:
 ## Principles
 
 * Document techniques for building reliable, accessible, cross-platform Web applications.
-* Centrally document how to use standards, cross referencing the relevant documents.
+* Centrally document how to use/implement standards, cross referencing the relevant documents.
 * Keep things simple.
-* Only document best practices, not everything you can possibly do.
+* Document best practices, not necessarially everything.
 * Document implementation status by each platform.
-* Inform users how to degrade on platforms that don't support the feature.
+* Explain how to degrade on platforms that don't support the feature.
 * Emphasize security and defense in depth.
 * Keep accessibility, UX, and security notes in-line as essential requirements, not as separate sections.
 
 
 ## Building
 
-Install Node.js
-Install submodules
-Install NPM packages
-run `make`
+1. Install Node.js
+1. Install submodules (if any, `git submodule update --init`)
+1. Install NPM packages (`npm install`)
+1. run `make`
+
+## Index of Files
+
+* `bin/` - Executables and helper scripts
+* `templates/` - Declarative documents and transforms
+* `web/` - webroot/docroot for the website
+* `Makefile` - The commands to build the website
+* `index.html` - Redirects to the index inside `web/` for the lazy
 
 
 ## Technical features for building the documentation
