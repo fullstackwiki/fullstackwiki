@@ -49,10 +49,11 @@ web/http/http-headers.json:
 web/http/http-headers.html: web/http/headers/*.html
 	$(NODEJS) bin/list-http-headers.js $^ > $@
 
-web/search-index.js: web/http/headers/*.html
-	cat /dev/null > $@
-	echo 'var searchIndex = ' >> $@
-	$(NODEJS) bin/lunr-index.js $^ >> $@
+web/search-index.js: $(XHTML)
+	cat /dev/null > $@.tmp
+	echo 'var searchIndex = ' >> $@.tmp
+	(cd web && $(NODEJS) ../bin/lunr-index.js $(^:web/%=%)) >> $@.tmp
+	mv $@.tmp $@
 
 .PHONY: all html clean
 

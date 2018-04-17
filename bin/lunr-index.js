@@ -1,3 +1,6 @@
+
+// This file called by Makefile to generate ../web/search-index.js
+
 var lunr = require('lunr');
 var buffer = [];
 
@@ -11,10 +14,12 @@ var documents = files.map(function(v){
 	var wae = WAE();
 	var parsed = wae.parse(body);
 	var data = parsed.rdfa['HTTP-Header'] && parsed.rdfa['HTTP-Header'][0];
+	console.error(v, parsed);
+	if(!data) data = {};
 	return {
 		id: v,
 		label: data['HTTP-Header-name'],
-		description: data['HTTP-Header-description'],
+		description: parsed.metatags.description && parsed.metatags.description[0],
 		direction: data['HTTP-Header-direction'],
 	};
 });
@@ -25,7 +30,6 @@ var idx = lunr(function () {
 	this.field('description');
 	this.field('direction');
 	documents.forEach(function (doc) {
-		console.error(doc);
 		this.add(doc);
 	}, this);
 });

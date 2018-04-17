@@ -1,5 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
+	var appRoot = document.getElementById('search-runner-script').getAttribute('src') + "/../..";
 	var idx;
 	var loading = false;
 	var body = document.getElementById('search-results');
@@ -8,10 +9,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	search.onkeypress = onSearch;
 	search.onkeyup = onSearch;
 	function onSearch(e){
+		switch(e.which) {
+		case 13: // enter
+			// Activate link
+			break;
+		case 27: // esc
+			search.value = '';
+			break;
+		case 38: // up
+			e.preventDefault();
+			// Select previous
+			break;
+		case 40: // down
+			e.preventDefault();
+			// Select next
+			break;
+		};
+
 		if(search.value==''){
 			body.style.display = 'none';
 			return;
 		}
+
 		if(loading===false){
 			loading = true;
 			var head = document.head || document.getElementsByTagName('head')[0];
@@ -23,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			head.appendChild(s);
 			// <script type="application/ecmascript" src="./search-index.js" />
 			var s = document.createElement('script');
-			s.src = document.getElementById('search-runner-script').getAttribute('src') + "/../../search-index.js";
+			s.src = appRoot + "/search-index.js";
 			s.type = 'application/ecmascript';
 			s.onload = runSearch;
 			head.appendChild(s);
@@ -44,8 +63,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			td0.textContent = result.ref;
 			tr.appendChild(td0);
 			var td1 = document.createElement('td');
-			td1.textContent = JSON.stringify(result.matchData);
 			tr.appendChild(td1);
+			var td1a = document.createElement('a');
+			td1.appendChild(td1a);
+			td1a.href = appRoot + "/" + result.ref;
+			td1a.textContent = JSON.stringify(result.matchData);
 		});
 		body.style.display = 'block';
 	}
