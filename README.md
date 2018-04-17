@@ -17,7 +17,7 @@ This repository includes all the broad categories of content:
 ## Principles
 
 * Document techniques for building reliable, accessible, cross-platform Web applications.
-* Centrally document how to implement tbe standards, cross referencing the relevant documents.
+* Centrally document how to use standards, cross referencing the relevant documents.
 * Keep things simple.
 * Only document best practices, not everything you can possibly do.
 * Document implementation status by each platform.

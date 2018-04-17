@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
 	<head>
 		<meta charset="UTF-8" />
 		<title>Date</title>
-		<meta name="description" content="Used by user agents to specify response media types that are acceptable."/>
+		<meta name="description" content="Represents the date and time at which the message was originated" />
 		<link rel="up" href="http-headers.xhtml"/>
 	</head>
 	<body>
 		<main id="main-content" vocab="http://example.com/" typeof="HTTP-Header">
+			<w:http-header name="Date">
+			</w:http-header>
+
 			<h1>Date</h1>
-			<p>Used by user agents to specify response media types that are acceptable.</p>
+			<p>Specifies date the message was generated.</p>
+
 			<h2>Overview table</h2>
-			<dl>
+			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="HTTP-Header-name">Date</dd>
 				<dt>Direction</dt>
@@ -23,11 +27,11 @@
 			<h2>Syntax</h2>
 <pre><code>Accept = #( media-range [ accept-params ] )
 media-range    = ( "*/*"
-					  / ( type "/" "*" )
-					  / ( type "/" subtype )
-					  ) *( OWS ";" OWS parameter )
+                 / ( type "/" "*" )
+                 / ( type "/" subtype )
+                 ) *( OWS ";" OWS parameter )
 accept-params  = weight *( accept-ext )
-accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+accept-ext     = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
 			</code></pre>
 
 			<h2>Examples</h2>
@@ -39,7 +43,10 @@ accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
 			</code></pre>
 
 			<h2>Related specifications</h2>
-			<p><a href="http://tools.ietf.org/html/rfc7231#section-5.3.2">HTTP/1.1 Semantics and Content</a>:</p>
+			<ul>
+				<li><a href="http://httpwg.org/specs/rfc7231.html#origination.date">HTTP/1.1 Semantics and Content &#xA7;7.1.1. Origination Date</a></li>
+				<li><a href="http://httpwg.org/specs/rfc7231.html#rfc.section.7.1.1.2">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.1.2. Date</a></li>
+			</ul>
 		</main>
 	</body>
 </html>
