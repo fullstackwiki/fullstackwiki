@@ -35,7 +35,7 @@ html: $(XHTML)
 # First, read the HTML file and style it up with the theme
 # Second, modify link targets: change authority-relative references to path-relative references, and change filename extensions
 %.xhtml: %.html
-	$(XSLTPROC) templates/xhtml.xslt $< \
+	$(XSLTPROC) --stringparam editlink 'https://github.com/awwright/fullstackwiki/edit/master/'$< templates/xhtml.xslt $< \
 	| $(XSLTPROC) --stringparam root $(call RELPATH,web,$(dir $<)) templates/root.xslt - \
 	> $@
 

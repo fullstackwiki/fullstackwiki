@@ -41,7 +41,8 @@
 				<table><tbody id="search-results-list"></tbody></table>
 			</div>
 		</header>
-		<main id="#main-content">
+		<main id="main-content">
+			<div id="edit"><a><xsl:attribute name="href"><xsl:value-of select="$editlink" /></xsl:attribute>Edit on GitHub</a></div>
 			<xsl:apply-templates select="//html:main/*"/>
 		</main>
 	</body>

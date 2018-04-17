@@ -183,6 +183,32 @@ dl dt {
 	margin-bottom: 0.3rem;
 	font-weight: bold;
 }
+dl dd {
+	padding-left: 1em;
+}
+
+/*
+dl.inline::after {
+	content: " ";
+	display: table-cell;
+	clear: both;
+	margin: 0;
+}
+dl.inline dt {
+	margin-bottom: 0.3rem;
+	font-weight: bold;
+	float: left;
+	clear: both;
+	margin: 0;
+}
+dl.inline dd {
+	float: left;
+	margin: 0;
+}
+*/
+dl.inline dt::after {
+	content: ": ";
+}
 
 blockquote {
 	margin: 0 0 1rem;
@@ -432,4 +458,8 @@ main {
 	content: "/";
 	padding-right: 0.3em;
 	padding-left: 0.4em;
+}
+
+#edit {
+	float: right;
 }
