@@ -16,7 +16,7 @@
 		<xsl:apply-templates select="//html:meta[@name]" />
 		<!--<base><xsl:attribute name="href"><xsl:value-of select="$root" /></xsl:attribute></base>-->
 		<link rel="stylesheet" href="/style/default.css" />
-		<title><xsl:apply-templates select="/html:head/html:title"/> | Fullstack.wiki</title>
+		<title><xsl:apply-templates select="/html:html/html:head/html:title/text()"/> | Fullstack.wiki</title>
 		<!-- the search runner will use this id= to get the src attribute -->
 		<script id="search-runner-script" type="application/ecmascript" src="/style/search-runner.js"></script>
 	</head>
