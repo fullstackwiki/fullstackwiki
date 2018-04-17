@@ -29,14 +29,22 @@
 
 	<xsl:template name="rewrite-uriref">
 		<xsl:param name="uriref"/>
-		<xsl:if test="starts-with(., '/')">
-			<xsl:value-of select="$root" />
-		</xsl:if>
-		<xsl:call-template name="string-replace-suffix">
-			<xsl:with-param name="text" select="."/>
-			<xsl:with-param name="search" select="'.html'"/>
-			<xsl:with-param name="replacement" select="'.xhtml'"/>
-	 </xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="contains(., ':')">
+				<!-- absolute URI, don't edit -->
+				<xsl:value-of select="." />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="starts-with(., '/')">
+					<xsl:value-of select="$root" />
+				</xsl:if>
+				<xsl:call-template name="string-replace-suffix">
+					<xsl:with-param name="text" select="."/>
+					<xsl:with-param name="search" select="'.html'"/>
+					<xsl:with-param name="replacement" select="'.xhtml'"/>
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<!-- Rewrite authority-relative link targets to be relative -->

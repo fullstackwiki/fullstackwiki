@@ -9,13 +9,14 @@
   <xsl:output method="xml"/>
   <xsl:template match="/">
 <!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">-->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" version="XHTML+RDFa 1.0" dir="ltr">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" version="XHTML+RDFa 1.0" dir="ltr" xml:space="preserve">
 	<head profile="http://www.w3.org/1999/xhtml/vocab">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<xsl:apply-templates select="//html:meta[@name]" />
 		<!--<base><xsl:attribute name="href"><xsl:value-of select="$root" /></xsl:attribute></base>-->
 		<link rel="stylesheet" href="/style/default.css" />
-		<title><xsl:value-of select="//title" /> | Fullstack.wiki</title>
+		<title><xsl:apply-templates select="/html:head/html:title"/> | Fullstack.wiki</title>
 		<!-- the search runner will use this id= to get the src attribute -->
 		<script id="search-runner-script" type="application/ecmascript" src="/style/search-runner.js"></script>
 	</head>
