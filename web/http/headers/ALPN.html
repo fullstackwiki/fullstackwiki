@@ -18,18 +18,16 @@
 				<dt>Name</dt>
 				<dd property="HTTP-Header-name">ALPN</dd>
 				<dt>Direction</dt>
-				<dd property="HTTP-Header-direction">Both</dd>
-				<dt>Description</dt>
-				<dd property="HTTP-Header-description">Indicate the intended protocol of a CONNECT request</dd>
+				<dd property="HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
 				<dd property="specification"><a href="http://httpwg.org/specs/rfc7639.html">RFC 7639</a></dd>
 			</dl>
 			<p>Features:</p>
 			<h2>Syntax</h2>
-<pre><code>
+<pre class="abnf-definition">
 ALPN            = 1#protocol-id
 protocol-id     = token ; percent-encoded ALPN protocol identifier
-</code></pre>
+</pre>
 
 			<h2>Examples</h2>
 <pre><code>

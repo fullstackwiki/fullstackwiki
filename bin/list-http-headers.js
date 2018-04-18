@@ -29,10 +29,11 @@ results.forEach(function(row){
 	// This is not how to look up RDFa data, but it suffices for now
 	var data = row.rdfa['HTTP-Header'] && row.rdfa['HTTP-Header'][0];
 	if(!data) return;
+	var description = row.metatags.description && row.metatags.description[0];
 	console.log('<tr>');
 	console.log('<td><a href="headers/'+h(data['HTTP-Header-name'])+'.xhtml">'+h(data['HTTP-Header-name'])+'</a></td>');
 	console.log('<td>'+h(data['HTTP-Header-direction'])+'</td>');
-	console.log('<td>'+h(data['HTTP-Header-description']+'')+'</td>');
+	console.log('<td>'+h(description)+'</td>');
 	//console.log('<td><pre>'+h(JSON.stringify(data, null, "\t"))+'</pre></td>');
 	console.log('</tr>');
 });

@@ -7,7 +7,7 @@
 		<link rel="up" href="http-headers.xhtml"/>
 	</head>
 	<body>
-		<main id="main-content" vocab="http://example.com/" typeof="HTTP-Header">
+		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
 			<w:http-header name="Date">
 			</w:http-header>
 
@@ -20,33 +20,13 @@
 				<dd property="HTTP-Header-name">Date</dd>
 				<dt>Direction</dt>
 				<dd property="HTTP-Header-direction">Both</dd>
-				<dt>Description</dt>
-				<dd property="HTTP-Header-description">The date and time at which the message was originated</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="http://httpwg.org/specs/rfc7231.html#header.date">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.1.2. Date</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
-<pre><code>Accept = #( media-range [ accept-params ] )
-media-range    = ( "*/*"
-                 / ( type "/" "*" )
-                 / ( type "/" subtype )
-                 ) *( OWS ";" OWS parameter )
-accept-params  = weight *( accept-ext )
-accept-ext     = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
-			</code></pre>
+				<pre>Date = HTTP-date</pre>
 
-			<h2>Examples</h2>
-			<p>Prefer HTML or text/x-c, or text/x-dvi if it’s the best the server has after a 20% markdown in quality, or plain text after a 50% markdown in quality:</p>
-			<pre><code>Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c
-			</code></pre>
-			<p>Prefer XHTML or HTML, or generic XML with a reduced preference, or else any content:</p>
-			<pre><code>Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
-			</code></pre>
-
-			<h2>Related specifications</h2>
-			<ul>
-				<li><a href="http://httpwg.org/specs/rfc7231.html#origination.date">HTTP/1.1 Semantics and Content &#xA7;7.1.1. Origination Date</a></li>
-				<li><a href="http://httpwg.org/specs/rfc7231.html#rfc.section.7.1.1.2">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.1.2. Date</a></li>
-			</ul>
 		</main>
 	</body>
 </html>

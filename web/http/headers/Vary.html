@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<title>Vary</title>
+		<meta name="description" content="Describes what parts of a request message might influence the origin server's process for selecting and representing this response" />
+		<link rel="up" href="http-headers.xhtml"/>
+	</head>
+	<body>
+		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<w:http-header name="Vary">
+			</w:http-header>
+
+			<h1>Vary</h1>
+			<p>The "Vary" header field in a response describes what parts of a request message might influence the origin server's process for selecting and representing this response.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">Vary</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="http://httpwg.org/specs/rfc7231.html#header.vary">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.4. Vary</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre>Vary = "*" / 1#field-name</pre>
+
+		</main>
+	</body>
+</html>
