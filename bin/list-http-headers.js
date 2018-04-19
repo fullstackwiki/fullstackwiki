@@ -33,7 +33,8 @@ function printHeader(row){
 	console.log('</tr>');
 }
 
-console.log('<h1>HTTP Request Headers</h1>');
+console.log('<h1>HTTP Headers</h1>');
+console.log('<h2>Request Headers</h2>');
 console.log('<table class="table-http-headers">');
 console.log('<thead>');
 console.log('<tr><th>Header Name</th><th>Direction</th><th>Description</th></tr>');
@@ -44,7 +45,7 @@ results
 console.log('</tbody>');
 console.log('</table>');
 
-console.log('<h1>HTTP Response Headers</h1>');
+console.log('<h2>Response Headers</h2>');
 console.log('<table class="table-http-headers">');
 console.log('<thead>');
 console.log('<tr><th>Header Name</th><th>Direction</th><th>Description</th></tr>');
