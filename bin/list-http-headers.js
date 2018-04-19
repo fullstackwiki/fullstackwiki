@@ -21,7 +21,7 @@ console.log('	<body>');
 console.log('		<main id="main-content">');
 
 console.log('<h1>HTTP Headers</h1>');
-console.log('<table>');
+console.log('<table class="table-http-headers">');
 console.log('<thead>');
 console.log('<tr><th>Header Name</th><th>Direction</th><th>Description</th></tr>');
 console.log('</thead><tbody>');

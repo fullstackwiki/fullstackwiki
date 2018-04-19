@@ -463,3 +463,10 @@ main {
 #edit {
 	float: right;
 }
+
+
+/* Page specific styles */
+.table-http-headers > thead > tr > th,
+.table-http-headers > tbody > tr > td:first-child {
+	white-space: nowrap;
+}
