@@ -20,12 +20,7 @@ console.log('	</head>');
 console.log('	<body>');
 console.log('		<main id="main-content">');
 
-console.log('<h1>HTTP Headers</h1>');
-console.log('<table class="table-http-headers">');
-console.log('<thead>');
-console.log('<tr><th>Header Name</th><th>Direction</th><th>Description</th></tr>');
-console.log('</thead><tbody>');
-results.forEach(function(row){
+function printHeader(row){
 	// This is not how to look up RDFa data, but it suffices for now
 	var data = row.rdfa['HTTP-Header'] && row.rdfa['HTTP-Header'][0];
 	if(!data) return;
@@ -36,7 +31,27 @@ results.forEach(function(row){
 	console.log('<td>'+h(description)+'</td>');
 	//console.log('<td><pre>'+h(JSON.stringify(data, null, "\t"))+'</pre></td>');
 	console.log('</tr>');
-});
+}
+
+console.log('<h1>HTTP Request Headers</h1>');
+console.log('<table class="table-http-headers">');
+console.log('<thead>');
+console.log('<tr><th>Header Name</th><th>Direction</th><th>Description</th></tr>');
+console.log('</thead><tbody>');
+results
+	.filter(function(row){ var dir = row.rdfa['HTTP-Header'][0]['HTTP-Header-direction']; return dir=='Request' || dir=='Both'; })
+	.forEach(printHeader);
+console.log('</tbody>');
+console.log('</table>');
+
+console.log('<h1>HTTP Response Headers</h1>');
+console.log('<table class="table-http-headers">');
+console.log('<thead>');
+console.log('<tr><th>Header Name</th><th>Direction</th><th>Description</th></tr>');
+console.log('</thead><tbody>');
+results
+	.filter(function(row){ var dir = row.rdfa['HTTP-Header'][0]['HTTP-Header-direction']; return dir=='Response' || dir=='Both'; })
+	.forEach(printHeader);
 console.log('</tbody>');
 console.log('</table>');
 
