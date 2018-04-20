@@ -26,9 +26,16 @@ This repository includes all the broad categories of content:
 * Keep accessibility, UX, and security notes in-line as essential requirements, not as separate sections.
 
 
+## Prerequisites
+
+* make
+* xsltproc
+* node
+* npm
+
+
 ## Building
 
-1. Install Node.js
 1. Install submodules (if any, `git submodule update --init`)
 1. Install NPM packages (`npm install`)
 1. run `make`
