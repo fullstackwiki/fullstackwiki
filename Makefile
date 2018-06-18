@@ -9,6 +9,8 @@ XSLTPROC ?= xsltproc --nonet
 
 # Disable `make` builtin/implicit rules
 .SUFFIXES:
+# Undo file creation for failed build steps
+.DELETE_ON_ERROR:
 
 # Function for computing relative path to another file
 RELPATH = $(shell python -c 'import os, sys; print(os.path.relpath(*sys.argv[1:]))' $(1) $(2))
