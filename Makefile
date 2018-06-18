@@ -23,7 +23,7 @@ MD_HTML := $(patsubst %.md,%.html,$(MD))
 HTML := $(MD_HTML) $(shell find web -name '**.html')
 XHTML := $(patsubst %.html,%.xhtml,$(HTML))
 INDEXES = \
-	web/http/http-headers.json \
+	web/http/http-headers.ttl \
 	web/http/http-headers.xhtml \
 	web/search-index.js \
 
@@ -45,7 +45,7 @@ html: $(XHTML)
 web/about/readme.md: README.md
 	cp -a $< $@
 
-web/http/http-headers.json:
+web/http/http-headers.ttl:
 	$(NODEJS) bin/index-rdfa.js web/http/headers/*.html > $@
 
 web/http/http-headers.html: web/http/headers/*.html
