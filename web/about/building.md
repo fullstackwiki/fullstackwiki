@@ -1,2 +1,2 @@
 == ABOUT
-About building
+About building the website for local use
