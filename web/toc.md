@@ -16,9 +16,19 @@ Topics:
 	* URI References
 	* Resolving URI References
 * TLS
-* Encryption certificates
+	* Encryption certificates
+	* Server Name Indication (SNI)
+	* Certificate Transparency Logging
 * HTTP
 	* Transparent proxies
+	* Gateways
+	* Caching
+	* Conditional changes
+	* Session management
+	* Glossary:
+		* HTTP methods
+		* HTTP status codes
+		* HTTP headers
 * Web Linking
 	* IANA Link Relations
 * ASCII
@@ -38,7 +48,10 @@ Topics:
 	* Webpages
 	* Element reference
 	* DOM
+	* organizing content sections
 	* Overview of template engines
+	* embedding media
+	* methods of streaming media with content type and bitrate negotiation
 * DOM
 * JSON
 * CSS
@@ -46,9 +59,6 @@ Topics:
 	* Document contexts (webpage, Node.js event loop, ...)
 * Web browser event loop
 * Caching
-* HTTP methods
-* HTTP status codes
-* HTTP headers
 * CSRF handling
 * OAuth
 * HTTP Requests
@@ -60,6 +70,7 @@ Topics:
 * User authentication
 	* https://pages.nist.gov/800-63-3/sp800-63c.html
 * How to store passwords
+	* PBKDF, constant-time comparison function
 * How to handle credit card numbers & PCI Compliance
 * Encoding URIs in HTML attributes to avoid XSS concerns
 * Disability accomidation
