@@ -10,7 +10,6 @@ const {DOMParser} = require('xmldom');
 
 function listHTMLFiles(base){
 	var files = [];
-	console.log(base);
 	function ls(dir){
 		fs.readdirSync(dir).forEach(function(filename){
 			if(fs.statSync(dir+'/'+filename).isDirectory()) ls(dir+'/'+filename);
@@ -18,7 +17,6 @@ function listHTMLFiles(base){
 		});
 	}
 	ls(base);
-	console.log(files);
 	return files;
 }
 
@@ -37,5 +35,9 @@ function testHTMLDocument(document){
 }
 
 describe('Test HTML documents', function(){
-	listHTMLFiles('web').forEach(testHTMLFilepath);
+	listHTMLFiles('web').filter(function(f){
+		// Specify a list of files here to be ignored, if needed
+		// Or, you know, don't
+		return true;
+	}).forEach(testHTMLFilepath);
 });

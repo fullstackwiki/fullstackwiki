@@ -83,3 +83,6 @@ Topics:
 * Error correction
 	* IP error detection
 	* https://quiet.github.io/quiet-blog/2018/09/16/How-Libcorrect-Does-Forward-Error-Correction.html
+* Similar documentation efforts
+	* https://www.owasp.org/
+	* http://typographyhandbook.com/
