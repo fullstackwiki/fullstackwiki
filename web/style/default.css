@@ -85,47 +85,37 @@ small {
 	line-height: inherit;
 }
 
-
-h1 {
-	font-size: 1.5rem;
+main h1, main h2, main h3, main h4, main h5, main h6 {
+	font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
 	line-height: 1.4;
 	margin-top: 0;
 	margin-bottom: 0.5rem;
 }
 
+h1 {
+	font-size: 1.5rem;
+	border-bottom: 1px solid #a2a9b1;
+}
+
 h2 {
-	font-size: 1.25rem;
-	line-height: 1.4;
-	margin-top: 0;
-	margin-bottom: 0.5rem;
+	font-size: 1.3rem;
+	border-bottom: 1px solid #a2a9b1;
 }
 
 h3 {
 	font-size: 1.1875rem;
-	line-height: 1.4;
-	margin-top: 0;
-	margin-bottom: 0.5rem;
 }
 
 h4 {
 	font-size: 1.125rem;
-	line-height: 1.4;
-	margin-top: 0;
-	margin-bottom: 0.5rem;
 }
 
 h5 {
 	font-size: 1.0625rem;
-	line-height: 1.4;
-	margin-top: 0;
-	margin-bottom: 0.5rem;
 }
 
 h6 {
 	font-size: 1rem;
-	line-height: 1.4;
-	margin-top: 0;
-	margin-bottom: 0.5rem;
 }
 
 a {
@@ -255,11 +245,13 @@ pre code {
 }
 
 code {
-	border: 1px solid #cacaca;
-	background-color: #e6e6e6;
+	border: 1px solid #e3e3e3;
+	background-color: #efefef;
 	font-family: Consolas, Monaco, 'Andale Mono', monospace;
 	font-weight: normal;
-	color: #0a0a0a;
+	color: #1a1a1a;
+	padding: 0.1em 0.3em;
+	font-size: 85%;
 }
 
 kbd {
@@ -469,4 +461,11 @@ main {
 .table-http-headers > thead > tr > th,
 .table-http-headers > tbody > tr > td:first-child {
 	white-space: nowrap;
+}
+
+
+/* Editor styles */
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
 }
