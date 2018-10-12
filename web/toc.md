@@ -25,6 +25,8 @@ Topics:
 	* Caching
 	* Conditional changes
 	* Session management
+	* Task management (e.g. 202 Accepted)
+		* Monitoring a remote task for completion
 	* Glossary:
 		* HTTP methods
 		* HTTP status codes
