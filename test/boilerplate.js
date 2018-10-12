@@ -32,6 +32,7 @@ function testHTMLDocument(document){
 	assert(document.documentElement.hasAttribute('dir'));
 	assert.equal(document.documentElement.getAttribute('xmlns'), "http://www.w3.org/1999/xhtml");
 	assert.equal(document.documentElement.getAttribute('xmlns:w'), "http://fullstack.wiki/ns/");
+	assert(document.getElementsByTagName('title')[0].textContent.length);
 }
 
 describe('Test HTML documents', function(){
