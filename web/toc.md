@@ -44,6 +44,15 @@ Topics:
 * XML Namespaces
 * Makefiles
 * Shell/bash
+* Parts of a Website
+	* homepage
+	* sitemap.xml
+	* robots.txt
+	* .well-known
+	* favicon
+	* stylesheet
+	* scripts
+	* metrics/tracking
 * HTML
 	* text/html parsing
 	* application/xhtml+xml parsing
