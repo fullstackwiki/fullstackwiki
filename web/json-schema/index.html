@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/" lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>JSON Schema</title>
+		<link rel="stylesheet" href="jsonschema.css" />
+	</head>
+	<body>
+		<main>
+
+<h1>JSON Schema</h1>
+<p>JSON Schema is a vocabulary for making assertions about JSON documents. You can use a JSON Schema document to annotate and validate other JSON documents.</p>
+<p>The JSON document being validated or described we call the instance, and the document containing the description is called the schema.</p>
+<p>The most basic schema is a blank JSON object, which constrains nothing, allows anything, and describes nothing:</p>
+<pre type="application/schema+json">{}</pre>
+<p>You can apply constraints on an instance by adding validation keywords to the schema. For example, the “type” keyword can be used to restrict an instance to an object, array, string, number, boolean, or null:</p>
+<pre type="application/schema+json">{ "type": "string" }</pre>
+<p>JSON Schema is hypermedia ready, and ideal for annotating your existing JSON-based HTTP API. JSON Schema documents are identified by URIs, which can be used in HTTP Link headers, and inside JSON Schema documents to allow recursive definitions.</p>
+
+<h2>How JSON Schema works</h2>
+<p>A JSON Schema is itself a JSON Document, that is applied against an input, called the <i>instance</i>.</p>
+<p>JSON Schema defines the vocabulary that these documents use: what it means when you provide an object or some other value, and what each of the property keywords mean.</p>
+
+<h2>Validating Documents with JSON Schema</h2>
+<h3>The "type" keyword</h3>
+<p>The <code>"type"</code> keyword asserts that the type of the instance (object, array, string, number, boolean, null) is. You can provide a single type as a string, or list up to all six types in an array. You will typically always want to include this keyword.</p>
+
+		</main>
+	</body>
+</html>
