@@ -92,29 +92,29 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 	margin-bottom: 0.5rem;
 }
 
-h1 {
+main h1 {
 	font-size: 1.5rem;
 	border-bottom: 1px solid #a2a9b1;
 }
 
-h2 {
+main h2 {
 	font-size: 1.3rem;
 	border-bottom: 1px solid #a2a9b1;
 }
 
-h3 {
+main h3 {
 	font-size: 1.1875rem;
 }
 
-h4 {
+main h4 {
 	font-size: 1.125rem;
 }
 
-h5 {
+main h5 {
 	font-size: 1.0625rem;
 }
 
-h6 {
+main h6 {
 	font-size: 1rem;
 }
 
