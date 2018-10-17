@@ -1,4 +1,5 @@
 var http = require('http');
+var fs = require('fs');
 var stream = require('stream');
 
 var http = require('http');
@@ -20,6 +21,7 @@ const {
 var Markdown = require( "./lib/Markdown.js" ).Markdown;
 var Render = require( "./lib/Render.js" ).Render;
 var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
+var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 
 // Application-specific types
 var RouteBrowserify = require('./lib/RouteBrowserify.js');
@@ -56,6 +58,12 @@ routes.addTemplate('http://localhost{/path*}.src', {}, First([
 // Editable form version
 routes.addTemplate('http://localhost{/path*}.edit', {}, First([
 	RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml', x=>x.pipe(new RenderForm)),
+//	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', x=>x.pipe(new RenderForm)),
+]) );
+
+// The Recent Changes page, which is a Git log
+routes.addTemplate('http://localhost/recent', {}, First([
+	RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}, x=>x.pipe(new Render)),
 //	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', x=>x.pipe(new RenderForm)),
 ]) );
 
