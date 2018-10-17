@@ -458,9 +458,21 @@ main {
 
 
 /* Page specific styles */
+
+/* HTTP headers table */
 .table-http-headers > thead > tr > th,
 .table-http-headers > tbody > tr > td:first-child {
 	white-space: nowrap;
+}
+
+/* Commit list */
+ol.commits-listing > li {
+	background: #ffffff;
+	padding: 0.5em 0.6em;
+	border: 1px solid #eaecef;
+}
+ol.commits-listing > li + li {
+	border-top: none;
 }
 
 
