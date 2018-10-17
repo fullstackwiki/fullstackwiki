@@ -350,11 +350,14 @@ table.unstriped tbody tr {
 }
 
 header, main {
-	max-width: 960px;
 	padding: 20px;
-	margin: 0 auto;
 	clear: both;
 	position: relative;
+}
+
+.pagewidth header, .pagewidth main {
+	max-width: 960px;
+	margin: 0 auto;
 }
 
 header ul {
@@ -418,9 +421,11 @@ header #search-results table {
 
 /* Theme styles - body & footer */
 
-main {
+body.pagewidth main {
 	padding: 22px;
 	margin-bottom: 35px;
+}
+main {
 	background-color: #fcfcfa;
 	border: solid 1px #e2e0d8;
 	border-radius: 5px;
