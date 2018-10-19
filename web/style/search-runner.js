@@ -70,8 +70,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			var td1a = document.createElement('a');
 			td1.appendChild(td1a);
 			td1a.href = appRoot + "/" + result.ref;
-			td1a.textContent = JSON.stringify(result.matchData);
+			td1a.textContent = JSON.stringify(result.matchData.metadata);
 		});
+		if(!tbody.firstChild){
+			var tr = document.createElement('tr');
+			tbody.appendChild(tr);
+			var td0 = document.createElement('th');
+			tr.appendChild(td0);
+			td0.textContent = 'No results';
+		}
 		body.style.display = 'block';
 	}
 });
