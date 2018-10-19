@@ -60,8 +60,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			var tr = document.createElement('tr');
 			tbody.appendChild(tr);
 			var td0 = document.createElement('td');
-			td0.textContent = result.ref;
 			tr.appendChild(td0);
+			var td0a = document.createElement('a');
+			td0.appendChild(td0a);
+			td0a.href = appRoot + "/" + result.ref;
+			td0a.textContent = result.ref;
 			var td1 = document.createElement('td');
 			tr.appendChild(td1);
 			var td1a = document.createElement('a');
