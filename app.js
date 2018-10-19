@@ -22,6 +22,7 @@ var Markdown = require( "./lib/Markdown.js" ).Markdown;
 var Render = require( "./lib/Render.js" ).Render;
 var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
+var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
 
 // Application-specific types
 var RouteBrowserify = require('./lib/RouteBrowserify.js');
@@ -33,7 +34,7 @@ const docroot = __dirname + '/web';
 var routes = new TemplateRouter.Router();
 
 // Alias / to /index.html
-routes.addTemplate('http://localhost{/path*}/', {}, RouteLocalReference("http://localhost{/path*}/index"));
+routes.addTemplate('http://localhost{/path*}/', {}, new RouteLocalReference(routes, "http://localhost{/path*}/index"));
 
 // Determine which version to return based on Content-Type negotiation
 //routes.addTemplate('http://localhost{/path*}', {}, new lib.Conneg([
@@ -79,7 +80,12 @@ routes.addTemplate('http://localhost/style/app.js', {}, RouteBrowserify(docroot+
 routes.addTemplate('http://localhost/style{/path*}.js', {}, RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript', x=>x) );
 routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css', x=>x) );
 
-routes.addTemplate('http://localhost/search-index.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
+var indexRoutes = routes.routes.filter(function(v){
+	return [
+		'http://localhost{/path*}',
+	].indexOf(v.template)>=0;
+});
+routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRoutes}, x=>x) );
 
 
 var options = {
