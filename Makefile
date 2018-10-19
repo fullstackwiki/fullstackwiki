@@ -6,6 +6,7 @@
 
 NODEJS ?= node
 XSLTPROC ?= xsltproc --nonet
+RDFAT ?= $(NODEJS) ~/rdf/rdfa-template/bin/process.js
 
 # Disable `make` builtin/implicit rules
 .SUFFIXES:
@@ -45,11 +46,11 @@ html: $(XHTML)
 web/about/readme.md: README.md
 	cp -a $< $@
 
-web/http/http-headers.ttl:
+web/http/http-headers.ttl: web/http/headers/*.html
 	$(NODEJS) bin/index-rdfa.js web/http/headers/*.html > $@
 
-web/http/http-headers.html: web/http/headers/*.html
-	$(NODEJS) bin/list-http-headers.js $^ > $@
+web/http/http-headers.html: web/http/http-headers.tpl.html web/http/http-headers.ttl
+	$(RDFAT) web/http/http-headers.tpl.html web/http/http-headers.ttl 'http://fullstack.wiki/http/http-headers.html' > $@
 
 web/search-index.js: $(XHTML)
 	cat /dev/null > $@.tmp
