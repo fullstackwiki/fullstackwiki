@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var appRoot = document.getElementById('search-runner-script').getAttribute('src') + "/../..";
 	var idx;
 	var loading = false;
+	var selectedIndex = 0;
 	var body = document.getElementById('search-results');
+	var tbody = body.lastElementChild.tBodies[0];
 	var search = document.getElementById('search');
 	search.onchange = onSearch;
 	search.onkeypress = onSearch;
@@ -11,17 +13,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	function onSearch(e){
 		switch(e.which) {
 		case 13: // enter
+			e.preventDefault();
 			// Activate link
+			var cell = tbody.children[selectedIndex].firstChild;
+			if(cell.firstChild) document.location = cell.firstChild.href;
 			break;
 		case 27: // esc
 			search.value = '';
 			break;
 		case 38: // up
 			e.preventDefault();
+			if(selectedIndex>0) selectedIndex--;
+			updateSelected();
 			// Select previous
 			break;
 		case 40: // down
 			e.preventDefault();
+			if(selectedIndex+1<tbody.children.length) selectedIndex++;
+			updateSelected();
 			// Select next
 			break;
 		};
@@ -54,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if(typeof lunr!=='function') return;
 		if(typeof searchIndex!=='object') return;
 		if(!idx) idx = lunr.Index.load(searchIndex);
-		var tbody = body.lastElementChild.tBodies[0];
 		while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
 		idx.search(search.value).forEach(function(result, i){
 			var tr = document.createElement('tr');
@@ -64,13 +72,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			var td0a = document.createElement('a');
 			td0.appendChild(td0a);
 			td0a.href = appRoot + "/" + result.ref;
-			td0a.textContent = result.ref;
+			//td0a.textContent = result.ref;
+			td0a.textContent = searchIndex.labels[result.ref];
 			var td1 = document.createElement('td');
 			tr.appendChild(td1);
 			var td1a = document.createElement('a');
 			td1.appendChild(td1a);
 			td1a.href = appRoot + "/" + result.ref;
-			td1a.textContent = JSON.stringify(result.matchData.metadata);
+			//td1a.textContent = JSON.stringify(result.matchData.metadata);
+			td1a.textContent = result.ref;
 		});
 		if(!tbody.firstChild){
 			var tr = document.createElement('tr');
@@ -80,5 +90,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			td0.textContent = 'No results';
 		}
 		body.style.display = 'block';
+		updateSelected();
+	}
+	function updateSelected(){
+		for(var i=0, tr=tbody.firstChild; tr; tr=tr.nextSibling, i++){
+			var className = (selectedIndex==i) ? 'selected' : '' ;
+			if(tr.className!=className) tr.className = className;
+		}
 	}
 });

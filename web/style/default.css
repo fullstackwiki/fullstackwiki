@@ -418,6 +418,18 @@ header .search-results-header {
 header #search-results table {
 	margin: 0;
 }
+header #search-results table tr td {
+	background-color: #fff;
+	border: solid 0.2em transparent;
+}
+header #search-results table tr.selected td {
+	background-color: #daeef3;
+	border-color: #00a8cf;
+}
+header #search-results table td {
+	padding: 0.4em;
+}
+
 
 /* Theme styles - body & footer */
 
