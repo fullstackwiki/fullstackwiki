@@ -23,6 +23,7 @@ var Render = require( "./lib/Render.js" ).Render;
 var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
+var RouteRDF = require( "./lib/RouteRDF.js" ).RouteRDF;
 
 // Application-specific types
 var RouteBrowserify = require('./lib/RouteBrowserify.js');
@@ -86,6 +87,7 @@ var indexRoutes = routes.routes.filter(function(v){
 	].indexOf(v.template)>=0;
 });
 routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRoutes}, x=>x) );
+routes.addTemplate('http://localhost/graph.ttl', {}, RouteRDF({routes:indexRoutes}, x=>x) );
 
 
 var options = {
