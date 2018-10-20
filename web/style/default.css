@@ -13,7 +13,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	background: #F6F5F0;
+	/* background: #F6F5F0; */
 }
 
 html {
@@ -177,25 +177,6 @@ dl dd {
 	padding-left: 1em;
 }
 
-/*
-dl.inline::after {
-	content: " ";
-	display: table-cell;
-	clear: both;
-	margin: 0;
-}
-dl.inline dt {
-	margin-bottom: 0.3rem;
-	font-weight: bold;
-	float: left;
-	clear: both;
-	margin: 0;
-}
-dl.inline dd {
-	float: left;
-	margin: 0;
-}
-*/
 dl.inline dt::after {
 	content: ": ";
 }
@@ -330,7 +311,7 @@ table.unstriped tbody tr {
 	right: 0;
 }
 #skip-link a {
-	background: #064771;
+	background: #424242;
 	box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 	color: white;
 	padding: 3px 20px 8px;
@@ -350,14 +331,66 @@ table.unstriped tbody tr {
 }
 
 header, main {
-	padding: 20px;
-	clear: both;
+	/* padding: 15px; */
 	position: relative;
 }
 
+.site-header {
+	border-top: 5px solid #424242;
+	border-bottom: 1px solid #e8e8e8;
+}
+
+
 .pagewidth header, .pagewidth main {
-	max-width: 960px;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 230px;
+	min-height: 55px;
+}
+.pagewidth header {
+	max-width: 720px;
 	margin: 0 auto;
+}
+
+header::after {
+	display: table-cell;
+	content: " ";
+	clear: both;
+}
+.pagewidth main {
+	max-width: 720px;
+}
+@media screen and (min-width: 1440px) {
+	.toc {
+		width: 25%;
+	}
+	.pagewidth main {
+		width: 50%;
+	}
+}
+@media screen and (min-width: 1080px) {
+	.toc {
+		min-width: 360px;
+	}
+}
+@media screen and (min-width: 720px) and (max-width: 1440px) {
+	.columns {
+		width: 100%;
+	}
+	.toc {
+		width: 25%;
+	}
+	.pagewidth main {
+		width: 75%;
+	}
+}
+@media screen and (max-width: 720px) {
+	.toc {
+		display: none;
+	}
+	.pagewidth main {
+		width: 100%;
+	}
 }
 
 header ul {
@@ -391,8 +424,8 @@ header form {
 
 header form input[type="search"] {
 	position: absolute;
-	top: 22px;
-	right: 16px;
+	top: 18px;
+	right: 15px;
 	width: 200px;
 	z-index: 3;
 	margin: 0;
@@ -430,17 +463,53 @@ header #search-results table td {
 	padding: 0.4em;
 }
 
+/*  */
+
+body.fullwidth div.columns {
+	max-width: 1440px;
+}
+div.columns {
+	clear: both;
+	max-width: 1440px;
+	margin: 0 auto;
+}
+div.columns::before {
+	content: "";
+	display: table;
+}
+div.columns::after {
+	clear: both;
+	content: "";
+	display: table;
+}
+body.pagewidth .columns .toc {
+	box-sizing: border-box;
+	float: left;
+	width: 25%;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 15px;
+}
+body.pagewidth .columns main {
+	float: left;
+}
+
+/* Table of Content */
+.toc > ol {
+	/* Don't show the numbering for the first level */
+	list-style-type: none;
+}
 
 /* Theme styles - body & footer */
 
 body.pagewidth main {
-	padding: 22px;
+	padding: 15px;
 	margin-bottom: 35px;
 }
 main {
-	background-color: #fcfcfa;
-	border: solid 1px #e2e0d8;
-	border-radius: 5px;
+	/* background-color: #fcfcfa; */
+	/* border: solid 1px #e2e0d8; */
+	/* border-radius: 5px; */
 }
 
 .breadcrumbs {
