@@ -13,6 +13,7 @@ const {
 	RouteError,
 	RouteNotFound,
 	RouteLocalReference,
+	RoutePipeline,
 	ServerResponseTransform,
 	First,
 	handleRequest,
@@ -47,47 +48,44 @@ routes.addTemplate('http://localhost{/path*}/', {}, new RouteLocalReference(rout
 
 // Render a document from the source version
 routes.addTemplate('http://localhost{/path*}', {}, First([
-	RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml', res=>res.pipe(new Render) ),
-	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', res=>res.pipe(new Markdown).pipe(new Render) ),
+	RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'), Render ),
+	RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown'), [Markdown, Render] ),
 ]) );
 
 // Source code
 routes.addTemplate('http://localhost{/path*}.src', {}, First([
-	RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml', x=>x),
-	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', x=>x),
+	RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'),
+	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown'),
 ]) );
 
 // Editable form version
 routes.addTemplate('http://localhost{/path*}.edit', {}, First([
-	RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml', x=>x.pipe(new RenderForm)),
-//	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', x=>x.pipe(new RenderForm)),
+	RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'), RenderForm),
+//	RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown'), RenderForm),
 ]) );
 
 // The Recent Changes page, which is a Git log
-routes.addTemplate('http://localhost/recent', {}, First([
-	RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}, x=>x.pipe(new Render)),
-//	RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', x=>x.pipe(new RenderForm)),
-]) );
+routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}), Render));
 
 // Render a document from the source Markdown
-routes.addTemplate('http://localhost{/path*}.md', {}, RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', x=>x) );
+routes.addTemplate('http://localhost{/path*}.md', {}, RouteStaticFile(docroot, "{/path*}.md", 'text/markdown') );
 // Codemirror dependencies
-routes.addTemplate('http://localhost/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css', x=>x) );
-routes.addTemplate('http://localhost/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript', x=>x) );
-routes.addTemplate('http://localhost/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css', x=>x) );
+routes.addTemplate('http://localhost/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
+routes.addTemplate('http://localhost/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
+routes.addTemplate('http://localhost/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
 
 // Render files
 routes.addTemplate('http://localhost/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
-routes.addTemplate('http://localhost/style{/path*}.js', {}, RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript', x=>x) );
-routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css', x=>x) );
+routes.addTemplate('http://localhost/style{/path*}.js', {}, RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript') );
+routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css') );
 
 var indexRoutes = routes.routes.filter(function(v){
 	return [
 		'http://localhost{/path*}',
 	].indexOf(v.template)>=0;
 });
-routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRoutes}, x=>x) );
-routes.addTemplate('http://localhost/graph.ttl', {}, RouteRDF({routes:indexRoutes}, x=>x) );
+routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRoutes}) );
+routes.addTemplate('http://localhost/graph.ttl', {}, RouteRDF({routes:indexRoutes}) );
 
 
 var options = {
