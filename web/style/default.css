@@ -191,12 +191,12 @@ blockquote, blockquote p {
 	color: #8a8a8a;
 }
 
-cite {
+blockquote + cite {
 	display: block;
 	font-size: 0.8125rem;
 	color: #8a8a8a;
 }
-cite:before {
+blockquote + cite:before {
 	content: "— ";
 }
 
