@@ -20,7 +20,6 @@
 
 			<h2>Making Requests</h2>
 			<p>The Host header is required, even if it would be redundant or the receiving end is known to not support the header. The value must be a valid hostname and optional port, and match the hostname part of the authority of the Request-URI; or left blank if the URI has no authority component (the part after the leading "//").</p>
-			<p>And so the Host header was introduced to HTTP, which more or less provides enough information to reconstruct the full Request-URI that the client is looking for. It is a required request header.</p>
 			<p>Since the value is used to construct the Request-URI and is used for routing, it should be placed as the first header (closest to the Request-Line of the HTTP request), for example:</p>
 
 			<pre type="message/http" w:space="indent">

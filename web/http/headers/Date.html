@@ -14,6 +14,17 @@
 			<h1>Date</h1>
 			<p>Specifies date the message was generated.</p>
 
+			<h2>Requests</h2>
+			<p>The Date header is optional in requests, and generally not necessary. It may be employed in specialized applications when the server would benefit from knowing the Client's time, for example if clock drift is important to the application.</p>
+
+			<h2>Writing Responses</h2>
+			<p>A server must include the Date header in responses, unless an reasonable approximation of the current date is not known.</p>
+			<p>A layer forwarding a message must add the Date header if it does not exist, and has a reasonable approximation.</p>
+			<p>The date can be any moment during the generation of the request, but ideally represents the moment the payload was generated, and when headers are written to the client.</p>
+
+			<h2>Reading Responses</h2>
+			<p>Other dates in the HTTP headers should be interperted relative to this date, if present, instead of using the local machine's clock.</p>
+
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
@@ -25,8 +36,9 @@
 			</dl>
 
 			<h2>Syntax</h2>
-				<pre>Date = HTTP-date</pre>
-
+			<pre type="abnf">Date = HTTP-date</pre>
+			<h3>Example</h3>
+			<pre type="message/http">Date: Tue, 15 Nov 1994 08:12:31 GMT</pre>
 		</main>
 	</body>
 </html>
