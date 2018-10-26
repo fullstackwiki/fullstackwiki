@@ -20,7 +20,9 @@ const {
 } = require('dive-httpd');
 
 var Markdown = require( "./lib/Markdown.js" ).Markdown;
-var Render = require( "./lib/Render.js" ).Render;
+var RenderTemplate = require( "./lib/RenderTemplate.js" ).RenderTemplate;
+var RenderBindings = require( "./lib/RenderBindings.js" ).RenderBindings;
+var RenderTheme = require( "./lib/RenderTheme.js" ).RenderTheme;
 var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
@@ -48,8 +50,8 @@ routes.addTemplate('http://localhost{/path*}/', {}, new RouteLocalReference(rout
 
 // Render a document from the source version
 routes.addTemplate('http://localhost{/path*}', {}, First([
-	RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'), Render ),
-	RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown'), [Markdown, Render] ),
+	RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'), [RenderTemplate, RenderBindings, RenderTheme] ),
+	RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown'), [Markdown, RenderTheme] ),
 ]) );
 
 // Source code
@@ -60,12 +62,12 @@ routes.addTemplate('http://localhost{/path*}.src', {}, First([
 
 // Editable form version
 routes.addTemplate('http://localhost{/path*}.edit', {}, First([
-	RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'), RenderForm),
+	RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml'), [RenderForm, RenderTheme]),
 //	RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown'), RenderForm),
 ]) );
 
 // The Recent Changes page, which is a Git log
-routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}), Render));
+routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}), [RenderTheme]));
 
 // Render a document from the source Markdown
 routes.addTemplate('http://localhost{/path*}.md', {}, RouteStaticFile(docroot, "{/path*}.md", 'text/markdown') );
