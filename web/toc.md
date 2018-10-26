@@ -25,6 +25,8 @@ Topics:
 	* Caching
 	* Conditional changes
 	* Session management
+	* Naming routes
+		* Versioning APIs (how and when to version an API)
 	* Task management (e.g. 202 Accepted)
 		* Monitoring a remote task for completion
 	* Glossary:
@@ -97,3 +99,7 @@ Topics:
 * Similar documentation efforts
 	* https://www.owasp.org/
 	* http://typographyhandbook.com/
+	* https://a11yproject.com/
+* How to write Internet Standards
+	* IETF process
+	* One media type, one specification for all versions
