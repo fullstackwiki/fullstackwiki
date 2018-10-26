@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP Effective Request URI</title>
+		<meta name="description" content="Calculation and proper handling of the effective Request-URI" />
+		<link rel="up" href="index.html" />
+		<link rel="stylesheet" href="/style/highlight.js/solarized-light.css" />
+	</head>
+	<body>
+		<main>
+			<h1>HTTP Effective Request URI</h1>
+
+			<h2>Making Requests</h2>
+			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
+			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authortatively.</p>
+			<p>Most requests will be made with the origin-form:</p>
+			<pre type="abnf"> origin-form    = absolute-path [ "?" query ]</pre>
+			<p>For example:</p>
+			<pre type="message/http" w:space="indent">
+				GET /where?q=now HTTP/1.1
+				Host: www.example.org
+			</pre>
+			<p>It is not possible to explicitly send the scheme being used HTTP/1.0 or HTTP/1.1 using the origin-form, however the server is usually able to detect the scheme being used.</p>
+
+			<h2>Parsing Requests</h2>
+			<h3>Parsing the headers</h3>
+			<p>If a request lacks or has more than one Host header, it MUST generate a <code>400 Bad Request</code> response.</p>
+			<p>The Host header is used to construct the effective Request-URI. This is described in <a href="../Request-URI.html">Effective Request URI</a>.</p>
+			<!-- TODO mark this as environment-specific -->
+			<aside><p>Node.js automatically ignores repeated Host headers. For HTTP compliance, it may be necessary to scan the <code>request.rawHeaders</code> data.</p></aside>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7230.html#effective.request.uri">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing &#xA7;5.5. Effective Request URI</a></dd>
+			</dl>
+		</main>
+	</body>
+</html>
