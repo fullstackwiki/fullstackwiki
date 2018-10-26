@@ -166,19 +166,22 @@ ul ul, ol ul, ul ol, ol ol {
 	margin-bottom: 0;
 }
 
-dl {
-	margin-bottom: 1rem;
-}
-dl dt {
-	margin-bottom: 0.3rem;
-	font-weight: bold;
-}
-dl dd {
-	padding-left: 1em;
+dl.inline {
 }
 
+dl.inline dt {
+	float: left;
+	clear: left;
+	min-width: 110px;
+	text-align: right;
+	font-weight: bold;
+}
 dl.inline dt::after {
-	content: ": ";
+	content: ":";
+}
+dl.inline dd {
+	margin: 0 0 0 120px;
+	padding: 0 0 0.4em 0.3em;
 }
 
 blockquote {
