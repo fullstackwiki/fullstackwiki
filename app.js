@@ -14,9 +14,7 @@ const {
 	RouteNotFound,
 	RouteLocalReference,
 	RoutePipeline,
-	ServerResponseTransform,
 	First,
-	handleRequest,
 } = require('dive-httpd');
 
 var Markdown = require( "./lib/Markdown.js" ).Markdown;
