@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
 	<head>
 		<meta charset="UTF-8" />
-		<title>HTTP Requests</title>
+		<title>HTTP Clients</title>
 		<meta name="description" content="Making client HTTP requests to a server and processing the response" />
 		<link rel="up" href="index.html" />
 		<link rel="stylesheet" href="/style/highlight.js/solarized-light.css" />
@@ -74,21 +74,21 @@
 
 			<h3>Accept-Encoding</h3>
 			<p>The client can list the kinds of content-codings it supports, for example, compressed streams.</p>
-		
+
 			<h3>Accept-Language</h3>
 			<p>The client can list the kinds of natural languages the user would prefer to receive.</p>
-		
+
 			<h2>Authenticating</h2>
 			<p>If the server requires authentication, the server may add headers to authenticate itself to the server. Additionally, the server may also perform authentication at the transport layer, for example with TLS certificates, or Unix domain sockets.</p>
 			<!-- TODO: Link to page on authentication -->
-		
+
 			<h2>Proxy Authorization</h2>
 			<p>Intermediate proxies may require their own authentication to use. Many of the HTTP headers available to authenticate to destination servers also have variants for authenticating to proxies, which will accept and remove the header before forwarding it to the destination server.</p>
 			<!-- TODO: Link to page on authentication -->
 
 			<h2>Page navigation data</h2>
 			<h3>Referer</h3>
-			<p>The <code>Referer</code> header (sic, a misspelling of "Referrer" that happens to save a byte over the wire) specifies the page</p>
+			<p>The <code>Referer</code> header (sic, a misspelling of "Referrer" that happens to save a byte over the wire) specifies the resource where the user-agent found and followed the request-URI for the current request.</p>
 			<h3>Cookie</h3>
 			<p>If the client chooses to, it may send .</p>
 			<p>The formatting of the Cookie header violates HTTP, so it must be treated as a special exemption in code.</p>
@@ -106,7 +106,7 @@
 
 			<h3>Related headers</h3>
 			<p>Authorization/authentication headers and cookies can also be used to identify the person making the request, see those respective sections for more information.</p>
-		
+
 			<h2>Conditional Request Headers</h2>
 			<p>In some cases, the client may want the server to only conditionally evaluate the request, for example, modify a resource only if it is is unchanged on the server, or download the resource only if it has changed since the last download. In these cases, use conditional headers.</p>
 			<h3>If-Match</h3>
@@ -143,6 +143,21 @@
 			</dl>
 			<p>The request body is typically only used for the <code>PUT</code> and <code>POST</code> methods.</p>
 
+			<h3>Set Expect header</h3>
+			<p>If the client has reason to believe the upload may be too large for the server to accept, it can indicate this with an Expect header:</p>
+			<!-- Each line is assumed to have a CRLF, but show it on the last one for clarity -->
+			<pre type="message/http" w:space="indent">
+				PUT /somewhere/fun HTTP/1.1
+				Host: origin.example.com
+				Content-Type: video/h264
+				Content-Length: 1234567890987
+				Expect: 100-continue
+				&#x240D;&#x240A;
+			</pre>
+			<p>Clients that send this must attach a request-body.</p>
+			<p>Clients should send the request body after a brief period of time without a response from the server (about a second), in the event of misimplementation or network problems.</p>
+			<p>If the client receives 417 Expectation Failed instead of 100 Continue, the server (or request path) does not support 100 Continue, and the request should be retried without using the 100-continue feature (remake the request attaching the entire request-body to the request).</p>
+
 			<h2>Lookup request from cache</h2>
 			<p>If a similar request has been made, the request might be able to be served from cache.</p>
 			<p>Several headers specify if the response is cachable:</p>
@@ -154,9 +169,13 @@
 				<li>Warning</li>
 			</ul>
 			<!-- Point to page on computing caching key for further information -->
-		
+
 			<h2>Parsing the Response</h2>
 			<p>At this point we wait for the response from the server.</p>
+
+			<h2>Parse zero or more 1xx responses</h2>
+			<!-- Implement RFC7231 6.2. Informational 1xx -->
+			<p>HTTP/1.1 and above defines the <i>1xx</i> status code class, which is an informational header sent before the final status code, that can encode information for the client before the final response has been generated or decided on.</p>
 
 			<h3>Compute effective request URI</h3>
 			<p>This identifies the URI that the server stores the selected representation at. If the client wants to get the same variation of the resource in the future, it should use this URI. It may be different than the URI requested by the client, if the server performed Content-Type negotiation.</p>
@@ -169,7 +188,7 @@
 
 			<h2>Parse Set-Cookie header</h2>
 			<p>The <code>Set-Cookie</code> header follows a nonstandard syntax that cannot be folded the same way as other headers can. Even if you don't intend on storing cookies, note that the Set-Cookie header requires special processing.</p>
-	
+
 			<h2>Store Session Data</h2>
 			<p>The contents of the <code>Set-Cookie</code> header can be stored for subsequent requests.</p>
 
@@ -182,11 +201,11 @@
 
 
 			<h3>Determine Content-Type</h3>
-			<p>The <code>Content-Type</code> header determines which media type will be used to decode the entity-body.</p>
+			<p>The <code>Content-Type</code> header determines which <i>media type</i> will be used to decode the entity-body.</p>
 			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document.</p>
 
 			<h3>Process payload contents</h3>
-			<p>After the .</p>
+			<p>The payload is processed according to the semantics of the media type.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
