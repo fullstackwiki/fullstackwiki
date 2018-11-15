@@ -17,15 +17,14 @@
 			<p>There are multiple ways to listen for HTTP requests, and you may wish to implement more than one of them.</p>
 			<p>HTTP is primarially defined in the concrete message syntax, shared by HTTP/1.x and email. HTTP servers should typically always listen on HTTP/1.x (HTTP/1.x refers to both HTTP/1.1 and HTTP/1.0).</p>
 			<p>HTTP/1.x by default listens on TCP port 80, and HTTP over TLS on port 443. HTTP also provides alternate ports 8008 and 8080, which is useful for origin servers behind a gateway/firewall, if a unix socket cannot be used.</p>
-			<!-- Implement RFC7230 6.1. Connection - TODO: describe some of the attacks and mitigations -->
+			<!-- Implements RFC7230 6.1. Connection - TODO: describe some of the attacks and mitigations -->
 			<p>Servers are expected to be robust against denial-of-service attacks.</p>
 			<!-- TODO: cover other HTTP versions and compatible protocols -->
 
 			<h2>Status codes and emitting errors</h2>
 			<p>Some operations below speak of emitting an error, or emitting a status code. This means the response to that request will be a status code (4xx or 5xx if an error), generating a document describing the error (if allowed), and further handling of the request will end (except as necessary to unlock and clean up resources, etc).</p>
 
-			<h2>Accepting Requests (HTTP/1.x)</h2>
-			<h3>Parse incoming request headers</h3>
+			<h2>Parse incoming request headers (HTTP/1.x)</h2>
 			<p>Except for the simplest of embedded routers, most implementations will need to parse all of the request headers and buffer them in memory, since headers may be specified in any order.</p>
 			<p>While HTTP does not specify any specific limits on headers, but servers may.</p>
 			<p>Servers receiving a header field, or number of header fields, longer than it is able to handle, should send an appropriate error:</p>
@@ -33,7 +32,7 @@
 			<!-- Implements RFC6585, RFC7231 -->
 			<dl>
 				<dt>414 (URI Too Long)</dt><dd>When the request-URI is very long (this length is 8190 in Apache HTTPD)</dd>
-				<dt>431 (Request Header Fields Too Large)</dt><dd>When there's a header that's too long, or too many headers. Send this when a header name is longer than the longest known header, when the value is very long (8190 bytes in Apache HTTPD), or when there's too many headers (100 count in Apache HTTPD)</dd>
+				<dt>431 (Request Header Fields Too Large)</dt><dd>When there's a header that's too long, or too many headers. Send this when a header name is very long (the longest known header plus some amount to accomidate new headers without interrupting client requests, about 100 bytes), when the value is very long (8190 bytes in Apache HTTPD), or when there's too many headers (100 count in Apache HTTPD)</dd>
 				<dt>400 (Client Error)</dt><dd>For other cases</dd>
 			</dl>
 
@@ -51,6 +50,9 @@
 			</pre>
 			<p>If the HTTP-version is not <code>HTTP/1.x</code>, where <code>x</code> is some digit, then return <code>505 (HTTP Version Not Supported)</code>.</p>
 			<!-- https://httpwg.org/specs/rfc7230.html#http.version -->
+
+			<h3>Parse Cookie header</h3>
+			<p>The <code>Cookie</code> header follows a nonstandard syntax that cannot be folded the same way as other headers can.</p>
 
 			<h3>Validate Host header</h3>
 			<!-- Implements RFC7230 section 5.4 -->
@@ -110,6 +112,12 @@
 			<p>Verify the syntax is a valid URI, and return 400 (Client Error) if not.</p>
 			<p>Verify the host and port (if any) components match the Host header, and return 400 (Client Error) if not.</p>
 
+			<h4>Other forms</h4>
+			<p>The other forms are special cases.</p>
+			<p>If the asterisk-form is used with a method besides OPTIONS, emit 405 (Method Not Allowed).</p>
+			<p>If the authority-form is used with a method besides CONNECT, emit 405 (Method Not Allowed).</p>
+			<p>If there's no need to implement these, return 501 (Not Implemented).</p>
+
 			<h2>Read request body metadata</h2>
 			<h3>Content-Language</h3>
 			<p>HTTP allows the sender to identify the primary language of the entity body (request body or response body) using the <code>Content-Language</code> header.</p>
@@ -125,12 +133,40 @@
 			<h3>Handle 100-continue</h3>
 			<p>If the client set the <code>100-continue</code> flag, that means it has a large upload it wants to send, but it will wait for confirmation from the server before uploading its request-body.</p>
 
+			<h2>Message Forwarding</h2>
+			<h3>Via</h3>
+			<p>The <code>Via</code> header specifies which intermediate nodes also processed the request, and will process the response. The server may use this for logging, debugging, or other informational purposes.</p>
+			<p>If this message is going to be forwarded to another server, then append the current server information to the <code>Via</code> header.</p>
+
+			<h2>Write headers</h2>
+			<h3>Date</h3>
+			<!-- Implements RFC7231 7.1.1 -->
+			<p>The <code>Date</code> header is required for responses, unless the server doesn't have an accurate time to send. (Clients may also send this header, but it's optional for them.)</p>
+			<p>For implementation, see <a href="headers/Date.html">HTTP Date header</a>.</p>
+
+			<h3>Connection</h3>
+			<p>If the server is going to close the connection at the end of the response, it must send the <code>Connection: close</code> to the client.</p>
+
+			<h2>Write Response</h2>
+			<h3>Compute length</h3>
+			<p>If the server knows the</p>
+
+			<h2>Clean up connection</h2>
+			<h3>Handle Connection: close</h3>
+			<!-- Implements RFC7230 6.6. Tear-down -->
+			<p>If the client specified the <code>close</code> token in the <code>Connection</code> header, or if the connection is HTTP/1.0, the server must close the TCP channel here (even if the client sent additional requests).</p>
+			<p>Recall that the server sends <code>Connection: close</code> to the client before it does this.</p>
+			<aside><p>This is handled by Node.js.</p></aside>
+
 			<h2>Overview table</h2>
 			<h3>Referenced specifications</h3>
 			<ul class="inline">
 				<li><a href="https://httpwg.org/specs/rfc7230.html">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a></li>
-				<li><a href="https://httpwg.org/specs/rfc7230.html">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a></li>
+				<li><a href="https://httpwg.org/specs/rfc7231.html">RFC 7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a></li>
 				<li><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml">IANA: Service Name and Transport Protocol Port Number Registry</a></li>
+				<li><a href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">IANA: Hypertext Transfer Protocol (HTTP) Status Code Registry</a></li>
+				<li><a href="https://www.iana.org/assignments/http-methods/http-methods.xhtml">IANA: Hypertext Transfer Protocol (HTTP) Method Registry</a></li>
+				<li><a href="https://www.iana.org/assignments/message-headers/message-headers.xhtml">IANA: Message Headers</a></li>
 			</ul>
 		</main>
 	</body>

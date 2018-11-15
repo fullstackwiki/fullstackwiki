@@ -166,6 +166,14 @@ ul ul, ol ul, ul ol, ol ol {
 	margin-bottom: 0;
 }
 
+dl dt {
+	font-weight: bold;
+}
+dl dd {
+	margin: 0 0 0 20px;
+	padding: 0 0 0.4em 0.3em;
+}
+
 dl.inline {
 }
 
@@ -174,7 +182,6 @@ dl.inline dt {
 	clear: left;
 	min-width: 110px;
 	text-align: right;
-	font-weight: bold;
 }
 dl.inline dt::after {
 	content: ":";
