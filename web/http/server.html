@@ -19,6 +19,7 @@
 			<p>HTTP/1.x by default listens on TCP port 80, and HTTP over TLS on port 443. HTTP also provides alternate ports 8008 and 8080, which is useful for origin servers behind a gateway/firewall, if a unix socket cannot be used.</p>
 			<!-- Implements RFC7230 6.1. Connection - TODO: describe some of the attacks and mitigations -->
 			<p>Servers are expected to be robust against denial-of-service attacks.</p>
+			<p>An incoming connection might not necessarially be the one making the requests, and a connection might send requests from many different user agents.</p>
 			<!-- TODO: cover other HTTP versions and compatible protocols -->
 
 			<h2>Status codes and emitting errors</h2>
@@ -26,45 +27,45 @@
 
 			<h2>Parse incoming request headers (HTTP/1.x)</h2>
 			<p>Except for the simplest of embedded routers, most implementations will need to parse all of the request headers and buffer them in memory, since headers may be specified in any order.</p>
-			<p>While HTTP does not specify any specific limits on headers, but servers may.</p>
-			<p>Servers receiving a header field, or number of header fields, longer than it is able to handle, should send an appropriate error:</p>
+
+			<h3>Header length limits</h3>
+			<p>While HTTP does not specify any specific limits on headers, servers may emit an error if a request has exceeded resource limits:</p>
 			<!-- Pull some sensible values from Apache HTTPD: http://httpd.apache.org/docs/2.2/mod/core.html#limitrequestline -->
 			<!-- Implements RFC6585, RFC7231 -->
 			<dl>
 				<dt>414 (URI Too Long)</dt><dd>When the request-URI is very long (this length is 8190 in Apache HTTPD)</dd>
 				<dt>431 (Request Header Fields Too Large)</dt><dd>When there's a header that's too long, or too many headers. Send this when a header name is very long (the longest known header plus some amount to accomidate new headers without interrupting client requests, about 100 bytes), when the value is very long (8190 bytes in Apache HTTPD), or when there's too many headers (100 count in Apache HTTPD)</dd>
-				<dt>400 (Client Error)</dt><dd>For other cases</dd>
 			</dl>
+			<p>If the server statically knows all of the resources it needs to process, the request URI limit should be at least as large as the largest URI.</p>
+			<p>Resource limits for the request-body are treated below.</p>
 
-			<h3>Determine incoming HTTP version</h3>
-			<p>The first line of the HTTP request will contain the method, resource, and HTTP version. The first course of action is determine the HTTP version the client is using. The line will usually look something like this:</p>
-			<pre type="abnf" w:space="indent">
-				request-line  = method SP request-target SP HTTP-version CRLF
-				HTTP-version  = HTTP-name "/" DIGIT "." DIGIT
-				HTTP-name     = %x48.54.54.50 ; "HTTP", case-sensitive
-			</pre>
-			<p>The HTTP version will be the text after the second space, until the first CR in the CRLF sequence. It should be exactly 8 bytes.</p>
+			<h3>HTTP version</h3>
+			<p>The HTTP version is specified on the first line, the request-line, for example:</p>
 			<pre type="message/http" w:space="indent">
 				GET /where?q=now HTTP/1.1
-				Host: www.example.org
 			</pre>
 			<p>If the HTTP-version is not <code>HTTP/1.x</code>, where <code>x</code> is some digit, then return <code>505 (HTTP Version Not Supported)</code>.</p>
 			<!-- https://httpwg.org/specs/rfc7230.html#http.version -->
 
-			<h3>Parse Cookie header</h3>
-			<p>The <code>Cookie</code> header follows a nonstandard syntax that cannot be folded the same way as other headers can.</p>
+			<h2>Consume Connection headers</h2>
+			<h3>Connect header</h3>
+			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
+			<p>The <code>Connection</code> header specifies hop-by-hop information about the connection that must be consumed (removed) before forwarding. This means that received Connection headers are from the previous node, not from the user-agent.</p>
+			<p>The Connection header may also list header names. Any request headers that are listed in Connection are connection headers, and are not to be forwarded.</p>
 
-			<h3>Validate Host header</h3>
-			<!-- Implements RFC7230 section 5.4 -->
-			<p>HTTP/1.1 clients MUST send a Host header, even with the absolute-form or with a request URI with no authority.</p>
-			<p>If the request lacks a Host header, or has more than one Host header, return status 400 (Bad Request).</p>
-
+			<h2>Verify client requirements</h2>
 			<h3>Validate Expect header</h3>
+			<!-- Implements RFC7231 5.1.1. Expect -->
 			<p>The "Expect" header enumerates the features the client expects the endpoint to implement in order to be able to correctly parse a request or response.</p>
 			<p>If the header is set, and is something besides <code>100-continue</code> (case-insensitive), emit 417 (Expectation Failed).</p>
 			<p>If the value is "100-continue", the server will need to emit a 100 (Continue) header before the client begins uploading its request-body (implemented below)</p>
 
-			<h3>Compute effective request URI</h3>
+			<h3>Validate Host header</h3>
+			<!-- Implements RFC7230 5.4. -->
+			<p>HTTP/1.1 clients MUST send a Host header, even with the absolute-form or with a request URI with no authority.</p>
+			<p>If the request lacks a Host header, or has more than one Host header, return status 400 (Bad Request).</p>
+
+			<h2>Compute effective request URI</h2>
 			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
 			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used for requests to proxies.</p>
 			<p>Most requests will be made with the origin-form:</p>
@@ -118,27 +119,81 @@
 			<p>If the authority-form is used with a method besides CONNECT, emit 405 (Method Not Allowed).</p>
 			<p>If there's no need to implement these, return 501 (Not Implemented).</p>
 
-			<h2>Read request body metadata</h2>
-			<h3>Content-Language</h3>
-			<p>HTTP allows the sender to identify the primary language of the entity body (request body or response body) using the <code>Content-Language</code> header.</p>
-
-			<h3>Determine Content-Type</h3>
-			<p>The <code>Content-Type</code> header determines which media type will be used to decode the entity-body.</p>
-			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document.</p>
-
-			<h2>Process payload contents</h2>
-			<h3>If there's a request-body, decode Content-Encoding</h3>
-			<blockquote><p>If one or more encodings have been applied to a representation, the sender that applied the encodings MUST generate a Content-Encoding header field that lists the content codings in the order in which they were applied.</p></blockquote>
-
-			<h3>Handle 100-continue</h3>
-			<p>If the client set the <code>100-continue</code> flag, that means it has a large upload it wants to send, but it will wait for confirmation from the server before uploading its request-body.</p>
-
 			<h2>Message Forwarding</h2>
-			<h3>Via</h3>
+			<p>If the server is forwarding the message to another node instead of handling it as an origin, it must implement the <code>Via</code> and <code>Max-Forwards</code> headers.</p>
+			<p>Recall that connection headers (described above) cannot be forwarded since they convey information about the particular connection between nodes.</p>
+
+			<h3>Via header</h3>
+			<!-- Implements RFC7230 5.7.1. Via -->
 			<p>The <code>Via</code> header specifies which intermediate nodes also processed the request, and will process the response. The server may use this for logging, debugging, or other informational purposes.</p>
 			<p>If this message is going to be forwarded to another server, then append the current server information to the <code>Via</code> header.</p>
 
-			<h2>Write headers</h2>
+			<h3>Max-Forwards header</h3>
+			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
+			<p>For nodes that would normally forward the request, the <code>Max-Forwards</code> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after deincrementing the value.</p>
+			<p>Origin servers may generally ignore this header.</p>
+
+			<h2>Handle Upgrade</h2>
+			<!-- Implements RFC7230 6.7. Upgrade -->
+			<p>The <code>Upgrade</code> request header asks the server to transition the protocol from HTTP/1.1 to some other protocol. Multiple protocols may be specified, which the server may choose from. The request is usually sent as a GET request.</p>
+			<p>If the server intends to honor the request, then respond with 101 (Switching Protocols), a <code>Connection: upgrade</code> header, and an Upgrade header specifying the protocol.</p>
+			<aside><p>This should probably be a new HTTP method.</p></aside>
+
+			<h2>Read request body</h2>
+			<p>The presence of a message body in a request is signaled by a Content-Length or Transfer-Encoding header field.</p>
+
+			<h3>Content-Type</h3>
+			<p>The <code>Content-Type</code> header determines which media type will be used to decode the entity-body.</p>
+			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document.</p>
+
+			<h3>Content-Language</h3>
+			<p>HTTP allows the sender to identify the primary language of the entity body (request body or response body) using the <code>Content-Language</code> header.</p>
+
+			<h2>Handle 100-continue</h2>
+			<p>If the client set the <code>100-continue</code> flag, that means the client has paused uploading the request-body so it can first read any errors from the server, that the server might want to emit in response to the request headers.</p>
+			<p>Since at this point all the headers look acceptable, emit a 100 (Continue) response, an intermediate response that will be replaced with the actual status code later on.</p>
+			<p>Alternatively, if the client did not ask for 100-continue and there's a serious problem with accepting a large upload, the server can close the entire TCP connection.</p>
+
+			<h2>Read payload</h2>
+			<p>If nothing looks wrong with the request metadata, the server can begin accepting the payload body.</p>
+			<ol>
+				<li>If the first transfer coding to decode is "chunked", then read the chunked stream until it indicates the request-body is EOF.</li>
+				<li>Otherwise if there is a Content-Length header, read that many bytes, then the request ends.</li>
+			</ol>
+
+			<h2>Decode transfer-codings</h2>
+			<p>A <i>transfer coding</i> is a transform applied to the requested resource for transporting the representation over the network, usually to compress the representation, and to indicate when the body has ended.</p>
+			<p>HTTP servers should (must?) support the following transfer-codings:</p>
+			<ul>
+				<li>chunked</li>
+				<li>compress</li>
+				<li>deflate</li>
+				<li>gzip</li>
+			</ul>
+			<p></p>
+
+			<h3>Transfer-Encoding: chunked</h3>
+			<!-- Implements RFC7230 3.3.1. Transfer-Encoding -->
+			<!-- Implements RFC7230 4.3. TE -->
+			<!-- Implements RFC7230 4.4. Trailer -->
+			<p>The <code>chunked</code> Transfer-Encoding is used to specify more detailed information about the status of the transfer, especially indicating when the transfer has ended.</p>
+
+			<h2>Decode content-encoding</h2>
+			<p>The values for <code>Content-Encoding</code> are:</p>
+			<ul>
+				<li>identity</li>
+				<li>compress</li>
+				<li>deflate</li>
+				<li>gzip</li>
+			</ul>
+
+			<h3>chunked transfer-coding</h3>
+			<p>The "chunked" transfer coding is capable of indicating when the request-body terminates, can be used to append headers to the end of the request, and metadata (for example, checksums). See the page on chunked coding for further information.</p>
+
+			<h2>Write response headers</h2>
+			<h3>HTTP-version</h3>
+			<p>The server must reply with an HTTP version to which both the server and client are conformant. If the server is responding to a client in an HTTP version it doesn't understand, send the latest version the server understands in the response-line (e.g. <code>HTTP/1.1</code>).</p>
+
 			<h3>Date</h3>
 			<!-- Implements RFC7231 7.1.1 -->
 			<p>The <code>Date</code> header is required for responses, unless the server doesn't have an accurate time to send. (Clients may also send this header, but it's optional for them.)</p>
@@ -147,9 +202,11 @@
 			<h3>Connection</h3>
 			<p>If the server is going to close the connection at the end of the response, it must send the <code>Connection: close</code> to the client.</p>
 
-			<h2>Write Response</h2>
+			<h2>Write response body</h2>
 			<h3>Compute length</h3>
-			<p>If the server knows the</p>
+			<!-- Implement RFC7230 3.3.2. Content-Length -->
+			<p>If the server knows the length of the response, it can send the <code>Content-Length</code> header (however this precludes sending a Transfer-Encoding).</p>
+			<p>A server MUST NOT send Content-Length with a 1xx status, a (204 No Content) status, or in response to a CONNECT request.</p>
 
 			<h2>Clean up connection</h2>
 			<h3>Handle Connection: close</h3>

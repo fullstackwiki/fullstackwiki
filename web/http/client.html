@@ -59,12 +59,16 @@
 			<p>It is not possible to explicitly send the scheme being used HTTP/1.0 or HTTP/1.1 using the origin-form, however the server is usually able to detect the scheme being used. If your networked application needs to support responding to arbritrary URI schemes, consider supporting the absolute-form of requests in your server.</p>
 
 			<!-- TODO mark this as environment-specific -->
-			<h2>Host</h2>
+			<h3>Host</h3>
 			<p>The very first header should be the <code>Host</code> header, since it is related to the request-URI and the request-line.</p>
 			<aside><p>Node.js automatically sets the Host header.</p></aside>
 
 			<h2>Optional Date header</h2>
 			<p>The Date header is optional for request headers. It can be sent if it would convey useful information to the server.</p>
+
+			<h2>Connection options</h2>
+			<h3>Connect header</h3>
+			<p>This is a hop-by-hop header and must be modified appropriately by intermediate nodes (gateways and proxies).</p>
 
 			<h2>List acceptable responses</h2>
 			<p>Clients may specify the kinds of responses they'd prefer to receive, along a variety of dimensions:</p>
@@ -77,6 +81,9 @@
 
 			<h3>Accept-Language</h3>
 			<p>The client can list the kinds of natural languages the user would prefer to receive.</p>
+
+			<h3>TE</h3>
+			<p>The client can list the kinds of Transfer-Encodings it allows (besides "chunked").</p>
 
 			<h2>Authenticating</h2>
 			<p>If the server requires authentication, the server may add headers to authenticate itself to the server. Additionally, the server may also perform authentication at the transport layer, for example with TLS certificates, or Unix domain sockets.</p>
@@ -203,9 +210,21 @@
 			<p>The <code>Content-Type</code> header determines which <i>media type</i> will be used to decode the entity-body.</p>
 			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document.</p>
 
-			<h3>Process payload contents</h3>
-			<p>The payload is processed according to the semantics of the media type.</p>
-
+			<h2>Read response body</h2>
+			<!-- Implements RFC7230 3.3.3. Message Body Length -->
+			<p>The presence of a message body in a request is signaled by a Content-Length or Transfer-Encoding header field.</p>
+			<p>The number of bytes to read depends on the request method, the response code, and headers present:</p>
+			<ol>
+				<li>A HEAD request is supposed to be identical to the same GET request. Regardless of response status or headers, there is no response body.</li>
+				<li>A CONNECT request with a 2xx (successful) response has no concept of a response body, it becomes a tunnel immediately after the response headers are written.</li>
+				<li>If the outermost applied Transfer-Encoding (if any) is "chunked", the response body ends when the chunked parsing does.</li>
+				<li>If there is any other Transfer-Encoding, the message can only be ended when the server closes the connection.</li>
+				<li>If there is a Content-Length header, then read that many bytes.</li>
+				<li>If there is a single Content-Length header (or multiple identical values), then read that many bytes.</li>
+				<li>If this is an HTTP/1.0 request, or if the response specifies <code>Connection: close</code>, read until the server closes the connection.</li>
+				<li>Note there is no reliable way to determine when the response ends, raise an error.</li>
+			</ol>
+			<p>Additioanlly, it's not possible to distinguish between some types of connection errors and the server closing the connection.</p>
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Specification</dt>

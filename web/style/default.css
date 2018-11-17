@@ -259,6 +259,11 @@ p {
 	margin-bottom: 1em;
 }
 
+aside {
+	border-left: 0.3em dotted #ddd;
+	padding-left: 0.6em;
+}
+
 table {
 	border-collapse: collapse;
 	width: 100%;
