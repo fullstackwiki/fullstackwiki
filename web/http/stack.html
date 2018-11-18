@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP Abstraction stack</title>
+		<meta name="description" content="Breaking down HTTP into component parts that can be separately implemented" />
+		<link rel="up" href="index.html" />
+	</head>
+	<body>
+		<main>
+			<h1>HTTP Abstraction Stack</h1>
+			<h2>Application</h2>
+			<table>
+				<thead>
+					<tr><th>Stage</th><th>Headers</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Transport</td><td>
+						<p>TCP or other reliable transport</p>
+						<p>Responsible for passing packets carrying HTTP requests to next node in HTTP path, for ensuring the reliable transport of this stream, and has no understanding of HTTP.</p>
+					</td></tr>
+					<tr><td>Protocol</td><td>
+						<p>HTTP stream processing one or more requests. May be one of several versions.</p>
+						<p>Not necesarially associated with a specific user-agent, and can typically pipeline multiple requests (including from different user-agents).</p>
+					</td></tr>
+					<tr><td>Message</td><td>
+						<p>Metadata that applies to the current message sent between nodes.</p>
+						<ul>
+							<li>TCP connection</li>
+							<li>CONNECT method</li>
+							<li>Connection</li>
+							<li>Via</li>
+							<li>Expect</li>
+							<li>Max-Forwards</li>
+						</ul>
+					</td></tr>
+					<tr><td>Data</td><td>
+						<p>Information that intermediate nodes may modify without significantly changing the semantics of the request</p>
+						<ul>
+							<li>Transfer-Encoding / TE</li>
+							<li>Trailer</li>
+							<li>Content-Length</li>
+						</ul>
+					</td></tr>
+					<tr><td>Request</td><td>
+						<p>Metadata that applies to this request made to the origin server, processed by the origin server.</p>
+						<ul>
+							<li>status code / method</li>
+							<li>Server / From, User-Agent, Referer</li>
+							<li>Host</li>
+							<li>request-URI</li>
+							<li>Date</li>
+							<li>Retry-After</li>
+							<li>Range</li>
+						</ul>
+					</td></tr>
+					<tr><td>Resource</td><td>
+							<p>Information that's about the resource as it exists on the server, and so won't change between requests (unless it changes on the server).</p>
+							<ul>
+								<li>Allow</li>
+								<li>ETag</li>
+								<li>Last-Modified</li>
+								<li>Content-Location</li>
+							</ul>
+						</td></tr>
+					</tbody>
+			</table>
+			<h2>Message Body</h2>
+			<table>
+				<thead>
+					<tr><th>Stage</th><th>Headers</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Message</td><td>
+						<p>Connection information specific to sending the message body over a particular version of HTTP or just between hops.</p>
+						<p>Data here may be encoded by a Transfer-Encoding</p>
+						<ul>
+							<li>Transfer-Encoding / TE</li>
+							<li>Trailer</li>
+							<li>Content-Length</li>
+						</ul>
+					</td></tr>
+					<tr><td>Transfer</td><td>
+						<p>Connection information specific to the origin server.</p>
+						<ul>
+							<li>Content-Encoding</li>
+						</ul>
+					</td></tr>
+					<tr><td>Representation</td><td>
+						<p>The message body after all network and origin server encodings have been decoded.</p>
+						<ul>
+							<li>Range / Accept-Range</li>
+						</ul>
+					</td></tr>
+					<tr><td>Resource</td><td>
+						<p>Metadata that applies to the resource as it exists on the server, and does not change with e.g. Range requests, or any sort of compression.</p>
+						<ul>
+							<li>ETag</li>
+							<li>Last-Modified</li>
+							<li>Content-Location</li>
+							<li>Content-Language</li>
+							<li>Content-Type</li>
+						</ul>
+					</td></tr>
+				</tbody>
+			</table>
+			<h2>Referenced specifications</h2>
+			<ul class="inline">
+				<li><a href="https://httpwg.org/specs/rfc7230.html">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a></li>
+				<li><a href="https://httpwg.org/specs/rfc7231.html">RFC 7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a></li>
+			</ul>
+		</main>
+	</body>
+</html>

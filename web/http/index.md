@@ -19,6 +19,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [HTTP/2 Protocol](http-syntax-2.html)
 * [Clients](client.html)
 * [Servers](server.html)
+* [Conceptual Model](stack.html)
 * [Requesting Resources](retreiving-resources.html)
 * [Modifying Resources](modifying-resources.html)
 * [HTTP Status Codes](http-status.html)
