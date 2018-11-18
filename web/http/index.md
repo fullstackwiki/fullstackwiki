@@ -27,3 +27,14 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [HTTP Headers](http-headers.html)
 * [Listing Resources](modifying-resources.html)
 * [Creating Resources](modifying-resources.html)
+
+## Specifications
+
+* RFC7230: HTTP/1.1: Message Syntax and Routing
+* RFC7231: HTTP/1.1: Semantics and Content
+* RFC7232: HTTP/1.1: Conditional Requests
+* RFC7233: HTTP/1.1: Range Requests
+* RFC7234: HTTP/1.1: Caching
+* RFC7235: HTTP/1.1: Authentication
+* RFC7239: HTTP Forwarded
+* RFC7240: HTTP Preferences

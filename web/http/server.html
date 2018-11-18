@@ -128,6 +128,12 @@
 			<p>The <code>Via</code> header specifies which intermediate nodes also processed the request, and will process the response. The server may use this for logging, debugging, or other informational purposes.</p>
 			<p>If this message is going to be forwarded to another server, then append the current server information to the <code>Via</code> header.</p>
 
+			<h3>Forwarded header</h3>
+			<!-- Implements RFC7239 -->
+			<p>The <code>Forwarded</code> header specifies which intermediate nodes also processed the request and associated information about the hop. The server may use this for logging, debugging, or other informational purposes.</p>
+			<p>This varies from the "Via" header in that the Forwarded header is extensible, and can contain information such as the client IP address, which would otherwise be lost by a proxy or gateway.</p>
+			<p>If this message is going to be forwarded to another server, then append the current server information to the <code>Forwarded</code> header.</p>
+
 			<h3>Max-Forwards header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
 			<p>For nodes that would normally forward the request, the <code>Max-Forwards</code> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after deincrementing the value.</p>
@@ -136,8 +142,8 @@
 			<h2>Handle Upgrade</h2>
 			<!-- Implements RFC7230 6.7. Upgrade -->
 			<p>The <code>Upgrade</code> request header asks the server to transition the protocol from HTTP/1.1 to some other protocol. Multiple protocols may be specified, which the server may choose from. The request is usually sent as a GET request.</p>
-			<p>If the server intends to honor the request, then respond with 101 (Switching Protocols), a <code>Connection: upgrade</code> header, and an Upgrade header specifying the protocol.</p>
-			<aside><p>This should probably be a new HTTP method.</p></aside>
+			<p>If the server intends to honor the request, then respond with 101 (Switching Protocols), a <code>Connection: upgrade</code> header, and an Upgrade header specifying the protocol. The server may ignore the header if it's content with the protocol as it is.</p>
+			<aside><p>Primary differences from using CONNECT is that CONNECT is hop-by-hop, and as a method, cannot be ignored.</p></aside>
 
 			<h2>Read request body</h2>
 			<p>The presence of a message body in a request is signaled by a Content-Length or Transfer-Encoding header field.</p>
