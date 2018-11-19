@@ -35,7 +35,7 @@
 						</ul>
 					</td></tr>
 					<tr><td>Data</td><td>
-						<p>Information that intermediate nodes may modify without significantly changing the semantics of the request</p>
+						<p>Information that intermediate nodes may modify without significantly changing the semantics of the request. Details vary significantly between HTTP versions.</p>
 						<ul>
 							<li>Transfer-Encoding / TE</li>
 							<li>Trailer</li>
@@ -43,7 +43,7 @@
 						</ul>
 					</td></tr>
 					<tr><td>Request</td><td>
-						<p>Metadata that applies to this request made to the origin server, processed by the origin server.</p>
+						<p>Metadata that applies to this request made to the origin server, processed by the origin server. Information at this layer can be passed through all different HTTP versions without loss of semantics.</p>
 						<ul>
 							<li>status code / method</li>
 							<li>Server / From, User-Agent, Referer</li>

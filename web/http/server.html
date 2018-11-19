@@ -29,9 +29,10 @@
 			<p>Except for the simplest of embedded routers, most implementations will need to parse all of the request headers and buffer them in memory, since headers may be specified in any order.</p>
 
 			<h3>Header length limits</h3>
+			<!-- Implements RFC6585 5. 431 Request Header Fields Too Large -->
+			<!-- Implements RFC7231 6.5.12. 414 URI Too Long -->
 			<p>While HTTP does not specify any specific limits on headers, servers may emit an error if a request has exceeded resource limits:</p>
 			<!-- Pull some sensible values from Apache HTTPD: http://httpd.apache.org/docs/2.2/mod/core.html#limitrequestline -->
-			<!-- Implements RFC6585, RFC7231 -->
 			<dl>
 				<dt>414 (URI Too Long)</dt><dd>When the request-URI is very long (this length is 8190 in Apache HTTPD)</dd>
 				<dt>431 (Request Header Fields Too Large)</dt><dd>When there's a header that's too long, or too many headers. Send this when a header name is very long (the longest known header plus some amount to accomidate new headers without interrupting client requests, about 100 bytes), when the value is very long (8190 bytes in Apache HTTPD), or when there's too many headers (100 count in Apache HTTPD)</dd>
@@ -48,6 +49,9 @@
 			<!-- https://httpwg.org/specs/rfc7230.html#http.version -->
 
 			<h2>Consume Connection headers</h2>
+			<p>Several headers are hop-by-hop headers and must be modified by, or set by, every node along the request pipeline.</p>
+			<p>These headers are typically managed by HTTP request libraries. And request libraries should not allow programs to set these headers (except for debugging purposes).</p>
+
 			<h3>Connect header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
 			<p>The <code>Connection</code> header specifies hop-by-hop information about the connection that must be consumed (removed) before forwarding. This means that received Connection headers are from the previous node, not from the user-agent.</p>
@@ -145,12 +149,33 @@
 			<p>If the server intends to honor the request, then respond with 101 (Switching Protocols), a <code>Connection: upgrade</code> header, and an Upgrade header specifying the protocol. The server may ignore the header if it's content with the protocol as it is.</p>
 			<aside><p>Primary differences from using CONNECT is that CONNECT is hop-by-hop, and as a method, cannot be ignored.</p></aside>
 
-			<h2>Read request body</h2>
-			<p>The presence of a message body in a request is signaled by a Content-Length or Transfer-Encoding header field.</p>
+			<h2>Validate request body headers</h2>
+			<h3>Verify a request-body is acceptable</h3>
+			<p>The presence of a message body in a request is signaled by a Content-Length or Transfer-Encoding header field. Verify that the current resource supports a method that accepts a content body.</p>
+
+			<h3>Identify request body URI</h3>
+			<!-- Implements 3.1.4.1. Identifying a Representation -->
+			<p>It is possible for the user-agent to specify a URI for the request body with the <code>Content-Location</code> header.</p>
+			<p>If it is present, its meaning is left largely up to the server do decide.</p>
+
+			<h3>Transfer-Encoding</h3>
+			<p>Verify that all applied transfer codings are known to the server, otherwise return 415 (Unsupported Media Type).</p>
 
 			<h3>Content-Type</h3>
-			<p>The <code>Content-Type</code> header determines which media type will be used to decode the entity-body.</p>
-			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document.</p>
+			<!-- Implements RFC7231 3.1.1.5. Content-Type -->
+			<!-- Implements RFC7231 6.5.13. 415 Unsupported Media Type -->
+			<p>The <code>Content-Type</code> header determines which <i>media type</i> will be used to decode the entity-body. A media type is a non-trivial format that accepts case, whitespace, parameters, and quoted-strings, so use a library to parse and normalize the Content-Type before reading it.</p>
+			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document. Parse the Content-Type (using a library that parses media types) and resolve which parser the server should use to parse the body, if any.</p>
+			<p>If the server has no way to consume the media type, return 415 (Unsupported Media Type).</p>
+
+			<h4>Content-Type charset</h4>
+			<p>Most media types, especially <code>text/*</code> types, implement a character set, a method of decoding a byte to a particular character. If the media type uses a charset decoding, ensure the server is capable of decoding it. The server should support ASCII and UTF-8.</p>
+
+			<h3>Content-Length</h3>
+			<p>Verify that the Content-Length is reasonable. If it is above the maximum length the server is willing to handle, return 413 (Payload Too Large). The server may wish to vary this maximum based on the request-URI, Content-Type, method, and user authorization.</p>
+
+			<h3>Content-Encoding</h3>
+			<p>Verify that all applied Content-Encodings are known to the server, otherwise return 415 (Unsupported Media Type).</p>
 
 			<h3>Content-Language</h3>
 			<p>HTTP allows the sender to identify the primary language of the entity body (request body or response body) using the <code>Content-Language</code> header.</p>
@@ -160,7 +185,7 @@
 			<p>Since at this point all the headers look acceptable, emit a 100 (Continue) response, an intermediate response that will be replaced with the actual status code later on.</p>
 			<p>Alternatively, if the client did not ask for 100-continue and there's a serious problem with accepting a large upload, the server can close the entire TCP connection.</p>
 
-			<h2>Read payload</h2>
+			<h3>Consume message-body</h3>
 			<p>If nothing looks wrong with the request metadata, the server can begin accepting the payload body.</p>
 			<ol>
 				<li>If the first transfer coding to decode is "chunked", then read the chunked stream until it indicates the request-body is EOF.</li>
@@ -169,7 +194,7 @@
 
 			<h2>Decode transfer-codings</h2>
 			<p>A <i>transfer coding</i> is a transform applied to the requested resource for transporting the representation over the network, usually to compress the representation, and to indicate when the body has ended.</p>
-			<p>HTTP servers should (must?) support the following transfer-codings:</p>
+			<p>HTTP servers MUST support the "chunked" encoding. Servers should support the following transfer-codings:</p>
 			<ul>
 				<li>chunked</li>
 				<li>compress</li>
@@ -193,10 +218,22 @@
 				<li>gzip</li>
 			</ul>
 
-			<h3>chunked transfer-coding</h3>
-			<p>The "chunked" transfer coding is capable of indicating when the request-body terminates, can be used to append headers to the end of the request, and metadata (for example, checksums). See the page on chunked coding for further information.</p>
+			<h2>Select response</h2>
+			<h3>Content-Type negotiation</h3>
+			<p>See the page on Content-Type Negotiation for more information.</p>
 
-			<h2>Write response headers</h2>
+			<h3>Prefer header</h3>
+			<!-- Implements RFC7240 -->
+			<p>The <code>Prefer</code> header specifies what sort of response a client may prefer from the server.</p>
+			<p>The server may indicate which of the preferences it honored using the <code>Preference-Applied</code> response header.</p>
+
+			<h3>Transfer codings</h3>
+			<!-- Implements RFC7230 4.3. TE -->
+			<p>The <code>TE</code> header specifies which transfer codings a client is capable of decoding.</p>
+			<p>The <code>chunked</code> transfer coding (without trailers) is assumed for HTTP/1.1 user agents.</p>
+			<p>If the client specifies the special value <code>trailers</code>, the user agent supports trailers in the chunked transfer coding. If the server wishes to use trailers, it must send the <code>Trailer</code> header.</p>
+
+			<h2>Begin response</h2>
 			<h3>HTTP-version</h3>
 			<p>The server must reply with an HTTP version to which both the server and client are conformant. If the server is responding to a client in an HTTP version it doesn't understand, send the latest version the server understands in the response-line (e.g. <code>HTTP/1.1</code>).</p>
 
@@ -209,10 +246,25 @@
 			<p>If the server is going to close the connection at the end of the response, it must send the <code>Connection: close</code> to the client.</p>
 
 			<h2>Write response body</h2>
+			<h3>Encode content coding</h3>
+			<p>A content coding is a transform applied to the representation indended to be decoded by the final recipient. It is not typically decoded by intermediaries, except transforming proxies.</p>
+			<p>The applied content codings are specified in the <code>Content-Encoding</code> header.</p>
+			<p>Content codings are usually cached by the server.</p>
+
 			<h3>Compute length</h3>
 			<!-- Implement RFC7230 3.3.2. Content-Length -->
-			<p>If the server knows the length of the response, it can send the <code>Content-Length</code> header (however this precludes sending a Transfer-Encoding).</p>
+			<p>If the server knows the length of the response, it should send the <code>Content-Length</code> header. The client will read that many bytes after the end of headers as the response-body, and then begin reading the next response in the pipeline.</p>
+			<p>If the server does not know the length of the response by this point, different HTTP protocols handle the response differently:</p>
+			<dl>
+				<dt>HTTP/1.0</dt><dd>The server terminates the connection to end the response. Ensure that <code>Connection: close</code> was sent earlier.</dd>
+				<dt>HTTP/1.1</dt><dd>The server must use the "chunked" Transfer-Encoding.</dd>
+			</dl>
 			<p>A server MUST NOT send Content-Length with a 1xx status, a (204 No Content) status, or in response to a CONNECT request.</p>
+
+			<h3>Encode transfer coding</h3>
+			<p>A transfer coding is a transform applied to the message in order to send the message over the network. Transfer codings are semantically transparent, and frequently re-encoded by intermediaries.</p>
+			<p>It is only available on HTTP/1.1 as a method of specifying the end of an indeterminate response.</p>
+			<p>Applying a transfer coding means the server cannot send a <code>Content-Length</code> header, so its use should be avoided in favor of using Content-Length.</p>
 
 			<h2>Clean up connection</h2>
 			<h3>Handle Connection: close</h3>
