@@ -11,11 +11,12 @@
 		<main>
 			<h1>HTTP Servers</h1>
 			<p>This document describes how to implement an HTTP server, from an incoming client request to closing the response.</p>
-			<p>Gateways and proxies are described separately, but must follow the behavior here nonetheless, as well as the behavior for clients.</p>
+			<p>Gateways and proxies must follow the behavior <a href="client.html">for clients</a>.</p>
+			<p>Not every section will be applicable to each server, read carefully.</p>
 
 			<h2>Listening for Requests</h2>
 			<p>There are multiple ways to listen for HTTP requests, and you may wish to implement more than one of them.</p>
-			<p>HTTP is primarially defined in the concrete message syntax, shared by HTTP/1.x and email. HTTP servers should typically always listen on HTTP/1.x (HTTP/1.x refers to both HTTP/1.1 and HTTP/1.0).</p>
+			<p>HTTP is primarially defined in the concrete message syntax, shared by HTTP/1.x and is similar to MIME, used for email. HTTP servers should typically always listen on HTTP/1.x (HTTP/1.x refers to both HTTP/1.1 and HTTP/1.0).</p>
 			<p>HTTP/1.x by default listens on TCP port 80, and HTTP over TLS on port 443. HTTP also provides alternate ports 8008 and 8080, which is useful for origin servers behind a gateway/firewall, if a unix socket cannot be used.</p>
 			<!-- Implements RFC7230 6.1. Connection - TODO: describe some of the attacks and mitigations -->
 			<p>Servers are expected to be robust against denial-of-service attacks.</p>
@@ -24,6 +25,13 @@
 
 			<h2>Status codes and emitting errors</h2>
 			<p>Some operations below speak of emitting an error, or emitting a status code. This means the response to that request will be a status code (4xx or 5xx if an error), generating a document describing the error (if allowed), and further handling of the request will end (except as necessary to unlock and clean up resources, etc).</p>
+
+			<h3>Retry-After</h3>
+			<p>In certain cases, especially due to server load or unrecognised parameters from the client, the server may want to advertise how long the client should wait to retry a request. Use the <code>Retry-After</code> header to specify this.</p>
+
+			<h2>Handle rate limiting and overload condition</h2>
+			<!-- Implements RFC7231 6.6.4. 503 Service Unavailable -->
+			<p>In some cases, especially for closed applications, servers may want to signal they are overloaded and the request should be retried at a later date. In this case, the server may respond with 503 (Service Unavailable). The server should accompany this with a <code>Retry-After</code> header.</p>
 
 			<h2>Parse incoming request headers (HTTP/1.x)</h2>
 			<p>Except for the simplest of embedded routers, most implementations will need to parse all of the request headers and buffer them in memory, since headers may be specified in any order.</p>
@@ -52,7 +60,7 @@
 			<p>Several headers are hop-by-hop headers and must be modified by, or set by, every node along the request pipeline.</p>
 			<p>These headers are typically managed by HTTP request libraries. And request libraries should not allow programs to set these headers (except for debugging purposes).</p>
 
-			<h3>Connect header</h3>
+			<h3>Connection header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
 			<p>The <code>Connection</code> header specifies hop-by-hop information about the connection that must be consumed (removed) before forwarding. This means that received Connection headers are from the previous node, not from the user-agent.</p>
 			<p>The Connection header may also list header names. Any request headers that are listed in Connection are connection headers, and are not to be forwarded.</p>
@@ -143,6 +151,49 @@
 			<p>For nodes that would normally forward the request, the <code>Max-Forwards</code> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after deincrementing the value.</p>
 			<p>Origin servers may generally ignore this header.</p>
 
+			<h2>Authenticate credentials</h2>
+			<p>Users may send an <code>Authorization</code> header (or <code>Proxy-Authorization</code> header for intermediaries) that carries credentials authorizing them to perform the request.</p>
+			<p>Some user agents might identify themselves with a TLS client certificate. In these cases, all requests from that connection are authenticated, however the server should still require authorization headers in addition to the client certificate to prevent ambient authority attacks. ( Subrequests from untrusted sources should be careful to make the request over an unauthenticated connection, to prevent an ambient authority/confused deputy attack.)</p>
+			<p>The below operations assume the server will verify these credentials before performing the operation. If an operation requires credentials, but the client has not specified any, or the credentials are insufficient for the requested operation, emit 401 (Unauthorized) with a <code>WWW-Authenticate</code> header.</p>
+
+			<h3>Rate limiting users</h3>
+			<!-- Implements RFC6585 4. 429 Too Many Requests -->
+			<p>If the server is able to keep track of requests per user, it may signal a request from that specific user has exceeded limits with 429 (Too Many Requests). The server should use <code>Retry-After</code> to specify the next time a client will be able to make successful requests.</p>
+			<p>The server can make this determination based on routing information (like IP address), or valid credentials, whichever is favorable to the user.</p>
+
+			<h2>Request metadata</h2>
+			<p>The following headers contain information about the request or the user making the request:</p>
+			<dl>
+				<dt>From</dt><dd>An email address that can be contacted if there's any questions about the user-agent or user making the request. We suggest using this for automated scripts and bots, in the case of misbehavior.</dd>
+				<dt>Referer</dt><dd>Specifies where the current request URI was obtained from.</dd>
+				<dt>User-Agent</dt><dd>Names/describes the user agent making the request.</dd>
+			</dl>
+			<p>Consider logging this information for debugging purposes.</p>
+
+			<h2>Handle method</h2>
+			<p>Process subroutines that vary based on incoming method.</p>
+
+			<h3>GET, HEAD</h3>
+			<p>Dereference the resource according to the section below.</p>
+
+			<h3>OPTIONS</h3>
+
+			<h3>PUT</h3>
+			<p>Put is an operation that updates a resource with an uploaded document, creating it if it doesn't exist.</p>
+			<p>The server should look up the resource being replaced (if any) and perform the necessary post-replace hooks, but this is not of consern to the client.</p>
+
+			<h2>Dereference resource</h2>
+			<p>For methods that dereference the (most methods), the server looks up the effective request URI from its routing table and/or database to determine if it exists.</p>
+			<p>If no such resource exists, return 404 (Not Found).</p>
+			<p>If a resource is marked as deleted, return 410 (Gone).</p>
+			<p>Applications should route based on the full URI and be prepared to route requests to multiple different hosts.</p>
+
+			<h3>Redirects</h3>
+			<p>The server can mark some resources as having moved to a different URI, for various reasons.</p>
+			<p>Servers should avoid renaming resources if there's not a pressing problem with keeping a URI.</p>
+			<p>In service of redirects, select an appropriate 3xx redirect, and use the <code>Location</code> header to specify the resource to direct the user-agent to.</p>
+			<p>Resources and other operations can send a redirect (e.g. a service that points a user to a random webpage), these uses will be explored later.</p>
+
 			<h2>Handle Upgrade</h2>
 			<!-- Implements RFC7230 6.7. Upgrade -->
 			<p>The <code>Upgrade</code> request header asks the server to transition the protocol from HTTP/1.1 to some other protocol. Multiple protocols may be specified, which the server may choose from. The request is usually sent as a GET request.</p>
@@ -203,7 +254,7 @@
 			</ul>
 			<p></p>
 
-			<h3>Transfer-Encoding: chunked</h3>
+			<h3>The chunked transfer coding</h3>
 			<!-- Implements RFC7230 3.3.1. Transfer-Encoding -->
 			<!-- Implements RFC7230 4.3. TE -->
 			<!-- Implements RFC7230 4.4. Trailer -->
@@ -218,9 +269,64 @@
 				<li>gzip</li>
 			</ul>
 
-			<h2>Select response</h2>
+			<h2>Handle request body</h2>
+			<p>Procedure for handling the request body varies with the method:</p>
+			<dl class="inline">
+				<dt>GET</dt><dd>Discard the input, or return 413 (Payload Too Large). GET with a request body is technically legal, and could be used as a kind of safe POST; in this case the server must indicate the response is not cachable.</dd>
+				<dt>HEAD</dt><dd>Same as GET.</dd>
+				<dt>POST</dt><dd>Semantics are defined by the resource; the server should have a subroutine associated with the resource that accepts and processes the POST request (including request body).</dd>
+				<dt>PUT</dt><dd>Store a resource on the server at a specific URI. The subroutine that stores the data may vary based on the request URI (e.g. authority or path) and Content-Type.</dd>
+				<dt>DELETE</dt><dd>Behavior is undefined, discard or return 413 (Payload Too Large).</dd>
+				<dt>CONNECT</dt><dd>Should have been handled in previous steps, generate 500 (Internal Server Error).</dd>
+				<dt>OPTIONS</dt><dd>Behavior is undefined, discard or return 413 (Payload Too Large).</dd>
+				<dt>TRACE</dt><dd>Clients are prohibited from providing a request body for TRACE; enforce this by emitting 413 (Payload Too Large).</dd>
+			</dl>
+
+			<h2>Report changes to server state</h2>
+			<h3>Created resources</h3>
+			<p>If the request was one to create a resource (either a PUT request to a resource that didn't previously exist, or a POST request that created a new resource), then:</p>
+			<ol>
+				<li><p>Set the status code to 201 (Created)</p></li>
+				<li><p>Set a Location header to point to the resource created. If multiple resources were created, point to a "primary" resource with sufficient links so that the other created resources may be discovered.</p></li>
+				<li><p>If the request is known to have come from a Web browser (e.g. by using a form field that says <code>prefer=redirect</code>), then instead use status code 303 to have the Web browser direct the user agent to the newly created resource.</p></li>
+			</ol>
+
+			<h3>Modified resources</h3>
+			<p>If the request was one to modify a resource (usually a PUT request to a resource that already existed), then set the status code to 200 (OK) or 204 (No Content)</p>.
+
+			<h3>Ongoing process</h3>
+			<p>If the request will take a long time to fulfill (more than several seconds), and wishes to inform the client of this, it can send a 202 (Accepted) response.</p>
+			<p>The result should describe how to request the result of the action when it finishes. Currently, there is no standardized means to do this.</p>
+
+			<h2>Response line and connection details</h2>
+			<h3>HTTP-version</h3>
+			<p>The server must reply with an HTTP version to which both the server and client are conformant. If the server is responding to a client in an HTTP version it doesn't understand, send the latest version the server understands in the response-line (e.g. <code>HTTP/1.1</code>).</p>
+
+			<h3>Date</h3>
+			<!-- Implements RFC7231 7.1.1. Origination Date -->
+			<p>The <code>Date</code> header is required for responses, unless the server doesn't have an accurate time to send. (Clients may also send this header, but it's optional for them.)</p>
+			<p>For implementation, see <a href="headers/Date.html">HTTP Date header</a>.</p>
+
+			<h3>Connection</h3>
+			<p>If the server is going to close the connection at the end of the response, it must send the <code>Connection: close</code> to the client.</p>
+
+			<h2>Select representation</h2>
 			<h3>Content-Type negotiation</h3>
+			<p>If the request-URI is allowed to vary among a number of dimensions, use the various Accept headers to determine which representation to pick:</p>
+			<ul>
+				<li>Accept</li>
+				<li>Accept-Charset</li>
+				<li>Accept-Language</li>
+			</ul>
+			<!-- TODO: is Accept-Encoding a header that can be varied in a URI? -->
 			<p>See the page on Content-Type Negotiation for more information.</p>
+
+			<h3>Set Content-Location</h3>
+			<p>With the different dimensions of variance negoaiated, compute the URI that uniquely identifies this selection. Send it in the <code>Content-Location</code> header. Preferably compute and send a relative URI, to minimize the chances that an intermediate node introduces problems if it rewrites the request-URI (e.g. the host header, or path).</p>
+
+			<h3>Set Vary</h3>
+			<!-- Implements RFC7231 7.1.4. Vary -->
+			<p>If the server selected a representation from among multiple representation, the dimensions that it selected among must be listed in the <code>Vary</code> header.</p>
 
 			<h3>Prefer header</h3>
 			<!-- Implements RFC7240 -->
@@ -233,17 +339,20 @@
 			<p>The <code>chunked</code> transfer coding (without trailers) is assumed for HTTP/1.1 user agents.</p>
 			<p>If the client specifies the special value <code>trailers</code>, the user agent supports trailers in the chunked transfer coding. If the server wishes to use trailers, it must send the <code>Trailer</code> header.</p>
 
-			<h2>Begin response</h2>
-			<h3>HTTP-version</h3>
-			<p>The server must reply with an HTTP version to which both the server and client are conformant. If the server is responding to a client in an HTTP version it doesn't understand, send the latest version the server understands in the response-line (e.g. <code>HTTP/1.1</code>).</p>
 
-			<h3>Date</h3>
-			<!-- Implements RFC7231 7.1.1 -->
-			<p>The <code>Date</code> header is required for responses, unless the server doesn't have an accurate time to send. (Clients may also send this header, but it's optional for them.)</p>
-			<p>For implementation, see <a href="headers/Date.html">HTTP Date header</a>.</p>
-
-			<h3>Connection</h3>
-			<p>If the server is going to close the connection at the end of the response, it must send the <code>Connection: close</code> to the client.</p>
+			<h2>Freshness and caching</h2>
+			<p>Write the several headers that can be used for caching.</p>
+			<h3>Caching control</h3>
+			<ul>
+				<li>Age</li>
+				<li>Cache-Control</li>
+				<li>Expires</li>
+			</ul>
+			<h3>Metadata about selected representation</h3>
+			<ul>
+				<li>ETag</li>
+				<li>Last-Modified</li>
+			</ul>
 
 			<h2>Write response body</h2>
 			<h3>Encode content coding</h3>
@@ -266,6 +375,16 @@
 			<p>It is only available on HTTP/1.1 as a method of specifying the end of an indeterminate response.</p>
 			<p>Applying a transfer coding means the server cannot send a <code>Content-Length</code> header, so its use should be avoided in favor of using Content-Length.</p>
 
+			<h3>Write data</h3>
+			<p>The data to respond with varies by method:</p>
+			<dl class="inline">
+				<dt>GET</dt><dd>the target resource</dd>
+				<dt>HEAD</dt><dd>no response body, but has the same headers as GET</dd>
+				<dt>POST</dt><dd>the output of the subroutine associated with the requested resource</dd>
+				<dt>PUT, DELETE</dt><dd>the result of operations performed</dd>
+				<dt>OPTIONS</dt><dd>list of communications options</dd>
+				<dt>TRACE</dt><dd>the request message as received by the end server</dd>
+			</dl>
 			<h2>Clean up connection</h2>
 			<h3>Handle Connection: close</h3>
 			<!-- Implements RFC7230 6.6. Tear-down -->

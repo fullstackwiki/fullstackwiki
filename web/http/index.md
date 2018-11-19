@@ -38,3 +38,4 @@ Use HTTP whenever you need to download files from another system on a network, o
 * RFC7235: HTTP/1.1: Authentication
 * RFC7239: HTTP Forwarded
 * RFC7240: HTTP Preferences
+* RFC8288: Web Linking
