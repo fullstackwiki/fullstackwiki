@@ -11,7 +11,7 @@
 		<main>
 			<h1>HTTP Servers</h1>
 			<p>This document describes how to implement an HTTP server, from an incoming client request to closing the response.</p>
-			<p>Gateways and proxies must follow the behavior <a href="client.html">for clients</a>.</p>
+			<p>Intermediate nodes (gateways and proxies) must also follow the behavior <a href="client.html">for clients</a>, since they are making (forwarding) requests, as well as accepting them.</p>
 			<p>Not every section will be applicable to each server, read carefully.</p>
 
 			<h2>Listening for Requests</h2>
@@ -65,7 +65,7 @@
 			<p>The <code>Connection</code> header specifies hop-by-hop information about the connection that must be consumed (removed) before forwarding. This means that received Connection headers are from the previous node, not from the user-agent.</p>
 			<p>The Connection header may also list header names. Any request headers that are listed in Connection are connection headers, and are not to be forwarded.</p>
 
-			<h2>Verify client requirements</h2>
+			<h2>Verify connection requirements</h2>
 			<h3>Validate Expect header</h3>
 			<!-- Implements RFC7231 5.1.1. Expect -->
 			<p>The "Expect" header enumerates the features the client expects the endpoint to implement in order to be able to correctly parse a request or response.</p>
@@ -74,7 +74,7 @@
 
 			<h3>Validate Host header</h3>
 			<!-- Implements RFC7230 5.4. -->
-			<p>HTTP/1.1 clients MUST send a Host header, even with the absolute-form or with a request URI with no authority.</p>
+			<p>HTTP/1.1 clients MUST send a Host header, even with the absolute-form or with a request URI with no authority (in which case the header will be empty).</p>
 			<p>If the request lacks a Host header, or has more than one Host header, return status 400 (Bad Request).</p>
 
 			<h2>Compute effective request URI</h2>
@@ -154,7 +154,7 @@
 			<h2>Authenticate credentials</h2>
 			<p>Users may send an <code>Authorization</code> header (or <code>Proxy-Authorization</code> header for intermediaries) that carries credentials authorizing them to perform the request.</p>
 			<p>Some user agents might identify themselves with a TLS client certificate. In these cases, all requests from that connection are authenticated, however the server should still require authorization headers in addition to the client certificate to prevent ambient authority attacks. ( Subrequests from untrusted sources should be careful to make the request over an unauthenticated connection, to prevent an ambient authority/confused deputy attack.)</p>
-			<p>The below operations assume the server will verify these credentials before performing the operation. If an operation requires credentials, but the client has not specified any, or the credentials are insufficient for the requested operation, emit 401 (Unauthorized) with a <code>WWW-Authenticate</code> header.</p>
+			<p>The operations performed for the rest of request processing assume the server will verify these credentials before performing the operation. If an operation requires authority, but the client has not specified any credentials, or the credentials are insufficient for the requested operation, emit 401 (Unauthorized) with a <code>WWW-Authenticate</code> header.</p>
 
 			<h3>Rate limiting users</h3>
 			<!-- Implements RFC6585 4. 429 Too Many Requests -->
@@ -292,7 +292,7 @@
 			</ol>
 
 			<h3>Modified resources</h3>
-			<p>If the request was one to modify a resource (usually a PUT request to a resource that already existed), then set the status code to 200 (OK) or 204 (No Content)</p>.
+			<p>If the request was one to modify a resource (usually a PUT request to a resource that already existed), then set the status code to 200 (OK) or 204 (No Content).</p>
 
 			<h3>Ongoing process</h3>
 			<p>If the request will take a long time to fulfill (more than several seconds), and wishes to inform the client of this, it can send a 202 (Accepted) response.</p>
@@ -308,7 +308,7 @@
 			<p>For implementation, see <a href="headers/Date.html">HTTP Date header</a>.</p>
 
 			<h3>Connection</h3>
-			<p>If the server is going to close the connection at the end of the response, it must send the <code>Connection: close</code> to the client.</p>
+			<p>If the server is going to close the connection at the end of the response, it must send <code>Connection: close</code> to the client.</p>
 
 			<h2>Select representation</h2>
 			<h3>Content-Type negotiation</h3>
