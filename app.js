@@ -7,6 +7,7 @@ var stream = require('stream');
 var inherits = require('util').inherits;
 
 const {
+	HTTPServer,
 	TemplateRouter,
 	RouteStaticFile,
 	RouteError,
@@ -23,7 +24,9 @@ var RenderTheme = require( "./lib/RenderTheme.js" ).RenderTheme;
 var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
-var RouteRDF = require( "./lib/RouteRDF.js" ).RouteRDF;
+var RouteNT = require( "./lib/RouteNT.js" ).RouteNT;
+var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
+var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
 
 var rdf = require('rdf');
 
@@ -34,7 +37,12 @@ var listenPort = process.env.PORT || 8080;
 
 const docroot = __dirname + '/web';
 
-var routes = new TemplateRouter.Router();
+var options = new HTTPServer;
+options.fixedScheme = 'http';
+options.fixedAuthority = 'localhost';
+options.RouteNotFound = RouteNotFound;
+options.RouteError = RouteError;
+var routes = options.routes;
 
 // Alias / to /index.html
 routes.addTemplate('http://localhost{/path*}/', {}, RouteLocalReference(routes, "http://localhost{/path*}/index"));
@@ -52,52 +60,65 @@ const MarkdownSource = RouteStaticFile(docroot, "{/path*}.md", 'text/markdown');
 // 	// 	RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.html"), [Markdown, RenderTheme] ),
 // }) );
 
-const dataGraph = rdf.TurtleParser.parse(fs.readFileSync('graph.ttl'), 'http://fullstack.wiki/').graph;
-function gRenderBindings(){
-	return new RenderBindings(dataGraph);
+function gRenderBindings(res){
+	return new RenderBindings(index.graph, res);
+}
+
+function gRenderTheme(res){
+	return new RenderTheme(index.graph, res);
 }
 
 // Source code
-routes.addTemplate('http://localhost{/path*}.source', {}, First([
+routes.addTemplate('http://localhost{/path*}.src', {}, First([
 	HTMLSource,
 	MarkdownSource,
 ]) );
 
-// Rendered HTML but plain (no) theme
-routes.addTemplate('http://localhost{/path*}.pattern', {}, First([
-	RoutePipeline(HTMLSource, [RenderTemplate] ),
-	RoutePipeline(MarkdownSource, [Markdown] ),
-]) );
+// Rendering happens in three stages:
+// 1. Template: substitute in template calls and other manipulations that will make it into the RDF index
+// 2. Bindings: use the RDF index to fill out data bindings for fulltext index
+// 3. Theme: generate themed page for Web browsers
 
-// Rendered HTML but plain (no) theme
-routes.addTemplate('http://localhost{/path*}.plain', {}, First([
-	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
-	RoutePipeline(MarkdownSource, [Markdown] ),
-]) );
+// // Rendered HTML but plain (no) theme
+// routes.addTemplate('http://localhost{/path*}.pattern', {}, First([
+// 	RoutePipeline(HTMLSource, [RenderTemplate] ),
+// 	RoutePipeline(MarkdownSource, [Markdown] ),
+// ]) );
 
-// Fully rendered HTML version
-routes.addTemplate('http://localhost{/path*}.html', {}, First([
-	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, RenderTheme] ),
-	RoutePipeline(MarkdownSource, [Markdown, RenderTheme] ),
-]) );
+// // Rendered HTML but plain (no) theme
+// routes.addTemplate('http://localhost{/path*}.plain', {}, First([
+// 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
+// 	RoutePipeline(MarkdownSource, [Markdown] ),
+// ]) );
+
+// // Fully rendered HTML version
+// routes.addTemplate('http://localhost{/path*}.html', {}, First([
+// 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, RenderTheme] ),
+// 	RoutePipeline(MarkdownSource, [Markdown, RenderTheme] ),
+// ]) );
 
 // Fully rendered HTML version (conneg)
-// But actually just pick the .html version for now
+// routes.addTemplate('http://localhost{/path*}', {}, First([
+// 	RouteLocalReference(routes, 'http://localhost{/path*}.html'),
+// 	RouteLocalReference(routes, 'http://localhost{/path*}.plain'),
+// 	RouteLocalReference(routes, 'http://localhost{/path*}.pattern'),
+// 	RouteLocalReference(routes, 'http://localhost{/path*}.source'),
+// ]) );
+// But actually just pick the rendered version for now
 routes.addTemplate('http://localhost{/path*}', {}, First([
-	RouteLocalReference(routes, 'http://localhost{/path*}.html'),
-	RouteLocalReference(routes, 'http://localhost{/path*}.plain'),
-	RouteLocalReference(routes, 'http://localhost{/path*}.pattern'),
-	RouteLocalReference(routes, 'http://localhost{/path*}.source'),
+	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, gRenderTheme] ),
+	RoutePipeline(MarkdownSource, [Markdown, gRenderTheme] ),
 ]) );
+
 
 // Editable form version
-routes.addTemplate('http://localhost{/path*}.edit', {}, First([
-	RoutePipeline(HTMLSource, [RenderForm, RenderTheme]),
-//	RoutePipeline(MarkdownSource, RenderForm),
-]) );
+// routes.addTemplate('http://localhost{/path*}.edit', {}, First([
+// 	RoutePipeline(HTMLSource, [RenderForm, RenderTheme]),
+// //	RoutePipeline(MarkdownSource, RenderForm),
+// ]) );
 
 // The Recent Changes page, which is a Git log
-routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}), [RenderTheme]));
+routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}), [gRenderTheme]));
 
 // Render the source Markdown
 routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );
@@ -117,6 +138,12 @@ var indexRoutes = routes.routes.filter(function(v){
 		'http://localhost{/path*}',
 	].indexOf(v.template)>=0;
 });
+
+var index = new IndexRDFa(options);
+indexRoutes.forEach(function(route){
+	index.import(route);
+});
+
 routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRoutes}) );
 
 var ttlRoutes = new TemplateRouter.Router();
@@ -126,14 +153,8 @@ ttlRoutes.addTemplate('http://localhost{/path*}', {}, First([
 	RoutePipeline(HTMLSource, [RenderTemplate] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
 ]) );
-routes.addTemplate('http://localhost/graph.ttl', {}, RouteRDF({routes:ttlRoutes.routes, acceptProfile:'plain'}) );
-
-var options = {
-	fixedScheme: 'http',
-	fixedAuthority: 'localhost',
-	RouteNotFound: RouteNotFound,
-	RouteError: RouteError,
-	routes: routes,
-}
+//routes.addTemplate('http://localhost/graph.ttl', {}, RouteNT({index:index, acceptProfile:'plain'}) );
+routes.addTemplate('http://localhost/graph.nt', {}, RouteNT({index:index, acceptProfile:'plain'}) );
+routes.addTemplate('http://localhost/graph.nq', {}, RouteNQ({index:index, acceptProfile:'plain'}) );
 
 module.exports = options;
