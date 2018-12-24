@@ -24,6 +24,7 @@ var RenderTheme = require( "./lib/RenderTheme.js" ).RenderTheme;
 var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
+var RouteTTL = require( "./lib/RouteTTL.js" ).RouteTTL;
 var RouteNT = require( "./lib/RouteNT.js" ).RouteNT;
 var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
 var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
@@ -153,7 +154,7 @@ ttlRoutes.addTemplate('http://localhost{/path*}', {}, First([
 	RoutePipeline(HTMLSource, [RenderTemplate] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
 ]) );
-//routes.addTemplate('http://localhost/graph.ttl', {}, RouteNT({index:index, acceptProfile:'plain'}) );
+routes.addTemplate('http://localhost/graph.ttl', {}, RouteTTL({index:index, acceptProfile:'plain'}) );
 routes.addTemplate('http://localhost/graph.nt', {}, RouteNT({index:index, acceptProfile:'plain'}) );
 routes.addTemplate('http://localhost/graph.nq', {}, RouteNQ({index:index, acceptProfile:'plain'}) );
 
