@@ -70,7 +70,7 @@ function gRenderTheme(res){
 }
 
 // Source code
-routes.addTemplate('http://localhost{/path*}.src', {}, First([
+routes.addTemplate('http://localhost{/path*}.src.html', {}, First([
 	HTMLSource,
 	MarkdownSource,
 ]) );
@@ -81,16 +81,16 @@ routes.addTemplate('http://localhost{/path*}.src', {}, First([
 // 3. Theme: generate themed page for Web browsers
 
 // // Rendered HTML but plain (no) theme
-// routes.addTemplate('http://localhost{/path*}.pattern', {}, First([
-// 	RoutePipeline(HTMLSource, [RenderTemplate] ),
-// 	RoutePipeline(MarkdownSource, [Markdown] ),
-// ]) );
+routes.addTemplate('http://localhost{/path*}.tpl.html', {}, First([
+	RoutePipeline(HTMLSource, [RenderTemplate] ),
+	RoutePipeline(MarkdownSource, [Markdown] ),
+]) );
 
-// // Rendered HTML but plain (no) theme
-// routes.addTemplate('http://localhost{/path*}.plain', {}, First([
-// 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
-// 	RoutePipeline(MarkdownSource, [Markdown] ),
-// ]) );
+// Rendered HTML but plain (no) theme
+routes.addTemplate('http://localhost{/path*}.plain.html', {}, First([
+	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
+	RoutePipeline(MarkdownSource, [Markdown] ),
+]) );
 
 // // Fully rendered HTML version
 // routes.addTemplate('http://localhost{/path*}.html', {}, First([
