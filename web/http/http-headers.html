@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="http://fullstack.wiki/ns/"
+	xmlns:q="http://fullstack.wiki/rdfq/"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP Headers</title>
+		<meta name="description" content="" />
+	</head>
+	<body>
+		<main id="main-content">
+<h1>HTTP Headers</h1>
+<h2>Request Headers</h2>
+
+<table class="table-http-headers" vocab="http://fullstack.wiki/ns/">
+	<thead>
+		<tr><th>Header Name</th><th>Specification</th></tr>
+	</thead>
+	<tbody>
+		<tr subquery="each" typeof="http://fullstack.wiki/ns/HTTP-Header">
+			<td property="http://fullstack.wiki/ns/HTTP-Header-name">{?name}</td>
+			<!-- <td><span property="HTTP-Header-direction">{?dir}</span></td> -->
+			<td property="specification">{?desc}</td>
+		</tr>
+	</tbody>
+</table>
+
+		</main>
+	</body>
+</html>

@@ -365,8 +365,8 @@
 			<p>If the server knows the length of the response, it should send the <code>Content-Length</code> header. The client will read that many bytes after the end of headers as the response-body, and then begin reading the next response in the pipeline.</p>
 			<p>If the server does not know the length of the response by this point, different HTTP protocols handle the response differently:</p>
 			<dl>
-				<dt>HTTP/1.0</dt><dd>The server terminates the connection to end the response. Ensure that <code>Connection: close</code> was sent earlier.</dd>
-				<dt>HTTP/1.1</dt><dd>The server must use the "chunked" Transfer-Encoding.</dd>
+				<dt>HTTP/1.0</dt><dd>Terminate the connection to end the response. Ensure that <code>Connection: close</code> was sent earlier.</dd>
+				<dt>HTTP/1.1</dt><dd>Use the "chunked" Transfer-Encoding.</dd>
 			</dl>
 			<p>A server MUST NOT send Content-Length with a 1xx status, a (204 No Content) status, or in response to a CONNECT request.</p>
 
