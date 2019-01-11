@@ -86,6 +86,9 @@ Topics:
 	* PBKDF, constant-time comparison function
 * How to handle credit card numbers & PCI Compliance
 * Encoding URIs in HTML attributes to avoid XSS concerns
+* HTML forms best practices
+	* Autompletion
+	* Geo-location
 * Disability accomidation
 	* Visual contrast requirements
 	* Screenreading support
