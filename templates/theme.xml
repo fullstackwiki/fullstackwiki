@@ -1,0 +1,36 @@
+<!-- TODO: actually use this file from lib/RenderTheme.js -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${langHTML}" lang="${langHTML}" version="XHTML+RDFa 1.0" dir="ltr">
+	<head profile="http://www.w3.org/1999/xhtml/vocab">
+		${metas}
+		<title>${eTitleString} | Fullstack.wiki</title>
+		${links}
+		<!-- the search runner will use this id= to get the src attribute -->
+		<script id="search-runner-script" type="application/ecmascript" src="/style/search-runner.js"></script>
+	</head>
+	<body class="pagewidth">
+		<div class="site-header">
+			<div id="skip-link">
+				<a href="#main-content">Skip to main content</a>
+			</div>
+			<header>
+				<ul>
+					<li><h1><a href="/">Fullstack.wiki</a></h1></li>
+					<li><a href="/recent">Recent changes</a></li>
+					<li><a href="/tools/index">Tools</a></li>
+					<li><a href="/about/index">About</a></li>
+				</ul>
+				<form id="searchform" action="/index.xhtml">
+					<input type="search" name="q" id="search" placeholder="Search..." title="Search [ctrl-option-f]" accesskey="f" />
+				</form>
+				<div id="search-results">
+					<div class="search-results-header">Search Results</div>
+					<table><tbody id="search-results-list"></tbody></table>
+				</div>
+			</header>
+		</div>
+		<div class="columns">
+			<div class="toc">${upHTML}${tocHTML}</div>
+			${mainHTML}
+		</div>
+	</body>
+</html>
