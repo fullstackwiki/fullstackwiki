@@ -1,0 +1,24 @@
+<!--
+As a rule, comments should say something unique,
+so don't copy these comments when copying the boilerplate.
+-->
+<!DOCTYPE html>
+<!-- @lang and @dir may need to be changed according to local language -->
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<!-- The title should be descriptive enough to uniquely describe the file across the entire website -->
+		<title>Boilerplate Heading</title>
+		<!-- Typically the same as the first sentence after the first heading -->
+		<meta name="description" content="" />
+		<!-- A link to the section this is in, typically to <index.xml> (or <../index.xml> if this file is an index.xml) -->
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<!-- The first heading should be unique across this document, and all the first headings in its category/section -->
+			<h1>Heading</h1>
+			<p></p>
+		</main>
+	</body>
+</html>
