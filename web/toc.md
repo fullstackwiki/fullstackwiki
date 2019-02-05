@@ -33,6 +33,8 @@ Topics:
 		* HTTP methods
 		* HTTP status codes
 		* HTTP headers
+	* https://www.w3.org/2001/tag/doc/mime-respect
+
 * Web Linking
 	* IANA Link Relations
 * ASCII
@@ -87,22 +89,24 @@ Topics:
 * How to handle credit card numbers & PCI Compliance
 * Encoding URIs in HTML attributes to avoid XSS concerns
 * HTML forms best practices
+	* i18n/lang support
 	* Autompletion
 	* Geo-location
 * Disability accomidation
 	* Visual contrast requirements
 	* Screenreading support
-	* CAPTCHA
+	* CAPTCHA considerations
 * Naming things
 	* Names should have a function and a type - just "date" is ambiguous, just "uri" is ambiguous
 * Blog/papers section for name & dated opinion pieces
 * Error correction
 	* IP error detection
 	* https://quiet.github.io/quiet-blog/2018/09/16/How-Libcorrect-Does-Forward-Error-Correction.html
-* Similar documentation efforts
+* Other documentation efforts
 	* https://www.owasp.org/
 	* http://typographyhandbook.com/
 	* https://a11yproject.com/
+	* https://devdocs.io/
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions
