@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Link</title>
+		<meta name="description" content="Represents the date and time at which the message was originated" />
+		<link rel="up" href="http-headers.xhtml"/>
+	</head>
+	<body>
+		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<w:http-header name="Link">
+			</w:http-header>
+
+			<h1>Link</h1>
+			<p>Specifies a link relationship between documents.</p>
+			<p>Link typically specifies a relationship @rel from the current document to another document; Link can also be used to specify a relationship @rev from other documents to this one, or between any two documents using @about.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">Link</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc8288.html">RFC 7231: Web Linking</a></dd>
+			</dl>
+
+			<h2>Parsing</h2>
+			<h3>Node.js</h3>
+			<ul>
+				<li><a href="https://www.npmjs.com/package/http-link">http-link</a></li>
+				<li><a href="https://www.npmjs.com/package/parse-links">parse-links</a></li>
+				<li><a href="https://github.com/wombleton/link-headers">https://github.com/wombleton/link-headers</a></li>
+				<li><a href="https://github.com/backbone-paginator/backbone-pageable/blob/master/lib/backbone-pageable.js">https://github.com/backbone-paginator/backbone-pageable/blob/master/lib/backbone-pageable.js</a></li>
+			</ul>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Link       = #link-value
+				link-value = "&lt;" URI-Reference ">" *( OWS ";" OWS link-param )
+				link-param = token BWS [ "=" BWS ( token / quoted-string ) ]
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				Link: &lt;http://example.com/TheBook/chapter2&gt; rel="previous"; title="previous chapter"
+			</pre>
+		</main>
+	</body>
+</html>
