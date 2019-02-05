@@ -21,7 +21,7 @@ var Markdown = require( "./lib/Markdown.js" ).Markdown;
 var RenderTemplate = require( "./lib/RenderTemplate.js" ).RenderTemplate;
 var RenderBindings = require( "./lib/RenderBindings.js" ).RenderBindings;
 var RenderTheme = require( "./lib/RenderTheme.js" ).RenderTheme;
-var RenderForm = require( "./lib/RenderForm.js" ).RenderForm;
+var RenderEditLink = require( "./lib/RenderEditLink.js" ).RenderEditLink;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
 var RouteTTL = require( "./lib/RouteTTL.js" ).RouteTTL;
@@ -48,8 +48,19 @@ var routes = options.routes;
 // Alias / to /index.html
 routes.addTemplate('http://localhost{/path*}/', {}, RouteLocalReference(routes, "http://localhost{/path*}/index"));
 
-const HTMLSource = RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml');
-const MarkdownSource = RouteStaticFile(docroot, "{/path*}.md", 'text/markdown');
+function gRenderEditLink(res){
+	return new RenderEditLink(__dirname, {
+		'edit-form': 'https://github.com/awwright/fullstackwiki/blob/master',
+		'version-history': 'https://github.com/awwright/fullstackwiki/commits/master',
+	});
+}
+const RouteStaticFileOpts = {
+	filepathLink: true,
+	filepathAuthority: 'fullstack.wiki',
+	filepathRel: 'http://fullstack.wiki/ns/source',
+};
+const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml', RouteStaticFileOpts), gRenderEditLink);
+const MarkdownSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', RouteStaticFileOpts), gRenderEditLink);
 
 // Content-negotiated version
 // routes.addTemplate('http://localhost{/path*}', {}, Conneg({
@@ -119,7 +130,7 @@ routes.addTemplate('http://localhost{/path*}', {}, First([
 // ]) );
 
 // The Recent Changes page, which is a Git log
-routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({fs:fs, dir:__dirname, ref:'HEAD'}), [gRenderTheme]));
+routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({title:'Recent Changes', fs:fs, dir:__dirname, ref:'HEAD'}), [gRenderTheme]));
 
 // Render the source Markdown
 routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );

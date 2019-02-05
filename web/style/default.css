@@ -354,7 +354,7 @@ table.unstriped tbody tr {
 	padding-right: 230px;
 }
 
-header, main {
+header, #main-col {
 	padding-top: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -449,14 +449,14 @@ header::after {
 
 /* Columns support */
 
-.pagewidth main {
+.pagewidth #main-col {
 	max-width: 720px;
 }
 @media screen and (min-width: 1440px) {
 	.toc {
 		width: 25%;
 	}
-	.pagewidth main {
+	.pagewidth #main-col {
 		width: 50%;
 	}
 }
@@ -472,7 +472,7 @@ header::after {
 	.toc {
 		width: 25%;
 	}
-	.pagewidth main {
+	.pagewidth #main-col {
 		width: 75%;
 	}
 }
@@ -480,7 +480,7 @@ header::after {
 	.toc {
 		display: none;
 	}
-	.pagewidth main {
+	.pagewidth #main-col {
 		width: 100%;
 	}
 }
@@ -509,7 +509,7 @@ body .columns .toc {
 	padding-right: 15px;
 	padding-top: 15px;
 }
-body.pagewidth .columns main {
+body.pagewidth .columns #main-col {
 	float: left;
 }
 
@@ -521,11 +521,11 @@ body.pagewidth .columns main {
 
 /* Theme styles - body & footer */
 
-body.pagewidth main {
+body.pagewidth #main-col {
 	padding: 15px;
 	margin-bottom: 35px;
 }
-main {
+#main-col {
 	/* background-color: #fcfcfa; */
 	/* border: solid 1px #e2e0d8; */
 	/* border-radius: 5px; */
@@ -559,6 +559,11 @@ main {
 
 #edit {
 	float: right;
+}
+#edit li {
+	list-style-type: none;
+	display: inline;
+	margin: 0.4em;
 }
 
 
