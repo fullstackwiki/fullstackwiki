@@ -45,7 +45,7 @@ options.RouteNotFound = RouteNotFound;
 options.RouteError = RouteError;
 var routes = options.routes;
 
-// Alias / to /index.html
+// Alias / to /index.xml
 routes.addTemplate('http://localhost{/path*}/', {}, RouteLocalReference(routes, "http://localhost{/path*}/index"));
 
 function gRenderEditLink(res){
@@ -59,17 +59,17 @@ const RouteStaticFileOpts = {
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'http://fullstack.wiki/ns/source',
 };
-const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.html", 'application/xhtml+xml', RouteStaticFileOpts), gRenderEditLink);
+const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.xml", 'application/xhtml+xml', RouteStaticFileOpts), gRenderEditLink);
 const MarkdownSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', RouteStaticFileOpts), gRenderEditLink);
 
 // Content-negotiated version
 // routes.addTemplate('http://localhost{/path*}', {}, Conneg({
 // 	'application/xhtml+xml;profile="http://fullstack.wiki/ns/profile/render"':
-// 		RoutePipeline(RouteLocalReference(routes, "http:http://localhost{/path*}.src.html"), [RenderTemplate, RenderBindings, RenderTheme] ),
+// 		RoutePipeline(RouteLocalReference(routes, "http:http://localhost{/path*}.src.xml"), [RenderTemplate, RenderBindings, RenderTheme] ),
 // 	'application/xhtml+xml;profile="http://fullstack.wiki/ns/profile/render"':
-// 		RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.html"), [Markdown, RenderTheme] ),
+// 		RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.xml"), [Markdown, RenderTheme] ),
 // 	// 'text/markdown':
-// 	// 	RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.html"), [Markdown, RenderTheme] ),
+// 	// 	RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.xml"), [Markdown, RenderTheme] ),
 // }) );
 
 function gRenderBindings(res){
@@ -81,7 +81,7 @@ function gRenderTheme(res){
 }
 
 // Source code
-routes.addTemplate('http://localhost{/path*}.src.html', {}, First([
+routes.addTemplate('http://localhost{/path*}.src.xml', {}, First([
 	HTMLSource,
 	MarkdownSource,
 ]) );
@@ -92,13 +92,13 @@ routes.addTemplate('http://localhost{/path*}.src.html', {}, First([
 // 3. Theme: generate themed page for Web browsers
 
 // // Rendered HTML but plain (no) theme
-routes.addTemplate('http://localhost{/path*}.tpl.html', {}, First([
+routes.addTemplate('http://localhost{/path*}.tpl.xml', {}, First([
 	RoutePipeline(HTMLSource, [RenderTemplate] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
 ]) );
 
 // Rendered HTML but plain (no) theme
-routes.addTemplate('http://localhost{/path*}.plain.html', {}, First([
+routes.addTemplate('http://localhost{/path*}.plain.xml', {}, First([
 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
 ]) );
@@ -111,7 +111,7 @@ routes.addTemplate('http://localhost{/path*}.plain.html', {}, First([
 
 // Fully rendered HTML version (conneg)
 // routes.addTemplate('http://localhost{/path*}', {}, First([
-// 	RouteLocalReference(routes, 'http://localhost{/path*}.html'),
+// 	RouteLocalReference(routes, 'http://localhost{/path*}.xml'),
 // 	RouteLocalReference(routes, 'http://localhost{/path*}.plain'),
 // 	RouteLocalReference(routes, 'http://localhost{/path*}.pattern'),
 // 	RouteLocalReference(routes, 'http://localhost{/path*}.source'),
@@ -136,9 +136,9 @@ routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({tit
 routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );
 
 // Codemirror dependencies
-routes.addTemplate('http://localhost/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
-routes.addTemplate('http://localhost/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
-routes.addTemplate('http://localhost/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
+// routes.addTemplate('http://localhost/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
+// routes.addTemplate('http://localhost/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
+// routes.addTemplate('http://localhost/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
 
 // Render files
 routes.addTemplate('http://localhost/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
