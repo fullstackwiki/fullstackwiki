@@ -21,7 +21,7 @@
 	</thead>
 	<tbody>
 		<tr subquery="each" typeof="http://fullstack.wiki/ns/HTTP-Header">
-			<td property="http://fullstack.wiki/ns/HTTP-Header-name">{?name}</td>
+			<td><a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="http://purl.org/dc/terms/title">{?name}</span></a></td>
 			<!-- <td><span property="HTTP-Header-direction">{?dir}</span></td> -->
 			<td property="specification">{?desc}</td>
 		</tr>
