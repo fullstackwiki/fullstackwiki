@@ -4,13 +4,11 @@
 		<meta charset="UTF-8" />
 		<title>Retry-After</title>
 		<meta name="description" content="Indicates how long the user agent ought to wait before making a follow-up request" />
-		<link rel="up" href="http-headers.xhtml"/>
+		<link rel="up" href="../http-headers.xml" />
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
 			<link rel="xhv:describedby" href="" />
-			<w:http-header name="Retry-After">
-			</w:http-header>
 
 			<h1>Retry-After</h1>
 			<p>Specifies Retry-After the message was generated.</p>

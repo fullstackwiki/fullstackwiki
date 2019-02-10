@@ -4,13 +4,11 @@
 		<meta charset="UTF-8" />
 		<title>Date</title>
 		<meta name="description" content="Represents the date and time at which the message was originated" />
-		<link rel="up" href="http-headers.xhtml"/>
+		<link rel="up" href="../http-headers.xml" />
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
 			<link rel="xhv:describedby" href="" />
-			<w:http-header name="Date">
-			</w:http-header>
 
 			<h1>Date</h1>
 			<p>Specifies date the message was generated.</p>

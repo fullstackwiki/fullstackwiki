@@ -4,13 +4,11 @@
 		<meta charset="UTF-8" />
 		<title>Location</title>
 		<meta name="description" content="Refers to another resource, depending on status code" />
-		<link rel="up" href="http-headers.xhtml"/>
+		<link rel="up" href="../http-headers.xml" />
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
 			<link rel="xhv:describedby" href="" />
-			<w:http-header name="Location">
-			</w:http-header>
 
 			<h1>Location</h1>
 			<p>Specifies Location the message was generated.</p>
