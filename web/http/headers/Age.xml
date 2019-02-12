@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Age</title>
+		<meta name="description" content="Specifies freshness of a document when served from a cache" />
+		<link rel="up" href="../http-headers.xml" />
+	</head>
+	<body>
+		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<a rel="xhv:describedby" href="" />
+
+			<h1>Age</h1>
+			<p>The Age header indicates the response was served from a cache without verification from the origin server; the value provides the number of seconds since the resource was updated with the origin server.</p>
+
+			<h2>Reading responses</h2>
+			<p>The value of the <code>Age</code> header is a non-negative integer. Implementations may wish to verify the value doesn't overflow the size of the number it's being read into during parsing.</p>
+			<p><code>Age</code> was introduced in HTTP/1.1, and might not be implemented by old HTTP caches, or caches that refuse to honor the Age header.</p>
+			<!-- TODO: Why would this header be important to clients? -->
+
+			<h2>Writing responses</h2>
+			<p>For the conditions when a cache may serve a cached response, see Caching.</p>
+
+			<!-- Nits: this seems inconsistent with other HTTP headers that specify an absolute date, instead of a relative time -->
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">Age</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7234.html#header.age">RFC 7234: HTTP/1.1 Caching &#xA7;5.1. Age</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Age = delta-seconds
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http">Age: 3550</pre>
+			<p>Here, the resource was returned from a cache, and the entry was populated just under an hour ago (just under 3600 seconds).</p>
+		</main>
+	</body>
+</html>
