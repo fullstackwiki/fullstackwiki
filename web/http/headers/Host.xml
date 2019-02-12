@@ -12,6 +12,7 @@
 			<link rel="xhv:describedby" href="" />
 
 			<h1>Host</h1>
+			<p>The <code>Host</code> header specifies the authority component of the request-URI.</p>
 
 			<h2>Preface</h2>
 			<p>In the olden days, the Web was a much simpler place. An HTTP server was assumed to serve a single set of documents, and that's as good a job it could be expected to do. However, this effectively prevented people from pointing their domain name to a server already hosting a website, and so caused growth problems. This was formalized as developments in networked application design specified that the URL is a subset of the URI, and names things in general, without necessarially pointing to a network location, so that servers should be able to respond to requests for <em>any</em> resource under an authority routed to them.</p>

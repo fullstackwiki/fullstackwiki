@@ -11,7 +11,7 @@
 			<link rel="xhv:describedby" href="" />
 
 			<h1>Retry-After</h1>
-			<p>Specifies Retry-After the message was generated.</p>
+			<p>In the case of certain errors, this header specifies a length of time after which the client can re-try the request.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

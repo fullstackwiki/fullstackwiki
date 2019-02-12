@@ -62,8 +62,9 @@
 
 			<h3>Connection header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
-			<p>The <code>Connection</code> header specifies hop-by-hop information about the connection that must be consumed (removed) before forwarding. This means that received Connection headers are from the previous node, not from the user-agent.</p>
-			<p>The Connection header may also list header names. Any request headers that are listed in Connection are connection headers, and are not to be forwarded.</p>
+			<p>The <code>Connection</code> header lists header names and special flags that apply to the current, hop-by-hop connection.</p>
+			<p>Do not forward headers listed in <code>Connection</code>.</p>
+			<p><code>Connection</code> may also list <code>close</code> as a flag indicating the connection will be closed at the end of this request. See "Clean up connection" below for how to handle this flag.</p>
 
 			<h2>Verify connection requirements</h2>
 			<h3>Validate Expect header</h3>
@@ -134,6 +135,7 @@
 			<h2>Message Forwarding</h2>
 			<p>If the server is forwarding the message to another node instead of handling it as an origin, it must implement the <code>Via</code> and <code>Max-Forwards</code> headers.</p>
 			<p>Recall that connection headers (described above) cannot be forwarded since they convey information about the particular connection between nodes.</p>
+			<p>The server must also remove the <code>Connection</code> header as described above.</p>
 
 			<h3>Via header</h3>
 			<!-- Implements RFC7230 5.7.1. Via -->
@@ -177,6 +179,7 @@
 			<p>Dereference the resource according to the section below.</p>
 
 			<h3>OPTIONS</h3>
+			<p>OPTIONS is specified to permit requesting metadata about a resource as a document, such as details of Content-Type negotiation, though at present time there is no standard for how to represent such information.</p>
 
 			<h3>PUT</h3>
 			<p>Put is an operation that updates a resource with an uploaded document, creating it if it doesn't exist.</p>
@@ -215,7 +218,7 @@
 			<h3>Content-Type</h3>
 			<!-- Implements RFC7231 3.1.1.5. Content-Type -->
 			<!-- Implements RFC7231 6.5.13. 415 Unsupported Media Type -->
-			<p>The <code>Content-Type</code> header determines which <i>media type</i> will be used to decode the entity-body. A media type is a non-trivial format that accepts case, whitespace, parameters, and quoted-strings, so use a library to parse and normalize the Content-Type before reading it.</p>
+			<p>The <code>Content-Type</code> header determines which <i>media type</i> will be used to decode the entity-body. Media types are listed in a non-trivial format that accepts case, whitespace, parameters, and quoted-strings, so use a library to parse and normalize the Content-Type before reading it.</p>
 			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document. Parse the Content-Type (using a library that parses media types) and resolve which parser the server should use to parse the body, if any.</p>
 			<p>If the server has no way to consume the media type, return 415 (Unsupported Media Type).</p>
 
@@ -232,8 +235,8 @@
 			<p>HTTP allows the sender to identify the primary language of the entity body (request body or response body) using the <code>Content-Language</code> header.</p>
 
 			<h2>Handle 100-continue</h2>
-			<p>If the client set the <code>100-continue</code> flag, that means the client has paused uploading the request-body so it can first read any errors from the server, that the server might want to emit in response to the request headers.</p>
-			<p>Since at this point all the headers look acceptable, emit a 100 (Continue) response, an intermediate response that will be replaced with the actual status code later on.</p>
+			<p>If the client set the <code>100-continue</code> flag, that means the client has paused uploading the request-body, and is waiting on verification from the server that the proposed upload looks acceptable and fits the resource limits.</p>
+			<p>Since at this point all the headers look acceptable, emit a 100 (Continue) response: an intermediate response that will be replaced with the actual status code later on.</p>
 			<p>Alternatively, if the client did not ask for 100-continue and there's a serious problem with accepting a large upload, the server can close the entire TCP connection.</p>
 
 			<h3>Consume message-body</h3>
@@ -272,7 +275,7 @@
 			<h2>Handle request body</h2>
 			<p>Procedure for handling the request body varies with the method:</p>
 			<dl class="inline">
-				<dt>GET</dt><dd>Discard the input, or return 413 (Payload Too Large). GET with a request body is technically legal, and could be used as a kind of safe POST; in this case the server must indicate the response is not cachable.</dd>
+				<dt>GET</dt><dd>Ignore the request body, or return 413 (Payload Too Large). GET with a request body is technically legal, and could be used as a kind of safe POST; in this case the server must indicate the response is not cachable.</dd>
 				<dt>HEAD</dt><dd>Same as GET.</dd>
 				<dt>POST</dt><dd>Semantics are defined by the resource; the server should have a subroutine associated with the resource that accepts and processes the POST request (including request body).</dd>
 				<dt>PUT</dt><dd>Store a resource on the server at a specific URI. The subroutine that stores the data may vary based on the request URI (e.g. authority or path) and Content-Type.</dd>
@@ -372,7 +375,7 @@
 
 			<h3>Encode transfer coding</h3>
 			<p>A transfer coding is a transform applied to the message in order to send the message over the network. Transfer codings are semantically transparent, and frequently re-encoded by intermediaries.</p>
-			<p>It is only available on HTTP/1.1 as a method of specifying the end of an indeterminate response.</p>
+			<p>It is only available on HTTP/1.1, used as a method of specifying the end of an indeterminate response.</p>
 			<p>Applying a transfer coding means the server cannot send a <code>Content-Length</code> header, so its use should be avoided in favor of using Content-Length.</p>
 
 			<h3>Write data</h3>

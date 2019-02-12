@@ -216,16 +216,15 @@
 			<p>The presence of a message body in a request is signaled by a Content-Length or Transfer-Encoding header field.</p>
 			<p>The number of bytes to read depends on the request method, the response code, and headers present:</p>
 			<ol>
-				<li>A HEAD request is supposed to be identical to the same GET request. Regardless of response status or headers, there is no response body.</li>
-				<li>A CONNECT request with a 2xx (successful) response has no concept of a response body, it becomes a tunnel immediately after the response headers are written.</li>
+				<li>If the request is a HEAD request, there is no response body. Response length information, if present, describes how long an otherwise identical GET request would have been.</li>
+				<li>A CONNECT request becomes a tunnel immediately after the response headers are written, as there is no concept of a response body.</li>
 				<li>If the outermost applied Transfer-Encoding (if any) is "chunked", the response body ends when the chunked parsing does.</li>
 				<li>If there is any other Transfer-Encoding, the message can only be ended when the server closes the connection.</li>
-				<li>If there is a Content-Length header, then read that many bytes.</li>
 				<li>If there is a single Content-Length header (or multiple identical values), then read that many bytes.</li>
 				<li>If this is an HTTP/1.0 request, or if the response specifies <code>Connection: close</code>, read until the server closes the connection.</li>
-				<li>Note there is no reliable way to determine when the response ends, raise an error.</li>
+				<li>Otherwise, raise an error that there is no reliable way to determine when the response ends.</li>
 			</ol>
-			<p>Additioanlly, it's not possible to distinguish between some types of connection errors and the server closing the connection.</p>
+			<p>Additionally, it's not possible to distinguish between some types of connection errors and the server closing the connection.</p>
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Specification</dt>
