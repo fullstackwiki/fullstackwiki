@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Authorization</title>
+		<meta name="description" content="Provides credentials authorizing the request" />
+		<link rel="up" href="../http-headers.xml" />
+	</head>
+	<body>
+		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<a rel="xhv:describedby" href="" />
+
+			<h1>Authorization</h1>
+			<p>The Authorization header is provided by clients to authenticate themselves to the server, for the purpose of authorizing the request.</p>
+			<p>For clients that want to authorize themselves to an intermediate node instead of the origin server, use <a href="Proxy-Authorization.xml">Proxy-Authorization</a></p>
+
+			<h2>Writing requests</h2>
+			<p>Clients may provide the Authorization header when they know the resource requires authentication, usually after a request results in a <code>401 (Unauthorized)</code> response.</p>
+			<!-- TODO: Link to the status code page -->
+			<!-- TODO: Link to "how to authorize and authenticate clients" -->
+			<p>The value of the is a <code>token</code> that indicates the authorization scheme (e.g. <code>basic</code>), a space, and credential data as required by the selected authorization scheme.</p>
+
+			<h2>Reading requests</h2>
+			<p>Servers should have tests to ensure the correct <code>401</code> status code is returned when given bad credentials.</p>
+
+			<!-- TODO: Provide to table of authorization schemes -->
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">Authorization</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7235.html#header.authorization">RFC 7235: HTTP/1.1 Authentication &#xA7;5.1. Authorization</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Authorization = credentials
+				credentials   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
+				auth-scheme   = token
+				auth-param    = token BWS "=" BWS ( token / quoted-string )
+				token68       = 1*( ALPHA / DIGIT /  "-" / "." / "_" / "~" / "+" / "/" ) *"="
+			</pre>
+
+			<h3>Example</h3>
+			<pre type="message/http">Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</pre>
+			<p>Here, the resource is being requested with a username <code>Aladdin</code> and password <code>open sesame</code>.</p>
+			<p>For more specific examples, consult the respective pages on each Authorization scheme.</p>
+		</main>
+	</body>
+</html>
