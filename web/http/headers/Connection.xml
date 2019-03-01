@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Connection</title>
+		<meta name="description" content="Lists hop-by-hop headers in the message" />
+		<link rel="up" href="../http-headers.xml" />
+	</head>
+	<body>
+		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<a rel="xhv:describedby" href="" />
+
+			<h1>Connection</h1>
+			<p>The Connection header provides directives that modify the default caching behavior for resources; allowing a normally non-cachable resource to be cached, or restricting or prohibiting caching of otherwise cachable resources (e.g. for privacy reasons).</p>
+
+
+			<h2>Reading</h2>
+			<p>The value of the <code>Connection</code> header is a list of header names that describe the state of the incoming connection, and as such do not make sense to forward. Any headers listed by this header MUST NOT be forwarded.</p>
+			<p>Some names are reserved as special values. The <code>close</code> token indicates the connection will be closed after the current message (request/response) is written out. Servers that see "close" in a request should close the connection after finishing the response.</p>
+			<p>The <code>keep-alive</code> token is used as a special value by HTTP/1.0 clients. See <a href="https://httpwg.org/specs/rfc7230.html#persistent.connections">RFC7230</a> for implementation details.</p>
+
+			<h2>Writing</h2>
+			<p>If the client intends to close the connection after it is written, the client must send <code>Connection: close</code>. Any other headers that are interperted as hop-by-hop, including <a href="Upgrade.xml">Upgrade</a></p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">Connection</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7230.html#header.connection">RFC 7230: HTTP/1.1 Caching &#xA7;6.1. Connection</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Connection        = 1#connection-option
+				connection-option = token
+			</pre>
+			<p>Connection options are case-insensitive. For clarity, connection options are typically written in lowercase, and header names are typically written in title case.</p>
+			<h3>Example</h3>
+			<pre type="message/http">Connection: close</pre>
+		</main>
+	</body>
+</html>
