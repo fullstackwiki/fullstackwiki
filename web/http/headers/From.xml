@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>From</title>
+		<meta name="description" content="Specifies an email address for contacting the user running the user-agent" />
+		<link rel="up" href="../http-headers.xml" />
+	</head>
+	<body>
+		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<a rel="xhv:describedby" href="" />
+
+			<h1>From</h1>
+			<p>The From header field contains an Internet email address for a human user who controls the requesting user agent.</p>
+			<p>This is not typically see usage, the user has to want feedback and know the server operator might be looking for this header.</p>
+
+			<h2>Writing requests</h2>
+			<p> Most requests will not use this field for privacy reasons; however it may get legitimate use by automated scripts who want to provide contact information to the script owner (e.g. so the server maintainer can contact the user in the event of misbehavior).</p>
+
+			<h2>Reading requests</h2>
+			<p>The From header contains unauthenticated contact information, and should be treated with care (to authenticity and privacy). Do not automatically send mail to this address; use should be limited to human-to-human contact if the need arises. If you have a good reason to need to read this, then you can consider logging it temporarily, but otherwise it can be ignored.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">From</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7231.html#header.from">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.5.1. From</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				From    = mailbox
+				mailbox = &lt;mailbox, see [RFC5322], Section 3.4&gt;
+			</pre>
+
+			<h3>Example</h3>
+			<pre type="message/http">From: webmaster@example.org</pre>
+			<pre type="message/http">From: Alice &lt;webmaster@example.org&gt;</pre>
+		</main>
+	</body>
+</html>
