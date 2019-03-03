@@ -7,7 +7,7 @@
 		<link rel="up" href="../http-headers.xml" />
 	</head>
 	<body>
-		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
 			<a rel="xhv:describedby" href="" />
 
 			<h1>Age</h1>

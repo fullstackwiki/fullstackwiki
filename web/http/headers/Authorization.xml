@@ -32,7 +32,7 @@
 				<dt>Direction</dt>
 				<dd property="HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="specification"><a href="https://httpwg.org/specs/rfc7235.html#header.authorization">RFC 7235: HTTP/1.1 Authentication &#xA7;5.1. Authorization</a></dd>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7235.html#header.authorization">RFC 7235: HTTP/1.1 Authentication &#xA7;4.2. Authorization</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

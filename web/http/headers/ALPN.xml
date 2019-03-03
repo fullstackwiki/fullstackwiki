@@ -23,17 +23,17 @@
 			</dl>
 			<p>Features:</p>
 			<h2>Syntax</h2>
-<pre class="abnf-definition">
-ALPN            = 1#protocol-id
-protocol-id     = token ; percent-encoded ALPN protocol identifier
-</pre>
+			<pre type="abnf" w:space="indent">
+				ALPN            = 1#protocol-id
+				protocol-id     = token ; percent-encoded ALPN protocol identifier
+			</pre>
 
 			<h2>Examples</h2>
-<pre><code>
-CONNECT www.example.com HTTP/1.1
-Host: www.example.com
-ALPN: h2, http%2F1.1
-</code></pre>
+			<pre type="message/http" w:space="indent">
+				CONNECT www.example.com HTTP/1.1
+				Host: www.example.com
+				ALPN: h2, http%2F1.1
+			</pre>
 		</main>
 	</body>
 </html>

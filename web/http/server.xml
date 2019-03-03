@@ -255,7 +255,6 @@
 				<li>deflate</li>
 				<li>gzip</li>
 			</ul>
-			<p></p>
 
 			<h3>The chunked transfer coding</h3>
 			<!-- Implements RFC7230 3.3.1. Transfer-Encoding -->
