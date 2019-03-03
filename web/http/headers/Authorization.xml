@@ -23,8 +23,6 @@
 			<h2>Reading requests</h2>
 			<p>Servers should have tests to ensure the correct <code>401</code> status code is returned when given bad credentials.</p>
 
-			<!-- TODO: Provide to table of authorization schemes -->
-
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
@@ -43,6 +41,8 @@
 				auth-param    = token BWS "=" BWS ( token / quoted-string )
 				token68       = 1*( ALPHA / DIGIT /  "-" / "." / "_" / "~" / "+" / "/" ) *"="
 			</pre>
+			<p><code>auth-scheme</code> is one of the registered values in the <a href="../authschemes/index.xml">Authentication Scheme Registry</a>.</p>
+
 
 			<h3>Example</h3>
 			<pre type="message/http">Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</pre>

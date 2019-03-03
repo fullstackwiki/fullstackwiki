@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Proxy-Authorization</title>
+		<meta name="description" content="" />
+		<link rel="up" href="../http-headers.xml" />
+	</head>
+	<body>
+		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<a rel="xhv:describedby" href="" />
+
+			<h1>Proxy-Authorization</h1>
+			<p>The "Proxy-Authorization" header field allows the client to identify itself (or its user) to a proxy that requires authentication. Its value consists of credentials containing the authentication information of the client for the proxy and/or realm of the resource being requested.</p>
+
+			<h3>Writing requests (clients)</h3>
+			<p></p>
+
+			<h3>Reading requests (servers)</h3>
+			<p></p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">Proxy-Authorization</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7235.html#header.proxy-authorization">RFC 7235: HTTP/1.1 Authentication &#xA7;4.4. Proxy-Authorization</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Proxy-Authorization = credentials
+				challenge = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
+				auth-scheme = token
+				auth-param = token BWS "=" BWS ( token / quoted-string )
+				token68 = 1*( ALPHA / DIGIT / "-" / "." / "_" / "~" / "+" / "/" ) *"="
+			</pre>
+			<p><code>auth-scheme</code> is one of the registered values in the <a href="../authschemes/index.xml">Authentication Scheme Registry</a>.</p>
+
+			<h3>Example</h3>
+			<pre type="message/http"></pre>
+		</main>
+	</body>
+</html>

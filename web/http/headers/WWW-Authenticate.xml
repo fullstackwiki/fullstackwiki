@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>WWW-Authenticate</title>
+		<meta name="description" content="The &quot;WWW-Authenticate&quot; header field indicates authentication scheme(s)" />
+		<link rel="up" href="../http-headers.xml" />
+	</head>
+	<body>
+		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+			<a rel="xhv:describedby" href="" />
+
+			<h1>WWW-Authenticate</h1>
+			<p>The "WWW-Authenticate" header field indicates the authentication scheme(s) and parameters applicable to the target resource.</p>
+
+			<h3>Writing responses (servers)</h3>
+			<p>Origin servers MUST send the <code>WWW-Authenticate</code> header with a 401 (Unauthorized) status code.</p>
+			<p>The variant of this header for intermediate nodes (proxies) is <a href="Proxy-Authenticate.xml">Proxy-Authenticate</a>.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>Clients that see this header can test if they understand and have credentials for any of the authorization schemes listed, and if so, re-try the request with them.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="HTTP-Header-name">WWW-Authenticate</dd>
+				<dt>Direction</dt>
+				<dd property="HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="specification"><a href="https://httpwg.org/specs/rfc7235.html#header.www-authenticate">RFC 7235: HTTP/1.1 Authentication &#xA7;4.1. WWW-Authenticate</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				WWW-Authenticate = 1#challenge
+				challenge = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
+				auth-scheme = token
+				auth-param = token BWS "=" BWS ( token / quoted-string )
+				token68 = 1*( ALPHA / DIGIT / "-" / "." / "_" / "~" / "+" / "/" ) *"="
+			</pre>
+			<p><code>auth-scheme</code> is one of the registered values in the <a href="../authschemes/index.xml">Authentication Scheme Registry</a>.</p>
+
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				WWW-Authenticate: Newauth realm="apps", type=1,
+					title="Login to \"apps\"", Basic realm="simple"</pre>
+		</main>
+	</body>
+</html>
