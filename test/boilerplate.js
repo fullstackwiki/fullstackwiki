@@ -6,14 +6,19 @@ const mocha = require('mocha');
 
 const {DOMParser} = require('xmldom');
 
-// TODO: Test that each document fills necessary conditions... UTF-8 is valid, XML is valid, HTML is valid, examples are valid, etc.
+// TODO: Test that each document fills necessary conditions:
+// UTF-8 is valid
+// XML is well-formed and valid,
+// HTML is valid,
+// self-closing HTML tags are self-closing in the XML,
+// examples are valid, etc.
 
 function listHTMLFiles(base){
 	var files = [];
 	function ls(dir){
 		fs.readdirSync(dir).forEach(function(filename){
 			if(fs.statSync(dir+'/'+filename).isDirectory()) ls(dir+'/'+filename);
-			else if(filename.match(/\.html$/)) files.push(dir+'/'+filename);
+			else if(filename.match(/\.xml$/)) files.push(dir+'/'+filename);
 		});
 	}
 	ls(base);
@@ -22,7 +27,12 @@ function listHTMLFiles(base){
 
 function testHTMLFilepath(filepath){
 	it(filepath, function(){
-		const document = new DOMParser().parseFromString(fs.readFileSync(filepath, 'UTF-8'));
+		const document = new DOMParser({
+			locator:{
+				systemId: filepath,
+			},
+			errorHandler: function(level,msg){ throw new Error(msg); }
+		}).parseFromString(fs.readFileSync(filepath, 'UTF-8'));
 		testHTMLDocument(document);
 	});
 }
