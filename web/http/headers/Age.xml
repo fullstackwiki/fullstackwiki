@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>Age</title>
 		<meta name="description" content="Specifies freshness of a document when served from a cache" />
-		<link rel="up" href="../http-headers.xml" />
+		<link rel="up" href="index.xml" />
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">

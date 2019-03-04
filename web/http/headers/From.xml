@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>From</title>
 		<meta name="description" content="Specifies an email address for contacting the user running the user-agent" />
-		<link rel="up" href="../http-headers.xml" />
+		<link rel="up" href="index.xml" />
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">

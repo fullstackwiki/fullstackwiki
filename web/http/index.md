@@ -24,7 +24,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [Modifying Resources](modifying-resources.xml)
 * [HTTP Status Codes](http-status.xml)
 * [HTTP Methods](http-methods.xml)
-* [HTTP Headers](http-headers.xml)
+* [HTTP Headers](headers/index.xml)
 * [HTTP Authentication Schemes](authschemes/index.xml)
 * [Listing Resources](modifying-resources.xml)
 * [Creating Resources](modifying-resources.xml)

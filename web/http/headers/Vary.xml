@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>Vary</title>
 		<meta name="description" content="Describes what parts of a request message might influence the origin server's process for selecting and representing this response" />
-		<link rel="up" href="../http-headers.xml" />
+		<link rel="up" href="index.xml" />
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">

@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>Accept-Charset</title>
 		<meta name="description" content="Indicate which charsets are acceptable in textual response content" />
-		<link rel="up" href="../http-headers.xml" />
+		<link rel="up" href="index.xml" />
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">

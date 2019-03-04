@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>Accept</title>
 		<meta name="description" content="Used by user agents to specify response media types that are acceptable." />
-		<link rel="up" href="../http-headers.xml" />
+		<link rel="up" href="index.xml" />
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
