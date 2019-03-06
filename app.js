@@ -1,10 +1,5 @@
-var http = require('http');
-var fs = require('fs');
-var stream = require('stream');
 
-var http = require('http');
-var stream = require('stream');
-var inherits = require('util').inherits;
+var fs = require('fs');
 
 const {
 	HTTPServer,
@@ -29,12 +24,8 @@ var RouteNT = require( "./lib/RouteNT.js" ).RouteNT;
 var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
 var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
 
-var rdf = require('rdf');
-
 // Application-specific types
 var RouteBrowserify = require('./lib/RouteBrowserify.js');
-
-var listenPort = process.env.PORT || 8080;
 
 const docroot = __dirname + '/web';
 
