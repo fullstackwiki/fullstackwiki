@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<link rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Host</h1>
 			<p>The <code>Host</code> header specifies the authority component of the request-URI.</p>

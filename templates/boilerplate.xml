@@ -6,7 +6,7 @@ so don't copy these comments when copying the boilerplate.
 <!-- @lang and @dir may need to be changed for the language -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/"
 	lang="en" dir="ltr"
-	vocab="xsv: http://www.w3.org/1999/xhtml/vocab#"
+	vocab="xsv: http://www.w3.org/1999/xhtml/vocab#describedby"
 >
 	<head>
 		<meta charset="UTF-8" />

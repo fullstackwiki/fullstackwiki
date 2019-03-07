@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<a rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Proxy-Authorization</h1>
 			<p>The "Proxy-Authorization" header field allows the client to identify itself (or its user) to a proxy that requires authentication. Its value consists of credentials containing the authentication information of the client for the proxy and/or realm of the resource being requested.</p>

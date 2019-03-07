@@ -20,9 +20,8 @@
 		<tr><th>Header Name</th><th>Specification</th></tr>
 	</thead>
 	<tbody>
-		<tr subquery="each" typeof="http://fullstack.wiki/ns/HTTP-Header">
-			<td><a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="http://purl.org/dc/terms/title">{?name}</span></a></td>
-			<!-- <td><span property="HTTP-Header-direction">{?dir}</span></td> -->
+		<tr subquery="each" subquery-order="?name" typeof="http://fullstack.wiki/ns/HTTP-Header">
+			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="http://fullstack.wiki/ns/HTTP-Header-name">{?name}</span></a></td>
 			<td property="specification">{?desc}</td>
 		</tr>
 	</tbody>

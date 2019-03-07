@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<a rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Connection</h1>
 			<p>The Connection header provides directives that modify the default caching behavior for resources; allowing a normally non-cachable resource to be cached, or restricting or prohibiting caching of otherwise cachable resources (e.g. for privacy reasons).</p>

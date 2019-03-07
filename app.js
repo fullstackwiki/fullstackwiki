@@ -138,7 +138,7 @@ routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(doc
 
 var indexRoutes = routes.routes.filter(function(v){
 	return [
-		'http://localhost{/path*}',
+		'http://localhost{/path*}.tpl.xml',
 	].indexOf(v.template)>=0;
 });
 

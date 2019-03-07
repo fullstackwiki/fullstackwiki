@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<link rel="xhv:describedby" href="" />
+			<link rel="http://www.w3.org/1999/xhtml/vocab#rg/1999/xhtml/vocab#" href="" />
 
 			<h1>Location</h1>
 			<p>Specifies Location the message was generated.</p>

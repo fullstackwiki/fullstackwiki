@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<link rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Accept-Charset</h1>
 			<p>Indicate which charsets are acceptable in textual response content.</p>

@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<a rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>WWW-Authenticate</h1>
 			<p>The "WWW-Authenticate" header field indicates the authentication scheme(s) and parameters applicable to the target resource.</p>

@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<a rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>From</h1>
 			<p>The From header field contains an Internet email address for a human user who controls the requesting user agent.</p>

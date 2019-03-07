@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<a rel="xhv:describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Age</h1>
 			<p>The Age header indicates the response was served from a cache without verification from the origin server; the value provides the number of seconds since the resource was updated with the origin server.</p>

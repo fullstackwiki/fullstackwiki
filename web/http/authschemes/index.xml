@@ -7,9 +7,7 @@
 		<link rel="up" href="../index.xml" />
 	</head>
 	<body>
-		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
-			<a rel="xhv:describedby" href="" />
-
+		<main vocab="http://fullstack.wiki/ns/">
 			<h1>Authentication Scheme Registry</h1>
 			<p>The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.</p>
 		</main>
