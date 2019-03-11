@@ -35,6 +35,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Date</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies the date that the origin server generated the response.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>

@@ -15,12 +15,14 @@
 			<a rel="xht:describedby" href="" />
 
 			<h1>Accept-Charset</h1>
-			<p>Indicate which charsets are acceptable in textual response content.</p>
+			<p>The Accept-Charset header describes which character sets are acceptable in textual response content.</p>
 
 			<h2>Overview table</h2>
 			<dl>
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Accept-Charset</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Indicates which charsets are acceptable in responses.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>

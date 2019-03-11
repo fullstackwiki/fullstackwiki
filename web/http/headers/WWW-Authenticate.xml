@@ -24,6 +24,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">WWW-Authenticate</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Requests the user-agent authenticate to the origin.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>

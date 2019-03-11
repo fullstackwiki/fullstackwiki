@@ -20,6 +20,8 @@
 			<dl>
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">ALPN</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies the protocols to initiate a CONNECT tunnel with.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>

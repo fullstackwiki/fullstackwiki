@@ -31,6 +31,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Authorization</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Provides credentials authenticating the client to the origin.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>

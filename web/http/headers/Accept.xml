@@ -15,12 +15,14 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Accept</h1>
-			<p>Used by user agents to specify response media types that are acceptable.</p>
+			<p>The Accept header specifies which response media types are acceptable to the client.</p>
 
 			<h2>Overview table</h2>
 			<dl>
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Accept</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies which response media types are acceptable.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>

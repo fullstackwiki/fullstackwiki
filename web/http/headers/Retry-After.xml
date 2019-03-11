@@ -17,6 +17,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Retry-After</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies a time to wait before re-trying a request.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>

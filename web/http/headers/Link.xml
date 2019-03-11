@@ -17,11 +17,14 @@
 			<h1>Link</h1>
 			<p>Specifies a link relationship between documents.</p>
 			<p>Link typically specifies a relationship @rel from the current document to another document; Link can also be used to specify a relationship @rev from other documents to this one, or between any two documents using @about.</p>
+			<p>Links found in this header have the same semantic meaning as links found in hypermedia (HTML) documents themselves.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Link</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Attaches a link to the message.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>

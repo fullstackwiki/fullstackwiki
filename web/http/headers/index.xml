@@ -14,17 +14,16 @@
 	<body>
 		<main id="main-content">
 <h1>HTTP Headers</h1>
-<h2>Request Headers</h2>
 
 <table class="table-http-headers">
 	<thead>
-		<tr><th>Header Name</th><th>Specification</th></tr>
+		<tr><th>Header Name</th><th>Description</th></tr>
 	</thead>
 	<tbody>
 		<tr subquery="each" subquery-order="ASC(?name)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/HTTP-Header">
 			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></a></td>
 			<!-- <td><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></td> -->
-			<td property="tag:fullstack.wiki,2018:ns/specification">{?desc}</td>
+			<td property="tag:fullstack.wiki,2018:ns/HTTP-Header-description">{?desc}</td>
 		</tr>
 	</tbody>
 </table>

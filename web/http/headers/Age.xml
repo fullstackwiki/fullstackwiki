@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<main about="tag:fullstack.wiki,2018:ns/http/headers/Age" typeof="w:HTTP-Header">
-			<a rel="describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Age</h1>
 			<p>The Age header indicates the response was served from a cache without verification from the origin server; the value provides the number of seconds since the resource was updated with the origin server.</p>
@@ -31,6 +31,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Age</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Indicates response was served from a cache.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>

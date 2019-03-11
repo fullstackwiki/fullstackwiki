@@ -35,6 +35,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Host</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies the authority component of the request-URI.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>

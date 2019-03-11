@@ -15,19 +15,27 @@ Use HTTP whenever you need to download files from another system on a network, o
 
 ## Table of Contents
 
+### Specifications
+
 * [HTTP/1.1 Protocol](http-syntax-1.xml)
 * [HTTP/2 Protocol](http-syntax-2.xml)
 * [Clients](client.xml)
 * [Servers](server.xml)
 * [Conceptual Model](stack.xml)
+
+### Articles
+
 * [Requesting Resources](retreiving-resources.xml)
 * [Modifying Resources](modifying-resources.xml)
-* [HTTP Status Codes](http-status.xml)
-* [HTTP Methods](http-methods.xml)
-* [HTTP Headers](headers/index.xml)
-* [HTTP Authentication Schemes](authschemes/index.xml)
 * [Listing Resources](modifying-resources.xml)
 * [Creating Resources](modifying-resources.xml)
+
+### HTTP Concepts
+
+* [HTTP Methods](methods/index.xml)
+* [HTTP Status Codes](status/index.xml)
+* [HTTP Headers](headers/index.xml)
+* [HTTP Authentication Schemes](authschemes/index.xml)
 
 ## Specifications
 

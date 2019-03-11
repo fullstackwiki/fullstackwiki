@@ -17,6 +17,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Vary</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists headers that affect the response.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>

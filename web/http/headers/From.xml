@@ -24,6 +24,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">From</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Supplies contact information for the requesting user.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
