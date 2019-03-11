@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Cache-Control</title>
+		<meta name="description" content="Specifies freshness of a document when served from a cache" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Cache-Control" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Cache-Control</h1>
+			<p>The Cache-Control header provides directives that modify the default caching behavior for resources; allowing a normally non-cachable resource to be cached, or restricting or prohibiting caching of otherwise cachable resources (e.g. for privacy reasons).</p>
+
+			<h2 id="request-write-client">Writing requests (clients)</h2>
+			<p>The value of the <code>Cache-Control</code> request header is a list of cache directives, which is a token, and an optional argument. Request Cache-Control directives typically instruct the cache to make privacy considerations or to force a refresh. RFC 7234 lists the <a href="https://httpwg.org/specs/rfc7234.html#cache-response-directive">available request Cache-Control directives</a>.</p>
+			<p><code>Cache-Control</code> was introduced in HTTP/1.1, and might not be implemented by old HTTP caches, or caches that refuse to honor the Cache-Control header.</p>
+
+			<h2 id="request-read-server">Reading requests (servers)</h2>
+			<p>For the conditions when a cache may serve a cached response, see Caching.</p>
+
+			<h2 id="response-write-client">Writing responses (servers)</h2>
+			<p>RFC 7234 lists the <a href="https://httpwg.org/specs/rfc7234.html#cache-response-directive">available response Cache-Control directives</a></p>
+			<p><code>Cache-Control</code> was introduced in HTTP/1.1, and might not be implemented by old HTTP caches, or caches that refuse to honor the Cache-Control header.</p>
+
+			<h2 id="response-read-client">Reading responses (clients)</h2>
+			<p>For the conditions when a cache may serve a cached response, see Caching.</p>
+
+			<h2 id="overview">Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Cache-Control</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7234.html#header.cache-control">RFC 7234: HTTP/1.1 Caching &#xA7;5.2. Cache-Control</a></dd>
+			</dl>
+			<p>Cache-Control is found in both directions, however the usage in either direction is different because of the different semantics of requests and responses.</p>
+
+			<h2 id="syntax">Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Cache-Control = delta-seconds
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http">Cache-Control: 3550</pre>
+			<p>Here, the resource was returned from a cache, and the entry was populated just under an hour ago (just under 3600 seconds).</p>
+		</main>
+	</body>
+</html>
