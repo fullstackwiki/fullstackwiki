@@ -48,16 +48,16 @@ function gRenderEditLink(res){
 const RouteStaticFileOpts = {
 	filepathLink: true,
 	filepathAuthority: 'fullstack.wiki',
-	filepathRel: 'http://fullstack.wiki/ns/source',
+	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
 };
 const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.xml", 'application/xhtml+xml', RouteStaticFileOpts), gRenderEditLink);
 const MarkdownSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', RouteStaticFileOpts), gRenderEditLink);
 
 // Content-negotiated version
 // routes.addTemplate('http://localhost{/path*}', {}, Conneg({
-// 	'application/xhtml+xml;profile="http://fullstack.wiki/ns/profile/render"':
+// 	'application/xhtml+xml;profile="tag:fullstack.wiki,2018:ns/profile/render"':
 // 		RoutePipeline(RouteLocalReference(routes, "http:http://localhost{/path*}.src.xml"), [RenderTemplate, RenderBindings, RenderTheme] ),
-// 	'application/xhtml+xml;profile="http://fullstack.wiki/ns/profile/render"':
+// 	'application/xhtml+xml;profile="tag:fullstack.wiki,2018:ns/profile/render"':
 // 		RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.xml"), [Markdown, RenderTheme] ),
 // 	// 'text/markdown':
 // 	// 	RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.xml"), [Markdown, RenderTheme] ),
@@ -138,7 +138,7 @@ routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(doc
 
 var indexRoutes = routes.routes.filter(function(v){
 	return [
-		'http://localhost{/path*}.tpl.xml',
+		'http://localhost{/path*}',
 	].indexOf(v.template)>=0;
 });
 

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
 	<head>
 		<meta charset="UTF-8" />
 		<title>Content-Length</title>
@@ -7,7 +11,7 @@
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
-		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Content-Length" typeof="w:HTTP-Header">
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Content-Length</h1>
@@ -22,11 +26,11 @@
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
-				<dd property="HTTP-Header-name">Content-Length</dd>
+				<dd property="w:HTTP-Header-name">Content-Length</dd>
 				<dt>Direction</dt>
-				<dd property="HTTP-Header-direction">Both</dd>
+				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>
-				<dd property="specification"><a href="https://httpwg.org/specs/rfc7230.html#header.content-length">RFC 7230: HTTP/1.1 Message Syntax and Routing &#xA7;3.3.2. Content-Length</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.content-length">RFC 7230: HTTP/1.1 Message Syntax and Routing &#xA7;3.3.2. Content-Length</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

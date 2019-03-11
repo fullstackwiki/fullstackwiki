@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
 	<head>
 		<meta charset="UTF-8" />
 		<title>Host</title>
@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="/style/highlight.js/solarized-light.css" />
 	</head>
 	<body>
-		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Host" typeof="w:HTTP-Header">
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Host</h1>
@@ -34,11 +34,11 @@
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
-				<dd property="HTTP-Header-name">Host</dd>
+				<dd property="w:HTTP-Header-name">Host</dd>
 				<dt>Direction</dt>
-				<dd property="HTTP-Header-direction">Request</dd>
+				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="specification"><a href="https://httpwg.org/specs/rfc7230.html#header.host">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing &#xA7;5.4. Host</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.host">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing &#xA7;5.4. Host</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

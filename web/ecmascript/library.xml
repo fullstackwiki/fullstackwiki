@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
 	<head>
 		<meta charset="UTF-8" />
 		<title>ECMAScript Libraries</title>
@@ -7,7 +7,7 @@
 		<link rel="up" href="index.html"/>
 	</head>
 	<body>
-		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main id="main-content" vocab="tag:fullstack.wiki,2018:ns/" typeof="HTTP-Header">
 			<h1>ECMAScript Libraries</h1>
 			<p>This describes how to package and distribute ECMAScript (JavaScript) libraries. This does not cover applications, which do not need to be included as part of another application, although the package may contain utility executables for development use.</p>
 			<p>Libaries are typically distrbuted in a bundle of files called a <i>package</i>, which may contain the executable code, as well as development utilities, tests, and documentation.</p>

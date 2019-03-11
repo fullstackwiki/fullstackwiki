@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
 	<head>
 		<meta charset="UTF-8" />
 		<title>WWW-Authenticate</title>
@@ -7,7 +7,7 @@
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
-		<main vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/WWW-Authenticate" typeof="w:HTTP-Header">
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>WWW-Authenticate</h1>
@@ -18,16 +18,16 @@
 			<p>The variant of this header for intermediate nodes (proxies) is <a href="Proxy-Authenticate.xml">Proxy-Authenticate</a>.</p>
 
 			<h3>Reading responses (clients)</h3>
-			<p>Clients that see this header can test if they understand and have credentials for any of the authorization schemes listed, and if so, re-try the request with them.</p>
+			<p>Clients that see this header can test if they understand and have credentials for any of the authorization schemes listed, and if so, re-try the request with an <a href="Authorization.xml">Authorization</a> header.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
-				<dd property="HTTP-Header-name">WWW-Authenticate</dd>
+				<dd property="w:HTTP-Header-name">WWW-Authenticate</dd>
 				<dt>Direction</dt>
-				<dd property="HTTP-Header-direction">Both</dd>
+				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>
-				<dd property="specification"><a href="https://httpwg.org/specs/rfc7235.html#header.www-authenticate">RFC 7235: HTTP/1.1 Authentication &#xA7;4.1. WWW-Authenticate</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7235.html#header.www-authenticate">RFC 7235: HTTP/1.1 Authentication &#xA7;4.1. WWW-Authenticate</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

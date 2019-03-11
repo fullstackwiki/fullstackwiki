@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
 	<head>
 		<meta charset="UTF-8" />
 		<title>Proxy-Authenticate</title>
@@ -7,7 +7,7 @@
 		<link rel="up" href="../index.xml" />
 	</head>
 	<body>
-		<main vocab="http://fullstack.wiki/ns/">
+		<main vocab="tag:fullstack.wiki,2018:ns/">
 			<h1>Authentication Scheme Registry</h1>
 			<p>The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.</p>
 		</main>

@@ -43,7 +43,7 @@ function testHTMLDocument(document){
 	assert(document.documentElement.hasAttribute('dir'));
 	// Verify namespaces are defined
 	assert.equal(document.documentElement.getAttribute('xmlns'), "http://www.w3.org/1999/xhtml");
-	assert.equal(document.documentElement.getAttribute('xmlns:w'), "http://fullstack.wiki/ns/");
+	assert.equal(document.documentElement.getAttribute('xmlns:w'), "tag:fullstack.wiki,2018:ns/");
 	// Verify the <title/> tag exists and has text content
 	assert(document.getElementsByTagName('title')[0].textContent.length);
 	// Verify the <meta charset="UTF-8" /> tag exists

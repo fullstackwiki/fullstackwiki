@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
 	<head>
 		<meta charset="UTF-8" />
 		<title>Retry-After</title>
@@ -7,7 +7,7 @@
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
-		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Retry-After" typeof="w:HTTP-Header">
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Retry-After</h1>
@@ -16,11 +16,11 @@
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
-				<dd property="HTTP-Header-name">Retry-After</dd>
+				<dd property="w:HTTP-Header-name">Retry-After</dd>
 				<dt>Direction</dt>
-				<dd property="HTTP-Header-direction">Response</dd>
+				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>
-				<dd property="specification"><a href="http://httpwg.org/specs/rfc7231.html#header.retry-after">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.3. Retry-After</a></dd>
+				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.retry-after">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.3. Retry-After</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

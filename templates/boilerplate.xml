@@ -4,7 +4,7 @@ so don't copy these comments when copying the boilerplate.
 -->
 <!DOCTYPE html>
 <!-- @lang and @dir may need to be changed for the language -->
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="http://fullstack.wiki/ns/"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/"
 	lang="en" dir="ltr"
 	vocab="xsv: http://www.w3.org/1999/xhtml/vocab#describedby"
 >
@@ -18,7 +18,7 @@ so don't copy these comments when copying the boilerplate.
 		<link rel="up" href="index.xml"/>
 	</head>
 	<body>
-		<main id="main-content" vocab="http://fullstack.wiki/ns/" typeof="HTTP-Header">
+		<main id="main-content" vocab="tag:fullstack.wiki,2018:ns/" typeof="HTTP-Header">
 			<!-- The first heading should be unique across this document, and all the first headings in its category/section -->
 			<h1>Heading</h1>
 			<p></p>

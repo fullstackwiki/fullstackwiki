@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr"
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:w="http://fullstack.wiki/ns/"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
 	xmlns:q="http://fullstack.wiki/rdfq/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
 >
 	<head>
 		<meta charset="UTF-8" />
@@ -15,14 +16,15 @@
 <h1>HTTP Headers</h1>
 <h2>Request Headers</h2>
 
-<table class="table-http-headers" vocab="http://fullstack.wiki/ns/">
+<table class="table-http-headers">
 	<thead>
 		<tr><th>Header Name</th><th>Specification</th></tr>
 	</thead>
 	<tbody>
-		<tr subquery="each" subquery-order="?name" typeof="http://fullstack.wiki/ns/HTTP-Header">
-			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="http://fullstack.wiki/ns/HTTP-Header-name">{?name}</span></a></td>
-			<td property="specification">{?desc}</td>
+		<tr subquery="each" subquery-order="ASC(?name)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/HTTP-Header">
+			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></a></td>
+			<!-- <td><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></td> -->
+			<td property="tag:fullstack.wiki,2018:ns/specification">{?desc}</td>
 		</tr>
 	</tbody>
 </table>
