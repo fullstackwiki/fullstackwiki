@@ -518,6 +518,18 @@ body.pagewidth .columns #main-col {
 	/* Don't show the numbering for the first level */
 	list-style-type: none;
 }
+ol.nav-up {
+	margin: 0;
+}
+ol.nav-up > li {
+	padding-bottom: 1rem;
+	list-style-position: outside;
+	line-height: 1.6;
+	margin-left: 1.25rem;
+	clear: both;
+	border-bottom: 1px solid #cacaca;
+	margin-top: 1rem;
+}
 
 /* Theme styles - body & footer */
 

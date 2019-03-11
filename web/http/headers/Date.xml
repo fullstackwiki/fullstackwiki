@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
 	<head>
 		<meta charset="UTF-8" />
 		<title>Date</title>
@@ -8,7 +12,7 @@
 	</head>
 	<body>
 		<main about="tag:fullstack.wiki,2018:ns/http/headers/Date" typeof="w:HTTP-Header">
-			<link rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Date</h1>
 			<p>Specifies date the message was generated.</p>
