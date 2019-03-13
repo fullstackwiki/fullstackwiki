@@ -40,7 +40,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.host">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing &#xA7;5.4. Host</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.host">RFC 7230: HTTP/1.1: Message Syntax and Routing &#xA7;5.4. Host</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

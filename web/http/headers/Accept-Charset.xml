@@ -30,15 +30,15 @@
 			</dl>
 
 			<h2>Syntax</h2>
-<pre class="abnf-definition">
-Accept = #( media-range [ accept-params ] )
-media-range    = ( "*/*"
-					  / ( type "/" "*" )
-					  / ( type "/" subtype )
-					  ) *( OWS ";" OWS parameter )
-accept-params  = weight *( accept-ext )
-accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
-</pre>
+			<pre class="abnf-definition" w:space="indent">
+				Accept = #( media-range [ accept-params ] )
+				media-range = ( "*/*"
+				              / ( type "/" "*" )
+				              / ( type "/" subtype )
+				              ) *( OWS ";" OWS parameter )
+				accept-params = weight *( accept-ext )
+				accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+			</pre>
 
 			<h2>Examples</h2>
 			<p>Prefer HTML or text/x-c, or text/x-dvi if it’s the best the server has after a 20% markdown in quality, or plain text after a 50% markdown in quality:</p>
