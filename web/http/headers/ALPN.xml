@@ -15,7 +15,8 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>ALPN</h1>
-			<p>Used by user agents to specify response media types that are acceptable.</p>
+			<p>Used by user agents to specify response media types that are acceptable. The list of valid values are described in the <a href="https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids">TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs</a> IANA registry.</p>
+			<p>ALPN is short for <i>Application-Layer Protocol Negotiation (ALPN) Extension</i> and is described in <a href="https://www.rfc-editor.org/rfc/rfc7301.txt">RFC 7301</a>.</p>
 			<h2>Overview table</h2>
 			<dl>
 				<dt>Name</dt>
