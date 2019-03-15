@@ -25,6 +25,7 @@ Topics:
 	* Caching
 	* Conditional changes
 	* Session management
+	* File uploads
 	* Naming routes
 		* Versioning APIs (how and when to version an API)
 	* Task management (e.g. 202 Accepted)
@@ -34,7 +35,9 @@ Topics:
 		* HTTP status codes
 		* HTTP headers
 	* https://www.w3.org/2001/tag/doc/mime-respect
-
+* Media types
+	* media type name syntax
+	* multipart
 * Web Linking
 	* IANA Link Relations
 * ASCII
@@ -58,15 +61,18 @@ Topics:
 	* scripts
 	* metrics/tracking
 * HTML
-	* text/html parsing
-	* application/xhtml+xml parsing
 	* Webpages
 	* Element reference
+	* Structuring pages
+	* Marking up content
+	* Annotating content with RDFa
 	* DOM
 	* organizing content sections
 	* Overview of template engines
 	* embedding media
 	* methods of streaming media with content type and bitrate negotiation
+	* text/html parsing
+	* application/xhtml+xml parsing
 * DOM
 * JSON
 * CSS
@@ -110,6 +116,7 @@ Topics:
 	* http://webconcepts.info/
 	* https://12factor.net/
 	* https://github.com/fejes713/accessibility-guide
+	* https://caniuse.com/
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions
