@@ -64,11 +64,11 @@ const MarkdownSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'te
 // }) );
 
 function gRenderBindings(res){
-	return new RenderBindings(index.graph, res);
+	return new RenderBindings(indexRDFa.graph, res);
 }
 
 function gRenderTheme(res){
-	return new RenderTheme(index.graph, res);
+	return new RenderTheme(indexRDFa.graph, res);
 }
 
 // Source code
@@ -136,18 +136,18 @@ routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );
 routes.addTemplate('http://localhost/style{/path*}.js', {}, RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript') );
 routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css') );
 
-var indexRoutes = routes.routes.filter(function(v){
+var indexRDFaRoutes = routes.routes.filter(function(v){
 	return [
 		'http://localhost{/path*}',
 	].indexOf(v.template)>=0;
 });
 
-var index = new IndexRDFa(options);
-indexRoutes.forEach(function(route){
-	index.import(route);
+var indexRDFa = new IndexRDFa(options);
+indexRDFaRoutes.forEach(function(route){
+	indexRDFa.import(route);
 });
 
-routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRoutes}) );
+routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRDFaRoutes}) );
 
 var ttlRoutes = new TemplateRouter.Router();
 // Present a version with templates substituted, but no data bindings
@@ -156,8 +156,8 @@ ttlRoutes.addTemplate('http://localhost{/path*}', {}, First([
 	RoutePipeline(HTMLSource, [RenderTemplate] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
 ]) );
-routes.addTemplate('http://localhost/graph.ttl', {}, RouteTTL({index:index, acceptProfile:'plain'}) );
-routes.addTemplate('http://localhost/graph.nt', {}, RouteNT({index:index, acceptProfile:'plain'}) );
-routes.addTemplate('http://localhost/graph.nq', {}, RouteNQ({index:index, acceptProfile:'plain'}) );
+routes.addTemplate('http://localhost/graph.ttl', {}, RouteTTL({index:indexRDFa, acceptProfile:'plain'}) );
+routes.addTemplate('http://localhost/graph.nt', {}, RouteNT({index:indexRDFa, acceptProfile:'plain'}) );
+routes.addTemplate('http://localhost/graph.nq', {}, RouteNQ({index:indexRDFa, acceptProfile:'plain'}) );
 
 module.exports = options;
