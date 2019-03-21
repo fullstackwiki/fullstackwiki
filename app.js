@@ -3,7 +3,6 @@ var fs = require('fs');
 
 const {
 	HTTPServer,
-	TemplateRouter,
 	RouteStaticFile,
 	RouteError,
 	RouteNotFound,
@@ -24,9 +23,6 @@ var RouteNT = require( "./lib/RouteNT.js" ).RouteNT;
 var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
 var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
 
-// Application-specific types
-var RouteBrowserify = require('./lib/RouteBrowserify.js');
-
 const docroot = __dirname + '/web';
 
 var options = new HTTPServer;
@@ -37,7 +33,9 @@ options.RouteError = RouteError;
 var routes = options.routes;
 
 // Alias / to /index.xml
-routes.addTemplate('http://localhost{/path*}/', {}, RouteLocalReference(routes, "http://localhost{/path*}/index"));
+var routeIndex = RouteLocalReference(routes, "http://localhost{/path*}/index");
+routeIndex.routerURITemplate = 'http://localhost{/path*}/';
+options.addRoute(routeIndex);
 
 function gRenderEditLink(res){
 	return new RenderEditLink(__dirname, {
@@ -50,8 +48,10 @@ const RouteStaticFileOpts = {
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
 };
-const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.xml", 'application/xhtml+xml', RouteStaticFileOpts), gRenderEditLink);
+const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.xml", 'application/xml', RouteStaticFileOpts), gRenderEditLink);
+HTMLSource.routerURITemplate = 'http://localhost{/path*}.xml';
 const MarkdownSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', RouteStaticFileOpts), gRenderEditLink);
+MarkdownSource.routerURITemplate = 'http://localhost{/path*}.md';
 
 // Content-negotiated version
 // routes.addTemplate('http://localhost{/path*}', {}, Conneg({
@@ -72,10 +72,12 @@ function gRenderTheme(res){
 }
 
 // Source code
-routes.addTemplate('http://localhost{/path*}.src.xml', {}, First([
+var routeSourceHTML = First([
 	HTMLSource,
 	MarkdownSource,
-]) );
+]);
+routeSourceHTML.routerURITemplate = 'http://localhost{/path*}.src.xml';
+options.addRoute(routeSourceHTML);
 
 // Rendering happens in three stages:
 // 1. Template: substitute in template calls and other manipulations that will make it into the RDF index
@@ -83,45 +85,33 @@ routes.addTemplate('http://localhost{/path*}.src.xml', {}, First([
 // 3. Theme: generate themed page for Web browsers
 
 // // Rendered HTML but plain (no) theme
-routes.addTemplate('http://localhost{/path*}.tpl.xml', {}, First([
+var routeTemplate = First([
 	RoutePipeline(HTMLSource, [RenderTemplate] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
-]) );
+]);
+routeTemplate.routerURITemplate = 'http://localhost{/path*}.tpl.xml';
+options.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
-routes.addTemplate('http://localhost{/path*}.plain.xml', {}, First([
+var routePlain = First([
 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
-]) );
+]);
+routePlain.routerURITemplate = 'http://localhost{/path*}.plain.xml';
+options.addRoute(routePlain);
 
-// // Fully rendered HTML version
-// routes.addTemplate('http://localhost{/path*}.html', {}, First([
-// 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, RenderTheme] ),
-// 	RoutePipeline(MarkdownSource, [Markdown, RenderTheme] ),
-// ]) );
-
-// Fully rendered HTML version (conneg)
-// routes.addTemplate('http://localhost{/path*}', {}, First([
-// 	RouteLocalReference(routes, 'http://localhost{/path*}.xml'),
-// 	RouteLocalReference(routes, 'http://localhost{/path*}.plain'),
-// 	RouteLocalReference(routes, 'http://localhost{/path*}.pattern'),
-// 	RouteLocalReference(routes, 'http://localhost{/path*}.source'),
-// ]) );
-// But actually just pick the rendered version for now
+// Fully rendered theme
+// Later, put this on <http://localhost{/path*}.xhtml> and
+// make <http://localhost{/path*}> a Content-Type negotiation version
 routes.addTemplate('http://localhost{/path*}', {}, First([
 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, gRenderTheme] ),
 	RoutePipeline(MarkdownSource, [Markdown, gRenderTheme] ),
 ]) );
 
-
-// Editable form version
-// routes.addTemplate('http://localhost{/path*}.edit', {}, First([
-// 	RoutePipeline(HTMLSource, [RenderForm, RenderTheme]),
-// //	RoutePipeline(MarkdownSource, RenderForm),
-// ]) );
-
 // The Recent Changes page, which is a Git log
-routes.addTemplate('http://localhost/recent', {}, RoutePipeline(RouteGitLog({title:'Recent Changes', fs:fs, dir:__dirname, ref:'HEAD'}), [gRenderTheme]));
+var routeRecent = RoutePipeline(RouteGitLog({title:'Recent Changes', fs:fs, dir:__dirname, ref:'HEAD'}), [gRenderTheme]);
+routeRecent.routerURITemplate = 'http://localhost/recent';
+options.addRoute(routeRecent);
 
 // Render the source Markdown
 routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );
@@ -133,8 +123,13 @@ routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );
 
 // Render files
 // routes.addTemplate('http://localhost/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
-routes.addTemplate('http://localhost/style{/path*}.js', {}, RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript') );
-routes.addTemplate('http://localhost/style{/path*}.css', {}, RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css') );
+var routeScript = RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript');
+routeScript.routerURITemplate = 'http://localhost/style{/path*}.js';
+options.addRoute(routeScript);
+
+var routeStyle = RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css');
+routeStyle.routerURITemplate = 'http://localhost/style{/path*}.css';
+options.addRoute(routeStyle);
 
 var indexRDFaRoutes = routes.routes.filter(function(v){
 	return [
@@ -147,17 +142,20 @@ indexRDFaRoutes.forEach(function(route){
 	indexRDFa.import(route);
 });
 
-routes.addTemplate('http://localhost/search-index.js', {}, RouteLunrIndex({exportName:'searchIndex', routes:indexRDFaRoutes}) );
+var routeLunrIndex = RouteLunrIndex({exportName:'searchIndex', routes:indexRDFaRoutes});
+routeLunrIndex.routerURITemplate = 'http://localhost/search-index.js';
+options.addRoute(routeLunrIndex);
 
-var ttlRoutes = new TemplateRouter.Router();
-// Present a version with templates substituted, but no data bindings
-// This is, after all, the file that the data bindings will be reading from
-ttlRoutes.addTemplate('http://localhost{/path*}', {}, First([
-	RoutePipeline(HTMLSource, [RenderTemplate] ),
-	RoutePipeline(MarkdownSource, [Markdown] ),
-]) );
-routes.addTemplate('http://localhost/graph.ttl', {}, RouteTTL({index:indexRDFa, acceptProfile:'plain'}) );
-routes.addTemplate('http://localhost/graph.nt', {}, RouteNT({index:indexRDFa, acceptProfile:'plain'}) );
-routes.addTemplate('http://localhost/graph.nq', {}, RouteNQ({index:indexRDFa, acceptProfile:'plain'}) );
+var RouteGraphTTL = RouteTTL({index:indexRDFa, acceptProfile:'plain'});
+RouteGraphTTL.routerURITemplate = 'http://localhost/graph.ttl';
+options.addRoute(RouteGraphTTL);
+
+var routeGraphNT = RouteNT({index:indexRDFa, acceptProfile:'plain'});
+routeGraphNT.routerURITemplate = 'http://localhost/graph.nt';
+options.addRoute(routeGraphNT);
+
+var routeGraphNT = RouteNQ({index:indexRDFa, acceptProfile:'plain'});
+routeGraphNT.routerURITemplate = 'http://localhost/graph.nq';
+options.addRoute(routeGraphNT);
 
 module.exports = options;
