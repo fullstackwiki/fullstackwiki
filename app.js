@@ -43,25 +43,26 @@ function gRenderEditLink(res){
 		'version-history': 'https://github.com/awwright/fullstackwiki/commits/master',
 	});
 }
-const RouteStaticFileOpts = {
+
+const HTMLSource = RoutePipeline(RouteStaticFile({
+	uriTemplate: 'http://localhost{/path*}.xml',
+	contentType: 'application/xml',
+	fileroot: docroot,
+	pathTemplate: "{/path*}.xml",
 	filepathLink: true,
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
-};
-const HTMLSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.xml", 'application/xml', RouteStaticFileOpts), gRenderEditLink);
-HTMLSource.routerURITemplate = 'http://localhost{/path*}.xml';
-const MarkdownSource = RoutePipeline(RouteStaticFile(docroot, "{/path*}.md", 'text/markdown', RouteStaticFileOpts), gRenderEditLink);
-MarkdownSource.routerURITemplate = 'http://localhost{/path*}.md';
+}), gRenderEditLink);
 
-// Content-negotiated version
-// routes.addTemplate('http://localhost{/path*}', {}, Conneg({
-// 	'application/xhtml+xml;profile="tag:fullstack.wiki,2018:ns/profile/render"':
-// 		RoutePipeline(RouteLocalReference(routes, "http:http://localhost{/path*}.src.xml"), [RenderTemplate, RenderBindings, RenderTheme] ),
-// 	'application/xhtml+xml;profile="tag:fullstack.wiki,2018:ns/profile/render"':
-// 		RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.xml"), [Markdown, RenderTheme] ),
-// 	// 'text/markdown':
-// 	// 	RoutePipeline(RouteLocalReference(routes, "http://localhost{/path*}.src.xml"), [Markdown, RenderTheme] ),
-// }) );
+const MarkdownSource = RoutePipeline(RouteStaticFile({
+	uriTemplate: 'http://localhost{/path*}.xml',
+	contentType: 'text/markdown',
+	fileroot: docroot,
+	pathTemplate: "{/path*}.md",
+	filepathLink: true,
+	filepathAuthority: 'fullstack.wiki',
+	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
+}), gRenderEditLink);
 
 function gRenderBindings(res){
 	return new RenderBindings(indexRDFa.graph, res);
@@ -109,8 +110,13 @@ routes.addTemplate('http://localhost{/path*}', {}, First([
 ]) );
 
 // The Recent Changes page, which is a Git log
-var routeRecent = RoutePipeline(RouteGitLog({title:'Recent Changes', fs:fs, dir:__dirname, ref:'HEAD'}), [gRenderTheme]);
-routeRecent.routerURITemplate = 'http://localhost/recent';
+var routeRecent = RoutePipeline(RouteGitLog({
+	uriTemplate: 'http://localhost/recent',
+	title: 'Recent Changes',
+	fs: fs,
+	dir: __dirname,
+	ref: 'HEAD'
+}), [gRenderTheme]);
 options.addRoute(routeRecent);
 
 // Render the source Markdown
@@ -142,20 +148,29 @@ indexRDFaRoutes.forEach(function(route){
 	indexRDFa.import(route);
 });
 
-var routeLunrIndex = RouteLunrIndex({exportName:'searchIndex', routes:indexRDFaRoutes});
-routeLunrIndex.routerURITemplate = 'http://localhost/search-index.js';
+var routeLunrIndex = RouteLunrIndex({
+	uriTemplate: 'http://localhost/search-index.js',
+	exportName: 'searchIndex',
+	routes: indexRDFaRoutes,
+});
 options.addRoute(routeLunrIndex);
 
-var RouteGraphTTL = RouteTTL({index:indexRDFa, acceptProfile:'plain'});
-RouteGraphTTL.routerURITemplate = 'http://localhost/graph.ttl';
+var RouteGraphTTL = RouteTTL({
+	uriTemplate: 'http://localhost/graph.ttl',
+	index: indexRDFa,
+});
 options.addRoute(RouteGraphTTL);
 
-var routeGraphNT = RouteNT({index:indexRDFa, acceptProfile:'plain'});
-routeGraphNT.routerURITemplate = 'http://localhost/graph.nt';
+var routeGraphNT = RouteNT({
+	uriTemplate: 'http://localhost/graph.nt',
+	index: indexRDFa,
+});
 options.addRoute(routeGraphNT);
 
-var routeGraphNT = RouteNQ({index:indexRDFa, acceptProfile:'plain'});
-routeGraphNT.routerURITemplate = 'http://localhost/graph.nq';
+var routeGraphNT = RouteNQ({
+	uriTemplate: 'http://localhost/graph.nq',
+	index: indexRDFa,
+});
 options.addRoute(routeGraphNT);
 
 module.exports = options;

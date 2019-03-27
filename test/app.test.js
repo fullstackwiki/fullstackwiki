@@ -59,15 +59,41 @@ describe('Server', function(){
 		return writeMessage(server, [
 			'GET /index.src.xml HTTP/1.1',
 			'Host: fullstack.wiki',
-			'Connection: close',
 		]).then(function(res){
 			assert(res.toString().match(/^HTTP\/1.1 200 /));
 			assert(res.toString().match(/^Content-Type: application\/xml$/m));
 			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
 		});
 	});
-	it('/graph.ttl');
-	it('/graph.nt');
-	it('/graph.nq');
+	it('/graph.ttl', function(){
+		return writeMessage(server, [
+			'GET /graph.ttl HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: text\/turtle$/m));
+			assert(res.toString().match(/<http:\/\/localhost\/index>/));
+		});
+	});
+	it('/graph.nt', function(){
+		return writeMessage(server, [
+			'GET /graph.nt HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/n-triples$/m));
+			assert(res.toString().match(/<http:\/\/localhost\/index>/));
+		});
+	});
+	it('/graph.nq', function(){
+		return writeMessage(server, [
+			'GET /graph.nq HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/n-quads$/m));
+			assert(res.toString().match(/<http:\/\/localhost\/index>/));
+		});
+	});
 	it('/search-index.js');
 });
