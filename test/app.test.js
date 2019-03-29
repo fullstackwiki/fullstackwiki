@@ -45,7 +45,7 @@ describe('Server', function(){
 		});
 	});
 	it('/http/index.md', function(){
-		// Choose any URI that is a Markdown file that is read from the filesystem
+		// Choose any URI sourced from a Markdown file on the filesystem
 		return writeMessage(server, [
 			'GET /http/index.md HTTP/1.1',
 			'Host: fullstack.wiki',
@@ -55,6 +55,17 @@ describe('Server', function(){
 			assert(res.toString().match(/^# /m));
 		});
 	});
+	it('/index.xml', function(){
+		// Choose any URI sourced from an XML file on the filesystem
+		return writeMessage(server, [
+			'GET /index.xml HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xml$/m));
+			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
+		});
+	});
 	it('/index.src.xml', function(){
 		return writeMessage(server, [
 			'GET /index.src.xml HTTP/1.1',
@@ -62,6 +73,26 @@ describe('Server', function(){
 		]).then(function(res){
 			assert(res.toString().match(/^HTTP\/1.1 200 /));
 			assert(res.toString().match(/^Content-Type: application\/xml$/m));
+			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
+		});
+	});
+	it('/index.tpl.xml', function(){
+		return writeMessage(server, [
+			'GET /index.tpl.xml HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/x.wiki.fullstack.template\+xml$/m));
+			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
+		});
+	});
+	it('/index.plain.xml', function(){
+		return writeMessage(server, [
+			'GET /index.plain.xml HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/x.wiki.fullstack.plain\+xml$/m));
 			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
 		});
 	});

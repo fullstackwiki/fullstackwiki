@@ -53,9 +53,10 @@ const HTMLSource = RoutePipeline(RouteStaticFile({
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
 }), gRenderEditLink);
+options.addRoute(HTMLSource);
 
 const MarkdownSource = RoutePipeline(RouteStaticFile({
-	uriTemplate: 'http://localhost{/path*}.xml',
+	uriTemplate: 'http://localhost{/path*}.md',
 	contentType: 'text/markdown',
 	fileroot: docroot,
 	pathTemplate: "{/path*}.md",
@@ -63,14 +64,7 @@ const MarkdownSource = RoutePipeline(RouteStaticFile({
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
 }), gRenderEditLink);
-
-function gRenderBindings(res){
-	return new RenderBindings(indexRDFa.graph, res);
-}
-
-function gRenderTheme(res){
-	return new RenderTheme(indexRDFa.graph, res);
-}
+options.addRoute(MarkdownSource);
 
 // Source code
 var routeSourceHTML = First([
@@ -94,6 +88,9 @@ routeTemplate.routerURITemplate = 'http://localhost{/path*}.tpl.xml';
 options.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
+function gRenderBindings(res){
+	return new RenderBindings(indexRDFa.graph, res);
+}
 var routePlain = First([
 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
 	RoutePipeline(MarkdownSource, [Markdown] ),
@@ -104,10 +101,15 @@ options.addRoute(routePlain);
 // Fully rendered theme
 // Later, put this on <http://localhost{/path*}.xhtml> and
 // make <http://localhost{/path*}> a Content-Type negotiation version
-routes.addTemplate('http://localhost{/path*}', {}, First([
+function gRenderTheme(res){
+	return new RenderTheme(indexRDFa.graph, res);
+}
+var routeThemed = First([
 	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, gRenderTheme] ),
 	RoutePipeline(MarkdownSource, [Markdown, gRenderTheme] ),
-]) );
+]);
+routeThemed.routerURITemplate = 'http://localhost{/path*}';
+options.addRoute(routeThemed);
 
 // The Recent Changes page, which is a Git log
 var routeRecent = RoutePipeline(RouteGitLog({
@@ -118,9 +120,6 @@ var routeRecent = RoutePipeline(RouteGitLog({
 	ref: 'HEAD'
 }), [gRenderTheme]);
 options.addRoute(routeRecent);
-
-// Render the source Markdown
-routes.addTemplate('http://localhost{/path*}.md', {}, MarkdownSource );
 
 // Codemirror dependencies
 // routes.addTemplate('http://localhost/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
