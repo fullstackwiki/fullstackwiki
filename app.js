@@ -9,6 +9,7 @@ const {
 	RouteLocalReference,
 	RoutePipeline,
 	First,
+	Negotiate,
 } = require('dive-httpd');
 
 var Markdown = require( "./lib/Markdown.js" ).Markdown;
@@ -53,6 +54,7 @@ const HTMLSource = RoutePipeline(RouteStaticFile({
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
 }), gRenderEditLink);
+HTMLSource.name = 'RenderEditLink';
 options.addRoute(HTMLSource);
 
 const MarkdownSource = RoutePipeline(RouteStaticFile({
@@ -64,12 +66,13 @@ const MarkdownSource = RoutePipeline(RouteStaticFile({
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
 }), gRenderEditLink);
+MarkdownSource.name = 'RenderEditLink';
 options.addRoute(MarkdownSource);
 
 // Source code
 var routeSourceHTML = First([
 	HTMLSource,
-	MarkdownSource,
+	RoutePipeline(MarkdownSource, Markdown),
 ]);
 routeSourceHTML.routerURITemplate = 'http://localhost{/path*}.src.xml';
 options.addRoute(routeSourceHTML);
@@ -80,22 +83,24 @@ options.addRoute(routeSourceHTML);
 // 3. Theme: generate themed page for Web browsers
 
 // // Rendered HTML but plain (no) theme
-var routeTemplate = First([
-	RoutePipeline(HTMLSource, [RenderTemplate] ),
-	RoutePipeline(MarkdownSource, [Markdown] ),
-]);
-routeTemplate.routerURITemplate = 'http://localhost{/path*}.tpl.xml';
+var routeTemplate = RoutePipeline({
+	routerURITemplate: 'http://localhost{/path*}.tpl.xml',
+	contentType: 'application/x.wiki.fullstack.template+xml',
+	outboundTransform: RenderTemplate,
+	innerRoute: routeSourceHTML,
+});
 options.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
 function gRenderBindings(res){
 	return new RenderBindings(indexRDFa.graph, res);
 }
-var routePlain = First([
-	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings] ),
-	RoutePipeline(MarkdownSource, [Markdown] ),
-]);
-routePlain.routerURITemplate = 'http://localhost{/path*}.plain.xml';
+var routePlain = RoutePipeline({
+	routerURITemplate: 'http://localhost{/path*}.plain.xml',
+	contentType: 'application/x.wiki.fullstack.plain+xml',
+	outboundTransform: gRenderBindings,
+	innerRoute: routeTemplate,
+});
 options.addRoute(routePlain);
 
 // Fully rendered theme
@@ -104,12 +109,21 @@ options.addRoute(routePlain);
 function gRenderTheme(res){
 	return new RenderTheme(indexRDFa.graph, res);
 }
-var routeThemed = First([
-	RoutePipeline(HTMLSource, [RenderTemplate, gRenderBindings, gRenderTheme] ),
-	RoutePipeline(MarkdownSource, [Markdown, gRenderTheme] ),
-]);
-routeThemed.routerURITemplate = 'http://localhost{/path*}';
+var routeThemed = RoutePipeline({
+	routerURITemplate: 'http://localhost{/path*}.html',
+	contentType: 'application/xhtml+xml',
+	outboundTransform: gRenderTheme,
+	innerRoute: routePlain,
+});
 options.addRoute(routeThemed);
+
+var routeBest = Negotiate('http://localhost{/path*}', [
+	routeThemed,
+	routePlain,
+	routeTemplate,
+	routeSourceHTML,
+]);
+options.addRoute(routeBest);
 
 // The Recent Changes page, which is a Git log
 var routeRecent = RoutePipeline(RouteGitLog({
