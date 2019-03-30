@@ -127,4 +127,7 @@ describe('Server', function(){
 		});
 	});
 	it('/search-index.js');
+	it('XML: Syntax highlighting');
+	it('Table of contents rel=up');
+	it('Data tables (/http/headers/index)');
 });
