@@ -41,6 +41,8 @@ describe('Server', function(){
 		]).then(function(res){
 			assert(res.toString().match(/^HTTP\/1.1 200 /));
 			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			assert(res.toString().match(/^Content-Location: http:\/\/fullstack.wiki\/index\.html$/m));
+			assert(res.toString().match(/^Vary: Accept$/m));
 			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
 		});
 	});
@@ -96,6 +98,16 @@ describe('Server', function(){
 			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
 		});
 	});
+	it('/index.html', function(){
+		return writeMessage(server, [
+			'GET /index.html HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			assert(res.toString().match(/<h1>Welcome to Fullstack.wiki<\/h1>/));
+		});
+	});
 	it('/graph.ttl', function(){
 		return writeMessage(server, [
 			'GET /graph.ttl HTTP/1.1',
@@ -103,7 +115,7 @@ describe('Server', function(){
 		]).then(function(res){
 			assert(res.toString().match(/^HTTP\/1.1 200 /));
 			assert(res.toString().match(/^Content-Type: text\/turtle$/m));
-			assert(res.toString().match(/<http:\/\/localhost\/index>/));
+			assert(res.toString().match(/<http:\/\/fullstack.wiki\/index>/));
 		});
 	});
 	it('/graph.nt', function(){
@@ -113,7 +125,7 @@ describe('Server', function(){
 		]).then(function(res){
 			assert(res.toString().match(/^HTTP\/1.1 200 /));
 			assert(res.toString().match(/^Content-Type: application\/n-triples$/m));
-			assert(res.toString().match(/<http:\/\/localhost\/index>/));
+			assert(res.toString().match(/<http:\/\/fullstack.wiki\/index>/));
 		});
 	});
 	it('/graph.nq', function(){
@@ -123,7 +135,7 @@ describe('Server', function(){
 		]).then(function(res){
 			assert(res.toString().match(/^HTTP\/1.1 200 /));
 			assert(res.toString().match(/^Content-Type: application\/n-quads$/m));
-			assert(res.toString().match(/<http:\/\/localhost\/index>/));
+			assert(res.toString().match(/<http:\/\/fullstack.wiki\/index>/));
 		});
 	});
 	it('/search-index.js');

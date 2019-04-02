@@ -28,14 +28,14 @@ const docroot = __dirname + '/web';
 
 var options = new HTTPServer;
 options.fixedScheme = 'http';
-options.fixedAuthority = 'localhost';
+options.fixedAuthority = 'fullstack.wiki';
 options.RouteNotFound = RouteNotFound;
 options.RouteError = RouteError;
 var routes = options.routes;
 
 // Alias / to /index.xml
-var routeIndex = RouteLocalReference(routes, "http://localhost{/path*}/index");
-routeIndex.routerURITemplate = 'http://localhost{/path*}/';
+var routeIndex = RouteLocalReference(routes, "http://fullstack.wiki{/path*}/index");
+routeIndex.routerURITemplate = 'http://fullstack.wiki{/path*}/';
 options.addRoute(routeIndex);
 
 function gRenderEditLink(res){
@@ -46,7 +46,7 @@ function gRenderEditLink(res){
 }
 
 const HTMLSource = RoutePipeline(RouteStaticFile({
-	uriTemplate: 'http://localhost{/path*}.xml',
+	uriTemplate: 'http://fullstack.wiki{/path*}.xml',
 	contentType: 'application/xml',
 	fileroot: docroot,
 	pathTemplate: "{/path*}.xml",
@@ -58,7 +58,7 @@ HTMLSource.name = 'RenderEditLink';
 options.addRoute(HTMLSource);
 
 const MarkdownSource = RoutePipeline(RouteStaticFile({
-	uriTemplate: 'http://localhost{/path*}.md',
+	uriTemplate: 'http://fullstack.wiki{/path*}.md',
 	contentType: 'text/markdown',
 	fileroot: docroot,
 	pathTemplate: "{/path*}.md",
@@ -74,7 +74,7 @@ var routeSourceHTML = First([
 	HTMLSource,
 	RoutePipeline(MarkdownSource, Markdown),
 ]);
-routeSourceHTML.routerURITemplate = 'http://localhost{/path*}.src.xml';
+routeSourceHTML.routerURITemplate = 'http://fullstack.wiki{/path*}.src.xml';
 options.addRoute(routeSourceHTML);
 
 // Rendering happens in three stages:
@@ -84,7 +84,7 @@ options.addRoute(routeSourceHTML);
 
 // // Rendered HTML but plain (no) theme
 var routeTemplate = RoutePipeline({
-	routerURITemplate: 'http://localhost{/path*}.tpl.xml',
+	routerURITemplate: 'http://fullstack.wiki{/path*}.tpl.xml',
 	contentType: 'application/x.wiki.fullstack.template+xml',
 	outboundTransform: RenderTemplate,
 	innerRoute: routeSourceHTML,
@@ -96,7 +96,7 @@ function gRenderBindings(res){
 	return new RenderBindings(indexRDFa.graph, res);
 }
 var routePlain = RoutePipeline({
-	routerURITemplate: 'http://localhost{/path*}.plain.xml',
+	routerURITemplate: 'http://fullstack.wiki{/path*}.plain.xml',
 	contentType: 'application/x.wiki.fullstack.plain+xml',
 	outboundTransform: gRenderBindings,
 	innerRoute: routeTemplate,
@@ -104,20 +104,20 @@ var routePlain = RoutePipeline({
 options.addRoute(routePlain);
 
 // Fully rendered theme
-// Later, put this on <http://localhost{/path*}.xhtml> and
-// make <http://localhost{/path*}> a Content-Type negotiation version
+// Later, put this on <http://fullstack.wiki{/path*}.xhtml> and
+// make <http://fullstack.wiki{/path*}> a Content-Type negotiation version
 function gRenderTheme(res){
 	return new RenderTheme(indexRDFa.graph, res);
 }
 var routeThemed = RoutePipeline({
-	routerURITemplate: 'http://localhost{/path*}.html',
+	routerURITemplate: 'http://fullstack.wiki{/path*}.html',
 	contentType: 'application/xhtml+xml',
 	outboundTransform: gRenderTheme,
 	innerRoute: routePlain,
 });
 options.addRoute(routeThemed);
 
-var routeBest = Negotiate('http://localhost{/path*}', [
+var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
 	routeThemed,
 	routePlain,
 	routeTemplate,
@@ -127,7 +127,7 @@ options.addRoute(routeBest);
 
 // The Recent Changes page, which is a Git log
 var routeRecent = RoutePipeline(RouteGitLog({
-	uriTemplate: 'http://localhost/recent',
+	uriTemplate: 'http://fullstack.wiki/recent',
 	title: 'Recent Changes',
 	fs: fs,
 	dir: __dirname,
@@ -136,23 +136,23 @@ var routeRecent = RoutePipeline(RouteGitLog({
 options.addRoute(routeRecent);
 
 // Codemirror dependencies
-// routes.addTemplate('http://localhost/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
-// routes.addTemplate('http://localhost/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
-// routes.addTemplate('http://localhost/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
+// routes.addTemplate('http://fullstack.wiki/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
+// routes.addTemplate('http://fullstack.wiki/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
+// routes.addTemplate('http://fullstack.wiki/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
 
 // Render files
-// routes.addTemplate('http://localhost/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
+// routes.addTemplate('http://fullstack.wiki/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
 var routeScript = RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript');
-routeScript.routerURITemplate = 'http://localhost/style{/path*}.js';
+routeScript.routerURITemplate = 'http://fullstack.wiki/style{/path*}.js';
 options.addRoute(routeScript);
 
 var routeStyle = RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css');
-routeStyle.routerURITemplate = 'http://localhost/style{/path*}.css';
+routeStyle.routerURITemplate = 'http://fullstack.wiki/style{/path*}.css';
 options.addRoute(routeStyle);
 
 var indexRDFaRoutes = routes.routes.filter(function(v){
 	return [
-		'http://localhost{/path*}',
+		'http://fullstack.wiki{/path*}',
 	].indexOf(v.template)>=0;
 });
 
@@ -162,26 +162,26 @@ indexRDFaRoutes.forEach(function(route){
 });
 
 var routeLunrIndex = RouteLunrIndex({
-	uriTemplate: 'http://localhost/search-index.js',
+	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
 	routes: indexRDFaRoutes,
 });
 options.addRoute(routeLunrIndex);
 
 var RouteGraphTTL = RouteTTL({
-	uriTemplate: 'http://localhost/graph.ttl',
+	uriTemplate: 'http://fullstack.wiki/graph.ttl',
 	index: indexRDFa,
 });
 options.addRoute(RouteGraphTTL);
 
 var routeGraphNT = RouteNT({
-	uriTemplate: 'http://localhost/graph.nt',
+	uriTemplate: 'http://fullstack.wiki/graph.nt',
 	index: indexRDFa,
 });
 options.addRoute(routeGraphNT);
 
 var routeGraphNT = RouteNQ({
-	uriTemplate: 'http://localhost/graph.nq',
+	uriTemplate: 'http://fullstack.wiki/graph.nq',
 	index: indexRDFa,
 });
 options.addRoute(routeGraphNT);
