@@ -150,6 +150,18 @@ describe('Server', function(){
 		});
 	});
 	it('XML: Syntax highlighting');
-	it('Table of contents rel=up');
+	it('Table of contents rel=up', function(){
+		// Pick any page that has a rel=up link on it
+		return writeMessage(server, [
+			'GET /http/headers/Link HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			// This can be adjusted as necessary, as long as the second is genereated from the first
+			assert(res.toString().indexOf('<link rel="up" href="index"') >= 0);
+			assert(res.toString().indexOf('<a href="/http/headers/index">HTTP Headers</a>') >= 0);
+		});
+	});
 	it('Data tables (/http/headers/index)');
 });
