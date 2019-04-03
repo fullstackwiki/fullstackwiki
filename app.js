@@ -131,7 +131,7 @@ var routeRecent = RoutePipeline(RouteGitLog({
 	title: 'Recent Changes',
 	fs: fs,
 	dir: __dirname,
-	ref: 'HEAD'
+	ref: 'HEAD',
 }), [gRenderTheme]);
 options.addRoute(routeRecent);
 
@@ -150,21 +150,21 @@ var routeStyle = RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css');
 routeStyle.routerURITemplate = 'http://fullstack.wiki/style{/path*}.css';
 options.addRoute(routeStyle);
 
-var indexRDFaRoutes = routes.routes.filter(function(v){
+var documentRoutes = routes.routes.filter(function(v){
 	return [
 		'http://fullstack.wiki{/path*}',
 	].indexOf(v.template)>=0;
 });
 
 var indexRDFa = new IndexRDFa(options);
-indexRDFaRoutes.forEach(function(route){
+documentRoutes.forEach(function(route){
 	indexRDFa.import(route);
 });
 
 var routeLunrIndex = RouteLunrIndex({
 	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
-	routes: indexRDFaRoutes,
+	routes: documentRoutes,
 });
 options.addRoute(routeLunrIndex);
 

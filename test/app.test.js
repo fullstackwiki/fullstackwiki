@@ -138,7 +138,17 @@ describe('Server', function(){
 			assert(res.toString().match(/<http:\/\/fullstack.wiki\/index>/));
 		});
 	});
-	it('/search-index.js');
+	it('/search-index.js', function(){
+		return writeMessage(server, [
+			'GET /search-index.js HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/ecmascript$/m));
+			assert(res.toString().match(/^var searchIndex=/m));
+			assert(res.toString().match(/"labels": {\s"*/));
+		});
+	});
 	it('XML: Syntax highlighting');
 	it('Table of contents rel=up');
 	it('Data tables (/http/headers/index)');
