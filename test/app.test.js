@@ -138,6 +138,17 @@ describe('Server', function(){
 			assert(res.toString().match(/<http:\/\/fullstack.wiki\/index>/));
 		});
 	});
+	it('/recent', function(){
+		return writeMessage(server, [
+			'GET /recent HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			assert(res.toString().indexOf('<h1>Recent Changes') >= 0);
+			assert(res.toString().indexOf('<li class="commit">') >= 0);
+		});
+	});
 	it('/search-index.js', function(){
 		return writeMessage(server, [
 			'GET /search-index.js HTTP/1.1',
