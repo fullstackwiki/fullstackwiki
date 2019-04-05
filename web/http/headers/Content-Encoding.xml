@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Content-Encoding</title>
+		<meta name="description" content="Specifies how to decode/decompress the message body into the intended media type" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Content-Encoding" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Content-Encoding</h1>
+			<p>The <code>Content-Encoding</code> header lists any <i>codings</i> used to encode the document into the message body. A content encoding is typically preserved end-to-end, and metadata headers (e.g. <code>Content-Length</code> describe this encoded message.</p>
+			<p>Codings are listed innermost to outermost. Content-Encoding is the last transformation to be decoded before the document is parsed according to its media type semantics, after <a href="Transfer-Encoding.xml">Transfer-Coding</a> and <a href="Content-Length.xml">Content-Length</a>.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients may find it desirable to compress an request message body. Clients should send <code>Expect: 100-continue</code> so the server can verify it's able to read the listed coding.</p>
+			<p>If the server responds with 415 (Unsupported Media Type), the client should re-try the request with a different or no content encoding. The server might still 415 in response to the Content-Type, so some trial and error may be necessary.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>If the server does not understand any of the listed codings, return <code>415 (Unsupported Media Type)</code> and describe the acceptable coding types in a response. Use an HTML or plain text document to describe the error; there is currently no standard, machine-readable way to list acceptable coding types for clients.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>If the client specified a list of acceptable content-encodings in the <a href="Accept-Encoding.xml">Accept-Encoding</a> request header, then select one of them, apply it to the response body, and list it in <code>Content-Encoding</code>.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>If the client does not understand any of the listed codings, re-try the request with an <a href="Accept-Encoding.xml">Accept-Encoding</a> header. Requests without an <code>Accept-Encoding</code> header can be sent with the server's choice of coding.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Content-Encoding</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists the transformations applied to the message body.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.content-encoding">RFC 7230: HTTP/1.1 Caching &#xA7;6.1. Content-Encoding</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Content-Encoding = 1#content-coding
+			</pre>
+			<p>Content-Encoding options are case-insensitive. For clarity, connection options are written in lowercase, and header names are typically written in their typical title case.</p>
+			<h3>Example</h3>
+			<pre type="message/http">Content-Encoding: gzip</pre>
+		</main>
+	</body>
+</html>

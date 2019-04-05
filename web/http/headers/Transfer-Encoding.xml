@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Transfer-Encoding</title>
+		<meta name="description" content="" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Transfer-Encoding" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Transfer-Encoding</h1>
+			<p>The Transfer-Encoding header field lists the transfer codings used to transmit the message body.</p>
+			<p>Transfer-Encoding is a property of an HTTP/1.1 connection (it is not used in HTTP/1.0 and not relevant to HTTP/2).</p>
+			<p>It is mutually exclusive with the <a href="Content-Length.xml">Content-Length</a> header. See <a href="https://httpwg.org/specs/rfc7230.html#message.body.length">RFC 7230 &#xA7;3.3.3. Message Body Length</a> for how to determine the message body length.</p>
+			<p>Messages can be encoded with any number of transfer codings, but if any, messages must use <code>chunked</code> as the outermost one, so that the end of the transfer can reliably be identified. Implementations will typocally only want to use "chunked", with compression specified by the <a href="Content-Encoding.xml">Content-Encoding</a> header.</p>
+
+			<h2 id="request-write-client">Writing requests (clients)</h2>
+			<p>Transfer-Encoding is typically sent in HTTP/1.1 requests when the length of the upload is unknown. Servers may require the client send a Content-Length header instead, and will return <code>411 Length Required</code> error in this case.</p>
+
+			<h id="request-read-server">Reading requests (servers)</h2>
+			<p>This header is only meaningful in HTTP/1.1 connections, return <code>400 Client Error</code> and close the connection if used in another HTTP version.</p>
+			<p>Parse the headers outermost to innermost. If any tokens are not understood, return <code> 501 (Not Implemented)</code> with a short description.</p>
+			<p>The outermost transfer coding can define when an EOF is present</p>
+
+			<h2 id="response-write-server">Writing responses (servers)</h2>
+			<p>Transfer-Encoding is frequently used for responses where the full length of the message is not known in advance of writing the response body.</p>
+			<p>A server MUST NOT send a Transfer-Encoding header field in any response with a status code of 1xx (Informational) or 204 (No Content), or in response to a CONNECT request; as these responses do not have a body.</p>
+
+			<h2 id="response-read-client">Reading responses (clients)</h2>
+			<p>It is difficult to recover from a response with an unknown Transfer-Encoding header. See <a href="https://httpwg.org/specs/rfc7230.html#message.body.length">RFC 7230 &#xA7;3.3.3. Message Body Length</a> for advice on how to read responses with a Transfer-Encoding header.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Transfer-Encoding</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists transfer encodings used to transmit the message body.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.transfer-encoding">RFC 7230: HTTP/1.1: Message Syntax and Routing &#xA7;3.3.1. Transfer-Encoding</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+					Transfer-Encoding = 1#transfer-coding
+			</pre>
+			<p></p>
+			<h3>Example</h3>
+			<pre type="message/http">Transfer-Encoding: gzip, chunked</pre>
+		</main>
+	</body>
+</html>
