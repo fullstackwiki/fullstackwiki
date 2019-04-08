@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>User-Agent</title>
+		<meta name="description" content="HTTP request header identifying the user agent version making the request" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/User-Agent" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>User-Agent</h1>
+			<p>The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use.</p>
+			<p>The header consists of one or more product names and versions, and comments.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients should typically include a User-Agent header unless specifically configured to omit it. HTTP libraries should include a default user agent that can be disabled, and offers the option to add a custom product name ahead of the library name. If there is a homepage about the user-agent, provide it in a comment (this URI cannot contain parentheses). For example:</p>
+			<pre type="message/http">User-Agent: Surfer/2.15 (http://example.com/about) libwww/2.17b3</pre>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Servers may record the user agent string to keep aggregated metrics on what sort of clients are accessing. Note that clients don't have to be honest, and frequently provide misleading information for the sake of bypassing feature detection that relies on testing the User-Agent string. Do not use the User-Agent string for feature detection.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">User-Agent</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Names the user agent and version making the request.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.user-agent">HTTP/1.1 Semantics and Content &#xA7;5.5.3. User-Agent</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				User-Agent      = product *( RWS ( product / comment ) )
+				product         = token ["/" product-version]
+				product-version = token
+				comment         = "(" *( ctext / quoted-pair / comment ) ")"
+				ctext           = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
+				quoted-pair     = "\" ( HTAB / SP / VCHAR / obs-text )
+			</pre>
+			<p></p>
+			<h3>Example</h3>
+			<pre type="message/http">User-Agent: User-Agent: Surfer/2.15 (http://example.com/about) libwww/2.17b3</pre>
+			<pre type="message/http">User-Agent: curl/7.54.0</pre>
+		</main>
+	</body>
+</html>
