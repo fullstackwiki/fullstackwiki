@@ -24,30 +24,24 @@
 				<dt>PUT</dt><dd>Store a resource on the server at a specific URI</dd>
 				<dt>DELETE</dt><dd>Delete a specific resource on the server</dd>
 				<dt>CONNECT</dt><dd>Open a bi-directional communication channel</dd>
-				<dt>OPTIONS</dt><dd>Request information about communication options, for specific cases where HEAD cannot be used</dd>
+				<dt>OPTIONS</dt><dd>Request a document about communication options, for cases where HEAD is insufficient</dd>
 				<dt>TRACE</dt><dd>Sends back the request message, used for debugging proxies/gateways</dd>
 			</dl>
+
 			<h2>Select the request URI</h2>
-			<p>All requests in HTTP contain some sort of request URI which identifies a resource on the server to be acted on.</p>
-			<p>The specific meaning of the URI varies with the method:</p>
-			<dl class="inline">
-				<dt>GET</dt><dd>The URI of the resource to download</dd>
-				<dt>HEAD</dt><dd>The URI of the resource to download (metadata only)</dd>
-				<dt>POST</dt><dd>The URI of the resource to process an uploaded document</dd>
-				<dt>PUT</dt><dd>The URI to store the uploaded document to, even if it does not exist beforehand</dd>
-				<dt>DELETE</dt><dd>The URI of the resource to be deleted</dd>
-				<dt>CONNECT</dt><dd>The URI of a resource to (typically on a different server)</dd>
-				<dt>OPTIONS</dt><dd>The URI of the resource to get information on</dd>
-				<dt>TRACE</dt><dd>Any valid URI</dd>
-			</dl>
-			<p>For additional information, consult the respective method documentation.</p>
+			<p>All requests in HTTP contain some sort of request URI which identifies a resource on the server to be acted on. Resource URIs are gathered from several places, typically:</p>
+			<ul>
+				<li><p>Another hypermedia document,</p></li>
+				<li><p>Created from a server-provided pattern for generating URIs (such as an HTML form or a URI Template),</p></li>
+				<li><p>An external source pointing to an <i>entry point</i>, typically the homepage, or</p></li>
+				<li><p>A bookmark saved during a previous use.</p></li>
+			</ul>
 
 			<h2>Splitting the request-URI</h2>
 			<p>For historical reasons, HTTP requires the request URI be split up into several component parts to generate the request.</p>
 			<aside><p>Technically, you can send the full request-URI in the request-line. However, this is not well supported by many servers, and is not guarenteed to work.</p></aside>
 			<p>For background, consult <a href="headers/Host.html">the Host header</a>.</p>
 
-			<h2>Encode the request-line</h2>
 			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
 			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authortatively.</p>
 			<p>Most requests will be made with the origin-form:</p>
@@ -69,7 +63,7 @@
 
 			<h2>Connection options</h2>
 			<h3>Connect header</h3>
-			<p>This is a hop-by-hop header and must be modified appropriately by intermediate nodes (gateways and proxies).</p>
+			<p>This is a hop-by-hop header and must be consumed and, if necessary, emitted by every intermediate node (gateways and proxies).</p>
 
 			<h2>List acceptable responses</h2>
 			<p>Clients may specify the kinds of responses they'd prefer to receive, along a variety of dimensions:</p>
@@ -98,18 +92,18 @@
 			<h3>Referer</h3>
 			<p>The <code>Referer</code> header (sic, a misspelling of "Referrer" that happens to save a byte over the wire) specifies the resource where the user-agent found and followed the request-URI for the current request.</p>
 			<h3>Cookie</h3>
-			<p>If the client chooses to, it may send .</p>
-			<p>The formatting of the Cookie header violates HTTP, so it must be treated as a special exemption in code.</p>
+			<p>If the client chooses to, it may send state information to the server in a <code>Cookie</code> header, if any has been sent from a <code>Set-Cookie</code> header in a previous response.</p>
+			<p>The formatting of the Cookie header is different than other HTTP headers, so it must be treated as a special exemption in code.</p>
 			<p>Be very careful when choosing to relay cookies, this makes applications susceptable to ambient authority (confused deputy) attacks if not carefully designed.</p>
 
 			<h2>User agent information</h2>
 			<h3>User-Agent</h3>
-			<p>The <code>User-Agent</code> header describes for the server the software the client is running, for logging, analytics, or other purposes.</p>
+			<p>The <a href="headers/User-Agent.xml">User-Agent</a> header describes for the server the software the client is running, for logging, analytics, or other purposes.</p>
 			<p>Sometimes servers use this header to determine what behavior the client supports. in these cases, you may need to modify the header to cajole the server to do the right thing, but avoid doing this unless absolutely necessary.</p>
 			<!-- TODO: write section on how to properly masquerade as another client, if/when that's necessary to do -->
 
 			<h3>From</h3>
-			<p>The <code>From</code> header field contains an Internet email address for a human user who controls the requesting user agent.</p>
+			<p>The <a href="headers/From.xml">From</a> header field contains an Internet email address for a human user who controls the requesting user agent.</p>
 			<p>The header is not indended for typical usage. Use it when running an automated script or bot, so server owners can contact the owner in the event of misbehavior.</p>
 
 			<h3>Related headers</h3>
@@ -124,8 +118,25 @@
 			<h3>If-Range</h3>
 
 			<h2>Encode the payload if any</h2>
-			<h3>Content-Type, Content-Encoding</h3>
-			<p>The Content-Type and Content-Encoding headers specify how the server must decode the information contained in the request-body.</p>
+			<p>Requests can have an attached document called the <i>request message body</i>. The meaning of this document varies with the definition of the method and the resource saved on the server. If a document is submitted, several headers control how to read the body and how to interpret it.</p>
+			<p>The specific meaning varies with the request method:</p>
+			<dl class="inline">
+				<dt>GET</dt><dd>Undefined</dd>
+				<dt>HEAD</dt><dd>Undefined</dd>
+				<dt>POST</dt><dd>Read by the server, frequently used to create a new resource</dd>
+				<dt>PUT</dt><dd>The document to be saved to the server</dd>
+				<dt>DELETE</dt><dd>Not allowed</dd>
+				<dt>CONNECT</dt><dd>Undefined</dd>
+				<dt>OPTIONS</dt><dd>Undefined</dd>
+				<dt>TRACE</dt><dd>Not allowed</dd>
+			</dl>
+			<p>The request body is typically only used for the <code>PUT</code> and <code>POST</code> methods.</p>
+
+			<h3>Content-Type</h3>
+			<p>Select a media type that the server will likely understand. The <a href="headers/Content-Type.xml">Content-Type</a> header specifies the media type of the document, and therefore what sort of data can be extracted out of it.</p>
+
+			<h3>Content-Encoding</h3>
+			<p>The client can additionally encode the document before attaching it into the message body using a content coding; for example, compressing or encrypting the document. The <a href="headers/Content-Encoding.xml">Content-Encoding</a> header specifies how the server will need to decode the body in order to arrive at the final document.</p>
 
 			<h3>Content-Language</h3>
 			<p>If the document is known to have a specific language, it can be conveyed in the <code>Content-Language</code> header.</p>
@@ -135,21 +146,6 @@
 			<!-- TODO: uh why would you actually do this -->
 
 			<!-- It is feasable that Content-Range might be used here -->
-
-			<h2>Generate the request-body</h2>
-
-			<p>Requests may attach a request body, a document uploaded with the request. The specific meaning varies with the request method:</p>
-			<dl class="inline">
-				<dt>GET</dt><dd>Meaning is undefined</dd>
-				<dt>HEAD</dt><dd>Meaning is undefined</dd>
-				<dt>POST</dt><dd>Read by the server, frequently used to create a new resource</dd>
-				<dt>PUT</dt><dd>The document to be saved to the server</dd>
-				<dt>DELETE</dt><dd>Not allowed</dd>
-				<dt>CONNECT</dt><dd>?</dd>
-				<dt>OPTIONS</dt><dd>?</dd>
-				<dt>TRACE</dt><dd>Not allowed</dd>
-			</dl>
-			<p>The request body is typically only used for the <code>PUT</code> and <code>POST</code> methods.</p>
 
 			<h3>Set Expect header</h3>
 			<p>If the client has reason to believe the upload may be too large for the server to accept, it can indicate this with an Expect header:</p>
@@ -221,10 +217,9 @@
 				<li>If the outermost applied Transfer-Encoding (if any) is "chunked", the response body ends when the chunked parsing does.</li>
 				<li>If there is any other Transfer-Encoding, the message can only be ended when the server closes the connection.</li>
 				<li>If there is a single Content-Length header (or multiple identical values), then read that many bytes.</li>
-				<li>If this is an HTTP/1.0 request, or if the response specifies <code>Connection: close</code>, read until the server closes the connection.</li>
+				<li>If this is an HTTP/1.0 request, or if the response specifies <code>Connection: close</code>, read until the server closes the connection. At this step, there is no way to distinguish a connection error from the end of the document.</li>
 				<li>Otherwise, raise an error that there is no reliable way to determine when the response ends.</li>
 			</ol>
-			<p>Additionally, it's not possible to distinguish between some types of connection errors and the server closing the connection.</p>
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Specification</dt>
