@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>TE</title>
+		<meta name="description" content="The TE HTTP request header lists transfer codings supported by the user-agent." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/TE" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>TE</h1>
+			<p>The <code>TE</code> header field is a request header that lists which transfer codings, besides chunked, the client is willing to accept in response, and whether or not the client is willing to accept trailer fields in a chunked transfer coding.</p>
+
+			<h3>Writing requests (clients)</h3>
+			<p>List all the transfer codings the client is capable of reading, except for <code>chunked</code> (which is required to be supported in HTTP/1.1). Additionally, if the client supports trailers in the chunked encoding, add <code>trailers</code>. This header will typically always be the same.</p>
+			<!-- TODO: Link to list of transfer codings -->
+
+			<h3>Reading requests (servers)</h3>
+			<p>Servers should select the highest-ranked, earliest-listed transfer coding that is worth encoding, or else no coding if there are no matches. A "chunked" coding should be applied on top of the selected encoding, if any.</p>
+			<p><code>TE</code> is only meaningful in HTTP/1.1 requests. Ignore the header in other versions.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">TE</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists transfer codings supported by the user-agent.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.te">RFC 7230: HTTP/1.1 Message Syntax and Routing &#xA7;4.3. TE</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				TE        = #t-codings
+				t-codings = "trailers" / ( transfer-coding [ t-ranking ] )
+				t-ranking = OWS ";" OWS "q=" rank
+				rank      = ( "0" [ "." 0*3DIGIT ] )
+				           / ( "1" [ "." 0*3("0") ] )
+			</pre>
+			<p></p>
+			<h3>Example</h3>
+			<p>A client that supports the "deflate" transfer coding, and the "chunked" transfer coding (without trailers):</p>
+			<pre type="message/http">TE: deflate</pre>
+			<p>A client that only supports the "chunked" transfer coding (without trailers):</p>
+			<pre type="message/http">TE:</pre>
+			<p>A client that supports the "chunked" transfer coding (including trailers), and supports "deflate" with a reduced preference:</p>
+			<pre type="message/http">TE: trailers, deflate;q=0.5</pre>
+		</main>
+	</body>
+</html>
