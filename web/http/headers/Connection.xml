@@ -30,6 +30,8 @@
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Connection</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists hop-by-hop headers that must be consumed by every node.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>
