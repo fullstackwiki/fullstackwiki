@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Trailer</title>
+		<meta name="description" content="The Trailer HTTP header lists headers expected to be included at the end of a chunked transfer" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Trailer" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Trailer</h1>
+			<p>HTTP message bodies sent with the "chunked" transfer coding may include additional HTTP headers, this header lists any headers expected to be included in the trailer section, but whose value will not be known until the trailer is written out.</p>
+			<p>Use of trailers is limited to specialized applications, where this header can optimize applications such as message digests, or other metadata that is computed against the message body.</p>
+			<p>These headers are currently known to include the <code>Server-Timing</code> header, and the (now obsolete) <code>Content-MD5</code> header.</p>
+
+			<h3>Writing requests (clients)</h3>
+			<p>The <code>Trailer</code> header is rarely used by user agents, but valid.</p>
+			<p>If the request contains a body transferred with the "chunked" transfer encoding, and it contains trailers, the client should include a <code>Trailer</code> header listing the headers that the client will include in the trailer section of the chunked body.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>The Trailer header is designed to give the server advance notice that more headers will appear, so if the server wishes to perform computations over the message body that it otherwise wouldn't need to, it can know to do so.</p>
+			<p>This header can typically be ignored, unless the application implements trailers for some purpose; see the relevant headers for details.</p>
+
+			<h3>Writing responses (servers)</h3>
+			<p>Servers may wish to include trailers such as content digests or timing information, that's related to the message body, but without buffering the entire message in memory. If the client has sent a <a href="TE.xml">TE</a> header with a "trailers" value, the server can send a chunked response with trailers. List the trailers being prepared in a <code>Trailer</code> header, then write the final trailers at the end of the chunked encoding.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>Clients that support trailers and wish to receive them should send the <a href="TE.xml">TE</a> header with a "trailers" value.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Trailer</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists headers expected in the chunked encoding's trailer section.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.trailer">RFC 7230: HTTP/1.1 Message Syntax and Routing &#xA7;4.4. Trailer</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Trailer = 1#field-name
+			</pre>
+			<p></p>
+			<h3>Example</h3>
+			<p>An example of a complete HTTP response with a chunked three-byte body (a period with CRLF line ending) and a <code>Server-Timing</code> trailer. The CR-LF line endings are shown explicitly for visual reasons.</p>
+			<ol>
+				<li>First, there is the HTTP response headers</li>
+				<li>A blank line terminates the HTTP headers</li>
+				<li>The remainder of the document is the chunked body, the first line specifies how many bytes to read (in base 16)</li>
+				<li>Three bytes are read, including a CRLF line ending (which is considered part of the document), then a CRLF to end the chunk</li>
+				<li>Another chunk-length line is read; the value of zero indicates it is the last chunk. No bytes are read, and another CRLF is read to end the final chunk.</li>
+				<li>Any number of headers are read the similar to HTTP headers, one per line until a blank line is encountered, which signals the end of the of the entire chunked message body.</li>
+			</ol>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 200 OK&#x240D;&#x240A;
+				Content-Type: text/plain&#x240D;&#x240A;
+				Transfer-Encoding: chunked&#x240D;&#x240A;
+				Trailer: Server-Timing&#x240D;&#x240A;
+				&#x240D;&#x240A;
+				3&#x240D;&#x240A;
+				.&#x240D;&#x240A;
+				&#x240D;&#x240A;
+				0&#x240D;&#x240A;
+				&#x240D;&#x240A;
+				Server-Timing: total;dur=110.2&#x240D;&#x240A;
+				&#x240D;&#x240A;
+			</pre>
+		</main>
+	</body>
+</html>
