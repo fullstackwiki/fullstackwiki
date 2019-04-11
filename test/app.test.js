@@ -174,5 +174,18 @@ describe('Server', function(){
 			assert(res.toString().indexOf('<a href="/http/headers/index">HTTP Headers</a>') >= 0);
 		});
 	});
-	it('Data tables (/http/headers/index)');
+	it('Data tables (/http/headers/index)', function(){
+		// Pick any page with a generated table
+		return writeMessage(server, [
+			'GET /http/headers/index HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			// Verify the table is outputting a reference (non-full URI)
+			assert(res.toString().indexOf('href="/http/headers/Link"') >= 0);
+			// This can be adjusted as necessary, as long as the generated table looks OK
+			assert(res.toString().indexOf('<span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">Link</span>') >= 0);
+		});
+	});
 });
