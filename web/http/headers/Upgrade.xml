@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Upgrade</title>
+		<meta name="description" content="HTTP request header to request that the server change protcols" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Upgrade" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Upgrade</h1>
+			<p>The <code>Upgrade</code> is used to transition the HTTP connection into another protocol. In requests, the client lists any number of protocols to switch to. In responses, it lists the protocol that the server selected.</p>
+			<!-- Todo: write page about the protocol switching process -->
+
+			<h3>Writing requests (clients)</h3>
+			<p>The Upgrade header is typically used to establish WebSocket connections, but can be used for any protocol identified by a <code>protocol-name</code>. Write an Upgrade header listing any number of protocols, in decending order of preference.</p>
+			<p>This is a hop-by-hop header, and so must be listed in the <a href="Connection.xml">Connection header</a>.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>Servers should pick particular resources (particular URIs) that are used for protocol changes. Servers encountering an Upgrade header can ignore it, unless the resource is configured to switch to a different protocol. In this case, pick the first protocol from the list that is understood, and respond with <code>101 (Switching Protocols)</code>.</p>
+
+			<h3>Writing responses (servers)</h3>
+			<p>Servers include the Upgrade header in responses that will switch protocols at the. The header must only be used with a <code>101 Switching Protocols</code> status code, and only a protocol listed by the client.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>The header lists the protocol selected by the server. The new protocol takes effect immediately following the blank line. If there is an error in reading the response headers, just close the TCP connection.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Upgrade</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Request that the server transition to another protocol.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.upgrade">RFC 7230: HTTP/1.1: Message Syntax and Routing &#xA7;6.7. Upgrade</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Upgrade          = 1#protocol
+				protocol         = protocol-name ["/" protocol-version]
+				protocol-name    = token
+				protocol-version = token
+			</pre>
+			<p></p>
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				GET /hello.txt HTTP/1.1
+				Host: www.example.com
+				Connection: upgrade
+				Upgrade: HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11
+
+			</pre>
+			<p>If the server understands the first protocol listed (here, <code>HTTP/2.0</code>), it will . Any data after the end of the request message will be consumed by the new protocol, and all data after the response message is from the new protocol:</p>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 101 Switching Protocols
+				Connection: upgrade
+				Upgrade: HTTP/2.0
+				
+				[... data stream switches to HTTP/2.0 with an appropriate response
+				(as defined by new protocol) to the "GET /hello.txt" request ...]
+			</pre>
+		</main>
+	</body>
+</html>
