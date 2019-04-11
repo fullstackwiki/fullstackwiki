@@ -19,6 +19,8 @@ Topics:
 	* Encryption certificates
 	* Server Name Indication (SNI)
 	* Certificate Transparency Logging
+* Encryption
+	* List of digest algorithms and links to IANA registries of digest algorithms
 * HTTP
 	* Transparent proxies
 	* Gateways
@@ -117,6 +119,7 @@ Topics:
 	* https://12factor.net/
 	* https://github.com/fejes713/accessibility-guide
 	* https://caniuse.com/
+	* https://featurepolicy.info/
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions

@@ -39,6 +39,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 
 ## Specifications
 
+* RFC3230: Instance Digests in HTTP
 * RFC6265: HTTP State Management Mechanism
 * RFC6585: Additional HTTP Status Codes
 * RFC7230: HTTP/1.1: Message Syntax and Routing
@@ -51,4 +52,5 @@ Use HTTP whenever you need to download files from another system on a network, o
 * RFC7240: HTTP Preferences
 * RFC7538: Status Code 308 (Permanent Redirect)
 * RFC7540: Hypertext Transfer Protocol Version 2 (HTTP/2)
+* RFC8188: Encrypted Content-Encoding for HTTP
 * RFC8288: Web Linking

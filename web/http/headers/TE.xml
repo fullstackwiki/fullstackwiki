@@ -15,6 +15,7 @@
 
 			<h3>Writing requests (clients)</h3>
 			<p>List all the transfer codings the client is capable of reading, except for <code>chunked</code> (which is required to be supported in HTTP/1.1). Additionally, if the client supports trailers in the chunked encoding, add <code>trailers</code>. This header will typically always be the same.</p>
+			<p>Since <code>TE</code> is a hop-by-hop header, clients must list it in the <a href="Connection.xml">Connection</a> header.</p>
 			<!-- TODO: Link to list of transfer codings -->
 
 			<h3>Reading requests (servers)</h3>
