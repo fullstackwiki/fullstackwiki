@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Via</title>
+		<meta name="description" content="The Via HTTP header lists upstream nodes that have processed the message" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Via" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Via</h1>
+			<p>The "Via" header field indicates the presence of intermediate protocols and recipients between the user agent and the server (on requests) or between the origin server and the client (on responses). </p>
+			<p>The <a href="Forwarded.xml">Forwarded header</a> can also convey this information, plus information on the client, such as IP address.</p>
+
+			<h3>Writing requests (clients)</h3>
+			<p>User-agents do not send this header, as they are the originator of the message.</p>
+			<p>Intermediate nodes (caches, proxies, and gateways) must add themselves to the list.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>This is an informational header and can be used for debugging purposes.</p>
+			<p>For a header with more information to act on, consider the <a href="Forwarded.xml">Forwarded header</a>.</p>
+
+			<h3>Writing responses (servers)</h3>
+			<p>Origin servers do not send this header, as they are the originator of the message.</p>
+			<p>Intermediate nodes may add themselves to the list, but are not required. Proxies and caches should add themselves for transparency purposes, gateways (intended to be transparent to the user) should not.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>This is an informational header and can be used for debugging purposes.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Via</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists upstream nodes that have processed the message.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.via">RFC 7230: HTTP/1.1: Message Syntax and Routing &#xA7;5.7.1. Via</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Via = 1#( received-protocol RWS received-by [ RWS comment ] )
+				received-protocol = [ protocol-name "/" ] protocol-version
+				                    ; see Section 6.7
+				received-by       = ( uri-host [ ":" port ] ) / pseudonym
+				pseudonym         = token
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http">Via: 1.0 fred, 1.1 p.example.net</pre>
+		</main>
+	</body>
+</html>

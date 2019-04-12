@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Forwarded</title>
+		<meta name="description" content="The Forwarded HTTP request-header provides connection metadata from upstream nodes" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Forwarded" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Forwarded</h1>
+			<p>The Forwarded header provides metadata about the message from intermediate nodes (proxies and gateways), that would otherwise be lost. For example, the IP address of the connected client. This header is similar to the <a href="Via.xml">Via header</a>, except it is never required, it is only used in requests, and it can provide more infomation.</p>
+			<p>It is typically implemented in gateways that want to preserve the IP address of the connecting client.</p>
+			<p>The header lists one or more nodes, listed upstream to downstream (comma-delimited), each containing one or more parameters (semicolon-delimited, no whitespace):</p>
+			<dl>
+				<dt>by</dt>
+				<dd>Identifies the user-agent facing interface of the proxy.</dd>
+
+				<dt>for</dt>
+				<dd>Identifies the node making the request to the proxy.</dd>
+
+				<dt>host</dt>
+				<dd>Is the host request header field as received by the proxy.</dd>
+
+				<dt>proto</dt>
+				<dd>Indicates what protocol was used to make the request.</dd>
+			</dl>
+
+			<h3>Writing requests (clients)</h3>
+			<p>User-agents do not send this header as they are the originator of the message.</p>
+			<p>Intermediate nodes (caches, proxies, and gateways) should add themselves to the list. Gateways should ensure the header is in a format with the information desired by the downstream origin server, so that the origin server will read the user-agent IP address correctly.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>This is an informational header. If the server is behind a gateway, it can read the last item's "for" parameter to retreive the requesting client IP, instead of reading the TCP IP address (which will be the gateway's IP address, instead of the end user).</p>
+
+			<h2>Older versions</h2>
+			<p>The Forwarded header is a standardized version of similar headers commonly seen in gateways, such as <code>X-Forwarded-For</code>. Nodes that understand such headers are encouraged to translate these fields into a Forwarded header, see <a href="https://tools.ietf.org/html/rfc7239#section-7.4">RFC7239 &#xA7;7.4. Transition</a> for advice.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Forwarded</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Provides connection metadata from upstream nodes.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://tools.ietf.org/html/rfc7239">RFC7239: Forwarded HTTP Extension</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Forwarded         = 1#forwarded-element
+				forwarded-element = [ forwarded-pair ] *( ";" [ forwarded-pair ] )
+				forwarded-pair    = token "=" value
+				value             = token / quoted-string
+			</pre>
+			<p></p>
+			<h3>Examples</h3>
+			<pre type="message/http">Forwarded: for="_gazonk"</pre>
+			<pre type="message/http">Forwarded: For="[2001:db8:cafe::17]:4711"</pre>
+			<pre type="message/http">Forwarded: for=192.0.2.60;proto=http;by=203.0.113.43</pre>
+			<pre type="message/http">Forwarded: for=192.0.2.43, for=198.51.100.17</pre>
+
+			<h2>Parsing</h2>
+			<h3>Node.js</h3>
+			<ul>
+				<li><a href="https://npmjs.org/package/forwarded">forwarded</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
