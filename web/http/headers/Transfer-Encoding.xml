@@ -19,7 +19,7 @@
 			<h2 id="request-write-client">Writing requests (clients)</h2>
 			<p>Transfer-Encoding is typically sent in HTTP/1.1 requests when the length of the upload is unknown. Servers may require the client send a Content-Length header instead, and will return <code>411 Length Required</code> error in this case.</p>
 
-			<h id="request-read-server">Reading requests (servers)</h2>
+			<h2 id="request-read-server">Reading requests (servers)</h2>
 			<p>This header is only meaningful in HTTP/1.1 connections, return <code>400 Client Error</code> and close the connection if used in another HTTP version.</p>
 			<p>Parse the headers outermost to innermost. If any tokens are not understood, return <code> 501 (Not Implemented)</code> with a short description.</p>
 			<p>The outermost transfer coding can define when an EOF is present</p>
@@ -47,7 +47,6 @@
 			<pre type="abnf" w:space="indent">
 					Transfer-Encoding = 1#transfer-coding
 			</pre>
-			<p></p>
 			<h3>Example</h3>
 			<pre type="message/http">Transfer-Encoding: gzip, chunked</pre>
 		</main>
