@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Content-Type</title>
+		<meta name="description" content="The Content-Type HTTP header indicates media type of the document (how the data in the document is coded)" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Content-Type" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Content-Type</h1>
+			<p>The Content-Type header indicates the media type of the document; the specification used to decode the data inside the document. The Content-Type header may include media type parameters, typically the document's character set and/or compatibility information.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients use the Content-Type header in requests when sending a message body, to inform the server on how to parse the body. Clients sending a body in a request should always use the Content-Type header, unless a specific security consern warrants otherwise, and the server only accepts a single media type at the target.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Use a media type parsing library to normalize the media type string.</p>
+			<p>Do not accept message bodies without a media type.</p>
+			<p>Make sure the client's indicated media type is preserved. If the media type of documents is indicated by filename extension, do not save uploads with filename extensions that conflict with the client's indicated media type. For example, if the server is configured to serve files ending in ".txt" as <code>text/plain;charset=UTF-8</code>, then do not accept uploads with <code>Content-Type: text/plain;charset=ISO-8859-4</code>, unless the server can convert the media type.</p>
+			<p>To reject uploads with an unsupported or missing media type, return <code>415 (Unsupported Media Type)</code> and include a response describing the permitted media types.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Use the generated media type from the document serializer if it provides one; this will ensure that the correct media type (including parameters) will be written. This is especially important for conveying the correct character set to the client.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>The Content-Type header is used to determine how to parse the final document of bytes into useful data. Each type (top type and subtype, without parameters) is described by a single specification that specifies how to read data out of the document, and what kind of data is available.</p>
+			<p>Use a parser to read the media type; top-level types, subtypes, and parameter names are all case-insensitive. Keep a map of normalized media types to parsers; then normalize the top-level and subtype, and lookup the normalized string in the parser map.</p>
+			<p>This value is influeuenced by the <a href="Accept.xml">Accept header</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Content-Type</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Indicates the media type of the document.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Negotiated by</dt>
+				<dd property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Accept"><a href="Accept.xml">Accept</a></dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.content-type">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;3.1.1.5. Content-Type</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<!-- TODO: Link to media type page -->
+			<pre type="abnf" w:space="indent">
+				Content-Type = media-type
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http">Content-Type: text/html; charset=ISO-8859-4</pre>
+			<pre type="message/http">Content-Type: application/xhtml+xml;charset=UTF-8</pre>
+		</main>
+	</body>
+</html>

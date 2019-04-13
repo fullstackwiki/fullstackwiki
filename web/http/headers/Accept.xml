@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Accept</title>
-		<meta name="description" content="Used by user agents to specify response media types that are acceptable." />
+		<meta name="description" content="The Accept HTTP request-header specify response media types that are acceptable to the user-agent." />
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
@@ -17,35 +17,50 @@
 			<h1>Accept</h1>
 			<p>The Accept header specifies which response media types are acceptable to the client.</p>
 
+			<h2>Writing requests (clients)</h2>
+			<p>Clients use the Content-Type header to indicate the media type responses they are capable of reading, and what they would prefer to receive.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Keep a mapping of supported media types to available representations; and use a library to match the incoming Accept list with a specific media type. If more than one representation could be selected from, add a <a href="Vary.xml">Vary header</a> of <code>Vary: Accept</code> to indicate to caches that the response might vary based on this header.</p>
+			<!-- TODO: link to Content-Type negotiation for more information -->
+
 			<h2>Overview table</h2>
-			<dl>
+			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Accept</dd>
 				<dt>Description</dt>
 				<dd property="w:HTTP-Header-description">Specifies which response media types are acceptable.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Negotiates</dt>
+				<dd property="w:HTTP-Header-negotiates" resource="w:http/headers/Content-Type"><a href="Content-Type.xml">Content-Type</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.accept">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
-			<pre><code>Accept = #( media-range [ accept-params ] )
-			media-range    = ( "*/*"
-								  / ( type "/" "*" )
-								  / ( type "/" subtype )
-								  ) *( OWS ";" OWS parameter )
-			accept-params  = weight *( accept-ext )
-			accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
-			</code></pre>
+			<pre class="abnf-definition" w:space="indent">
+				Accept = #( media-range [ accept-params ] )
+				media-range = ( "*/*"
+								/ ( type "/" "*" )
+								/ ( type "/" subtype )
+								) *( OWS ";" OWS parameter )
+				accept-params  = weight *( accept-ext )
+				accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+			</pre>
 
 			<h2>Examples</h2>
 			<p>Prefer HTML or text/x-c, or text/x-dvi if it’s the best the server has after a 20% markdown in quality, or plain text after a 50% markdown in quality:</p>
-			<pre><code>Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c
-			</code></pre>
+			<pre>Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c</pre>
 			<p>Prefer XHTML or HTML, or generic XML with a reduced preference, or else any content:</p>
-			<pre><code>Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
-			</code></pre>
+			<pre>Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8</pre>
+
+			<h2>Implementations</h2>
+			<h3>Node.js</h3>
+			<ul>
+				<li>accepts</li>
+				<li>negotiator</li>
+			</ul>
 		</main>
 	</body>
 </html>
