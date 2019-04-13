@@ -40,8 +40,8 @@ options.addRoute(routeIndex);
 
 function gRenderEditLink(res){
 	return new RenderEditLink(__dirname, {
-		'edit-form': 'https://github.com/awwright/fullstackwiki/blob/master',
-		'version-history': 'https://github.com/awwright/fullstackwiki/commits/master',
+		'edit-form': 'https://github.com/fullstackwiki/fullstackwiki/blob/master',
+		'version-history': 'https://github.com/fullstackwiki/fullstackwiki/commits/master',
 	});
 }
 
