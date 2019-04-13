@@ -30,6 +30,8 @@
 				<dd property="w:HTTP-Header-description">Lists transfer codings supported by the user-agent.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Negotiates</dt>
+				<dd property="w:HTTP-Header-negotiates" resource="w:http/headers/Transfer-Encoding"><a href="Transfer-Encoding.xml">Transfer-Encoding</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.te">RFC 7230: HTTP/1.1 Message Syntax and Routing &#xA7;4.3. TE</a></dd>
 			</dl>

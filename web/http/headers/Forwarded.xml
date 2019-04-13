@@ -16,16 +16,16 @@
 			<p>The header lists one or more nodes, listed upstream to downstream (comma-delimited), each containing one or more parameters (semicolon-delimited, no whitespace):</p>
 			<dl>
 				<dt>by</dt>
-				<dd>Identifies the user-agent facing interface of the proxy.</dd>
+				<dd>The address of the node itself.</dd>
 
 				<dt>for</dt>
-				<dd>Identifies the node making the request to the proxy.</dd>
+				<dd>Identifies the source address of the client making the request to the node.</dd>
 
 				<dt>host</dt>
-				<dd>Is the host request header field as received by the proxy.</dd>
+				<dd>The <code>Host</code> request header field as received by the node. This should be used by gateways that change the Host header.</dd>
 
 				<dt>proto</dt>
-				<dd>Indicates what protocol was used to make the request.</dd>
+				<dd>Indicates what protocol was used to make the request. This should be used if the node forwards the request with a different protocol.</dd>
 			</dl>
 
 			<h3>Writing requests (clients)</h3>

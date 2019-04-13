@@ -18,13 +18,15 @@
 			<p>The Accept-Charset header describes which character sets are acceptable in textual response content.</p>
 
 			<h2>Overview table</h2>
-			<dl>
+			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Accept-Charset</dd>
 				<dt>Description</dt>
 				<dd property="w:HTTP-Header-description">Indicates which charsets are acceptable in responses.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Negotiates</dt>
+				<dd property="w:HTTP-Header-negotiates">Media type's character set</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.accept-charset">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.3. Accept-Charset</a></dd>
 			</dl>

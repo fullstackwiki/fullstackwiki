@@ -11,7 +11,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Content-Type</h1>
-			<p>The Content-Type header indicates the media type of the document; the specification used to decode the data inside the document. The Content-Type header may include media type parameters, typically the document's character set and/or compatibility information.</p>
+			<p>The Content-Type header indicates the media type of the document in the message body; the specification used to decode the data inside the document. The Content-Type header may include media type parameters, typically the document's character set and/or compatibility information.</p>
 
 			<h2>Writing requests (clients)</h2>
 			<p>Clients use the Content-Type header in requests when sending a message body, to inform the server on how to parse the body. Clients sending a body in a request should always use the Content-Type header, unless a specific security consern warrants otherwise, and the server only accepts a single media type at the target.</p>
@@ -28,7 +28,7 @@
 			<h2>Reading responses (clients)</h2>
 			<p>The Content-Type header is used to determine how to parse the final document of bytes into useful data. Each type (top type and subtype, without parameters) is described by a single specification that specifies how to read data out of the document, and what kind of data is available.</p>
 			<p>Use a parser to read the media type; top-level types, subtypes, and parameter names are all case-insensitive. Keep a map of normalized media types to parsers; then normalize the top-level and subtype, and lookup the normalized string in the parser map.</p>
-			<p>This value is influeuenced by the <a href="Accept.xml">Accept header</a>.</p>
+			<p>This value may be influeuenced by the <a href="Accept.xml">Accept header</a>; if this is the case, the server will usually send <code>Vary: Accept</code> in the response.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

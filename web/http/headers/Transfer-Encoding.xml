@@ -39,13 +39,15 @@
 				<dd property="w:HTTP-Header-description">Lists transfer encodings used to transmit the message body.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Negotiated by</dt>
+				<dd property="w:HTTP-Header-negotiated-by" resource="w:http/headers/TE"><a href="TE.xml">TE</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.transfer-encoding">RFC 7230: HTTP/1.1: Message Syntax and Routing &#xA7;3.3.1. Transfer-Encoding</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
 			<pre type="abnf" w:space="indent">
-					Transfer-Encoding = 1#transfer-coding
+				Transfer-Encoding = 1#transfer-coding
 			</pre>
 			<h3>Example</h3>
 			<pre type="message/http">Transfer-Encoding: gzip, chunked</pre>
