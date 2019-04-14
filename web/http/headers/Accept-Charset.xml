@@ -27,6 +27,8 @@
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Negotiates</dt>
 				<dd property="w:HTTP-Header-negotiates"><a href="Content-Type.xml">Content-Type</a> (the character set of the media type)</dd>
+				<dt>List usage in</dt>
+				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.accept-charset">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.3. Accept-Charset</a></dd>
 			</dl>
