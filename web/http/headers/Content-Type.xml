@@ -39,7 +39,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Negotiated by</dt>
-				<dd property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Accept"><a href="Accept.xml">Accept</a></dd>
+				<dd><span property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Accept"><a href="Accept.xml">Accept</a></span>, <span property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Accept-Charset"><a href="Accept-Charset.xml">Accept-Charset</a></span></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.content-type">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;3.1.1.5. Content-Type</a></dd>
 			</dl>

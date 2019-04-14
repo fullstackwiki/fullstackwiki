@@ -35,6 +35,12 @@
 				<dd property="w:HTTP-Header-description">Request that the server transition to another protocol.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Negotiates</dt>
+				<dd property="w:HTTP-Header-negotiates" resource="w:http/headers/Upgrade"><a href="Upgrade.xml">Upgrade</a></dd>
+				<dt>Negotiated by</dt>
+				<dd property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Upgrade"><a href="Upgrade.xml">Upgrade</a></dd>
+				<dt>List usage in</dt>
+				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Connection"><a href="Connection.xml">Connection</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.upgrade">RFC 7230: HTTP/1.1: Message Syntax and Routing &#xA7;6.7. Upgrade</a></dd>
 			</dl>

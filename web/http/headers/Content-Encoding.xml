@@ -39,6 +39,8 @@
 				<dd property="w:HTTP-Header-description">Lists the transformations applied to the message body.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Negotiated by</dt>
+				<dd property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Accept-Encoding"><a href="Accept-Encoding.xml">Accept-Encoding</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.content-encoding">RFC 7230: HTTP/1.1 Caching &#xA7;6.1. Content-Encoding</a></dd>
 			</dl>
