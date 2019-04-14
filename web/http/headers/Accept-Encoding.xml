@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Accept-Encoding</title>
+		<meta name="description" content="The Accept-Encoding HTTP request-header specify response content codings that are acceptable to the user-agent." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/http/headers/Accept-Encoding" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Accept-Encoding</h1>
+			<p>The Accept-Encoding header specifies which response content codings are acceptable to the client.</p>
+			<p>This header is typically used to indicate the user agent supports compressed response messages, such as gzip.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Write an Accept-Encoding header listing which content codings it is capable of decoding, especially compression methods. Check the response <a href="Content-Encoding.xml">Content-Encoding header</a> to determine how to decode the message body, if necessary.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Using the Accept-Encoding header to select a response content coding is not trivial; keep a mapping of supported content-codings to available encoders or encoded representations, and use a library to match the incoming Accept-Encoding to an available encoding. If more than one representation could be selected from, add a <a href="Vary.xml">Vary header</a> of <code>Vary: Accept-Encoding</code> to indicate to caches that the response might vary based on this header.</p>
+			<p>For HTTP/Web applications, consider using a transforming HTTP gateway or cache to perform this step, instead of adding this complexity in the application.</p>
+			<!-- TODO: link to list of content codings -->
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Accept-Encoding</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies which response content codings are acceptable.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Negotiates</dt>
+				<dd property="w:HTTP-Header-negotiates" resource="w:http/headers/Content-Encoding"><a href="Content-Encoding.xml">Content-Encoding</a></dd>
+				<dt>List usage in</dt>
+				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.Accept-Encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept-Encoding</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre class="abnf-definition" w:space="indent">
+				Accept-Encoding  = #( codings [ weight ] )
+				codings          = content-coding / "identity" / "*"
+				weight = OWS ";" OWS "q=" qvalue
+				qvalue = ( "0" [ "." 0*3DIGIT ] )
+				       / ( "1" [ "." 0*3("0") ] )
+			</pre>
+
+			<h2>Examples</h2>
+			<p>Indicate support for compress, gzip:</p>
+			<pre type="message/http">Accept-Encoding: compress, gzip</pre>
+
+			<h2>Implementations</h2>
+			<h3>Node.js</h3>
+			<ul>
+				<li>accepts</li>
+				<li>negotiator</li>
+			</ul>
+		</main>
+	</body>
+</html>
