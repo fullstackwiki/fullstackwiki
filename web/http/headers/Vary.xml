@@ -13,6 +13,21 @@
 			<h1>Vary</h1>
 			<p>The "Vary" header field in a response describes what parts of a request message might influence the origin server's process for selecting and representing this response.</p>
 
+			<h2>Writing responses (servers)</h2>
+			<p>List all headers that affect the contents of the response message body. These headers include:</p>
+			<ul>
+				<!-- Not all headers that are negotiated will be listed in Vary; in particular, Connection headers are not listed in Vary -->
+				<!-- <li subquery="each" about-bind="{?abt}" property="w:HTTP-Header-negotiates" resource-bind="{?header}"><a property="xht:describedby" href-bind="{?headerabt}">{?headerabt}</a></li> -->
+				<li><a href="Accept.xml">Accept</a></li>
+				<li><a href="Accept-Charset.xml">Accept-Charset</a></li>
+				<li><a href="Accept-Encoding.xml">Accept-Encoding</a></li>
+			</ul>
+			<p>Do not include connection headers that negotiate protocol details (such as <code>TE</code>). These are listed in the <a href="Connection.xml">Connection header</a>.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>The Vary header is used for computing caching keys, see caching instructions for more information.</p>
+			<!-- TODO: link to page on computing caching keys -->
+
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>

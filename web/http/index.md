@@ -42,6 +42,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * RFC3230: Instance Digests in HTTP
 * RFC6249: Metalink/HTTP: Mirrors and Hashes
 * RFC6265: HTTP State Management Mechanism
+* RFC6266: Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 * RFC6585: Additional HTTP Status Codes
 * RFC7230: HTTP/1.1: Message Syntax and Routing
 * RFC7231: HTTP/1.1: Semantics and Content

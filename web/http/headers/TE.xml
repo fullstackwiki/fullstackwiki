@@ -21,6 +21,7 @@
 			<h3>Reading requests (servers)</h3>
 			<p>Servers should select the highest-ranked, earliest-listed transfer coding that is worth encoding, or else no coding if there are no matches. A "chunked" coding should be applied on top of the selected encoding, if any.</p>
 			<p><code>TE</code> is only meaningful in HTTP/1.1 requests. Ignore the header in other versions.</p>
+			<p>The Transfer-Encoding is hop-by hop and not used for caching, therefore it is not listed in Vary.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
