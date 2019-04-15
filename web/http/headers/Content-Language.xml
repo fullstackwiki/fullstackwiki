@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Content-Language</title>
+		<meta name="description" content="The Content-Language HTTP header indicates the (natural) language of the document" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Content-Language" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Content-Language</h1>
+			<p>The Content-Language header indicates the primary (natural) languages that the document is written in. (This does not refer to computer languages; see <a href="Content-Type.xml">Content-Type</a> instead.) Using a language tag implies the target audience is capable of reading one of the languages listed.</p>
+			<p>The value is one or more <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a> language tags identifying a language, one of which the audience must be able to understand.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients can send this in requests containing a message body. Send this if the media type doesn't have a way of conveying the content's language (e.g. plain text), and server is known to use it in some fashion. For example, document databases might store the Content-Language header of uploaded documents, and use it to assist with indexing, as well as send back the same header when the document is retreived.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Servers can use the Content-Language header for applications where the written text of the uploaded document is being processed, and the document's media type does not have a way, or does not specify, a language. For example, any natural language processing, or fulltext indexes. If the document is being saved, e.g. on a filesystem, try to save the language header and preserve it for subsequent requests. Note that language tags are case-insensitive, but it is not necessary to normalize a valid language tag, the downstream processor should be able to use the language tag as-is.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers should send a Content-Language header if the primary language of the document is known. If the server has saved a language in the database, or if the document specifies a language (e.g. in an <code>xml:lang</code> or HTML <code>lang</code> attribute), then generate a language tag (or verify the existing langtag) and send it in a Content-Language header.</p>
+			<p>While applications increasingly detect the language of a document without a machine label, in some cases this is impractical. For example, negotiating gateways and caches might select a document based on the user's language preferences.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Note this value may be influeuenced by the <a href="Accept-Language.xml">Accept-Language header</a>; if this is the case, the server will usually send <code>Vary: Accept-Language</code> in the response.</p>
+
+			<h2>Offering translations</h2>
+			<p>Alternate versions of a document can be specified using a link, either the <a href="Link.xml">Link header</a> or a link , such as the <code>&lt;link/&gt;</code> element in HTML; by using <code>rel="alternate"</code> and <code>hreflang="<i>target-language</i>"</code>. User agents can use this link to suggest translations to users. <a href="https://www.w3.org/TR/html/links.html#link-type-alternate">See the HTML specification for more information</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Content-Language</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Indicates the (written) language of the document.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Negotiated by</dt>
+				<dd property="w:HTTP-Header-negotiated-by" resource="w:http/headers/Accept-Language"><a href="Accept-Language.xml">Accept-Language</a></dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.content-language">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;3.1.3.2. Content-Language</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<!-- TODO: Link to media type page -->
+			<pre type="abnf" w:space="indent">
+			Content-Language = 1#language-tag
+			language-tag     = &lt;Language-Tag, see [RFC5646], Section 2.1&gt;
+			Language-Tag  = langtag             ; normal language tags
+			              / privateuse          ; private use tag
+			              / grandfathered       ; grandfathered tags
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http">Content-Language: mi, en</pre>
+		</main>
+	</body>
+</html>

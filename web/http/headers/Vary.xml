@@ -21,6 +21,7 @@
 				<li><a href="Accept.xml">Accept</a></li>
 				<li><a href="Accept-Charset.xml">Accept-Charset</a></li>
 				<li><a href="Accept-Encoding.xml">Accept-Encoding</a></li>
+				<li><a href="Accept-Language.xml">Accept-Language</a></li>
 			</ul>
 			<p>Do not include connection headers that negotiate protocol details (such as <code>TE</code>). These are listed in the <a href="Connection.xml">Connection header</a>.</p>
 
