@@ -23,7 +23,7 @@
 				<li><a href="Accept-Encoding.xml">Accept-Encoding</a></li>
 				<li><a href="Accept-Language.xml">Accept-Language</a></li>
 			</ul>
-			<p>Do not include connection headers that negotiate protocol details (such as <code>TE</code>). These are listed in the <a href="Connection.xml">Connection header</a>.</p>
+			<p>Do not include connection headers that negotiate protocol details (such as <code>TE</code>). These will be listed by the client in the <a href="Connection.xml">Connection header</a>.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p>The Vary header is used for computing caching keys, see caching instructions for more information.</p>
