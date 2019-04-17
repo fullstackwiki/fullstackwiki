@@ -37,6 +37,7 @@ Topics:
 		* HTTP status codes
 		* HTTP headers
 	* https://www.w3.org/2001/tag/doc/mime-respect
+	* Subscribing to events with webhooks
 * Media types
 	* media type name syntax
 	* multipart
@@ -110,6 +111,9 @@ Topics:
 * Error correction
 	* IP error detection
 	* https://quiet.github.io/quiet-blog/2018/09/16/How-Libcorrect-Does-Forward-Error-Correction.html
+* Dweb - SOLID
+	* https://github.com/solid/solid-spec
+	* https://solid.inrupt.com/docs/intro-to-solid-spec
 * Other documentation efforts
 	* https://www.owasp.org/
 	* http://typographyhandbook.com/
@@ -120,6 +124,8 @@ Topics:
 	* https://github.com/fejes713/accessibility-guide
 	* https://caniuse.com/
 	* https://featurepolicy.info/
+	* https://github.com/LearnSolid/solid-roadmap
+	* http://resthooks.org/
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions

@@ -5,33 +5,31 @@
 
 Fullstack.wiki is a repository of documentation for how to build reliable, accessible, cross-platform Web applications.
 
-This repository includes all the broad categories of content:
+This can be broken down into several broad categories of content:
 
 * Original specification text, for offline reference
 * Writing technical standards & participating in standards groups
-* Writing Web applications
-* Writing Web user-agents
+* Writing Web applications (i.e. publishing data)
+* Writing Web user-agents (i.e. consuming data)
 * Techniques & tools for programming
 
 
 ## Principles
 
 * Document techniques for building reliable, accessible, cross-platform Web applications.
-* Centrally document how to use/implement standards, cross referencing the relevant documents.
-* Keep things simple.
+* Centrally document how to use/implement standards, cross referencing the relevant authortative documents.
 * Document best practices, not necessarially everything.
 * Document implementation status by each platform.
-* Explain how to degrade on platforms that don't support the feature.
-* Emphasize security and defense in depth.
+* Support progressive enhancement and graceful degradation.
+* Encourage defense in depth and emphasize security at every step.
 * Keep accessibility, UX, and security notes in-line as essential requirements, not as separate sections.
 
 
 ## Prerequisites
 
 * make
-* xsltproc
 * node
-* npm
+* npm (or compatible package install)
 
 
 ## Building
@@ -44,10 +42,11 @@ This repository includes all the broad categories of content:
 ## Index of Files
 
 * `bin/` - Executables and helper scripts
-* `templates/` - Declarative documents and transforms
+* `lib/` - Web server related libraries
 * `web/` - webroot/docroot for the website
+* `app.js` - Web server routing
 * `Makefile` - The commands to build the website
-* `index.html` - Redirects to the index inside `web/` for the lazy
+* `index.html` - Redirects to the `web/index.xhtml` for the lazy
 
 
 ## Technical requirements
