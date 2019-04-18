@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Allow</title>
+		<meta name="description" content="The Allow HTTP response header lists methods supported by the resource" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Allow" typeof="w:HTTP-Header">
+			<a rel="xht:describedby" href="" />
+
+			<h1>Allow</h1>
+			<p>The Allow response header lists all of the HTTP methods that may be used on the target resource. It is required in a <code>405 (Method Not Allowed)</code> response, and optional in other responses.</p>
+			<p>As a rule of thumb, any method not listed here will return <code>405 (Method Not Allowed)</code> or <code>501 (Not Implemented)</code>, and listed methods will never return <code>404 (Not Found)</code> or 405 (but may return other errors, such as <code>401 (Unauthorized)</code>).</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers should know which methods are valid on a given resource; all the different methods that the server logic can possibly execute. For each resource, the value of this header should always be the same (unless a security reason warrants otherwise). </p>
+			<p>This header must be sent in <code>405 (Method Not Allowed)</code> responses, and should also be sent in response to an OPTIONS request.</p>
+
+			<dl>
+				<dt>GET, HEAD</dt>
+				<dd>Always list these together, unless for some reason the resource exists without a readable representation (where a GET request would return 405).</dd>
+				<dt>OPTIONS</dt>
+				<dd>Servers should typically always support OPTIONS, and should list OPTIONS.</dd>
+				<dt>PUT, PATCH</dt>
+				<dd>List PUT if the resource can be modified (by any user, not necessarially by the current user). List PATCH if the server additionally supports the PATCH method.</dd>
+				<dt>DELETE</dt>
+				<dd>List DELETE if the resource supports a DELETE request.</dd>
+				<dt>POST</dt>
+				<dd>List POST if the resource has a defined POST handler.</dd>
+			</dl>
+
+			<p>In APIs, send this header in 2xx, 3xx, and 4xx responses; this describes the API so that clients can determine what sorts of actions they may perform on a resource after downloading it. By sending this header, clients can skip a potential re-request if they first make a request with an invalid method (e.g. if the client tries PATCH when the server only supports PUT, the client can know to avoid PATCH requests altogether instead of finding this out after a 405 (Method Not Allowed) response). If the resource does not exist but it can be created (i.e. in a 404 response), PUT should be the only method listed.</p>
+
+			<p>GET should always be accompanied by HEAD, since both must be supported at the same time.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Clients should read this header to determine the course of action for follow-up requests on the same resource.</p>
+			<p>If available, clients can read this header to determine how to write to a resource; if the resource indicates it supports PATCH, the client can send a patch; otherwise if it supports PUT, the client will need to upload the entire document.</p>
+			<p>RFC7231 seems to imply the OPTIONS header is always permitted, even if not listed in Allow.</p>
+
+
+			<h2>Link relations</h2>
+			<p>Some media types support a media-type-specific link attribute that functions similar to Allow, which lists the known permitted methods of the link target.</p>
+
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Allow</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists methods supported by the resource.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Advertises</dt>
+				<dd property="w:HTTP-Header-negotiates">HTTP method</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.allow">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.4.1. Allow</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre class="abnf-definition" w:space="indent">
+				Allow = #method
+			</pre>
+
+			<h3>Examples</h3>
+			<p>An example of a resource that is hard-coded or has been read off a read-only filesystem:</p>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 200 OK
+				Date: Thu, 18 Apr 2019 00:07:32 GMT
+				Content-Type: application/xhtml+xml
+				Allow: GET, HEAD, OPTIONS
+			</pre>
+		</main>
+	</body>
+</html>
