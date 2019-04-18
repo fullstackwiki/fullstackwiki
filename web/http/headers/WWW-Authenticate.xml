@@ -27,7 +27,9 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-Header-description">Requests the user-agent authenticate to the origin.</dd>
 				<dt>Direction</dt>
-				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Advertises</dt>
+				<dd property="w:HTTP-Header-advertises" resource="w:http/headers/Authorization"><a href="Authorization.xml">Authorization</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7235.html#header.www-authenticate">RFC 7235: HTTP/1.1 Authentication &#xA7;4.1. WWW-Authenticate</a></dd>
 			</dl>

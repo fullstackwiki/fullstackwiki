@@ -16,7 +16,7 @@
 
 			<h1>Authorization</h1>
 			<p>The Authorization header is provided by clients to authenticate themselves to the server, for the purpose of authorizing the request.</p>
-			<p>For clients that want to authorize themselves to an intermediate node instead of the origin server, use <a href="Proxy-Authorization.xml">Proxy-Authorization</a></p>
+			<p>For clients that want to authorize themselves to an intermediate node instead of the origin server, use <a href="Proxy-Authorization.xml">Proxy-Authorization</a>.</p>
 
 			<h2>Writing requests</h2>
 			<p>Clients may provide the Authorization header when they know the resource requires authentication, usually after a request results in a <code>401 (Unauthorized)</code> response.</p>

@@ -15,7 +15,7 @@
 			<a rel="xht:describedby" href="" />
 
 			<h1>Allow</h1>
-			<p>The Allow response header lists all of the HTTP methods that may be used on the target resource. It is required in a <code>405 (Method Not Allowed)</code> response, and optional in other responses.</p>
+			<p>The Allow response header lists all of the HTTP methods that may be used on the target resource, so that a client may select one understood by the server on subsequent requests. It is required in a <code>405 (Method Not Allowed)</code> response, and optional in other responses.</p>
 			<p>As a rule of thumb, any method not listed here will return <code>405 (Method Not Allowed)</code> or <code>501 (Not Implemented)</code>, and listed methods will never return <code>404 (Not Found)</code> or 405 (but may return other errors, such as <code>401 (Unauthorized)</code>).</p>
 
 			<h2>Writing responses (servers)</h2>
@@ -42,7 +42,7 @@
 			<h2>Reading responses (clients)</h2>
 			<p>Clients should read this header to determine the course of action for follow-up requests on the same resource.</p>
 			<p>If available, clients can read this header to determine how to write to a resource; if the resource indicates it supports PATCH, the client can send a patch; otherwise if it supports PUT, the client will need to upload the entire document.</p>
-			<p>RFC7231 seems to imply the OPTIONS header is always permitted, even if not listed in Allow.</p>
+			<p>RFC7231 seems to imply the OPTIONS method is always permitted, even if not listed in Allow.</p>
 
 
 			<h2>Link relations</h2>
@@ -58,7 +58,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Advertises</dt>
-				<dd property="w:HTTP-Header-negotiates">HTTP method</dd>
+				<dd property="w:HTTP-Header-advertises">HTTP method</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.allow">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.4.1. Allow</a></dd>
 			</dl>

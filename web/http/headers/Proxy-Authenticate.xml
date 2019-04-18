@@ -27,6 +27,8 @@
 				<dd property="w:HTTP-Header-description">Requests the user-agent authenticate to an intermediate proxy.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Advertises</dt>
+				<dd property="w:HTTP-Header-advertises" resource="w:http/headers/Proxy-Authorization"><a href="Proxy-Authorization.xml">Proxy-Authorization</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7235.html#header.proxy-authenticate">RFC 7235: HTTP/1.1 Authentication &#xA7;4.3. Proxy-Authenticate</a></dd>
 			</dl>
