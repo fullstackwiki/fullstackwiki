@@ -232,6 +232,7 @@ pre {
 	border: 1px dotted #9b9689;
 	font-family: Consolas, Monaco, 'Andale Mono', monospace;
 	overflow-x: auto;
+	font-size: 90%;
 }
 pre code {
 	border: none;
