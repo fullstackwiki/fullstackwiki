@@ -124,7 +124,7 @@
 
 				function parseHTTPDate(str){
 					if(typeof str !== 'string') throw new Error('Expected a string');
-					if(str.test(IMF_fixdate) || str.test(rfc850_date) || str.test(asctime_date)) return new Date(str);
+					if(IMF_fixdate.test(str) || rfc850_date.test(str) || asctime_date.test(str)) return new Date(str);
 					throw new Error('Invalid HTTP-date');
 				}
 			</pre>
