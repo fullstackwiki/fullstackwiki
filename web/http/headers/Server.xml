@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Server</title>
+		<meta name="description" content="HTTP request header identifying the user agent version making the request" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Server" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Server</h1>
+			<p>The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use.</p>
+			<p>The header consists of one or more product names and versions, and comments.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Origin servers should typically include a Server header unless specifically configured to omit it. HTTP libraries should include a default user agent that can be disabled, and offers the option to add a custom product name ahead of the library name.</p>
+			<pre type="message/http">Server: CERN/3.0 libwww/2.17</pre>
+			<p>Comments can be provided inside a matched pair of parentheses, and matched pairs of parentheses can be nested:</p>
+			<pre type="message/http">Server: Webapp (http://example.com/about)</pre>
+			<p>Currently, there is no way for intermediate nodes (proxies, caches, and gateways) to advertise their product names and versions, however their presence can be indicated with the <a href="Via.xml">Via header</a>, and they can be specifically addressed with the Max-Forwards header.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Typically the Server header only serves as advertising for the server software.</p>
+			<p>In some cases, parsing the server header can be used to determine if clients need to deploy a workaround for a server bug; in this case, clients should blacklist exact headers so that upgrades to the server do not have to work around the client's workaround.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Server</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Names the server software name and version generating the origin response.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.server">HTTP/1.1 Semantics and Content &#xA7;7.4.2. Server</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Server          = product *( RWS ( product / comment ) )
+				product         = token ["/" product-version]
+				product-version = token
+				comment         = "(" *( ctext / quoted-pair / comment ) ")"
+				ctext           = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
+				quoted-pair     = "\" ( HTAB / SP / VCHAR / obs-text )
+			</pre>
+			<p></p>
+			<h3>Example</h3>
+			<pre type="message/http">Server: Server: Surfer/2.15 (http://example.com/about) libwww/2.17b3</pre>
+			<pre type="message/http">Server: curl/7.54.0</pre>
+		</main>
+	</body>
+</html>
