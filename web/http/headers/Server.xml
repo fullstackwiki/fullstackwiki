@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Server</title>
-		<meta name="description" content="HTTP request header identifying the user agent version making the request" />
+		<meta name="description" content="HTTP response header identifying the server generating the response" />
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
@@ -12,7 +12,7 @@
 
 			<h1>Server</h1>
 			<p>The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use.</p>
-			<p>The header consists of one or more product names and versions, and comments.</p>
+			<p>The header consists of one or more product names and versions, and comments. The equivalent header for clients making requests is the <a href="User-Agent.xml">User-Agent header</a>.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Origin servers should typically include a Server header unless specifically configured to omit it. HTTP libraries should include a default user agent that can be disabled, and offers the option to add a custom product name ahead of the library name.</p>
@@ -46,10 +46,9 @@
 				ctext           = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
 				quoted-pair     = "\" ( HTAB / SP / VCHAR / obs-text )
 			</pre>
-			<p></p>
+			<p>This syntax is the same as the <a href="User-Agent.xml">User-Agent header</a>.</p>
 			<h3>Example</h3>
-			<pre type="message/http">Server: Server: Surfer/2.15 (http://example.com/about) libwww/2.17b3</pre>
-			<pre type="message/http">Server: curl/7.54.0</pre>
+			<pre type="message/http">Server: CERN/3.0 libwww/2.17</pre>
 		</main>
 	</body>
 </html>
