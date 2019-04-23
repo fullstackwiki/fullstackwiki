@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Max-Forwards</title>
+		<meta name="description" content="The Max-Forwards HTTP request-header limits how many intermediate nodes a message may pass through." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Max-Forwards" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Max-Forwards</h1>
+			<p>The <code>Max-Forwards</code> header limits how many intermediate nodes that an HTTP message may pass through. It is used primarially for with the TRACE method to debug HTTP routing through caches and proxies.</p>
+			<p>When a node receives a message with the Max-Forwards header, it must forward the header with the value deincremented by one. If the received value is zero (and cannot be deincremented further), the node becomes authortative for the given request, instead of the origin server.</p>
+
+			<h3>Writing requests (user agent clients)</h3>
+			<p>User agents do not typically use the Max-Forwards header, except by users when debugging routing configurations. Clients may use a behavior similar to the traceroute utility to debug configurations: Try a TRACE request with <code>Max-Forwards: 0</code>, and note the response, which will be from the node being connected to. The headers that were sent will probably match those in the response message. Retry the request, incrementing the value each try.</p>
+
+			<h3>Intermediate nodes</h3>
+			<p>Intermediate nodes MUST look for the presence of the <code>Max-Forwards</code> header. If it exists, and the value is 0, respond as if the final recipient. Otherwise, the downstream message must include this header with the value deincremented by one.</p>
+			<p>Intermediate nodes MUST NOT add the header if they did not receive it.</p>
+			<p>Nodes may ignore the header for methods besides TRACE and OPTIONS.</p>
+
+			<h3>Reading requests (origin server)</h3>
+			<p>The origin server ignores the Max-Forwards header, since the server is authortative for the message and is going to respond to the message regardless of the Max-Forwards value.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Max-Forwards</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Limits how many intermediate nodes a message can pass through.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.max-forwards">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.1.2. Max-Forwards</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Max-Forwards = 1*DIGIT
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				TRACE / HTTP/1.1
+				Host: example.com
+				Max-Forwards: 0
+			</pre>
+			<p>An intermediate node receiving this message must always respond, in this case, the TRACE method specifies reflecting back the received HTTP headers in the response body.</p>
+		</main>
+	</body>
+</html>

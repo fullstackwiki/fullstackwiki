@@ -9,7 +9,7 @@
     "lunr": "^2.3.6",
     "markdown": "^0.5.0",
     "rdf": "^4.0.1",
-    "rdfa": "^0.0.9",
+    "rdfa": "^0.0.10",
     "rdfa-template": "^0.0.6",
     "strip-indent": "^2.0.0",
     "xmldom": "^0.1.27"
