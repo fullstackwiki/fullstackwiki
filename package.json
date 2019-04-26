@@ -2,20 +2,20 @@
   "dependencies": {
     "bluebird": "^3.5.3",
     "browserify": "^16.2.3",
-    "dive-httpd": "^0.0.10",
+    "dive-httpd": "^0.0.11",
     "highlight.js": "^9.15.6",
     "http-link": "^0.3.0",
-    "isomorphic-git": "^0.37.4",
+    "isomorphic-git": "^0.54.2",
     "lunr": "^2.3.6",
     "markdown": "^0.5.0",
-    "rdf": "^4.0.1",
+    "rdf": "^4.1.0",
     "rdfa": "^0.0.10",
     "rdfa-template": "^0.0.6",
-    "strip-indent": "^2.0.0",
+    "strip-indent": "^3.0.0",
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "mocha": "^6.1.4"
   },
   "scripts": {
     "test": "mocha"
