@@ -31,7 +31,7 @@ function testHTMLFilepath(filepath){
 			locator:{
 				systemId: filepath,
 			},
-			errorHandler: function(level,msg){ throw new Error(msg); }
+			errorHandler: function(level,msg){ throw new Error(msg); },
 		}).parseFromString(fs.readFileSync(filepath, 'UTF-8'));
 		testHTMLDocument(document);
 	});

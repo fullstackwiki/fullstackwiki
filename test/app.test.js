@@ -3,13 +3,12 @@ var createServer = require('http').createServer;
 var assert = require('assert');
 
 var writeMessage = require('../../dive-httpd/test/util.js').writeMessage;
-var lib = require('../../dive-httpd/index.js');
 var app = require('../app.js');
 
 describe('Server', function(){
 	var server;
 	before(function(){
-		server = createServer(lib.handleRequest.bind(null, app));
+		server = createServer(app.handleRequestFactory());
 	});
 	after(function(){
 		server = undefined;

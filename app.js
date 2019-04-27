@@ -35,7 +35,7 @@ var routes = options.routes;
 
 // Alias / to /index.xml
 var routeIndex = RouteLocalReference(routes, "http://fullstack.wiki{/path*}/index");
-routeIndex.routerURITemplate = 'http://fullstack.wiki{/path*}/';
+routeIndex.uriTemplate = 'http://fullstack.wiki{/path*}/';
 options.addRoute(routeIndex);
 
 function gRenderEditLink(res){
@@ -70,11 +70,10 @@ MarkdownSource.name = 'RenderEditLink';
 options.addRoute(MarkdownSource);
 
 // Source code
-var routeSourceHTML = First([
+var routeSourceHTML = First('http://fullstack.wiki{/path*}.src.xml', [
 	HTMLSource,
 	RoutePipeline(MarkdownSource, Markdown),
 ]);
-routeSourceHTML.routerURITemplate = 'http://fullstack.wiki{/path*}.src.xml';
 options.addRoute(routeSourceHTML);
 
 // Rendering happens in three stages:
@@ -84,7 +83,7 @@ options.addRoute(routeSourceHTML);
 
 // // Rendered HTML but plain (no) theme
 var routeTemplate = RoutePipeline({
-	routerURITemplate: 'http://fullstack.wiki{/path*}.tpl.xml',
+	uriTemplate: 'http://fullstack.wiki{/path*}.tpl.xml',
 	contentType: 'application/x.wiki.fullstack.template+xml',
 	outboundTransform: RenderTemplate,
 	innerRoute: routeSourceHTML,
@@ -96,7 +95,7 @@ function gRenderBindings(res){
 	return new RenderBindings(indexRDFa.graph, res);
 }
 var routePlain = RoutePipeline({
-	routerURITemplate: 'http://fullstack.wiki{/path*}.plain.xml',
+	uriTemplate: 'http://fullstack.wiki{/path*}.plain.xml',
 	contentType: 'application/x.wiki.fullstack.plain+xml',
 	outboundTransform: gRenderBindings,
 	innerRoute: routeTemplate,
@@ -110,7 +109,7 @@ function gRenderTheme(res){
 	return new RenderTheme(indexRDFa.graph, res);
 }
 var routeThemed = RoutePipeline({
-	routerURITemplate: 'http://fullstack.wiki{/path*}.html',
+	uriTemplate: 'http://fullstack.wiki{/path*}.xhtml',
 	contentType: 'application/xhtml+xml',
 	outboundTransform: gRenderTheme,
 	innerRoute: routePlain,
@@ -142,12 +141,21 @@ options.addRoute(routeRecent);
 
 // Render files
 // routes.addTemplate('http://fullstack.wiki/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
-var routeScript = RouteStaticFile(docroot+'/style', "{/path*}.js", 'application/ecmascript');
-routeScript.routerURITemplate = 'http://fullstack.wiki/style{/path*}.js';
+
+var routeScript = RouteStaticFile({
+	uriTemplate: 'http://fullstack.wiki/style{/path*}.js',
+	fileroot: docroot+'/style',
+	pathTemplate: "{/path*}.js",
+	contentType: 'application/ecmascript',
+});
 options.addRoute(routeScript);
 
-var routeStyle = RouteStaticFile(docroot+'/style', "{/path*}.css", 'text/css');
-routeStyle.routerURITemplate = 'http://fullstack.wiki/style{/path*}.css';
+var routeStyle = RouteStaticFile({
+	uriTemplate: 'http://fullstack.wiki/style{/path*}.css',
+	fileroot: docroot+'/style',
+	pathTemplate: "{/path*}.css",
+	contentType: 'text/css',
+});
 options.addRoute(routeStyle);
 
 var documentRoutes = routes.routes.filter(function(v){
