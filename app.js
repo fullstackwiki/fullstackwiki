@@ -31,10 +31,9 @@ options.fixedScheme = 'http';
 options.fixedAuthority = 'fullstack.wiki';
 options.RouteNotFound = RouteNotFound;
 options.RouteError = RouteError;
-var routes = options.routes;
 
 // Alias / to /index.xml
-var routeIndex = RouteLocalReference(routes, "http://fullstack.wiki{/path*}/index");
+var routeIndex = RouteLocalReference(options.innerRoute.routes, "http://fullstack.wiki{/path*}/index");
 routeIndex.uriTemplate = 'http://fullstack.wiki{/path*}/';
 options.addRoute(routeIndex);
 
@@ -158,7 +157,7 @@ var routeStyle = RouteStaticFile({
 });
 options.addRoute(routeStyle);
 
-var documentRoutes = routes.routes.filter(function(v){
+var documentRoutes = options.innerRoute.routes.routes.filter(function(v){
 	return [
 		'http://fullstack.wiki{/path*}',
 	].indexOf(v.template)>=0;
