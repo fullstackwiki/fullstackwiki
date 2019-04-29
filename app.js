@@ -2,10 +2,9 @@
 var fs = require('fs');
 
 const {
+	Route,
 	HTTPServer,
 	RouteStaticFile,
-	RouteError,
-	RouteNotFound,
 	RouteLocalReference,
 	RoutePipeline,
 	First,
@@ -29,8 +28,14 @@ const docroot = __dirname + '/web';
 var options = new HTTPServer;
 options.fixedScheme = 'http';
 options.fixedAuthority = 'fullstack.wiki';
-options.RouteNotFound = RouteNotFound;
-options.RouteError = RouteError;
+
+// Define a function that will resolve a Resource that generates the 404 Not Found error page
+// This is set in `defaultNotFound` for static file generators, but this will mostly be called from
+// the `error` handler of the <http://fullstack.wiki{/path*}> route.
+function prepareNotFound(){
+	return routeBest.prepare('http://fullstack.wiki/error.notfound');
+}
+options.defaultNotFound = prepareNotFound;
 
 function gRenderEditLink(res){
 	return new RenderEditLink(__dirname, {
@@ -116,6 +121,7 @@ var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
 	routeTemplate,
 	routeSourceHTML,
 ]);
+routeBest.error = prepareNotFound;
 options.addRoute(routeBest);
 
 // Alias / to /index.xml
