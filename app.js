@@ -32,11 +32,6 @@ options.fixedAuthority = 'fullstack.wiki';
 options.RouteNotFound = RouteNotFound;
 options.RouteError = RouteError;
 
-// Alias / to /index.xml
-var routeIndex = RouteLocalReference(options.innerRoute.routes, "http://fullstack.wiki{/path*}/index");
-routeIndex.uriTemplate = 'http://fullstack.wiki{/path*}/';
-options.addRoute(routeIndex);
-
 function gRenderEditLink(res){
 	return new RenderEditLink(__dirname, {
 		'edit-form': 'https://github.com/fullstackwiki/fullstackwiki/blob/master',
@@ -122,6 +117,10 @@ var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
 	routeSourceHTML,
 ]);
 options.addRoute(routeBest);
+
+// Alias / to /index.xml
+var routeIndex = RouteLocalReference("http://fullstack.wiki{/path*}/", options.innerRoute, "http://fullstack.wiki{/path*}/index");
+options.addRoute(routeIndex);
 
 // The Recent Changes page, which is a Git log
 var routeRecent = RoutePipeline(RouteGitLog({
