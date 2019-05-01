@@ -125,7 +125,7 @@ routeBest.error = prepareNotFound;
 options.addRoute(routeBest);
 
 // Alias / to /index.xml
-var routeIndex = RouteLocalReference("http://fullstack.wiki{/path*}/", options.innerRoute, "http://fullstack.wiki{/path*}/index");
+var routeIndex = RouteLocalReference("http://fullstack.wiki{/path*}/", routeBest, "http://fullstack.wiki{/path*}/index");
 options.addRoute(routeIndex);
 
 // The Recent Changes page, which is a Git log
@@ -177,6 +177,7 @@ var routeLunrIndex = RouteLunrIndex({
 	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
 	routes: documentRoutes,
+	app: options,
 });
 options.addRoute(routeLunrIndex);
 
