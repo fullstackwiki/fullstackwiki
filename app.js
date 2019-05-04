@@ -2,13 +2,13 @@
 var fs = require('fs');
 
 const {
-	Route,
-	HTTPServer,
+	Application,
 	RouteStaticFile,
 	RouteLocalReference,
 	RoutePipeline,
 	First,
 	Negotiate,
+	RoutePermanentRedirect,
 } = require('dive-httpd');
 
 var Markdown = require( "./lib/Markdown.js" ).Markdown;
@@ -25,7 +25,7 @@ var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
 
 const docroot = __dirname + '/web';
 
-var options = new HTTPServer;
+var options = new Application;
 options.fixedScheme = 'http';
 options.fixedAuthority = 'fullstack.wiki';
 
@@ -162,21 +162,13 @@ var routeStyle = RouteStaticFile({
 });
 options.addRoute(routeStyle);
 
-var documentRoutes = options.innerRoute.routes.routes.filter(function(v){
-	return [
-		'http://fullstack.wiki{/path*}',
-	].indexOf(v.template)>=0;
-});
-
 var indexRDFa = new IndexRDFa(options);
-documentRoutes.forEach(function(route){
-	indexRDFa.import(route);
-});
+indexRDFa.import(routeBest);
 
 var routeLunrIndex = RouteLunrIndex({
 	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
-	routes: documentRoutes,
+	routes: [routeBest],
 	app: options,
 });
 options.addRoute(routeLunrIndex);
