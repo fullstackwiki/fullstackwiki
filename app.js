@@ -12,7 +12,7 @@ const {
 } = require('dive-httpd');
 
 var RouteApplyMarkdown = require( "./lib/Markdown.js" ).RouteApplyMarkdown;
-var RenderTemplate = require( "./lib/RenderTemplate.js" ).RenderTemplate;
+var RouteApplyMacros = require( "./lib/RenderMacros.js" ).RouteApplyMacros;
 var RouteApplyBindings = require( "./lib/RenderBindings.js" ).RouteApplyBindings;
 var RouteApplyTheme = require( "./lib/RenderTheme.js" ).RouteApplyTheme;
 var RenderEditLink = require( "./lib/RenderEditLink.js" ).RenderEditLink;
@@ -78,17 +78,12 @@ var routeSourceHTML = First('http://fullstack.wiki{/path*}.src.xml', [
 options.addRoute(routeSourceHTML);
 
 // Rendering happens in three stages:
-// 1. Template: substitute in template calls and other manipulations that will make it into the RDF index
+// 1. Macro substitution: substitute in manipulations that will make it into the RDF index
 // 2. Bindings: use the RDF index to fill out data bindings for fulltext index
 // 3. Theme: generate themed page for Web browsers
 
-// // Rendered HTML but plain (no) theme
-var routeTemplate = RoutePipeline({
-	uriTemplate: 'http://fullstack.wiki{/path*}.tpl.xml',
-	contentType: 'application/x.wiki.fullstack.template+xml',
-	outboundTransform: RenderTemplate,
-	innerRoute: routeSourceHTML,
-});
+// Macros applied, waiting for RDFa Templates to be applied
+var routeTemplate = new RouteApplyMacros('http://fullstack.wiki{/path*}.tpl.xml', routeSourceHTML);
 options.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
