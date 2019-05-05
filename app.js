@@ -14,7 +14,7 @@ const {
 var Markdown = require( "./lib/Markdown.js" ).Markdown;
 var RenderTemplate = require( "./lib/RenderTemplate.js" ).RenderTemplate;
 var RenderBindings = require( "./lib/RenderBindings.js" ).RenderBindings;
-var RenderTheme = require( "./lib/RenderTheme.js" ).RenderTheme;
+var RouteApplyTheme = require( "./lib/RenderTheme.js" ).RouteApplyTheme;
 var RenderEditLink = require( "./lib/RenderEditLink.js" ).RenderEditLink;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
@@ -28,6 +28,8 @@ const docroot = __dirname + '/web';
 var options = new Application;
 options.fixedScheme = 'http';
 options.fixedAuthority = 'fullstack.wiki';
+
+var indexRDFa = new IndexRDFa(options);
 
 // Define a function that will resolve a Resource that generates the 404 Not Found error page
 // This is set in `defaultNotFound` for static file generators, but this will mostly be called from
@@ -104,15 +106,7 @@ options.addRoute(routePlain);
 // Fully rendered theme
 // Later, put this on <http://fullstack.wiki{/path*}.xhtml> and
 // make <http://fullstack.wiki{/path*}> a Content-Type negotiation version
-function gRenderTheme(res){
-	return new RenderTheme(indexRDFa.graph, res);
-}
-var routeThemed = RoutePipeline({
-	uriTemplate: 'http://fullstack.wiki{/path*}.xhtml',
-	contentType: 'application/xhtml+xml',
-	outboundTransform: gRenderTheme,
-	innerRoute: routePlain,
-});
+var routeThemed = new RouteApplyTheme('http://fullstack.wiki{/path*}.xhtml', indexRDFa.graph, routePlain);
 options.addRoute(routeThemed);
 
 var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
@@ -129,13 +123,13 @@ var routeIndex = RouteLocalReference("http://fullstack.wiki{/path*}/", routeBest
 options.addRoute(routeIndex);
 
 // The Recent Changes page, which is a Git log
-var routeRecent = RoutePipeline(RouteGitLog({
+var routeRecent = new RouteApplyTheme('http://fullstack.wiki/recent', indexRDFa.graph, RouteGitLog({
 	uriTemplate: 'http://fullstack.wiki/recent',
 	title: 'Recent Changes',
 	fs: fs,
 	dir: __dirname,
 	ref: 'HEAD',
-}), [gRenderTheme]);
+}));
 options.addRoute(routeRecent);
 
 // Codemirror dependencies
@@ -162,7 +156,6 @@ var routeStyle = RouteStaticFile({
 });
 options.addRoute(routeStyle);
 
-var indexRDFa = new IndexRDFa(options);
 indexRDFa.import(routeBest);
 
 var routeLunrIndex = RouteLunrIndex({
