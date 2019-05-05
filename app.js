@@ -11,7 +11,7 @@ const {
 	RoutePermanentRedirect,
 } = require('dive-httpd');
 
-var Markdown = require( "./lib/Markdown.js" ).Markdown;
+var RouteApplyMarkdown = require( "./lib/Markdown.js" ).RouteApplyMarkdown;
 var RenderTemplate = require( "./lib/RenderTemplate.js" ).RenderTemplate;
 var RenderBindings = require( "./lib/RenderBindings.js" ).RenderBindings;
 var RouteApplyTheme = require( "./lib/RenderTheme.js" ).RouteApplyTheme;
@@ -73,7 +73,7 @@ options.addRoute(MarkdownSource);
 // Source code
 var routeSourceHTML = First('http://fullstack.wiki{/path*}.src.xml', [
 	HTMLSource,
-	RoutePipeline(MarkdownSource, Markdown),
+	new RouteApplyMarkdown('http://fullstack.wiki{/path*}.src.xml', MarkdownSource),
 ]);
 options.addRoute(routeSourceHTML);
 
