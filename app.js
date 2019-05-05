@@ -13,7 +13,7 @@ const {
 
 var RouteApplyMarkdown = require( "./lib/Markdown.js" ).RouteApplyMarkdown;
 var RenderTemplate = require( "./lib/RenderTemplate.js" ).RenderTemplate;
-var RenderBindings = require( "./lib/RenderBindings.js" ).RenderBindings;
+var RouteApplyBindings = require( "./lib/RenderBindings.js" ).RouteApplyBindings;
 var RouteApplyTheme = require( "./lib/RenderTheme.js" ).RouteApplyTheme;
 var RenderEditLink = require( "./lib/RenderEditLink.js" ).RenderEditLink;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
@@ -92,15 +92,7 @@ var routeTemplate = RoutePipeline({
 options.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
-function gRenderBindings(res){
-	return new RenderBindings(indexRDFa.graph, res);
-}
-var routePlain = RoutePipeline({
-	uriTemplate: 'http://fullstack.wiki{/path*}.plain.xml',
-	contentType: 'application/x.wiki.fullstack.plain+xml',
-	outboundTransform: gRenderBindings,
-	innerRoute: routeTemplate,
-});
+var routePlain = new RouteApplyBindings('http://fullstack.wiki{/path*}.plain.xml', indexRDFa.graph, routeTemplate);
 options.addRoute(routePlain);
 
 // Fully rendered theme
