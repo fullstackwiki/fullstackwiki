@@ -1,0 +1,15 @@
+
+application/ecmascript	ecma js
+application/json	json
+application/n-triples	nt
+application/n-quads	nq
+application/pdf	pdf
+application/sparql-query	rq
+application/sparql-results+xml	srx
+application/xhtml+xml	xhtml xht
+application/xml	xml xsl
+application/xml-dtd	dtd
+message/http http
+message/rfc822	eml mime
+text/css	css
+text/turtle ttl
