@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Referer</title>
+		<meta name="description" content="The Referer HTTP request-header specifies where the request-URI was obtained from." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Referer" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Referer</h1>
+			<p>The "Referer" header allows the user agent to specify the URI reference of the resource where the request-URI was obtained (i.e. the "referrer").</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Referer</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies where the request-URI was obtained from.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.referer">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.5.2. Referer</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Referer = absolute-URI / partial-URI
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				GET /about HTTP/1.1
+				Host: example.com
+				Referer: /
+				
+			</pre>
+		</main>
+	</body>
+</html>
