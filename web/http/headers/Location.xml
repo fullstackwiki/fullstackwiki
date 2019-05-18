@@ -15,7 +15,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Location</h1>
-			<p>Specifies Location the message was generated.</p>
+			<p>The "Location" header refers to a resource that has some relationship to the request, typically a URI to be followed for a redirect.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -23,6 +23,8 @@
 				<dd property="w:HTTP-Header-name">Location</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Refers to another resource, depending on status code</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.location">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.2. Location</a></dd>
 			</dl>
