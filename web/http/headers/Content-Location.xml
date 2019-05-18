@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Content-Location</title>
+		<meta name="description" content="The Content-Location HTTP header specifies the URI of the selected representation" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Content-Location" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Content-Location</h1>
+			<p>The Content-Location header specifies the URI of the selected representation. It is used when the request-URI can negotiate to one of several representations, or when a server wants to indicate that the message body of a response (e.g. a POST) is available for retreival at the given URI.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Usage of the Content-Location header in requests is technically legal, but since the server is the final authority of its URI namespace, behavior in requests is undefined.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>The Content-Location header in requests should be ignored, unless the server has something to gain by a client's assertion that the request-body is also available at another URI.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>The Content-Location header should be used in the following responses:</p>
+			<ul>
+				<li>GET/HEAD requests that have multiple alternative representations, and a representation was selected by the server after Content-Type negotiation</li>
+				<li>The server accepted a PUT request, or other request that modified a resource; then normalized or otherwise modified the resource; and so the server responded with the new/modified version</li>
+			</ul>
+
+			<h2>Reading responses (clients)</h2>
+			<p>The Content-Location header may be a URI Reference, which is resolved relative to the request-URI.</p>
+			<p>If the client wants to bookmark the selected variant, it should save the Content-Location URI instead of the request-URI.</p>
+			<p>If the server returns a Content-Location of the request-URI in a PUT or similar request, it means the representation was potentially modified by the server from what the client sent, and the server is attaching the new representation for reference.</p>
+			<p>Caching headers apply to the request-URI, not the Content-Location, and caches cannot populate an entry at the Content-Location with the response. Caches could potentially use the Content-Location header to invalidate a cache entry.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Content-Location</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies a URI that the message body is available at.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.content-location">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;3.1.4.2. Content-Location</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Content-Location = absolute-URI / partial-URI
+			</pre>
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 200 OK
+				Date: Thu, 16 May 2112 18:51:10 GMT
+				Content-Location: http://example.com/index.html
+			</pre>
+
+			<h2>History</h2>
+			<p>RFC2616 defined the Content-Location header as able to set the base URI for the document. User agents did not typically implement this, and this aspect was removed in RFC7231. Many hypermedia types, including HTML (by the "base" element), have similar features that are implemented by user agents, and these should be used instead.</p>
+		</main>
+	</body>
+</html>
