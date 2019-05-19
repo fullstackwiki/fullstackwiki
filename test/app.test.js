@@ -2,7 +2,7 @@
 var createServer = require('http').createServer;
 var assert = require('assert');
 
-var testMessage = require('../../dive-httpd/test/util.js').testMessage;
+var testMessage = require('dive-httpd/test/util.js').testMessage;
 var server = require('../app.js');
 
 describe('Server', function(){
