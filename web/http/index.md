@@ -51,5 +51,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * RFC7240: HTTP Preferences
 * RFC7538: Status Code 308 (Permanent Redirect)
 * RFC7540: Hypertext Transfer Protocol Version 2 (HTTP/2)
+* RFC7725: Hypertext Transfer Protocol (HTTP) Client-Initiated Content-Encoding
+* RFC8164: Opportunistic Security for HTTP/2
 * RFC8188: Encrypted Content-Encoding for HTTP
 * RFC8288: Web Linking

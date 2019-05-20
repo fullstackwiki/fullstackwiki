@@ -18,13 +18,28 @@
 			<p>The Accept-Encoding header specifies which response content codings are acceptable to the client.</p>
 			<p>This header is typically used to indicate the user agent supports compressed response messages, such as gzip.</p>
 
-			<h2>Writing requests (clients)</h2>
-			<p>Write an Accept-Encoding header listing which content codings it is capable of decoding, especially compression methods. Check the response <a href="Content-Encoding.xml">Content-Encoding header</a> to determine how to decode the message body, if necessary.</p>
+			<h2>Usage in requests</h2>
+			<h3>Writing requests (clients)</h3>
+			<p>Write an Accept-Encoding header listing which content codings that the user-agent is capable of decoding, especially compression methods. Check the response <a href="Content-Encoding.xml">Content-Encoding header</a> to determine how to decode the message body, if necessary.</p>
 
-			<h2>Reading requests (servers)</h2>
+			<h3>Reading requests (servers)</h3>
 			<p>Using the Accept-Encoding header to select a response content coding is not trivial; keep a mapping of supported content-codings to available encoders or encoded representations, and use a library to match the incoming Accept-Encoding to an available encoding. If more than one representation could be selected from, add a <a href="Vary.xml">Vary header</a> of <code>Vary: Accept-Encoding</code> to indicate to caches that the response might vary based on this header.</p>
 			<p>For HTTP/Web applications, consider using a transforming HTTP gateway or cache to perform this step, instead of adding this complexity in the application.</p>
 			<!-- TODO: link to list of content codings -->
+
+
+			<h2>Usage in responses</h2>
+			<p>RFC 7231 only specifies the request form of this header. RFC 7694 specifies usage in a response to indicate the client's selected content coding is not understood, and the client may re-make the request with one of the listed content codings.</p>
+
+			<h3>Writing responses (servers)</h3>
+			<p>Servers send Accept-Encoding to the client in <code>415 Unsupported Media Type</code> responses. The header could also be sent in response to OPTIONS.</p>
+			<p>The server should first ensure the resource exists, that the user-agent has the proper credentials to make the request, and any other checks that can be performed without needing to know the exact details of the request-body.</p>
+			<p>If the server receives a request from a client with a <a href="Content-Encoding.xml">Content-Encoding value</a> that it does not understand, send <code>415 Unsupported Media Type</code> with an <code>Accept-Encoding</code> header listing the content codings the server can accept from clients.</p>
+			<p>The 415 Unsupported Media Type status can be used for other purposes (e.g. an invalid Content-Type), do not supply this header in these other cases.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>Reading the Accept-Encoding header is only necessary from a response with <code>415 Unsupported Media Type</code>. In this case, the client should re-make the request with one of the listed content codings listed in the response <code>Accept-Encoding</code> header.</p>
+			<p>Clients who would like to handle this error before writing the request body should send <code>Expect: 100-continue</code>. See the <a href="Content-Encoding.xml">Content-Encoding header</a> for information about how to make requests with a content encoding.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -33,13 +48,13 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-Header-description">Specifies which response content codings are acceptable.</dd>
 				<dt>Direction</dt>
-				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Negotiates</dt>
 				<dd property="w:HTTP-Header-negotiates" resource="w:http/headers/Content-Encoding"><a href="Content-Encoding.xml">Content-Encoding</a></dd>
 				<dt>List usage in</dt>
 				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.Accept-Encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept-Encoding</a></dd>
+				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.Accept-Encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept-Encoding</a>, <a href="https://httpwg.org/specs/rfc7694.html">RFC 7694: HTTP Client-Initiated Content-Encoding</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
