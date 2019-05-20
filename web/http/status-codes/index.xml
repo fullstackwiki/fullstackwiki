@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:q="http://fullstack.wiki/rdfq/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP Status Codes</title>
+		<meta name="description" content="A list of HTTP headers" />
+		<link rel="up" href="../index.xml" />
+	</head>
+	<body>
+		<main id="main-content">
+<h1>HTTP Status Codes</h1>
+
+<table class="table-http-headers">
+	<thead>
+		<tr><th>Code</th><th>Description</th></tr>
+	</thead>
+	<tbody>
+		<tr subquery="each" subquery-order="ASC(?code)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/HTTP-StatusCode">
+			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="tag:fullstack.wiki,2018:ns/HTTP-StatusCode-line">{?name}</span></a></td>
+			<!-- <td><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></td> -->
+			<td property="tag:fullstack.wiki,2018:ns/HTTP-StatusCode-description">{?desc}</td>
+		</tr>
+	</tbody>
+</table>
+
+		</main>
+	</body>
+</html>
