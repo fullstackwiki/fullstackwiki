@@ -35,7 +35,7 @@ This can be broken down into several broad categories of content:
 ## Building
 
 1. Install submodules (if any, `git submodule update --init`)
-1. Install NPM packages (`npm install`)
+1. Install dependencies (`yarn install`)
 1. run `make`
 
 

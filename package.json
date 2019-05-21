@@ -17,6 +17,9 @@
   "devDependencies": {
     "mocha": "^6.1.4"
   },
+  "resolutions": {
+    "**/rdfa": "^0.0.10"
+  },
   "scripts": {
     "test": "mocha"
   }
