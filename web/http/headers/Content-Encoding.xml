@@ -15,12 +15,12 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Content-Encoding</h1>
-			<p>The <code>Content-Encoding</code> header lists any <i>codings</i> used to encode the document into the message body. A content encoding is typically preserved end-to-end, and metadata headers (e.g. <code>Content-Length</code> describe this encoded message.</p>
+			<p>The <code>Content-Encoding</code> header lists any <i>codings</i> used to encode the document into the message body. A content encoding is typically preserved end-to-end, and metadata headers (e.g. <code>Content-Length</code>) describe this encoded message.</p>
 			<p>Codings are listed innermost to outermost. Content-Encoding is the last transformation to be decoded before the document is parsed according to its media type semantics, after <a href="Transfer-Encoding.xml">Transfer-Coding</a> and <a href="Content-Length.xml">Content-Length</a>.</p>
 
 			<h2>Writing requests (clients)</h2>
 			<p>Clients may find it desirable to compress an request message body. Clients should send <code>Expect: 100-continue</code> so the server can verify it's able to read the listed coding.</p>
-			<p>If the server responds with 415 (Unsupported Media Type), the client should re-try the request with a different or no content encoding. The server might still 415 in response to the Content-Type, so some trial and error may be necessary.</p>
+			<p>If the server is not able to read the selected content coding, it will respond with <a href="../status-codes/415.xml">415 Unsupported Media Type</a>; re-try the request according to the directions for handling that status code.</p>
 
 			<h2>Reading requests (servers)</h2>
 			<p>If the server does not understand any of the listed codings, return <code>415 (Unsupported Media Type)</code> and describe the acceptable coding types in a response. Use an HTML or plain text document to describe the error; there is currently no standard, machine-readable way to list acceptable coding types for clients.</p>

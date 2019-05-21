@@ -11,10 +11,10 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Transfer-Encoding</h1>
-			<p>The Transfer-Encoding header field lists the transfer codings used to transmit the message body.</p>
+			<p>The Transfer-Encoding header field lists the mechanisms used by the connection to transmit the message body (including the content coding already applied to it). The primary use is to signal a <i>chunked</i> transmission of the message body when the length is not known in advance.</p>
 			<p>Transfer-Encoding is a property of an HTTP/1.1 connection (it is not used in HTTP/1.0 and not relevant to HTTP/2).</p>
 			<p>It is mutually exclusive with the <a href="Content-Length.xml">Content-Length</a> header. See <a href="https://httpwg.org/specs/rfc7230.html#message.body.length">RFC 7230 &#xA7;3.3.3. Message Body Length</a> for how to determine the message body length.</p>
-			<p>Messages can be encoded with any number of transfer codings, but if any, messages must use <code>chunked</code> as the outermost one, so that the end of the transfer can reliably be identified. Implementations will typocally only want to use "chunked", with compression specified by the <a href="Content-Encoding.xml">Content-Encoding</a> header.</p>
+			<p>Messages can be encoded with any number of transfer codings, but if any, messages must use <code>chunked</code> as the outermost one, so that the end of the transfer can reliably be identified. Implementations will typically use "chunked" by itself, and any compression is applied as a content coding using the <a href="Content-Encoding.xml">Content-Encoding header</a>.</p>
 
 			<h2 id="request-write-client">Writing requests (clients)</h2>
 			<p>Transfer-Encoding is typically sent in HTTP/1.1 requests when the length of the upload is unknown. Servers may require the client send a Content-Length header instead, and will return <code>411 Length Required</code> error in this case.</p>

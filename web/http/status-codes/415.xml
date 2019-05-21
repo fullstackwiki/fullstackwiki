@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>415 Unsupported Media Type</title>
+		<meta name="description" content="The 415 Unsupported Media Type HTTP status code indicates an unacceptable request Content-Type or Content-Encoding." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/415" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>415 Unsupported Media Type</h1>
+			<p>The 415 Unsupported Media Type status code indicates the client made a request with a Content-Type or Content-Encoding that is unknown or invalid for the resource.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers should produce <code>415 Unsupported Media Type</code> in two cases:</p>
+
+			<h3>Unknown Content-Encoding</h3>
+			<p>If the resource exists and the request is understood and authorized, but the server does not understand the Content-Encoding applied to the message, then return <code>415 Unsupported Media Type</code> and an <a href="../headers/Accept-Encoding.xml">Accept-Encoding header</a> listing the content codings that the server is capable of decoding.</p>
+
+			<h3>Unknown Content-Type</h3>
+			<p>If the resource exists and the request is understood and authorized, and the server understands the content coding, but does not understand the request Content-Type, or the request Content-Type is not valid for the resource, then return <code>415 Unsupported Media Type</code> along with a message describing acceptable media types.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Clients should handle <code>415 Unsupported Media Type</code> with the following process:</p>
+			<ol>
+				<li>Look for an <a href="../headers/Accept-Encoding.xml">Accept-Encoding header</a>. If present, and the initial coding does not appear, re-make the request with a different <a href="../headers/Content-Encoding.xml">Content-Encoding</a> from codings listed in Accept-Encoding.</li>
+				<li>Otherwise, re-make the request with a different Content-Type. Show the user the returned error page and prompt them to re-make the request with a different upload media type.</li>
+			</ol>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">415</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">415 Unsupported Media Type</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">Signals an incompatible request Content-Type or Content-Encoding.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.415">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.13. 415 Unsupported Media Type</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 415 Unsupported Media Type
+			</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+		</main>
+	</body>
+</html>

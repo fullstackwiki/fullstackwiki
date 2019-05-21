@@ -32,7 +32,7 @@
 			<p>RFC 7231 only specifies the request form of this header. RFC 7694 specifies usage in a response to indicate the client's selected content coding is not understood, and the client may re-make the request with one of the listed content codings.</p>
 
 			<h3>Writing responses (servers)</h3>
-			<p>Servers send Accept-Encoding to the client in <code>415 Unsupported Media Type</code> responses. The header could also be sent in response to OPTIONS.</p>
+			<p>Servers send Accept-Encoding to the client in <a href="../status-codes/415.xml">415 Unsupported Media Type</a> responses. The header could also be sent in response to OPTIONS.</p>
 			<p>The server should first ensure the resource exists, that the user-agent has the proper credentials to make the request, and any other checks that can be performed without needing to know the exact details of the request-body.</p>
 			<p>If the server receives a request from a client with a <a href="Content-Encoding.xml">Content-Encoding value</a> that it does not understand, send <code>415 Unsupported Media Type</code> with an <code>Accept-Encoding</code> header listing the content codings the server can accept from clients.</p>
 			<p>The 415 Unsupported Media Type status can be used for other purposes (e.g. an invalid Content-Type), do not supply this header in these other cases.</p>

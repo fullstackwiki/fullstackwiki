@@ -20,7 +20,7 @@
 		<tr><th>Code</th><th>Description</th></tr>
 	</thead>
 	<tbody>
-		<tr subquery="each" subquery-order="ASC(?code)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/HTTP-StatusCode">
+		<tr subquery="each" subquery-order="ASC(?name)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/HTTP-StatusCode">
 			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="tag:fullstack.wiki,2018:ns/HTTP-StatusCode-line">{?name}</span></a></td>
 			<!-- <td><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></td> -->
 			<td property="tag:fullstack.wiki,2018:ns/HTTP-StatusCode-description">{?desc}</td>
