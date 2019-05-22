@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>451 Unavailable For Legal Reasons</title>
+		<meta name="description" content="The 451 (Unavailable For Legal Reasons) HTTP status code indicates a resource is inaccessable or censored under threat of legal action." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/451" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>451 Unavailable For Legal Reasons</h1>
+			<p>451 (Unavailable For Legal Reasons) status code indicates a resource or server is inaccessable or censored under threat of legal action or other great threat against the server operator.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Use <code>451 Unavailable For Legal Reasons</code> if legal authorities have demanded content be taken down under some sort of threat of legal action.</p>
+			<p>This can be implemented at a router level, before any resource is dereferenced, or set as a custom status code on a document, similar to handling for <code>410 Gone</code>.</p>
+			<p>If available, attach a link with the <code>blocked-by</code> link relation, linking to the entity or order blocking the request (see example).</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>This status indicates the request cannot be filled because of an outstanding legal demand. It can be a result of any aspect of a request, or applied to an entire server, and it does not imply the request would succeed even if the legal demand were lifted. As such, short of Skynet, WOPR, or a similar automated legal response system, there is no way to automatically fix a 451 error.</p>
+			<aside><p>Even then, a world where computers can automatically leverage any available resources to respond to legal threats may not be pretty or desirable. Please consult extensive expert opinion before attempting to implement this.</p></aside>
+			<p>The resource might still be available from another party, or in a different legal jurisdiction. If desired, seek the advice of a local lawyer on how you might advise you on the risks and benefits of various courses of action.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">451</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">451 Unavailable For Legal Reasons</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">Signals the request cannot be filled due to a legal demand.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7725.html">RFC 7725: An HTTP Status Code to Report Legal Obstacles</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 451 Unavailable For Legal Reasons
+				Link: &lt;https://spqr.example.org/legislatione&gt;; rel="blocked-by"
+				Content-Type: text/html
+
+				&lt;html&gt;
+					&lt;head&gt;&lt;title&gt;Unavailable For Legal Reasons&lt;/title&gt;&lt;/head&gt;
+					&lt;body&gt;
+						&lt;h1&gt;Unavailable For Legal Reasons&lt;/h1&gt;
+						&lt;p&gt;This request may not be serviced in the Roman Province
+						of Judea due to the Lex Julia Majestatis, which disallows
+						access to resources hosted on servers deemed to be
+						operated by the People&apos;s Front of Judea.&lt;/p&gt;
+					&lt;/body&gt;
+				&lt;/html&gt;
+				</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+		</main>
+	</body>
+</html>
