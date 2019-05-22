@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>507 Insufficient Storage</title>
+		<meta name="description" content="The 507 Insufficient Storage HTTP status code indicates an unexpected or over-long request message body." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/507" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>507 Insufficient Storage</h1>
+			<p>The 507 Insufficient Storage HTTP status code indicates the server does not have enough free storage to perform the operation. The client can re-try the operation at some time in the future when more storage becomes available.</p>
+			<p>This status code is defined by WebDAV, but available for use in any applicaion.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers should produce <code>507 Insufficient Storage</code> when the operation requires free disk space, but not enough is available to complete the operation. <code>500 Internal Server Error</code> can also be used for this error, but it is less specific.</p>
+			<p>Servers should link to a system status page that provides any progress updates from the system administrator, and customer service contact information.</p>
+
+			<h3>See also: Message body exceeds resource limits</h3>
+			<p>If the server technically has the space to accept an upload, but would prefer not to because it exceeds a specified resource limit, this is considered a user error and not a server error, see <a href="413.xml">413 Payload Too Large</a> instead.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Typically this requires user intervention, either the attention of the system administrator, or the user confirming out-of-band that the system is back into regular operation, before retrying the request.</p>
+			<p>If the server specifies <a href="../headers/Retry-After.xml">Retry-After</a>, this might signal that additional storage is being automatically provisioned, and clients may automatically retry an upload after the given duration. Clients should send <code>Expect: 100-continue</code> when making uploads, to not waste bandwidth on a request that will likely be rejected.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">507</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">507 Insufficient Storage</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">Signals an incompatible request Content-Type or Content-Encoding.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.507">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.13. 507 Insufficient Storage</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 507 Insufficient Storage
+			</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+		</main>
+	</body>
+</html>

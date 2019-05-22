@@ -26,6 +26,9 @@
 			<h3>Unknown Content-Type</h3>
 			<p>If the resource exists and the request is understood and authorized, and the server understands the content coding, but does not understand the request Content-Type, or the request Content-Type is not valid for the resource, then return <code>415 Unsupported Media Type</code> along with a message describing acceptable media types.</p>
 
+			<h3>Unexpected message body</h3>
+			<p>If the method/resource does not permit a message body at all, see <a href="413.xml">413 Payload Too Large</a> instead.</p>
+
 			<h2>Reading responses (clients)</h2>
 			<p>Clients should handle <code>415 Unsupported Media Type</code> with the following process:</p>
 			<ol>
