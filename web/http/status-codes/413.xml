@@ -42,7 +42,7 @@
 				<dt>Message</dt>
 				<dd property="w:HTTP-StatusCode-line">413 Payload Too Large</dd>
 				<dt>Description</dt>
-				<dd property="w:HTTP-StatusCode-description">Signals an incompatible request Content-Type or Content-Encoding.</dd>
+				<dd property="w:HTTP-StatusCode-description">The request body is too large.</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.413">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.13. 413 Payload Too Large</a></dd>
 			</dl>

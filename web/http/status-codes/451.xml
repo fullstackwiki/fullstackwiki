@@ -34,7 +34,7 @@
 				<dt>Message</dt>
 				<dd property="w:HTTP-StatusCode-line">451 Unavailable For Legal Reasons</dd>
 				<dt>Description</dt>
-				<dd property="w:HTTP-StatusCode-description">Signals the request cannot be filled due to a legal demand.</dd>
+				<dd property="w:HTTP-StatusCode-description">The request cannot be filled due to a legal demand.</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7725.html">RFC 7725: An HTTP Status Code to Report Legal Obstacles</a></dd>
 			</dl>

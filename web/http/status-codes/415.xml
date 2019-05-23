@@ -43,7 +43,7 @@
 				<dt>Message</dt>
 				<dd property="w:HTTP-StatusCode-line">415 Unsupported Media Type</dd>
 				<dt>Description</dt>
-				<dd property="w:HTTP-StatusCode-description">Signals an incompatible request Content-Type or Content-Encoding.</dd>
+				<dd property="w:HTTP-StatusCode-description">The Content-Encoding or Content-Type is not acceptable.</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.415">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.13. 415 Unsupported Media Type</a></dd>
 			</dl>
