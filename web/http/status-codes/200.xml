@@ -44,7 +44,7 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">The request completed as requested.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7234.html#header.age">RFC 7231: HTTP/1.1 Caching &#xA7;5.1. Age</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.200">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.3.1. 200 OK</a></dd>
 			</dl>
 
 			<h2>Example</h2>

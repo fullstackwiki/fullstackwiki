@@ -38,7 +38,7 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">The server cannot fill the request because it is out of storage space.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.507">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.13. 507 Insufficient Storage</a></dd>
+				<dd property="w:specification"><a href="https://tools.ietf.org/html/rfc4918#section-11.5">RFC 4918: HTTP Extensions for Distributed Authoring (WebDAV)</a></dd>
 			</dl>
 
 			<h2>Example</h2>

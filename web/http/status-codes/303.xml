@@ -33,7 +33,7 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">The request was completed and the result is available at another location.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7538.html">RFC 7538: The Hypertext Transfer Protocol Status Code 303 (Permanent Redirect)</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.303">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.4.4. 303 See Other</a></dd>
 			</dl>
 
 			<h2>Example</h2>
