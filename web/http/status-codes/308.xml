@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>308 Permanent Redirect</title>
+		<meta name="description" content="The 308 Permanent Redirect HTTP status code tells clients to update references with the old URI, then re-issue the request at a different URI." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/308" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>308 Permanent Redirect</h1>
+			<p>The 308 Permanent Redirect HTTP status code tells clients the request was not filled, but the resource has been moved to another location; the client must update references with the old URI and re-issue the request at the new URI to complete the operation.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers should produce <code>308 Permanent Redirect</code> when a resource or set of resources has been assigned a new URI, especially one at a different authority/origin server.</p>
+			<p>308 redirects can typically be configured as a search-and-replace on the request-URI.</p>
+			<p>For a period of time, servers should instead issue <code>307 Temporary Redirect</code>, so that if there is an error in the redirect, it won't cause clients to adjust their bookmarks to a URI that doesn't exist.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p><code>308 Permanent Redirect</code> is an indication the client should adjust references to a different URI. If the client has any bookmarks, they should first be updated to the new URI.</p>
+			<p>Then, the request should be re-tried at the URI.</p>
+			<p>The server doesn't necessarially know anything about the target URI; the request at the redirect target might fail, but this doesn't change handling of the 308 response.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">308</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">308 Permanent Redirect</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The resource has moved to a different URI and the request must be re-made.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7538.html">RFC 7538: The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect)</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 308 Permanent Redirect
+			</pre>
+
+			<!-- TODO: client support -->
+		</main>
+	</body>
+</html>

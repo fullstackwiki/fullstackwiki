@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>303 See Other</title>
+		<meta name="description" content="The 303 See Other HTTP status code tells clients the request was processed and the workflow can be completed by visiting a different URI." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/303" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>303 See Other</h1>
+			<p>The 303 See Other HTTP status code indicates the result of the operation is available at another location. The client should interpret the request as completed, and then make a new request to another resource identified by the <a href="../headers/Location.xml">Location header</a>. The new request must be made with GET (or HEAD)</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers will typically only produce <code>303 See Other</code> in response to POST requests, so that after a browser has submitted from a form, the browser can make a safe request to show the user the result; whereas if the resource generated a response to the POST request directly, the browser would not be able to re-request the page that was returned.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>A <code>303 See Other</code> will be accompnied by a <a href="../headers/Location.xml">Location header</a> that indicates the next page that should be loaded.</p>
+			<p>The request-URI should not be pushed to the history, so that navigation brings the user to the redirect target, instead of re-issuing the request that caused the 303. If the user intends to re-issue the request, they can re-submit the form.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">303</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">303 See Other</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The request was completed and the result is available at another location.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7538.html">RFC 7538: The Hypertext Transfer Protocol Status Code 303 (Permanent Redirect)</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 303 See Other
+			</pre>
+		</main>
+	</body>
+</html>

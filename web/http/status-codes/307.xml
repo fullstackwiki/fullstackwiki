@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>307 Temporary Redirect</title>
+		<meta name="description" content="The 307 Temporary Redirect HTTP status code tells clients to re-issue the request at a different URI." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/307" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>307 Temporary Redirect</h1>
+			<p>The 307 Temporary Redirect HTTP status code tells clients the request was not filled, and to re-issue the request at a different URI.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers should produce <code>307 Temporary Redirect</code> when a request should be re-made to a different URI, especially a different authority or server.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p><code>307 Temporary Redirect</code> is an indication the request was not filled, and that this must be issued at a different location. The client must otherwise make the same request, including the same method.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">307</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">307 Temporary Redirect</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The request must be re-made at a different URI.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7538.html">RFC 7538: The Hypertext Transfer Protocol Status Code 307 (Permanent Redirect)</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 307 Temporary Redirect
+			</pre>
+
+			<!-- TODO: client support -->
+		</main>
+	</body>
+</html>
