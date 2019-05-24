@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>501 Not Implemented</title>
+		<meta name="description" content="The 501 Not Implemented HTTP status code indicates the server does not support the functionality required to fulfill the request." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/501" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>501 Not Implemented</h1>
+			<p>The 501 (Method Not Allowed) HTTP status code indicates the method is not supported by the resource. With this status code, the origin server MUST generate an <a href="../headers/Allow.xml">Allow header</a> containing a list of the target resource's currently supported methods.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<h3>Unknown request method</h3>
+			<p>The primary purpose of this is to indicate the server is unfamiliar with the requested method. This status code is emitted after the request headers have been parsed, before the request-URI is dereferenced. The response should include a document listing the supported methods, or link to documentation describing the supported methods.</p>
+
+			<h3>See also: Method Not Allowed</h3>
+			<p>If the server supports the requested method, but the resource does not, see <a href="405.xml">405 Method Not Allowed</a>.</p>
+
+			<h3>See also: Expectation failed</h3>
+			<p>The Expect header can be used to indicate a client requires a specific feature from a server. Failure to meet this requirement will generate a seperate status code, <a href="417.xml">417 Expectation Failed</a>.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>The client can reissue the request modified to use a different method, if there is a way to do so.</p>
+
+			<h3>501 response to a PATCH request</h3>
+			<p>The client can make a GET request for the resource, then a PUT request with the modified version.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">501</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">501 Not Implemented</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The server does not support the functionality required to fill the request.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.501">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.6.2. 501 Not Implemented</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.0 501 Not Implemented
+				Content-Type: text/plain
+
+				The "MGET" method is not recognised by this server.
+
+				See &lt;http://example.com/help&gt; for information on our offerings.
+			</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+		</main>
+	</body>
+</html>

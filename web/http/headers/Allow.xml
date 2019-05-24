@@ -16,7 +16,7 @@
 
 			<h1>Allow</h1>
 			<p>The Allow response header lists all of the HTTP methods that may be used on the target resource, so that a client may select one understood by the server on subsequent requests. It is required in a <code>405 (Method Not Allowed)</code> response, and optional in other responses.</p>
-			<p>As a rule of thumb, any method not listed here will return <code>405 (Method Not Allowed)</code> or <code>501 (Not Implemented)</code>, and listed methods will never return <code>404 (Not Found)</code> or 405 (but may return other errors, such as <code>401 (Unauthorized)</code>).</p>
+			<p>As a rule of thumb, any method not listed here will return <a href="../status-codes/405.xml">405 (Method Not Allowed)</a> or <code>501 (Not Implemented)</code>, and listed methods will never return <code>404 (Not Found)</code> or 405 (but may return other errors, such as <code>401 (Unauthorized)</code>).</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Servers should know which methods are valid on a given resource; all the different methods that the server logic can possibly execute. For each resource, the value of this header should always be the same (unless a security reason warrants otherwise). </p>

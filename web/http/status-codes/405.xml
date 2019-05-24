@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>405 Method Not Allowed</title>
+		<meta name="description" content="The 405 Method Not Allowed HTTP status code indicates the resource does not support the method." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/405" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>405 Method Not Allowed</h1>
+			<p>The 405 (Method Not Allowed) HTTP status code indicates the method is not supported by the resource. The origin server MUST generate an <a href="../headers/Allow.xml">Allow header</a> containing a list of the target resource's currently supported methods.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Every resource should have an associated set of methods that it supports (see the <a href="../headers/Allow.xml">Allow header</a>), and send 405 if the requested method is not one of them.</p>
+			<p>For example, if a document is hard-coded into an application, a PUT request would generate <code>405 Method Not Allowed</code> since there is no way to modify the resource.</p>
+			<p>Servers should send <code>405 Method Not Allowed</code> after the resource has been looked up, before method-specific routines are called.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>This error is typically perminent, it indicates the client is trying to perform an action that doesn't make any sense.</p>
+			<p>It is possible that another sequence of methods might accomplish the same effect, but this is less likely than if the response code is <a href="501.xml">501 Method Not Implemented</a>, since <code>405</code> implies that the server understands the method, it's just not applicable for this resource.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">405</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">405 Method Not Allowed</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The resource does not permit the requested method.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.405">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.5. 405 Method Not Allowed</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 405 Method Not Allowed
+				Content-Type: text/plain
+				Allow: GET, HEAD, OPTIONS
+
+				This is a read-only resource!
+			</pre>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 405 Method Not Allowed
+				Content-Type: text/plain
+				Allow: GET, HEAD, OPTIONS, POST
+
+				This is a hard-coded collection that supports the following methods:
+				- GET/HEAD: List the resources in the collection
+				- OPTIONS: List serialization options
+				- POST: Upload a new member of the collection
+			</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+		</main>
+	</body>
+</html>

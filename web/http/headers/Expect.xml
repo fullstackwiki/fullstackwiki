@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Expect</title>
+		<meta name="description" content="The Expect HTTP header lists behaviors expected from the server to properly make the request." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Expect" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Expect</h1>
+			<p>The "Expect" header field in a request indicates a certain set of behaviors (expectations) that need to be supported by the server in order to properly handle this request.</p>
+			<p>The only feature that uses this header is <a href="../server.xml#handle-100-continue">100-continue</a>.</p>
+
+			<h3>Writing requests (clients)</h3>
+			<p>The Expect header is designed to indicate to the server that the client expects a specific behavior in order to function properly.</p>
+			<p>In the case of <code>100-continue</code>, the client is signaling that it won't begin uploading the request-body until the server signals it is acceptable to do so. Servers that do not support this would send 417, and the client can retry the request without 100-continue.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>If the header exists, and is a value not <code>100-continue</code>, return <a href="../status-codes/417.xml">417 Expectation Failed</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Expect</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Lists behaviors expected from the server to properly make the request.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.expect">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.1.1. Expect</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Expect = "100-continue"
+			</pre>
+
+			<h3>Example with 100 Continue</h3>
+			<p>The client begins by writing just the headers of the request:</p>
+			<pre type="message/http" w:space="indent">
+				PUT / HTTP/1.1
+				Host: localhost
+				Content-Type: text/plain
+				Content-Length: 10
+				Expect: 100-continue
+			</pre>
+			<p>The server verifies it can accept an upload of <code>text/plain</code> of 10 bytes by sending an intermediate status:</p>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 100 Continue
+			</pre>
+			<p>The client finishes writing out the body part of the message:</p>
+			<pre w:space="indent">
+				Message!
+			</pre>
+			<p>The server resumes its response message. Note this can still include 1xx intermediate responses.</p>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 200 OK
+				Content-Type: text/plain
+
+				Success!
+			</pre>
+
+			<h3>Example with Expectation Failed</h3>
+			<p>The client begins by writing just the headers of the request:</p>
+			<pre type="message/http" w:space="indent">
+				PUT / HTTP/1.1
+				Host: localhost
+				Content-Type: text/plain
+				Content-Length: 10
+				Expect: 100-continue
+			</pre>
+			<p>A server that does not support <code>100-continue</code> will inform the client by writing an error as the final response:</p>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 417 Expectation Failed
+			</pre>
+			<p>The client can then retry the upload, making the entire upload and waiting for the server to validate it.</p>
+
+			<h3>History</h3>
+			<p>RFC7231 removed the "expectation-extension" rule previously defined by RFC2616:</p>
+			<pre type="abnf" w:space="indent">
+				Expect       =  "Expect" ":" 1#expectation
+
+				expectation  =  "100-continue" | expectation-extension
+				expectation-extension =  token [ "=" ( token | quoted-string ) *expect-params ]
+				expect-params =  ";" token [ "=" ( token | quoted-string ) ]
+			</pre>
+		</main>
+	</body>
+</html>
