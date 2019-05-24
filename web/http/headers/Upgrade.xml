@@ -11,18 +11,24 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Upgrade</h1>
-			<p>The <code>Upgrade</code> is used to transition the HTTP connection into another protocol. In requests, the client lists any number of protocols to switch to. In responses, it lists the protocol that the server selected.</p>
+			<p>The <code>Upgrade</code> is used to transition the HTTP connection into another protocol, such as a WebSocket.</p>
 			<!-- Todo: write page about the protocol switching process -->
+
+			<h2>Usage in requests</h2>
+			<p>The <code>Upgrade</code> header in a request lists any number of protocols.</p>
 
 			<h3>Writing requests (clients)</h3>
 			<p>The Upgrade header is typically used to establish WebSocket connections, but can be used for any protocol identified by a <code>protocol-name</code>. Write an Upgrade header listing any number of protocols, in decending order of preference.</p>
 			<p>This is a hop-by-hop header, and so must be listed in the <a href="Connection.xml">Connection header</a>.</p>
 
 			<h3>Reading requests (servers)</h3>
-			<p>Servers should pick particular resources (particular URIs) that are used for protocol changes. Servers encountering an Upgrade header can ignore it, unless the resource is configured to switch to a different protocol. In this case, pick the first protocol from the list that is understood, and respond with <code>101 (Switching Protocols)</code>.</p>
+			<p>Servers should pick particular resources (particular URIs) that are used for protocol changes. Servers encountering an Upgrade header can ignore it, unless the resource is configured to switch to a different protocol. In this case, pick the first protocol from the list that is understood, and respond with <a href="../status-codes/101.xml">101 (Switching Protocols)</a>.</p>
+
+			<h2>Usage in responses</h2>
+			<p>In responses, the <code>Upgrade</code> header lists the protocol that the server selected.</p>
 
 			<h3>Writing responses (servers)</h3>
-			<p>Servers include the Upgrade header in responses that will switch protocols at the. The header must only be used with a <code>101 Switching Protocols</code> status code, and only a protocol listed by the client.</p>
+			<p>Servers include the Upgrade header in responses that will switch protocols at the. The header must only be used with a <a>101 Switching Protocols</a> status code, and only a protocol listed by the client.</p>
 
 			<h3>Reading responses (clients)</h3>
 			<p>The header lists the protocol selected by the server. The new protocol takes effect immediately following the blank line. If there is an error in reading the response headers, just close the TCP connection.</p>

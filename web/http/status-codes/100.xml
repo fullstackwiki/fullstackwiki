@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>100 Continue</title>
+		<meta name="description" content="The 100 (Continue) HTTP status signals a client to finish writing its request message." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/100" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>100 Continue</h1>
+			<p>The 100 Continue status code is a 1xx intermediate status code instructing the client to resume transmission of the rest of the request message. It is primarially seen in a request with <code>Expect: 100-continue</code>, where the client will transmit just the message headers, and wait for a <code>100 Continue</code> intermediate status before uploading the message body.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>This status code is used when handling requests with <code>Expect: 100-continue</code>, see the <a href="../headers/Expect.xml">Expect header</a> for usage.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>If the client has sent a request with <code>Expect: 100-continue</code>, then upon reciept of <code>100 Continue</code>, begin writing the request message-body. Otherwise, this intermediate status be ignored.</p>
+
+			<!-- TODO: Link to 1xx page, and handling of status code classes -->
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">100</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">100 Continue</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">Begin uploading the request message-body.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.100">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.2.1. 100 Continue</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 100 Continue
+			</pre>
+
+			<!-- TODO: client compatibility information -->
+			<h2>Implementation support</h2>
+			<h3></h3>
+		</main>
+	</body>
+</html>

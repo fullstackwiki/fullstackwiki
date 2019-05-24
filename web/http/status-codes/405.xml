@@ -23,7 +23,7 @@
 			<p>Servers should send <code>405 Method Not Allowed</code> after the resource has been looked up, before method-specific routines are called.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p>This error is typically perminent, it indicates the client is trying to perform an action that doesn't make any sense.</p>
+			<p>This error is typically permanent, it indicates the client is trying to perform an action that doesn't make any sense.</p>
 			<p>It is possible that another sequence of methods might accomplish the same effect, if the <code>Allow</code> response header lists all the necessary methods. The possibility of recovering is less likely than recovering from <a href="501.xml">501 Method Not Implemented</a>, since <code>405</code> implies that the server understands the method, it's just not applicable for this resource.</p>
 
 			<h2>Overview table</h2>

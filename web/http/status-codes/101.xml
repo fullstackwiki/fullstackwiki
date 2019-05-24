@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>101 Switching Protocols</title>
+		<meta name="description" content="101 Switching Protocols is an intermediate message" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/101" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>101 Switching Protocols</h1>
+			<p>The 101 Switching Protocols status code indicates the server has acknowledged the clients <code>Upgrade</code> request, and will switch protocols at the conclusion of the header block.</p>
+			<p>Despite being a 1xx intermediate status code, which normally signals there are more status codes to arrive for this response, this is the final status code that will be emitted on this connection before being converted to another protocol.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>This status code is used when handling requests with an <a href="../headers/Upgrade.xml">Upgrade header</a>, see that header page for more details.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p><code>101 Switching Protocols</code> will only be sent by clients that requested it. If the client receives the status code without having sent an <code>Upgrade</code> header, this is a server error, and the client should close the connection and treat it the same as a 5xx error.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">101</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">101 Switching Protocols</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The server will change the protocol of the connection as requested.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.101">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.2.2. 101 Switching Protocols</a></dd>
+			</dl>
+		</main>
+	</body>
+</html>
