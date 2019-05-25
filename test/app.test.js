@@ -152,6 +152,19 @@ describe('Server', function(){
 			assert(res.toString().match(/"labels": {\s"*/));
 		});
 	});
+	it('Edit/History links (/index)', function(){
+		return testMessage(server, [
+			'GET /index HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			assert(res.toString().match(/^Content-Location: http:\/\/fullstack.wiki\/index\.xhtml$/m));
+			assert(res.toString().match(/^Vary: Accept$/m));
+			assert(res.toString().indexOf('<a rel="edit-form" href="https://github.com/fullstackwiki/fullstackwiki/blob/master/web/index.xml">Edit</a>') >= 0);
+			assert(res.toString().indexOf('<a rel="version-history" href="https://github.com/fullstackwiki/fullstackwiki/commits/master/web/index.xml">History</a>') >= 0);
+		});
+	});
 	it('XML: Syntax highlighting');
 	it('Table of contents rel=up', function(){
 		// Pick any page that has a rel=up link on it
