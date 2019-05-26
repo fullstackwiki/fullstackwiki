@@ -21,6 +21,7 @@
     "**/rdfa": "^0.0.10"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "dive-httpd httpd.conf"
   }
 }
