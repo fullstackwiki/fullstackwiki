@@ -21,6 +21,7 @@ var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
 var RouteTTL = require( "./lib/RouteTTL.js" ).RouteTTL;
 var RouteNT = require( "./lib/RouteNT.js" ).RouteNT;
 var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
+var RouteSitemapXML = require( "./lib/RouteSitemapXML.js" ).RouteSitemapXML;
 var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
 
 const docroot = __dirname + '/web';
@@ -170,5 +171,7 @@ var routeGraphNT = RouteNQ({
 	index: indexRDFa,
 });
 options.addRoute(routeGraphNT);
+
+options.addRoute(new RouteSitemapXML('http://fullstack.wiki/sitemap.xml', routeBest));
 
 module.exports = options;
