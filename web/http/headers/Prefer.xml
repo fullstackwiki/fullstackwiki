@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Prefer</title>
+		<meta name="description" content="The Prefer HTTP request-header lets the user-agent advertise its preferences for server behavior." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Prefer" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Prefer</h1>
+			<p>The "Prefer" header allows the user-agent to specify server behaviors that are preferred, though not required, by the client. The server can read this header when there's different, optional ways of handling a request, to pick an option that would be most convenient for the client.</p>
+			<p>For example, an automated script might send <code>Prefer: return=minimal</code> to indicate it only reads the status code, and does not need a response body.</p>
+			<p>This header offers functionality similar to the <a href="Expect.xml">Expect header</a>, but can be ignored, and is end-to-end instead of hop-by-hop by default. If listed in <a href="Connection.xml">Connection</a>, then it is a hop-by-hop header to be parsed by the node.</p>
+			<aside><p>It would be nice to have a <code>Proxy-Prefer</code> header that can be used alongside an end-to-end header.</p></aside>
+			<p>See the <a href="../preferences/index.xml">list of HTTP preference tokens</a>.</p>
+
+			<h2>Usage in requests</h2>
+
+			<h3>Writing requests (clients)</h3>
+			<p>Clients may select a preference for any of the known <a href="../preferences/index.xml">HTTP preferences</a>, and write them to a <code>Prefer</code> header in the request.</p>
+			<p>Clients should be prepared to handle a response in whatever way the server responds by, as the request header is strictly advisory. If the server returns a response without a <a href="Preference-Applied.xml">Preference-Applied header</a> listing the names of all the used preferences, the client should take appropriate steps to ensure that the intended outcome was applied.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>Servers that read values from the <code>Prefer</code> header must first tokenize the values. See the list of <a href="../preferences/index.xml">list of HTTP preferences</a> for preferences that can be implemented. Any preferences used should have their names written to the <a href="Preference-Applied.xml">Preference-Applied response header</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Prefer</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies client preferences for the server.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Negotiates</dt>
+				<dd property="w:HTTP-Header-negotiates" resource="w:http/headers/Preference-Applied"><a href="Preference-Applied.xml">Preference-Applied</a></dd>
+				<dt>List usage in</dt>
+				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7240.html#prefer">RFC 7240: Prefer Header for HTTP</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<!-- This syntax is under-specified in the RFC, see https://www.rfc-editor.org/errata/eid4439 for correction -->
+			<pre type="abnf" w:space="indent">
+				Prefer     = "Prefer" ":" 1#preference
+				preference = preference-parameter *( OWS ";" [ OWS	preference-parameter ] )
+				preference-parameter = parameter / token
+			</pre>
+
+			<aside><p>Nit: The original specification under-specified the syntax, defining a custom syntax utilizing the <code>BWS</code> from HTTP, and an undefined <code>word</code> production. New features should not use BWS. <a href="https://www.rfc-editor.org/errata/eid4439">The revision</a> specifies a stricter version that uses only productions already used in HTTP.</p></aside>
+
+			<h3>Example</h3>
+			<pre>Prefer: foo; bar</pre>
+			<pre>Prefer: respond-async, wait=10</pre>
+
+			<h2>Implementations</h2>
+			<h3>Node.js</h3>
+			<ul><a href="https://yarnpkg.com/en/package/parse-prefer-header">"parse-prefer-header"</a></ul>
+		</main>
+	</body>
+</html>

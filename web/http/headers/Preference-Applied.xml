@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Preference-Applied</title>
+		<meta name="description" content="The Preference-Applied HTTP response header specifies which preferences were observed, if not otherwise evident by the response." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Preference-Applied" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Preference-Applied</h1>
+			<p>The <code>Preference-Applied</code> response header specifies which preferences were observed, if not otherwise evident by the response.</p>
+
+			<h2>Usage in responses</h2>
+			<h3>Writing responses (servers)</h3>
+			<p>Servers write a <code>Preference-Applied</code> header when they read and act on a preference found in a <a href="Prefer.xml">Prefer header</a> of the request. Servers should write a value for this header for every preference used, since it may be easier for clients to read this header than to inspect the result for the expected outcome.</p>
+			<p>The server should also emit <code>Vary: Prefer</code> in the event the response is cachable.</p>
+			<p>See <a href="../preferences/index.xml">specific HTTP preference descriptions</a> for more information.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>Clients can read the <code>Preference-Applied</code> header to verify the server.</p>
+			<p>Use of the header is optional, and might be omitted if application of the preference is self-evident.</p>
+			<p>See <a href="../preferences/index.xml">specific HTTP preference descriptions</a> for more specific advice.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Preference-Applied</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies which preferences were observed, if not otherwise evident by the response.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7240.html#preference-applied">RFC 7240: Prefer Header for HTTP</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Preference-Applied = "Preference-Applied" ":" 1#applied-pref
+				applied-pref = preference-parameter
+				preference-parameter = parameter / token
+			</pre>
+
+			<h3>Example</h3>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 200 OK
+				Content-Type: application/json
+				Preference-Applied: return=representation
+				Content-Location: /my-document
+				
+				{"a": 1}
+			</pre>
+
+			<h2>Implementations</h2>
+			<p>The <code>Preference-Applied</code> is a syntatic subset of the <a href="Prefer.xml">Prefer header</a>, consider using a library for parsing that header, and looking for tokens with no parameters.</p>
+		</main>
+	</body>
+</html>

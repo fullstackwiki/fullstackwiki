@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Prefer</title>
+		<meta name="description" content="The 'respond-async' HTTP preference indicates that the client prefers a faster, asynchronous response." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/preferences/respond-async" typeof="w:HTTP-Preference">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>"respond-async" HTTP Preference</h1>
+			<p>The 'respond-async' HTTP preference indicates that the client prefers a faster, asynchronous response to a request, rather than potentially waiting a long time for a response.</p>
+			<aside><p>Handling of asynchronous responses is not well standardized, and is typically implementation-specific.</p></aside>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients should only send <code>respond-async</code> to a server known to use a process compatible with the client. Consider writing a test that tests the functionality of the server's asynchronous responses, and that client can read the final result.</p>
+			<p>Clients should also send a <a href="wait.xml">wait preference</a> so that fast operations bypass the extra request necessary to process <code>202 Accepted</code>.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>If the server has functionality to return <code>202 Accepted</code>, in addition to <code>200 OK</code>, <code>201 Created</code>, or a similar status code that indicates the request was completed successfully, then the presence of the <code>respond-async</code> preference should cause the server to select the <code>202 Accepted</code> variation. Include <code>Preference-Applied: respond-async</code> in the response to indicate this was a result of the client's request header.</p>
+			<p>Absent the <code>respond-async</code> preference, servers should avoid sending <code>202 Accepted</code> responses, since clients that do not implement asynchronous responses might see the unknown 2xx status code and treat it the same as a <a href="../status-codes/200.xml">200 OK</a>, even though the requested action hasn't been completed yet.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Preference-name">respond-async</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Preference-description">A 202 Accepted response is preferable to waiting for the final status code.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7240.html#respond-async">RFC 7240: Prefer Header for HTTP</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				respond-async = "respond-async"
+			</pre>
+
+			<h3>Example</h3>
+			<pre type="abnf" w:space="indent">
+				POST /some-resource HTTP/1.1
+				Host: example.org
+				Content-Type: text/plain
+				Prefer: respond-async, wait=10
+				
+				{...}
+			</pre>
+		</main>
+	</body>
+</html>

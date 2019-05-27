@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Prefer</title>
+		<meta name="description" content="The 'return' HTTP preference." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/preferences/return" typeof="w:HTTP-Preference">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>"return" HTTP Preference</h1>
+			<p>The "return" preference can modify how a server responds to a successful operation.</p>
+
+			<h2>"return" values</h2>
+			<p>Many methods specify that the request specify the <i>result</i> of the action, for example, a table of resources modified. Some servers also offer the option to omit this result, or to return the affected resource. Using a <code>return</code> preference offers a standard way to specify this behavior.</p>
+
+			<h3>return=representation</h3>
+			<p>The <code>return=representation</code> preference requests the server send the complete contents of the affected resource, along with a <a href="../headers/Content-Location.xml">Content-Location header</a> specifying the URI of that resource.</p>
+			<p>Clients should be careful handling URI references, which might resolve differently under the request URI instead of the canonical resource URI. Clients should update the internal representation using the returned resource, and resolve URI references from the internal representation.</p>
+
+			<h3>return=minimal</h3>
+			<p>The <code>return=minimal</code> preference requests the server send an empty body upon a successful response. This should be <code>204 No Content</code>, but can also be <code>200 OK</code> with a zero-length body.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Different uses of this preference may be chosen depending on the client and need.</p>
+			<p>Clients making a PATCH request may prefer to send <code>return=representation</code> to verify the result of the operation is what they expect.</p>
+			<p>Clients in an automated script might not care about result of the operation, and send <code>return=representation</code>.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Servers will need to ignore this preferene based on the specifics of the operation. This preference does not make sense applied to safe operations.</p>
+			<p>This preference only applies to successful results. In the event of an error, normal error handling (returning a document describing the error) should be followed.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Preference-name">return</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Preference-description">Indicates what the server write to the response message body.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7240.html#return">RFC 7240: Prefer Header for HTTP</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				return = "return" BWS "=" BWS ("representation" / "minimal")
+			</pre>
+
+			<h3>Example</h3>
+			<pre>
+				POST /collection HTTP/1.1
+				Host: example.org
+				Content-Type: text/plain
+				Prefer: return=minimal
+				
+				Upload body
+			</pre>
+		</main>
+	</body>
+</html>
