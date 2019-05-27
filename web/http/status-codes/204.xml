@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>204 No Content</title>
+		<meta name="description" content="204 No Content indicates the request was successful and the response has no body." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/204" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>204 No Content</h1>
+			<p>The 204 No Content status code indicates that the request was successful and the response has no body.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Use <code>204 No Content</code> when the status code would normally be <a href="200.xml">200 OK</a> but the payload size would be zero. These are typically <code>PUT</code>, <code>PATCH</code>, or <code>DELETE</code> requests made with <a href="../preferences/return.xml">return=minimal</a>.</p>
+			<p>Servers that would like to send a more specific status code, such as <code>201 Created</code> if a resource was created, but without a response body, should use the more specific status code instead, and use a <code><a href="../headers/Content-Length.xml">Content-Length</a>: 0</code> header field instead.</p>
+			<p>This status code implies the request has been filled. If the request does not need to be filled because of a conditional header, see <a href="304.xml">304 Not Modified</a>.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Handling of <code>204 No Content</code> is the same as a <a href="200.xml">200 OK</a> with a zero-length payload, even if the server omits the <a href="../headers/Content-Length.xml">Content-Length</a> and <a href="../headers/Transfer-Encoding.xml">Transfer-Encoding</a> headers, one of which would normally be necessary in HTTP/1.1.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">204</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">204 No Content</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The request was successful and the response has no body.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.204">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.3.3. 204 No Content</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 204 No Content
+			</pre>
+		</main>
+	</body>
+</html>

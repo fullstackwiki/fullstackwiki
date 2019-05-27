@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>304 Not Modified</title>
+		<meta name="description" content="The 304 Not Modified HTTP status code would have succeeded but the client already has an up-to-date copy of the representation." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/304" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>304 Not Modified</h1>
+			<p>The 304 Not Modified HTTP status code indicates a conditional GET or HEAD did not need to be filled because the conditional request did not require it; and the request would have resulted in a 200 otherwise. This is the expected response if the client's cached copy of a resource is up to date with the server.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>If the request contains an <code>If-Modified-Since</code> or <code>If-None-Match</code> header, parse the header and return <code>304 Not Modified</code>. The response must not contain a payload, and additionally may omit the <code>Content-Length</code> header.</p>
+			<p>The <a href="../headers/Cache-Control.xml">Cache-Control</a>, <a href="../headers/Content-Location.xml">Content-Location</a>, <a href="../headers/Date.xml">Date</a>, <a href="../headers/ETag.xml">ETag</a>, <a href="../headers/Expires.xml">Expires</a>, and <a href="../headers/Vary.xml">Vary</a> headers must be the same as in a 200 OK response.</p>
+			<p>If the client is attempting to perform a nonsafe action, see <a href="412.xml">412 Precondition Failed</a> instead.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>A <code>304 Not Modified</code> indicates the client can use the response in the cache the same as if it were returned from the server.</p>
+			<p>See <a href="../headers/If-Modified-Since.xml">If-Modified-Since</a> and <a href="../headers/If-None-Match.xml">If-Match</a> for guidence on making these requests.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">304</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">304 Not Modified</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The client already has an up-to-date copy of the representation.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#status.304">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;4.1. 304 Not Modified</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 304 Not Modified
+			</pre>
+		</main>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>412 Precondition Failed</title>
+		<meta name="description" content="The 412 Precondition Failed HTTP status code indicates the server could not perform a requested action because of a conditional request failure." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/412" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>412 Precondition Failed</h1>
+			<p>The 412 Precondition Failed HTTP status code indicates a conditional request failed and the requested action could not be performed. This typically indicates the resource changed since the previous request to this resource, and the client should re-request the representation and try again.</p>
+			<aside><p>Nit: This status code could include an option to return the current, changed version of the resource, so that the client doesn't need to make a new request. This could perhaps be implemented with <a href="../preferences/return.xml">return=representation</a>.</p></aside>
+
+			<h2>Writing responses (origin servers)</h2>
+			<p>If the request contains an <code>If-Unmodified-Since</code> or <code>If-Match</code> headers, parse each header header and return <code>412 Precondition Failed</code> if the condition fails. The response payload may be a document describing the reasons for failure, the new state of the resource, and/or changes to the resource since the client's copy.</p>
+			<p>If the client is attempting to perform a safe request and doesn't need to indicate an error, see <a href="304.xml">304 Not Modified</a> instead.</p>
+
+
+			<h2>Reading responses (user agents)</h2>
+			<p>A <code>412 Precondition Failed</code> indicates the resource changed from. The client needs to update the representation available, and try again.</p>
+			<p>See <a href="../headers/If-Unmodified-Since.xml">If-Unmodified-Since</a> and <a href="../headers/If-Match.xml">If-Match</a> for guidence on making these requests.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">412</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">412 Precondition Failed</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The conditional request failed.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#status.412">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;4.2. 412 Precondition Failed</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 412 Precondition Failed
+				Content-Type: text/plain
+
+				The resource is currently at version 5.
+			</pre>
+		</main>
+	</body>
+</html>

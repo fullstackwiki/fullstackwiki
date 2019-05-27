@@ -15,17 +15,19 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>200 OK</h1>
-			<p>The 200 OK status code indicates that a status code completed as requested.</p>
+			<p>The 200 OK status code indicates that a status code completed as requested. The meaning of the payload varies with the request method; typically the response is either information in response to a query, or a description of changes in response to an operation.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Aim to funnel clients to a 200 OK response, if a more specific 2xx code is not available.</p>
+			<p>A 200 response implies the following things about the request:</p>
 			<ul>
 				<li>The resource exists (if the resource was created by the request, see <code>201 Created</code>)</li>
 				<li>The client provided the correct credentials to perform the request, if necessary</li>
 			</ul>
+			<p>If a server would normally send <code>200 OK</code> with a <code>Content-Length: 0</code>, it can instead omit the Content-Length header field and return <a href="204.xml">204 No Content</a>.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p><code>200 OK</code> doesn't require many special consideations.</p>
+			<p><code>200 OK</code> indicates a successful response doesn't require any special consideations. Consult the request method description for the meaing of the response, and the <a href="../headers/Content-Type.xml">Content-Type</a> for how to parse the contents of the document.</p>
 
 			<h2>Variations</h2>
 			<p>The 200 status code is a generic status code, and a more specific status code should be used instead, if one exists. Clients will treat unknown 2xx status codes as a 200, so it's always acceptable to use a more specific version instead of 200:</p>
@@ -43,6 +45,8 @@
 				<dd property="w:HTTP-StatusCode-line">200 OK</dd>
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">The request completed as requested.</dd>
+				<dt>Cachability</dt>
+				<dd property="w:HTTP-StatusCode-cacheable">Cachable by default</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.200">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.3.1. 200 OK</a></dd>
 			</dl>
