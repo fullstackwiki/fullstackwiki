@@ -21,6 +21,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [HTTP Status Codes](status-codes/index.xml)
 * [HTTP Headers](headers/index.xml)
 * [HTTP Authentication Schemes](authschemes/index.xml)
+* [HTTP Preferences](preferences/index.xml)
 
 ### Articles
 
@@ -55,4 +56,6 @@ Use HTTP whenever you need to download files from another system on a network, o
 * RFC7725: An HTTP Status Code to Report Legal Obstacles
 * RFC8164: Opportunistic Security for HTTP/2
 * RFC8188: Encrypted Content-Encoding for HTTP
+* RFC8246: HTTP Immutable Responses
 * RFC8288: Web Linking
+* RFC8470: Using Early Data in HTTP
