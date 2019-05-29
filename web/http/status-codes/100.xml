@@ -44,7 +44,14 @@
 
 			<!-- TODO: client compatibility information -->
 			<h2>Implementation support</h2>
-			<h3></h3>
+			<h3>Node.js</h3>
+			<p>Node.js has sufficient support for 100 to process to process <code>100-continue</code> expectations. These requests will be emitted as a separate event, see <a href="https://nodejs.org/docs/latest/api/http.html#http_event_checkcontinue">Event: 'checkContinue'</a> and <a href="https://nodejs.org/docs/latest/api/http.html#http_response_writecontinue">response.writeContinue()</a> for server support; and <a href="https://nodejs.org/docs/latest/api/http.html#http_event_continue">Event: 'continue'</a> for client support.</p>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://evertpot.com/http/304-not-modified">HTTP 303 by Evert Pot</a></li>
+				<li><a href="https://httpstatusdogs.com/304-not-modified">HTTP 303 on HTTP STATUS DOGS</a></li>
+			</ul>
 		</main>
 	</body>
 </html>
