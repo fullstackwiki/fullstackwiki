@@ -12,6 +12,18 @@ describe('Server', function(){
 		var listener = new lib.HTTPServer(app);
 		server = createServer(listener.callback());
 	});
+	it('app.listing', function(){
+		// Choose any URI that doesn't have a definition
+		return app.listing().then(function(resources){
+			assert(resources.length);
+			var uris = resources.map(function(resource){
+				return resource.uri;
+			});
+			assert(uris.indexOf('http://fullstack.wiki/index') >= 0);
+			assert(uris.indexOf('http://fullstack.wiki/recent') >= 0);
+			assert(uris.indexOf('http://fullstack.wiki/graph.ttl') >= 0);
+		});
+	});
 	it('404 Not Found', function(){
 		// Choose any URI that doesn't have a definition
 		return writeMessage(server, [
