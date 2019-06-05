@@ -17,6 +17,7 @@ describe('Server', function(){
 		return app.listing().then(function(resources){
 			assert(resources.length);
 			var uris = resources.map(function(resource){
+				assert(resource.uri.length);
 				return resource.uri;
 			});
 			assert(uris.indexOf('http://fullstack.wiki/index') >= 0);
