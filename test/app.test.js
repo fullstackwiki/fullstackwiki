@@ -2,13 +2,19 @@
 var createServer = require('http').createServer;
 var assert = require('assert');
 
-var testMessage = require('dive-httpd/test/util.js').testMessage;
-var server = require('../app.js');
+var writeMessage = require('dive-httpd/test/util.js').writeMessage;
+var app = require('../app.js');
+var lib = require('dive-httpd');
 
 describe('Server', function(){
+	var server;
+	before(function(){
+		var listener = new lib.HTTPServer(app);
+		server = createServer(listener.callback());
+	});
 	it('404 Not Found', function(){
 		// Choose any URI that doesn't have a definition
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /some-path-that-does-not-exist HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -16,7 +22,7 @@ describe('Server', function(){
 		});
 	});
 	it('/ (landing page)', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index HTTP/1.1',
 			'Accept: application/xhtml+xml',
 			'Host: fullstack.wiki',
@@ -27,7 +33,7 @@ describe('Server', function(){
 		});
 	});
 	it('/index', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -40,7 +46,7 @@ describe('Server', function(){
 	});
 	it('/http/index.md', function(){
 		// Choose any URI sourced from a Markdown file on the filesystem
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /http/index.md HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -51,7 +57,7 @@ describe('Server', function(){
 	});
 	it('/index.xml', function(){
 		// Choose any URI sourced from an XML file on the filesystem
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index.xml HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -61,7 +67,7 @@ describe('Server', function(){
 		});
 	});
 	it('/index.src.xml', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index.src.xml HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -71,7 +77,7 @@ describe('Server', function(){
 		});
 	});
 	it('/index.tpl.xml', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index.tpl.xml HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -81,7 +87,7 @@ describe('Server', function(){
 		});
 	});
 	it('/index.plain.xml', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index.plain.xml HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -91,7 +97,7 @@ describe('Server', function(){
 		});
 	});
 	it('/index.xhtml', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index.xhtml HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -101,7 +107,7 @@ describe('Server', function(){
 		});
 	});
 	it('/graph.ttl', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /graph.ttl HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -111,7 +117,7 @@ describe('Server', function(){
 		});
 	});
 	it('/graph.nt', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /graph.nt HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -121,7 +127,7 @@ describe('Server', function(){
 		});
 	});
 	it('/graph.nq', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /graph.nq HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -131,7 +137,7 @@ describe('Server', function(){
 		});
 	});
 	it('/recent', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /recent HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -142,7 +148,7 @@ describe('Server', function(){
 		});
 	});
 	it('/search-index.js', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /search-index.js HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -153,7 +159,7 @@ describe('Server', function(){
 		});
 	});
 	it('Edit/History links (/index)', function(){
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /index HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -168,7 +174,7 @@ describe('Server', function(){
 	it('XML: Syntax highlighting');
 	it('Table of contents rel=up', function(){
 		// Pick any page that has a rel=up link on it
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /http/headers/Link HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){
@@ -181,7 +187,7 @@ describe('Server', function(){
 	});
 	it('Data tables (/http/headers/index)', function(){
 		// Pick any page with a generated table
-		return testMessage(server, [
+		return writeMessage(server, [
 			'GET /http/headers/index HTTP/1.1',
 			'Host: fullstack.wiki',
 		]).then(function(res){

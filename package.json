@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "bluebird": "^3.5.3",
+    "bluebird": "^3.5.5",
     "browserify": "^16.2.3",
-    "dive-httpd": "^0.0.18",
-    "highlight.js": "^9.15.6",
+    "dive-httpd": "^0.0.19",
+    "highlight.js": "^9.15.8",
     "http-link": "^0.3.0",
-    "isomorphic-git": "^0.55.0",
+    "isomorphic-git": "^0.55.2",
     "lunr": "^2.3.6",
     "markdown": "^0.5.0",
     "rdf": "^4.1.0",

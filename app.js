@@ -1,4 +1,4 @@
-
+"use strict";
 var fs = require('fs');
 
 const {
@@ -144,13 +144,11 @@ var routeStyle = RouteStaticFile({
 });
 options.addRoute(routeStyle);
 
-indexRDFa.import(routeBest);
-
 var routeLunrIndex = RouteLunrIndex({
 	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
-	routes: [routeBest],
-	app: options,
+	route: routeBest,
+	// app: options,
 });
 options.addRoute(routeLunrIndex);
 
@@ -173,5 +171,9 @@ var routeGraphNT = RouteNQ({
 options.addRoute(routeGraphNT);
 
 options.addRoute(new RouteSitemapXML('http://fullstack.wiki/sitemap.xml', routeBest));
+
+options.before(function(){
+	return indexRDFa.import(routeBest);
+});
 
 module.exports = options;
