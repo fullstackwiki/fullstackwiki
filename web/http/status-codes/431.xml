@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>431 Request Header Fields Too Large</title>
+		<meta name="description" content="The 431 Request Header Fields Too Large indicates the client sent a request with headers too large to process." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/431" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>431 Request Header Fields Too Large</h1>
+			<p>The 431 status code indicates that the server is unwilling to process the request because its header fields are too large.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Servers produce this status code when the server would have to consume an excessive amount of resources buffering the request headers. This can be triggered in two cases:</p>
+
+			<h3>Parsing terminated</h3>
+			<p>If the client request wrote too many headers, or a header that is too long, in such a way that then terminate parsing, return <code>431 Request Header Fields Too Large</code> with <code>Connection: close</code>, and close the stream.</p>
+
+			<h3>Request fully parsed</h3>
+			<p>If the server fully parsed the request headers, the server may still indicate one of the headers is too long to be used in processing the request.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>The request was not filled. The client may retry the request with fewer or shorter headers, but typically this requires user intervention to determine what part of the request triggered the error.</p>
+
+			<h2>In HTTP/2</h2>
+			<p>Similar circumstances in HTTP/2 might instead generate a stream or connection error of <code>x000B (ENHANCE_YOUR_CALM)</code></p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">431</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">431 Request Header Fields Too Large</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">A request header is too long.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc6585.html#status-431">RFC 6585: Additional HTTP Status Codes &#xA7;6.5.13. 431 Request Header Fields Too Large</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 431 Request Header Fields Too Large
+				Server: httpd
+				Connection: close
+			</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+			<h2>Implementations</h2>
+
+			<h3>Node.js (http/https)</h3>
+			<p>Node.js automatically handles too-long or too-many headers with a 431 status code and a blank body. The only case this status code is useful is if this parser </p>
+			<p>A custom response may be sent in HTTP/1.1 responses for a <code>clientError</code> event; header size or count overflows will emit an error with <code>err.code === "HPE_HEADER_OVERFLOW"</code>. The second argument will be the raw socket, which must be written to, then destroyed.</p>
+			<pre type="application/ecmascript" w:space="indent">
+				var http = require('http');
+				var server = http.createServer(/* ... */);
+				server.on('clientError', function(err, socket){
+					if (socket.writable) {
+						if(err.code === 'HPE_HEADER_OVERFLOW'){
+							socket.write("HTTP/1.1 431 Request Header Fields Too Large\r\n");
+							socket.write("Connection: close\r\n");
+							socket.write("\r\n");
+						}else{
+							socket.write("HTTP/1.1 400 Client Error\r\n");
+							socket.write("Connection: close\r\n");
+							socket.write("\r\n");
+						}
+					}
+					socket.destroy(err);
+				});
+			</pre>
+
+			<!-- TODO: Link Apache size limits -->
+			<!-- <h3>Apache HTTP Server</h3> -->
+		</main>
+	</body>
+</html>
