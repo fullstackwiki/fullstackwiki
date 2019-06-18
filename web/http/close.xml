@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Closing client HTTP connections</title>
+		<meta name="description" content="Closing client HTTP connections" />
+		<link rel="up" href="index.html" />
+	</head>
+	<body>
+		<main>
+			<h1>Closing client connections</h1>
+			<p>Responses that are closing the connection without a message body may be sent without any Content-Length header. Correctly implementing connection closes can ensure that clients get a chance to read error messages sent prior to the socket teardown.</p>
+
+			<h2>Lost data after a connection close</h2>
+			<p>If, while a client is uploading data, the server prematurely writes a response then closes the connection, the client may not ever see that written data, due to how TCP implemented by operating systems: If the server closes the connection, then receives additional data from the client, the server kernel will reply with a TCP RST packet. Servers normally send RST when they receive data on a closed connection to indicate that the data was lost. However, this has the effect of wiping out any data buffered by the client kernel.</p>
+
+			<h2>Closing an HTTP/1.1 stream</h2>
+			<p>Closing an HTTP/1.1 stream (request and associated response) is the same as closing the underlying reliable/TCP stream, and is performed in several stages:</p>
+			<ol>
+				<li>Send a complete response with a <code><a href="headers/Connection.xml">Connection</a>: close</code> header</li>
+				<li>Call shutdown() on the socket, e.g. <code>shutdown(socket, SHUT_WR);</code></li>
+				<li>Call read() on the socket, in a loop until the buffer is emptied (until an empty string is read)</li>
+				<li>Call close() on the socket</li>
+			</ol>
+
+			<h2>Receiving a closed HTTP/1.1 response</h2>
+			<p>Closing an HTTP/1.1 stream (request and associated response) is the same as closing the underlying reliable/TCP stream, and is performed in several stages:</p>
+			<ol>
+				<li>Stop sending data</li>
+				<li>Close the socket</li>
+			</ol>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://httpwg.org/specs/rfc7230.html#persistent.tear-down">HTTP/1.1 connection tear-down</a></li>
+				<li><a href="https://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable">The ultimate SO_LINGER page, or: why is my tcp not reliable</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
