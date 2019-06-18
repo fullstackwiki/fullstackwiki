@@ -75,6 +75,8 @@
 					socket.destroy(err);
 				});
 			</pre>
+			<p>The same error is generated for too long a request URI, too many headers, or a header that is too long; these cannot be distinguished.</p>
+			<p>The actual limit is configurable by two methods: a <code>--max-http-header-size</code> CLI argument passed to Node.js configures the maximum size of the request-line and each header (this is not configurable at runtime), and the <code>Server#maxHeadersCount</code> property configures the total number of allowed headers.</p>
 
 			<!-- TODO: Link Apache size limits -->
 			<!-- <h3>Apache HTTP Server</h3> -->
