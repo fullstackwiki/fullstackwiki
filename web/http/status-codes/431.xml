@@ -80,6 +80,11 @@
 
 			<!-- TODO: Link Apache size limits -->
 			<!-- <h3>Apache HTTP Server</h3> -->
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://httpstatusdogs.com/431-request-header-fields-too-large">HTTP 431 on HTTP STATUS DOGS</a></li>
+			</ul>
 		</main>
 	</body>
 </html>

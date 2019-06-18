@@ -52,6 +52,12 @@
 			<p>Node.js has a builtin HTTP parser that will respond if a header line exceeds the maximum allowed length. It treats the request-line the same as a header-line, see <a href="431.xml">431 Request Header Too Long</a> for setting this limit and generating a custom response when handling this error.</p>
 
 			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://evertpot.com/http/414-uri-too-long">HTTP 414 by Evert Pot</a></li>
+				<li><a href="https://httpstatusdogs.com/414-request-uri-too-long">HTTP 414 on HTTP STATUS DOGS</a></li>
+			</ul>
 		</main>
 	</body>
 </html>

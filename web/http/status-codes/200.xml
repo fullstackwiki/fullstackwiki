@@ -55,6 +55,12 @@
 			<pre type="message/http" w:space="indent">
 				HTTP/1.1 200 OK
 			</pre>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://evertpot.com/http/200-ok">HTTP 200 by Evert Pot</a></li>
+				<li><a href="https://httpstatusdogs.com/200-ok">HTTP 200 on HTTP STATUS DOGS</a></li>
+			</ul>
 		</main>
 	</body>
 </html>
