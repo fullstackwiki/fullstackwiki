@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>500 Server Error</title>
+		<meta name="description" content="The 500 (Server Error) HTTP status code indicates the server cannot process the request at this time." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/500" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>500 Server Error</h1>
+			<p>The 500 (Server Error) HTTP status code indicates indicates the server cannot process the request at this time.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Use <code>500 (Server Error)</code> for errors that arise in the course of server processing, but where there is nothing apparently wrong with the request itself, and retrying the request at a later date might be successful. This status code is generic, consult the <a href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">IANA HTTP Status Code Registry</a> to determine if a more appropriate status code is available. If the error is correctable by the client, or is otherwise a problem with the request itself, see <a href="400.xml">400 Bad Request</a>.</p>
+			<p>Server errors and bad requests are not always easily distinguishable, for example, <a href="404.xml">404 Not Found</a> and <a href="501.xml">501 Not Implemented</a> could both be caused either by client or server errors, depending on the circumstance. Since 4xx and 5xx both indicate the request was not filled, it is more important to use a correct, specific status code, than a generic status code from a more accurate class.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>500 errors are generally not fixable without manual intervention by the server administrator; after which, the request may be re-tried. See the <a href="../headers/Retry-After.xhtml">Retry-After header</a> for server-indicated retry times.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">500</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">500 Server Error</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The server does not support the functionality required to fill the request.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.500">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.6.2. 500 Server Error</a></dd>
+			</dl>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://httpstatusdogs.com/500-internal-server-error">HTTP 500 on HTTP STATUS DOGS</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
