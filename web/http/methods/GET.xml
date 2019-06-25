@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP GET</title>
+		<meta name="description" content="Request a transfer of the target resource" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/GET" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>GET</h1>
+			<p>The GET method requests transfer of a current selected representation for the target resource. The resource may be a representation of another resource, for example, the resource <code>http://example.com/index</code> might be a listing of files, and <code>http://example.com/index.html</code> might be the particular HTML document <i>representing</i> that listing of files.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients should use use GET to download a specified document.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>If the resource does not exist, return a <a href="../status-codes/404.xml">404 Not Found</a> response.</p>
+			<p>If the resource is negotiated, determine which representation to return.</p>
+			<p>If conditional headers are present, test them and return <a href="../status-codes/304.xml">304 Not Modified</a> as necessary.</p>
+
+			<h2>Request Payloads</h2>
+			<p>Payloads on a GET request have no defined semantics; while servers can use the request payload for any purpose, intermediate nodes may also manipulate or drop the request payload. For sending documents to a server, that cannot be encoded into the request-URI due to length, see the <a href="search.xml">SEARCH method</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl>
+				<dt>Name</dt>
+				<dd property="w:HTTP-Method-name">GET</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Returns the representation of a resource</dd>
+				<dt>Safeness</dt>
+				<dd property="w:HTTP-Method-safe">Safe, Idempotent</dd>
+				<dt>Conditional match</dt>
+				<dd property="w:HTTP-Method-conditional"><a href="../status-codes/304.xml">304 Not Modified</a></dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#GET">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.1. GET</a></dd>
+			</dl>
+
+		</main>
+	</body>
+</html>

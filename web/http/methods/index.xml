@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:q="http://fullstack.wiki/rdfq/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP Methods</title>
+		<meta name="description" content="A list of HTTP headers" />
+		<link rel="up" href="../index.xml" />
+	</head>
+	<body>
+		<main id="main-content">
+<h1>HTTP Methods</h1>
+
+<p>The full list of HTTP methods is maintained by the IANA at the <a href="https://www.iana.org/assignments/http-methods/http-methods.xhtml">Hypertext Transfer Protocol (HTTP) Method Registry</a>.</p>
+
+<table class="table-http-headers">
+	<thead>
+		<tr><th>Method</th><th>Description</th></tr>
+	</thead>
+	<tbody>
+		<tr subquery="each" subquery-order="ASC(?name)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/HTTP-Method">
+			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="tag:fullstack.wiki,2018:ns/HTTP-Method-name">{?name}</span></a></td>
+			<td property="tag:fullstack.wiki,2018:ns/HTTP-Method-description">{?desc}</td>
+		</tr>
+	</tbody>
+</table>
+
+		</main>
+	</body>
+</html>
