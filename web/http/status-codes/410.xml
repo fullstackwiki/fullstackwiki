@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>410 Gone</title>
+		<meta name="description" content="The 410 Gone HTTP status code indicates the resource was deleted and does not exist anymore." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/410" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>410 Gone</h1>
+			<p>The 410 (Gone) HTTP status code indicates the requested resource previously existed on the server, but no longer does.</p>
+			<p>This status code is considered a 4xx client error because it is not a server error; the resource was deliberately removed and it is expected to be gone indefinitely.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>This status code is a more specific variation of <a href="404.xml">404 Not Found</a> which implies the resource previously existed.</p>
+			<p>If the resource was merely moved, servers should use <a href="308.xml">308 Permanent Redirect</a> instead.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>This is the expected error code after a resource has been deleted by a client.</p>
+			<p>See <a href="404.xml">404 Not Found</a> for additional handling.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">410</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">410 Gone</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The resource was deleted and does not exist anymore</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.410">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.9. 410 Gone</a></dd>
+			</dl>
+
+		</main>
+	</body>
+</html>
