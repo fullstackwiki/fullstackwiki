@@ -23,7 +23,7 @@
 			<p>This status might also be used when disclosing the existence of a resource to an unauthorized user could be a security or privacy problem.</p>
 			<p>Servers responding with this error code may wish to log the <a href="../headers/Referer.xml">Referer header</a>, if any, which can be used to troubleshoot the presence of broken links.</p>
 			<p>If the resource has merely been deleted (for example, a "deleted" flag on the database record is set), then see <a href="410.xml">410 Gone</a> instead.</p>
-			<p>Servers may wish to keep track of links and a record of link targets that do not exist. If the request is for one of these resources, the server should provide instructions on how to create the resource, using a link rel=create-form, and should advertise the ability for clients to create the resource directly using an <code><a href="">Allow</a>: PUT</code> header.</p>
+			<p>Servers may wish to keep track of links and a record of link targets that do not exist. If the request is for one of these resources, the server should provide instructions on how to create the resource, using a link rel=create-form, and should advertise the ability for clients to create the resource directly using an <code><a href="../headers/Allow.xml">Allow</a>: PUT</code> header.</p>
 			<p>The exact contents of this error will likely vary by the namespace that the URI falls under. For example, a server might reserve URIs beginning with <code>http://example.com/~</code> for usernames; so when handling requests for users that do not exist, the server may opt to theme 404 responses in a different HTML theme than the rest of the website.</p>
 
 			<h2>Reading responses (clients)</h2>

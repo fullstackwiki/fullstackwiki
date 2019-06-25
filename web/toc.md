@@ -99,9 +99,9 @@ Topics:
 * Encoding URIs in HTML attributes to avoid XSS concerns
 * HTML forms best practices
 	* i18n/lang support
-	* Autompletion
+	* Autocompletion
 	* Geo-location
-* Disability accomidation
+* Disability accommodation
 	* Visual contrast requirements
 	* Screenreading support
 	* CAPTCHA considerations
@@ -126,6 +126,9 @@ Topics:
 	* https://featurepolicy.info/
 	* https://github.com/LearnSolid/solid-roadmap
 	* http://resthooks.org/
+	* https://javascript.info/
+	* http://apistylebook.com/
+	* https://howtojsonapi.com/
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions

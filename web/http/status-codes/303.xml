@@ -16,12 +16,13 @@
 
 			<h1>303 See Other</h1>
 			<p>The 303 See Other HTTP status code indicates the result of the operation is available at another location. The client should interpret the request as completed, and then make a new request to another resource identified by the <a href="../headers/Location.xml">Location header</a>. The new request must be made with GET (or HEAD)</p>
+			<aside><p>This status code should typically be treated as a 2xx status, since it conveys the request was handled by the server.</p></aside>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Servers will typically only produce <code>303 See Other</code> in response to POST requests, so that after a browser has submitted from a form, the browser can make a safe request to show the user the result; whereas if the resource generated a response to the POST request directly, the browser would not be able to re-request the page that was returned.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p>A <code>303 See Other</code> will be accompnied by a <a href="../headers/Location.xml">Location header</a> that indicates the next page that should be loaded.</p>
+			<p>A <code>303 See Other</code> will be accompanied by a <a href="../headers/Location.xml">Location header</a> that indicates the next page that should be loaded.</p>
 			<p>The request-URI should not be pushed to the history, so that navigation brings the user to the redirect target, instead of re-issuing the request that caused the 303. If the user intends to re-issue the request, they can re-submit the form.</p>
 
 			<h2>Overview table</h2>

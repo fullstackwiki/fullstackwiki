@@ -15,6 +15,8 @@
 		<main id="main-content">
 <h1>HTTP Status Codes</h1>
 
+<p>This is the table of suggested HTTP status codes. The complete list of registered status codes is maintained by the IANA at the <a href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">Hypertext Transfer Protocol (HTTP) Status Code Registry</a>.</p>
+
 <table class="table-http-headers">
 	<thead>
 		<tr><th>Code</th><th>Description</th></tr>

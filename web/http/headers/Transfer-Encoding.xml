@@ -12,7 +12,7 @@
 
 			<h1>Transfer-Encoding</h1>
 			<p>The Transfer-Encoding header field lists the mechanisms used by the connection to transmit the message body (including the content coding already applied to it). The primary use is to signal a <i>chunked</i> transmission of the message body when the length is not known in advance.</p>
-			<p>Transfer-Encoding is a property of an HTTP/1.1 connection (it is not used in HTTP/1.0 and not relevant to HTTP/2).</p>
+			<p>Transfer-Encoding is a property of an HTTP/1.1 connection (it is not used in HTTP/1.0 and, HTTP/2 has an entirely different mechanism for transferring payloads).</p>
 			<p>It is mutually exclusive with the <a href="Content-Length.xml">Content-Length</a> header. See <a href="https://httpwg.org/specs/rfc7230.html#message.body.length">RFC 7230 &#xA7;3.3.3. Message Body Length</a> for how to determine the message body length.</p>
 			<p>Messages can be encoded with any number of transfer codings, but if any, messages must use <code>chunked</code> as the outermost one, so that the end of the transfer can reliably be identified. Implementations will typically use "chunked" by itself, and any compression is applied as a content coding using the <a href="Content-Encoding.xml">Content-Encoding header</a>.</p>
 

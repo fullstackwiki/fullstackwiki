@@ -17,10 +17,16 @@
 			<h1>204 No Content</h1>
 			<p>The 204 No Content status code indicates that the request was successful and the response has no body.</p>
 
-			<h2>Writing responses (servers)</h2>
-			<p>Use <code>204 No Content</code> when the status code would normally be <a href="200.xml">200 OK</a> but the payload size would be zero. These are typically <code>PUT</code>, <code>PATCH</code>, or <code>DELETE</code> requests made with <a href="../preferences/return.xml">return=minimal</a>.</p>
-			<p>Servers that would like to send a more specific status code, such as <code>201 Created</code> if a resource was created, but without a response body, should use the more specific status code instead, and use a <code><a href="../headers/Content-Length.xml">Content-Length</a>: 0</code> header field instead.</p>
+			<h2>Writing responses (servers)</h2>			
+			<p><code>204 No Content</code> may be used when the payload size is zero, and the status would otherwise be <a href="200.xml">200 OK</a>. These are typically <code>PUT</code>, <code>PATCH</code>, or <code>DELETE</code> requests made with <a href="../preferences/return.xml">return=minimal</a>.</p>
+			<p>It is typically more straightforward to always use <a href="200.xml">200 OK</a> with an explicit <code><a href="../headers/Content-Length.xml">Content-Length</a>: 0</code> header.</p>
 			<p>This status code implies the request has been filled. If the request does not need to be filled because of a conditional header, see <a href="304.xml">304 Not Modified</a>.</p>
+
+			<h3>In HTTP/1</h3>
+			<p>This status code may be used as an alternative to a <a href="200.xml">200 OK</a> response with a zero-length payload; in this case, the <a href="../headers/Content-Length.xml">Content-Length</a> header may be omitted, however, it is more consistent if it is always sent.</p>
+
+			<h3>In HTTP/2</h3>
+			<p>In HTTP/2, headers are not used for payload transfer, so <code>204 No Content</code> behaves identically to <a href="200.xml">200 OK</a>.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p>Handling of <code>204 No Content</code> is the same as a <a href="200.xml">200 OK</a> with a zero-length payload, even if the server omits the <a href="../headers/Content-Length.xml">Content-Length</a> and <a href="../headers/Transfer-Encoding.xml">Transfer-Encoding</a> headers, one of which would normally be necessary in HTTP/1.1.</p>

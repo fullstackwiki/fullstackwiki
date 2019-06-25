@@ -15,28 +15,64 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Connection</h1>
-			<p>The Connection header provides directives that modify the default caching behavior for resources; allowing a normally non-cachable resource to be cached, or restricting or prohibiting caching of otherwise cachable resources (e.g. for privacy reasons).</p>
+			<p>The Connection header lists hop-by-hop headers in a message and other desired control options for the next node downstream.</p>
+			<p>This header is typically handled entirely by HTTP libraries and servers on behalf of developers, see section below on implementations.</p>
+			<p>All connection options are case-insensitive.</p>
 
+			<h2>Usage in user agents</h2>
+			<p>Clients (including intermediaries) must list any connection headers (besides Connection itself) in the Connection header.</p>
+			<p>Clients that do not support persistent connections must send the <code>close</code> token in every request.</p>
+			<p>Clients that </p>
+			<p>Clients that receive either <code>Connection: close</code> or an HTTP/1.0 response without <code>Connection: keep-alive</code> from the upstream node may re-try any pipelined requests .</p>
+			<!-- TODO: How safe is it to retry the request? -->
 
-			<h2>Reading</h2>
+			<h2>Usage in intermediaries</h2>
+			<p>Intermediaries forwarding the message to another node must only forward end-to-end headers, skipping connection headers, either the Connection header, or any header whose name appears in it.</p>
+			<p>Intermediate clients add their own Connection header as necessary.</p>
+			<p>For workarounds for historical problems, a proxy server must not maintain a keep-alive connection with an HTTP/1.0 client.</p>
+
+			<h2>Usage in origin servers</h2>
+			<p>Servers that do not support persistent connections must send the <code>close</code> token in every response (non-1xx).</p>
+			<p>Servers responding to a request with <code>Connection: close</code> should also respond with <code>close</code>.</p>
+
+			<h2>Values</h2>
+
+			<h3>Name of a header</h3>
 			<p>The value of the <code>Connection</code> header is a list of header names that describe the state of the incoming connection, and as such do not make sense to forward. Any headers listed by this header MUST NOT be forwarded.</p>
+
+			<h3>Special token</h3>
+			<p>Unknown tokens can be ignored. If knowledge of a token is essential, the client or server will use a version of HTTP that specifies the behavior.</p>
 			<p>Some names are reserved as special values. The <code>close</code> token indicates the connection will be closed after the current message (request/response) is written out. Servers that see "close" in a request should close the connection after finishing the response.</p>
 			<p>The <code>keep-alive</code> token is used as a special value by HTTP/1.0 clients. See <a href="https://httpwg.org/specs/rfc7230.html#persistent.connections">RFC7230</a> for implementation details.</p>
-
-			<h2>Writing</h2>
-			<p>If the client intends to close the connection after it is written, the client must send <code>Connection: close</code>. Any other headers that are interperted as hop-by-hop, including <a href="Upgrade.xml">Upgrade</a></p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
 				<dd property="w:HTTP-Header-name">Connection</dd>
 				<dt>Description</dt>
-				<dd property="w:HTTP-Header-description">Lists hop-by-hop headers that must be consumed by every node.</dd>
+				<dd property="w:HTTP-Header-description">Lists hop-by-hop headers that must be consumed by the downstream node.</dd>
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Both</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7230.html#header.connection">RFC 7230: HTTP/1.1 Message Syntax and Routing &#xA7;6.1. Connection</a></dd>
 			</dl>
+
+			<h2>Special values</h2>
+			<p>Any values for <code>Connection</code> that do not appear as the name of one of the message headers is a control option for the current connection. Unknown values may be ignored.</p>
+
+			<h3>Connection: close</h3>
+			<p>See <a href="../close.xml">closing client connections</a> for usage in responses.</p>
+
+			<h3>Connection: keep-alive</h3>
+			<p>The <code>keep-alive</code> token is limited to use in HTTP/1.0 connections where perstistent connections are not the default.</p>
+			<p>HTTP/1.0 defines a <code>Keep-Alive</code> header, but Connection may specify <code>keep-alive</code> as a token without using the header.</p>
+
+			<h2>List of connection headers</h2>
+			<p>In addition to <code>Connection</code> itself, the following headers are known to be connection headers:</p>
+			<ul>
+				<li><a href="Upgrade.xml">Upgrade</a></li>
+				<li><a href="HTTP2-Settings.xml">HTTP2-Settings</a></li>
+			</ul>
 
 			<h2>Syntax</h2>
 			<pre type="abnf" w:space="indent">
@@ -46,6 +82,10 @@
 			<p>Connection options are case-insensitive. For clarity, connection options are typically written in lowercase, and header names are typically written in title case.</p>
 			<h3>Example</h3>
 			<pre type="message/http">Connection: close</pre>
+
+			<h2>Implementation status</h2>
+			<h3>Node.js</h3>
+			<p>Node.js emits the header correctly, but does not segregate connection headers from end-to-end headers when reading messages. If writing an application that will forward the message, it must be programmed to omit the <code>Connection</code> header and any headers whose names appear within it, before forwarding.</p>
 		</main>
 	</body>
 </html>

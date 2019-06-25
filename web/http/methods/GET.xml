@@ -33,10 +33,10 @@
 				<dt>Name</dt>
 				<dd property="w:HTTP-Method-name">GET</dd>
 				<dt>Description</dt>
-				<dd property="w:HTTP-Method-description">Returns the representation of a resource</dd>
+				<dd property="w:HTTP-Method-description">Returns a representation of the resource</dd>
 				<dt>Safeness</dt>
 				<dd property="w:HTTP-Method-safe">Safe, Idempotent</dd>
-				<dt>Conditional match</dt>
+				<dt>Conditional fail</dt>
 				<dd property="w:HTTP-Method-conditional"><a href="../status-codes/304.xml">304 Not Modified</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#GET">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.1. GET</a></dd>
