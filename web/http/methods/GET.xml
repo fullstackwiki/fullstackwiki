@@ -15,10 +15,10 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
 
 			<h1>GET</h1>
-			<p>The GET method requests transfer of a current selected representation for the target resource. The resource may be a representation of another resource, for example, the resource <code>http://example.com/index</code> might be a listing of files, and <code>http://example.com/index.html</code> might be the particular HTML document <i>representing</i> that listing of files.</p>
+			<p>The GET method is used to download a representation of a resource. It is the most commonly used HTTP method. Servers may select between several <i>representations</i>, for example, different media types, languages, or make a variation customized for the currently authenticated user. The resource may itself be a representation of another resource, for example, the resource <code>http://example.com/index</code> might be a listing of files, and <code>http://example.com/index.html</code> might always refer to the HTML document <i>representing</i> that listing of files.</p>
 
 			<h2>Writing requests (clients)</h2>
-			<p>Clients should use use GET to download a specified document.</p>
+			<p>Clients should use use GET to download a specified document. GET is going to be the standard method used to perform downloads. If the response payload is not necessary, but the client is only reading headers, or testing for the existence of the resource, see the <a href="HEAD.xml">HEAD method</a>.</p>
 
 			<h2>Reading requests (servers)</h2>
 			<p>If the resource does not exist, return a <a href="../status-codes/404.xml">404 Not Found</a> response.</p>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP HEAD</title>
+		<meta name="description" content="Returns GET request without payload" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/HEAD" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>HEAD</h1>
+			<p>This method returns only the header part of a <a href="GET.xml">GET</a> request. It can be used for obtaining metadata about the selected representation, without transferring the representation data.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>HEAD may be used in any case where the client needs metadata about the resource, available from headers, but not the payload itself. The response will always end at the end of the header section, even in the presence of headers to the contrary (e.g. <a href="../headers/Content-Length.xml">Content-Length</a></p>
+			<p>This method is not guaranteed to return same payload header fields, however (Content-Length, Content-Range, Trailer, Transfer-Encoding). The same GET request might add these fields.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Servers may implement HEAD by processing the request as a GET request, and discarding the response payload, or terminating the request after the headers are fully written out (this works because GET requests are not supposed to impact the server state).</p>
+
+			<h2>Overview table</h2>
+			<dl>
+				<dt>Name</dt>
+				<dd property="w:HTTP-Method-name">HEAD</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Returns GET request without payload</dd>
+				<dt>Conditional fail</dt>
+				<dd property="w:HTTP-Method-conditional"><a href="../status-codes/304.xml">304 Not Modified</a></dd>
+				<dt>Request payload</dt>
+				<dd property="w:HTTP-Method-request-payload">Undefined</dd>
+				<dt>Response payload</dt>
+				<dd property="w:HTTP-Method-response-payload">Prohibited</dd>
+				<dt>Cachable</dt>
+				<dd property="w:HTTP-Method-cachable">Cachable</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#HEAD">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.2. HEAD</a></dd>
+			</dl>
+
+			<h2>Implementations</h2>
+
+			<h3>Node.js (http/https/http2)</h3>
+			<p>Node.js will never allow data to be written to a HEAD response, however it is the job of the implementation to ensure the response is handled the same as an equivalent GET request.</p>
+		</main>
+	</body>
+</html>
