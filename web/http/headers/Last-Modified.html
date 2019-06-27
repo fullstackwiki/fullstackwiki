@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Last-Modified</title>
+		<meta name="description" content="The Last-Modified HTTP header identifies the date when the representation was last modified." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Last-Modified" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Last-Modified</h1>
+			<p>The "Last-Modified" header field specifies the date when the representation was last modified: the most recent date when the representation was changed to its current contents. It can be used in caching and conditional requests.</p>
+
+			<h2>Writing responses (origin servers)</h2>
+			<p>Send a Last-Modified header if there's a reasonable way to determine the representation's modified-time. For representations read from the filesystem, this will be the mtime. If the response is generated from multiple parts, this must be computed as the last-modified time of the component parts, including the function that assembles them together. The Last-Modified date changes every time the document does, and never goes backwards (except possibly from obviously invalid dates in the future). It describes to the <i>selected representation</i>: a combination of the request-URI, and any request headers listed in the <a href="Vary.xml">Vary header</a>.</p>
+			<!-- TODO: If the response includes Content-Location, will that produce the same document for everyone? -->
+			<p>Servers must not send Last-Modified dates later than the <a href="Date.xml">Date</a> header.</p>
+
+			<h2>Reading responses (user agents)</h2>
+			<p>Clients use the Last-Modified when caching documents; it may be used to compute a <i>heuristic expiration time</i>, and/or may be used in an <a href="If-Modified-Since.xml">If-Modified-Since</a> or <a href="If-Unmodified-Since.xml">If-Unmodified-Since</a> header. If the <a href="ETag.xml">ETag</a> header is present, that is used instead for freshining caches.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Last-Modified</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Identifies the date when the representation was last modified</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.last-modified">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;2.2. Last-Modified</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Last-Modified = HTTP-date
+			</pre>
+
+			<h3>Example</h3>
+			<pre>Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT</pre>
+
+		</main>
+	</body>
+</html>
