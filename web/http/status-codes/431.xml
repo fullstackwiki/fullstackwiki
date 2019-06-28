@@ -55,7 +55,7 @@
 			<h2>Implementations</h2>
 
 			<h3>Node.js (http/https)</h3>
-			<p>Node.js automatically handles too-long or too-many headers with a 431 status code and a blank body. The only case this status code is useful is if this parser </p>
+			<p>Node.js automatically handles too-long or too-many headers with a 431 status code and a blank body.</p>
 			<p>A custom response may be sent in HTTP/1.1 responses for a <code>clientError</code> event; header size or count overflows will emit an error with <code>err.code === "HPE_HEADER_OVERFLOW"</code>. The second argument will be the raw socket, which must be written to, then destroyed.</p>
 			<pre type="application/ecmascript" w:space="indent">
 				var http = require('http');

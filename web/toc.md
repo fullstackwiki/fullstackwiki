@@ -129,6 +129,8 @@ Topics:
 	* https://javascript.info/
 	* http://apistylebook.com/
 	* https://howtojsonapi.com/
+	* https://apisyouwonthate.com/
+	* http://standards.rest/
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions

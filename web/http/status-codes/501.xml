@@ -31,9 +31,6 @@
 			<h2>Reading responses (clients)</h2>
 			<p>The client can reissue the request modified to use a different method, if there is a way to do so.</p>
 
-			<h3>501 response to a PATCH request</h3>
-			<p>The client can make a GET request for the resource, then a PUT request with the modified version.</p>
-
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>

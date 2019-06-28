@@ -20,7 +20,7 @@
 
 			<h2>Writing responses (origin servers)</h2>
 			<p>If the request contains an <code>If-Unmodified-Since</code> or <code>If-Match</code> headers, parse each header header and return <code>412 Precondition Failed</code> if the condition fails. The response payload may be a document describing the reasons for failure, the new state of the resource, and/or changes to the resource since the client's copy.</p>
-			<p>If the client is attempting to perform a safe request and doesn't need to indicate an error, see <a href="304.xml">304 Not Modified</a> instead.</p>
+			<p>If the client is attempting to perform a safe request and the server merely needs to indicate there's no changes, without indicating an error, see <a href="304.xml">304 Not Modified</a> instead.</p>
 
 
 			<h2>Reading responses (user agents)</h2>
