@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>OPTIONS</title>
+		<meta name="description" content="OPTIONS requests communication options about the target URI" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/OPTIONS" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>OPTIONS</h1>
+			<p>The OPTIONS requests communication options about the target URI.</p>
+			<p>OPTIONS is not often implemented as intended, and is not well defined. Typically resources options are communicated through HTTP headers, eliminating the need for an additional OPTIONS request. Additionally, no media type has been defined for OPTIONS responses, making automated use of the method difficult.</p>
+			<p>"Communication options" is not well defined, but could include things like content negotiation configuration, media types, metadata, alternate versions of a resource, supported encodings, required permissions, and so forth.</p>
+			<p>wThe most common use of an OPTIONS request in the wild is a "CORS pre-flight request," typically by Web browsers when a webpage wants to make an HTTP request to another origin.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>There isn't currently a well-known use for OPTIONS. Clients that know an origin server returns useful information in an OPTIONS response may wish to make such a request.</p>
+			<p>Web browsers may make an OPTIONS request to fill CORS requirements. However, this is a workaround to protect a user's Web browser from making malicious requests to HTTP servers inside their private network; it does not secure HTTP servers in general, and its use is only applicable to HTTP requests made from scripts written by untrusted parties.</p>
+
+			<h2>Reading requests (servers)</h2>
+
+			<h3>CORS requests</h3>
+			<p>Servers will typically want to add CORS headers to OPTIONS responses, so that information is made available to resources in other origins. (This information would normally be available through use of a CORS proxy, adding CORS headers removes the need for a proxy.) For information, see <a href="https://enable-cors.org/">Enable CORS</a>. At the very least, servers will want to add:</p>
+			<pre type="message/http" w:space="indent">
+				Access-Control-Allow-Origin: *
+				Access-Control-Allow-Methods: GET, POST, OPTIONS
+			</pre>
+
+			<h3>Other requests</h3>
+			<p>Servers wish to implement OPTIONS as intended may wish to return a document containing a list of resources that could be negotiated, and their negotiating metadata. For example:</p>
+			<pre type="application/link-format" w:space="indent"><![CDATA[
+				<http://www.example.com/index.txt>;type="text/plain"
+				<http://www.example.com/index.html>;type="application/xhtml+xml"
+				<http://www.example.com/index.json>;type="application/json"
+			]]></pre>
+
+
+			<h2>Usage in the wild</h2>
+			<p><i>This list is incomplete, you can suggest additions.</i></p>
+
+			<h2>Usage by CORS (Cross-Origin Resource Sharing)</h2>
+			<p>CORS is a procedure used by Web browsers to determine if webpages from one origin may make HTTP requests to another origin. The request that determines this is called a "pre-flight request" and is made over OPTIONS. This usage somewhat overloads the intended use of OPTIONS.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Method-name">OPTIONS</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Requests requests communication options about the resource.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#OPTIONS">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.7. OPTIONS</a></dd>
+			</dl>
+
+			<h2>See Also</h2>
+			<ul>
+				<li><a href="https://enable-cors.org/">Enable CORS</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
