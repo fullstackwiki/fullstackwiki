@@ -15,8 +15,8 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Connection</h1>
-			<p>The Connection header lists hop-by-hop headers in a message and other desired control options for the next node downstream.</p>
-			<p>This header is typically handled entirely by HTTP libraries and servers on behalf of developers, see section below on implementations.</p>
+			<p>The Connection header lists hop-by-hop headers in an HTTP/1 message, and other desired control options for the next node downstream.</p>
+			<p>This header is typically handled entirely by HTTP libraries and servers on behalf of the application, see section below on implementations.</p>
 			<p>All connection options are case-insensitive.</p>
 
 			<h2>Usage in user agents</h2>

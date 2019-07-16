@@ -26,7 +26,7 @@
 			<p>If the server supports the requested method, and has looked up the resource, but the resource does not support the request method, see <a href="405.xml">405 Method Not Allowed</a>.</p>
 
 			<h3>See also: Expectation failed</h3>
-			<p>The Expect header can be used to indicate a client requires a specific feature from a server. Failure to meet this requirement will generate a seperate status code, <a href="417.xml">417 Expectation Failed</a>.</p>
+			<p>The Expect header can be used to indicate a client requires a specific feature from a server. Failure to meet this requirement will generate a separate status code, <a href="417.xml">417 Expectation Failed</a>.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p>The client can reissue the request modified to use a different method, if there is a way to do so.</p>

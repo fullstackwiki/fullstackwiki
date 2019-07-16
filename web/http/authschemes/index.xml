@@ -13,9 +13,9 @@
 	</head>
 	<body>
 		<main id="main-content">
-				<h1>Authentication Scheme Registry</h1>
+				<h1>HTTP Authentication Schemes</h1>
 
-				<p>The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.</p>
+				<p>The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It is maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.</p>
 		</main>
 	</body>
 </html>

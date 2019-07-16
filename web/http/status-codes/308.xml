@@ -25,7 +25,7 @@
 			<h2>Reading responses (clients)</h2>
 			<p><code>308 Permanent Redirect</code> is an indication the client should adjust references to a different URI. If the client has any bookmarks, they should first be updated to the new URI.</p>
 			<p>Then, the request should be re-tried at the URI.</p>
-			<p>The server doesn't necessarially know anything about the target URI; the request at the redirect target might fail, but this doesn't change handling of the 308 response.</p>
+			<p>The server doesn't necessarily know anything about the target URI; the request at the redirect target might fail, but this doesn't change handling of the 308 response.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

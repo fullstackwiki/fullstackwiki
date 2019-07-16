@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>451 Unavailable For Legal Reasons</title>
-		<meta name="description" content="The 451 (Unavailable For Legal Reasons) HTTP status code indicates a resource is inaccessable or censored under threat of legal action." />
+		<meta name="description" content="The 451 (Unavailable For Legal Reasons) HTTP status code indicates a resource is inaccessible or censored under threat of legal action." />
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
@@ -15,7 +15,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>451 Unavailable For Legal Reasons</h1>
-			<p>451 (Unavailable For Legal Reasons) status code indicates a resource or server is inaccessable or censored under threat of legal action or other great threat against the server operator.</p>
+			<p>451 (Unavailable For Legal Reasons) status code indicates a resource or server is inaccessible or censored under threat of legal action or other great threat against the server operator.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Use <code>451 Unavailable For Legal Reasons</code> if legal authorities have demanded content be taken down under some sort of threat of legal action.</p>

@@ -39,11 +39,11 @@
 
 			<h2>Splitting the request-URI</h2>
 			<p>For historical reasons, HTTP requires the request URI be split up into several component parts to generate the request.</p>
-			<aside><p>Technically, you can send the full request-URI in the request-line. However, this is not well supported by many servers, and is not guarenteed to work.</p></aside>
+			<aside><p>Technically, you can send the full request-URI in the request-line. However, this is not well supported by many servers, and is not guaranteed to work.</p></aside>
 			<p>For background, consult <a href="headers/Host.html">the Host header</a>.</p>
 
 			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
-			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authortatively.</p>
+			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authoritatively.</p>
 			<p>Most requests will be made with the origin-form:</p>
 			<pre type="abnf"> origin-form    = absolute-path [ "?" query ]</pre>
 			<p>For example:</p>
@@ -51,7 +51,7 @@
 				GET /request-URI HTTP/1.1
 				Host: www.example.org
 			</pre>
-			<p>It is not possible to explicitly send the scheme being used HTTP/1.0 or HTTP/1.1 using the origin-form, however the server is usually able to detect the scheme being used. If your networked application needs to support responding to arbritrary URI schemes, consider supporting the absolute-form of requests in your server.</p>
+			<p>It is not possible to explicitly send the scheme being used HTTP/1.0 or HTTP/1.1 using the origin-form, however the server is usually able to detect the scheme being used. If your networked application needs to support responding to arbitrary URI schemes, consider supporting the absolute-form of requests in your server.</p>
 
 			<!-- TODO mark this as environment-specific -->
 			<h3>Host</h3>
@@ -94,7 +94,7 @@
 			<h3>Cookie</h3>
 			<p>If the client chooses to, it may send state information to the server in a <code>Cookie</code> header, if any has been sent from a <code>Set-Cookie</code> header in a previous response.</p>
 			<p>The formatting of the Cookie header is different than other HTTP headers, so it must be treated as a special exemption in code.</p>
-			<p>Be very careful when choosing to relay cookies, this makes applications susceptable to ambient authority (confused deputy) attacks if not carefully designed.</p>
+			<p>Be very careful when choosing to relay cookies, this makes applications susceptible to ambient authority (confused deputy) attacks if not carefully designed.</p>
 
 			<h2>User agent information</h2>
 			<h3>User-Agent</h3>

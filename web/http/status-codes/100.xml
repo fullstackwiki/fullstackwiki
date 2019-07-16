@@ -15,13 +15,13 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>100 Continue</h1>
-			<p>The 100 Continue status code is a 1xx intermediate status code instructing the client to resume transmission of the rest of the request message. It is primarially seen in a request with <code>Expect: 100-continue</code>, where the client will transmit just the message headers, and wait for a <code>100 Continue</code> intermediate status before uploading the message body.</p>
+			<p>The 100 Continue status code is a 1xx intermediate status code instructing the client to resume transmission of the rest of the request message. It is primarily seen in a request with <code>Expect: 100-continue</code>, where the client will transmit just the message headers, and wait for a <code>100 Continue</code> intermediate status before uploading the message body.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>This status code is used when handling requests with <code>Expect: 100-continue</code>, see the <a href="../headers/Expect.xml">Expect header</a> for usage.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p>If the client has sent a request with <code>Expect: 100-continue</code>, then upon reciept of <code>100 Continue</code>, begin writing the request message-body. Otherwise, this intermediate status be ignored.</p>
+			<p>If the client has sent a request with <code>Expect: 100-continue</code>, then upon receipt of <code>100 Continue</code>, begin writing the request message-body. Otherwise, this intermediate status be ignored.</p>
 
 			<!-- TODO: Link to 1xx page, and handling of status code classes -->
 

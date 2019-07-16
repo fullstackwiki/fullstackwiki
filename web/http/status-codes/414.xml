@@ -18,7 +18,7 @@
 			<p>The 414 URI Too Long HTTP status code indicates an unexpected or over-long request message body. In some environments, a lengthy request URI may trigger <a href="431.xml">431 Request Header Fields Too Large</a>, especially in HTTP/2, where the request-URI follws the same syntax as a header (see <i>Implementations</i> below).</p>
 
 			<h2>Writing responses (servers)</h2>
-			<p>On the Web and in HTTP, URIs are allowed to be indefinitely long; there is no defined limitation on URI length. However, at some point, long URIs can become technically infeasable, causing performance issues, excessive resource consumption, and can even be a vector for attacks against cryptographic systems if compressed over the wire. There are two triggers for this status code:</p>
+			<p>On the Web and in HTTP, URIs are allowed to be indefinitely long; there is no defined limitation on URI length. However, at some point, long URIs can become technically infeasible, causing performance issues, excessive resource consumption, and can even be a vector for attacks against cryptographic systems if compressed over the wire. There are two triggers for this status code:</p>
 
 			<h3>Parsing terminated</h3>
 			<p>If the request-line is being parsed and the client has sent more characters than the server-defined maximum, terminate parsing, return <code>414 URI Too Long</code> with <code>Connection: close</code>, and close the stream.</p>

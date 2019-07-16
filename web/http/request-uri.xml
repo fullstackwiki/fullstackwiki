@@ -13,7 +13,7 @@
 
 			<h2>Making Requests</h2>
 			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
-			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authortatively.</p>
+			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authoritatively.</p>
 			<p>Most requests will be made with the origin-form:</p>
 			<pre type="abnf"> origin-form    = absolute-path [ "?" query ]</pre>
 			<p>For example:</p>

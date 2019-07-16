@@ -16,18 +16,18 @@
 
 			<h2>Listening for Requests</h2>
 			<p>There are multiple ways to listen for HTTP requests, and you may wish to implement more than one of them.</p>
-			<p>HTTP is primarially defined in the concrete message syntax, shared by HTTP/1.x and is similar to MIME, used for email. HTTP servers should typically always listen on HTTP/1.x (HTTP/1.x refers to both HTTP/1.1 and HTTP/1.0).</p>
+			<p>HTTP is primarily defined in the concrete message syntax, shared by HTTP/1.x and is similar to MIME, used for email. HTTP servers should typically always listen on HTTP/1.x (HTTP/1.x refers to both HTTP/1.1 and HTTP/1.0).</p>
 			<p>HTTP/1.x by default listens on TCP port 80, and HTTP over TLS on port 443. HTTP also provides alternate ports 8008 and 8080, which is useful for origin servers behind a gateway/firewall, if a unix socket cannot be used.</p>
 			<!-- Implements RFC7230 6.1. Connection - TODO: describe some of the attacks and mitigations -->
 			<p>Servers are expected to be robust against denial-of-service attacks.</p>
-			<p>An incoming connection might not necessarially be the one making the requests, and a connection might send requests from many different user agents.</p>
+			<p>An incoming connection might not necessarily be the one making the requests, and a connection might send requests from many different user agents.</p>
 			<!-- TODO: cover other HTTP versions and compatible protocols -->
 
 			<h2>Status codes and emitting errors</h2>
 			<p>Some operations below speak of emitting an error, or emitting a status code. This means the response to that request will be a status code (4xx or 5xx if an error), generating a document describing the error (if allowed), and further handling of the request will end (except as necessary to unlock and clean up resources, etc).</p>
 
 			<h3>Retry-After</h3>
-			<p>In certain cases, especially due to server load or unrecognised parameters from the client, the server may want to advertise how long the client should wait to retry a request. Use the <code>Retry-After</code> header to specify this.</p>
+			<p>In certain cases, especially due to server load or unrecognized parameters from the client, the server may want to advertise how long the client should wait to retry a request. Use the <code>Retry-After</code> header to specify this.</p>
 
 			<h2>Handle rate limiting and overload condition</h2>
 			<!-- Implements RFC7231 6.6.4. 503 Service Unavailable -->
@@ -43,7 +43,7 @@
 			<!-- Pull some sensible values from Apache HTTPD: http://httpd.apache.org/docs/2.2/mod/core.html#limitrequestline -->
 			<dl>
 				<dt>414 (URI Too Long)</dt><dd>When the request-URI is very long (this length is 8190 in Apache HTTPD)</dd>
-				<dt>431 (Request Header Fields Too Large)</dt><dd>When there's a header that's too long, or too many headers. Send this when a header name is very long (the longest known header plus some amount to accomidate new headers without interrupting client requests, about 100 bytes), when the value is very long (8190 bytes in Apache HTTPD), or when there's too many headers (100 count in Apache HTTPD)</dd>
+				<dt>431 (Request Header Fields Too Large)</dt><dd>When there's a header that's too long, or too many headers. Send this when a header name is very long (the longest known header plus some amount to accommodate new headers without interrupting client requests, about 100 bytes), when the value is very long (8190 bytes in Apache HTTPD), or when there's too many headers (100 count in Apache HTTPD)</dd>
 			</dl>
 			<p>If the server statically knows all of the resources it needs to process, the request URI limit should be at least as large as the largest URI.</p>
 			<p>Resource limits for the request-body are treated below.</p>
@@ -150,7 +150,7 @@
 
 			<h3>Max-Forwards header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
-			<p>For nodes that would normally forward the request, the <code>Max-Forwards</code> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after deincrementing the value.</p>
+			<p>For nodes that would normally forward the request, the <code>Max-Forwards</code> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after decrementing the value.</p>
 			<p>Origin servers may generally ignore this header.</p>
 
 			<h2>Authenticate credentials</h2>
@@ -183,7 +183,7 @@
 
 			<h3>PUT</h3>
 			<p>Put is an operation that updates a resource with an uploaded document, creating it if it doesn't exist.</p>
-			<p>The server should look up the resource being replaced (if any) and perform the necessary post-replace hooks, but this is not of consern to the client.</p>
+			<p>The server should look up the resource being replaced (if any) and perform the necessary post-replace hooks, but this is not of concern to the client.</p>
 
 			<h2>Dereference resource</h2>
 			<p>For methods that dereference the (most methods), the server looks up the effective request URI from its routing table and/or database to determine if it exists.</p>
@@ -324,7 +324,7 @@
 			<p>See the page on Content-Type Negotiation for more information.</p>
 
 			<h3>Set Content-Location</h3>
-			<p>With the different dimensions of variance negoaiated, compute the URI that uniquely identifies this selection. Send it in the <code>Content-Location</code> header. Preferably compute and send a relative URI, to minimize the chances that an intermediate node introduces problems if it rewrites the request-URI (e.g. the host header, or path).</p>
+			<p>With the different dimensions of variance negotiated, compute the URI that uniquely identifies this selection. Send it in the <code>Content-Location</code> header. Preferably compute and send a relative URI, to minimize the chances that an intermediate node introduces problems if it rewrites the request-URI (e.g. the host header, or path).</p>
 
 			<h3>Set Vary</h3>
 			<!-- Implements RFC7231 7.1.4. Vary -->
@@ -358,7 +358,7 @@
 
 			<h2>Write response body</h2>
 			<h3>Encode content coding</h3>
-			<p>A content coding is a transform applied to the representation indended to be decoded by the final recipient. It is not typically decoded by intermediaries, except transforming proxies.</p>
+			<p>A content coding is a transform applied to the representation intended to be decoded by the final recipient. It is not typically decoded by intermediaries, except transforming proxies.</p>
 			<p>The applied content codings are specified in the <code>Content-Encoding</code> header.</p>
 			<p>Content codings are usually cached by the server.</p>
 

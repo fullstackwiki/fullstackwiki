@@ -16,7 +16,7 @@
 
 			<h1>507 Insufficient Storage</h1>
 			<p>The 507 Insufficient Storage HTTP status code indicates the server does not have enough free storage to perform the operation. The client can re-try the operation at some time in the future when more storage becomes available.</p>
-			<p>This status code is defined by WebDAV, but available for use in any applicaion.</p>
+			<p>This status code is defined by WebDAV, but available for use in any application.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Servers should produce <code>507 Insufficient Storage</code> when the operation requires free disk space, but not enough is available to complete the operation. <code>500 Internal Server Error</code> can also be used for this error, but it is less specific.</p>

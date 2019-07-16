@@ -18,7 +18,7 @@
 			<p>The 417 Expectation Failed status code indicates that the expectation given in the request's <a href="../headers/Expect.xml">Expect header</a> could not be met by at least one of the inbound servers.</p>
 
 			<h2>Writing responses (servers)</h2>
-			<p>Servers produce this status code when the client makes a request with the <a href="../headers/Expect.xml">Expect header</a> with a value not understood by the server, see the header description for informaton.</p>
+			<p>Servers produce this status code when the client makes a request with the <a href="../headers/Expect.xml">Expect header</a> with a value not understood by the server, see the header description for information.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p>Clients should reissue the request, reworked to not use the Expect header. See <a href="../headers/Expect.xml">Expect header</a> for additional informaton.</p>
