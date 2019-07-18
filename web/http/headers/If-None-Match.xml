@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>If-None-Match</title>
+		<meta name="description" content="The If-None-Match HTTP header makes request conditional on target resource having been changed from all of the specified ETags." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/If-None-Match" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>If-None-Match</h1>
+			<p>The "If-None-Match" header makes the request conditional on the target resource (on the cache or origin) having the specified <a href="ETag.xml">ETag</a>. ETags are compared using the weak validation function (i.e. the weak flag is ignored when comparing ETags). This form is typically used when freshining a cache. If the request fails (i.e. the resource is unchanged), the server will respond with <a href="../status-codes/304.xml">304 (Not Modified)</a>; otherwise, the request will proceed.</p>
+			<p>If the value is <code>*</code>, then no ETag is allowed to exist, i.e. request becomes conditional on the resource not existing. This form is typically used when creating resources, so that an existing resource is not overwritten. If the request fails, the server will respond with <a href="../status-codes/412.xml">412 (Precondition Failed)</a>; otherwise, the request will proceed.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients should use ETag when freshening a cache entry, and the cached representation has an associated ETag.</p>
+			<p>Clients should also use <code>If-None-Match: *</code> when creating resources (with e.g. <a href="../methods/PUT.xml">PUT</a> or <a href="../methods/PATCH.xml">PATCH</a>).</p>
+			<p>Clients should be aware that evaluation of conditional headers is optional, and there is currently no way to guarentee it will be tested by the server.</p>
+
+			<h2>Reading requests (caches)</h2>
+			<p>Caches may test conditional headers and respond to directly to requests without contacting the inbound server. See <a href="https://httpwg.org/specs/rfc7234.html#validation.received">"Handling a Received Validation Request" in RFC7234</a> for instructions on how caches handle conditional headers.</p>
+
+			<h2>Reading requests (origins)</h2>
+			<p>Conditional requests should be tested after the resource has been looked up, a representation has been selected, and authorization to access the resource has been verified. See the <a href="ETag.xml">ETag header</a> for guidence on how to compute the ETag, for performance, it should not need to involve generating the entire resource.</p>
+			<p>Servers that wish to prevent lost updates may require that unsafe requests be accompanied by a conditional header, see <a href="../status-codes/428.xml">428 Precondition Required</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">If-None-Match</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Makes request conditional on target resource having been changed.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.expect">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.1.1. If-None-Match</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				If-None-Match = "*" / 1#entity-tag
+			</pre>
+
+			<h3>Examples</h3>
+			<pre w:space="indent">
+				If-None-Match: "xyzzy"
+				If-None-Match: W/"xyzzy"
+				If-None-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
+				If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
+				If-None-Match: *
+			</pre>
+		</main>
+	</body>
+</html>
