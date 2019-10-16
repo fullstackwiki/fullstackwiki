@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>If-Modified-Since</title>
+		<meta name="description" content="The If-Modified-Since HTTP header makes the request conditional on the resource being updated after the provided date." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/If-Modified-Since" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>If-Modified-Since</h1>
+			<p>The "If-Modified-Since"  header field in a request asks the server to only perform the requested operation of the state of the resource has changed since the client's last update. The equivelant header for ETags is <a href="If-None-Match.xml">If-None-Match</a>; if available, use that instead.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Use <code>If-Modified-Since</code> when freshining a cache.</p>
+			<p>The <a href="If-None-Match.xml">If-None-Match</a> header is more precise; if available, use that instead.</p>
+			<aside><p>As an optimization, some servers are known to only perform an exact string match. This does not pose a problem for most caches, but does pose a problem to spiders that want only documents updated since a certain point in time. The only way to work around this is to keep the Last-Modified value for each document retreived, instead of the date of the last crawl as a whole.</p></aside>
+
+			<h2>Reading requests (servers)</h2>
+			<p>If the client also specified <a href="If-None-Match.xml">If-None-Match</a>, ignore this header.</p>
+			<p>If the request method is not a valid HTTP-date, ignore this header.</p>
+			<p>If the request method is not GET or HEAD, ignore this header.</p>
+			<p>If the resource's Last-Modified date is the same or older than this header, return <a href="../status-codes/304.xml">304 (Not Modified)</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">If-Modified-Since</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Makes the request conditional on the resource being updated after the provided date.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-modified-since">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;3.3. If-Modified-Since</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				If-Modified-Since = HTTP-date
+			</pre>
+
+		</main>
+	</body>
+</html>

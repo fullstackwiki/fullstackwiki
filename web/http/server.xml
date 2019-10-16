@@ -284,6 +284,9 @@
 				<dt>TRACE</dt><dd>Clients are prohibited from providing a request body for TRACE; enforce this by emitting 413 (Payload Too Large).</dd>
 			</dl>
 
+			<h2>Test conditional headers</h2>
+			<p>Before any changes to the server state have been made, the server should test any conditional headers to see if the server should skip this request. See <a href="conditional.xml">conditional requests</a> for handling. Depending on the requested action, this step may return <a href="status-codes/304.xml">304 (Not Modified)</a> or <a href="status-codes/412.xml">412 (Precondition Failed)</a>.</p>
+
 			<h2>Report changes to server state</h2>
 			<h3>Created resources</h3>
 			<p>If the request was one to create a resource (either a PUT request to a resource that didn't previously exist, or a POST request that created a new resource), then:</p>

@@ -18,12 +18,13 @@
 			<p>The "Last-Modified" header field specifies the date when the representation was last modified: the most recent date when the representation was changed to its current contents. It can be used in caching and conditional requests.</p>
 
 			<h2>Writing responses (origin servers)</h2>
-			<p>Send a Last-Modified header if there's a reasonable way to determine the representation's modified-time. For representations read from the filesystem, this will be the mtime. If the response is generated from multiple parts, this must be computed as the last-modified time of the component parts, including the function that assembles them together. The Last-Modified date changes every time the document does, and never goes backwards (except possibly from obviously invalid dates in the future). It describes to the <i>selected representation</i>: a combination of the request-URI, and any request headers listed in the <a href="Vary.xml">Vary header</a>.</p>
+			<p>Send a Last-Modified header if there's a reasonable way to determine the representation's modified-time. For representations read from the filesystem, this will be the mtime. If the response is generated from multiple parts, this must be computed as most recent last-modified time of the component parts, including the template that assembles them together. The Last-Modified date changes every time the document does, and never goes backwards (except invalid dates in the future). It only describes the <i>selected representation</i>, not necessarially other representations that could have been negotiated.</p>
 			<!-- TODO: If the response includes Content-Location, will that produce the same document for everyone? -->
 			<p>Servers must not send Last-Modified dates later than the <a href="Date.xml">Date</a> header.</p>
 
 			<h2>Reading responses (user agents)</h2>
 			<p>Clients use the Last-Modified when caching documents; it may be used to compute a <i>heuristic expiration time</i>, and/or may be used in an <a href="If-Modified-Since.xml">If-Modified-Since</a> or <a href="If-Unmodified-Since.xml">If-Unmodified-Since</a> header. If the <a href="ETag.xml">ETag</a> header is present, that is used instead for freshining caches.</p>
+			<p>The Last-Modified date applies to the selected representation; if the response includes a <a href="Vary.xml">Vary response-header</a>, then the Last-Modified value can vary among the listed dimensions. If the response includes a <a href="Content-Location.xml">Content-Location header</a>, then the Last-Modified date also describes that resource.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

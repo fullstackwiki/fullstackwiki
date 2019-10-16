@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>If-Unmodified-Since</title>
+		<meta name="description" content="The If-Unmodified-Since HTTP header makes the request conditional on the resource being unchanged since the provided date." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/If-Unmodified-Since" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>If-Unmodified-Since</h1>
+			<p>The "If-Unmodified-Since" header field makes a request conditional on the resource having a Last-Modified date earlier than or equal the specified date. It is typically used for unsafe requests, such as PUT, to prevent a "lost update".</p>
+			<p>The equivelant header for ETag is <a href="If-Match.xml">If-Match</a>; if available, use that instead.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Use this header when making changes to a resource, that has only a Last-Modified date (and no known ETag). This header is less precise than <a href="If-Match.xml">If-Match</a>; if available, use that instead.</p>
+
+			<h2>Reading requests (intermediaries)</h2>
+			<p>Caches and other intermediate nodes can typically ignore this header, as it is not used in caching.</p>
+
+			<h2>Reading requests (origin servers)</h2>
+			<p>Conditional headers are evaluated after a representation is selected, and just before it is written to the response.</p>
+			<p>If the client also specified the <a href="If-Match.xml">If-Match</a> header, ignore this header and follow that one instead.</p>
+			<p>If the request method is not a valid HTTP-date, ignore this header.</p>
+			<p>If the header value is a date earlier or equal to the <code>Last-Modified</code> date of the selected representation, then return <a href="../status-codes/412.xml">412 (Precondition Failed).</a> <code>304 (Not Modified)</code> is not applicable because this header is not used in caching.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">If-Unmodified-Since</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Makes the request conditional on the resource being unchanged since the provided date.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-unmodified-since">RFC 7231: HTTP/1.1 Conditional Requests &#xA7;3.4. If-Unmodified-Since</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				If-Unmodified-Since = "100-continue"
+			</pre>
+
+		</main>
+	</body>
+</html>

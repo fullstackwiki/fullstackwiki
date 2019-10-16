@@ -15,13 +15,17 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>If-None-Match</h1>
-			<p>The "If-None-Match" header makes the request conditional on the target resource (on the cache or origin) having the specified <a href="ETag.xml">ETag</a>. ETags are compared using the weak validation function (i.e. the weak flag is ignored when comparing ETags). This form is typically used when freshining a cache. If the request fails (i.e. the resource is unchanged), the server will respond with <a href="../status-codes/304.xml">304 (Not Modified)</a>; otherwise, the request will proceed.</p>
-			<p>If the value is <code>*</code>, then no ETag is allowed to exist, i.e. request becomes conditional on the resource not existing. This form is typically used when creating resources, so that an existing resource is not overwritten. If the request fails, the server will respond with <a href="../status-codes/412.xml">412 (Precondition Failed)</a>; otherwise, the request will proceed.</p>
+			<p>The "If-None-Match" header makes the request conditional on the target resource (on the cache or origin) having changed from the specified <a href="ETag.xml">ETag</a>. ETags are compared using the weak validation function (i.e. the weak flag is ignored when comparing ETags). This form is typically used when freshining a cache. If the request fails (i.e. the resource is unchanged), the server will respond with <a href="../status-codes/304.xml">304 (Not Modified)</a>; otherwise, the request will proceed. The equivelant header for Last-Modified is <a href="If-Modified-Since.xml">If-Modified-Since</a>.</p>
+			<p>The Last-Modified equivelant is <a href="If-Modified-Since.xml">If-Modified-Since</a>.</p>
+			<p>If the value is <code>*</code>, then the request becomes conditional on the resource not existing. This form is typically used when creating resources, so that an existing resource is not overwritten. If the request fails, the server will respond with <a href="../status-codes/412.xml">412 (Precondition Failed)</a>; otherwise, the request will proceed.</p>
 
 			<h2>Writing requests (clients)</h2>
-			<p>Clients should use ETag when freshening a cache entry, and the cached representation has an associated ETag.</p>
-			<p>Clients should also use <code>If-None-Match: *</code> when creating resources (with e.g. <a href="../methods/PUT.xml">PUT</a> or <a href="../methods/PATCH.xml">PATCH</a>).</p>
-			<p>Clients should be aware that evaluation of conditional headers is optional, and there is currently no way to guarentee it will be tested by the server.</p>
+
+			<h3>Freshining a cache</h3>
+			<p>Use <code>If-None-Match</code> in requests for resources that are already cached by the client, see <a href="https://httpwg.org/specs/rfc7234.html">HTTP Caching</a> for details.</p>
+
+			<h3>Creating a new resource</h3>
+			<p>Clients should use <code>If-None-Match: *</code> when creating a resource that is not expected to exist (with e.g. <a href="../methods/PUT.xml">PUT</a> or <a href="../methods/PATCH.xml">PATCH</a>).</p>
 
 			<h2>Reading requests (caches)</h2>
 			<p>Caches may test conditional headers and respond to directly to requests without contacting the inbound server. See <a href="https://httpwg.org/specs/rfc7234.html#validation.received">"Handling a Received Validation Request" in RFC7234</a> for instructions on how caches handle conditional headers.</p>
@@ -29,6 +33,8 @@
 			<h2>Reading requests (origins)</h2>
 			<p>Conditional requests should be tested after the resource has been looked up, a representation has been selected, and authorization to access the resource has been verified. See the <a href="ETag.xml">ETag header</a> for guidence on how to compute the ETag, for performance, it should not need to involve generating the entire resource.</p>
 			<p>Servers that wish to prevent lost updates may require that unsafe requests be accompanied by a conditional header, see <a href="../status-codes/428.xml">428 Precondition Required</a>.</p>
+			<p>If the value is <code>*</code> and the resource exists, return <a href="../status-codes/304.xml">304 (Not Modified)</a> (safe methods) or <a href="../status-codes/412.xml">412 (Precondition Failed)</a> (unsafe methods).</p>
+			<p>If the value is the ETag form, use the strong comparison function to compare each ETag to the resource's current ETag. If none of the comparisons match, return <a href="../status-codes/304.xml">304 (Not Modified)</a> (safe methods) or <a href="../status-codes/412.xml">412 (Precondition Failed)</a> (unsafe methods).</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -39,7 +45,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.expect">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.1.1. If-None-Match</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-none-match">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;3.1. If-None-Match</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>

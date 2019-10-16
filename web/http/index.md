@@ -33,6 +33,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [HTTP/2 Protocol](http-syntax-2.xml)
 * [Clients](client.xml)
 * [Servers](server.xml)
+* [Conditional requests](conditional.xml)
 * [Conceptual Model](stack.xml)
 * [Closing client connections](close.xml)
 

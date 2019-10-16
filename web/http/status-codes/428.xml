@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>428 Precondition Required</title>
+		<meta name="description" content="The 428 (Precondition Required) HTTP status code indicates the request must be re-issued with a conditional request header." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/428" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>428 Precondition Required</h1>
+			<p>The 428 Precondition Required HTTP status code indicates request was not filled, and must be re-issued with a conditional request header.</p>
+
+			<h2>Writing responses (origin servers)</h2>
+			<p>Serers may respond with <code>428 Precondition Required</code> at the time conditional headers would normally be tested, and if the server is processing an unsafe request, and expects conditional headers for the purpose of avoiding a "lost update" situation.</p>
+			<p>Servers using this feature should send this status code whether or not the resource exists; if the resource does not exist and no <code>If-None-Match: *</code> is sent, return this status code; and if the resource does exist and no <code>If-Match</code> header was sent, return this status code.</p>
+
+			<h2>Reading responses (user agents)</h2>
+			<p>The client must re-make the request with a conditional header. This typically requires developer intervention to implement, the request process must be changed to request a resource ETag, and then use it as necessary. If the request is to create a resource, the client can add <code>If-None-Match: *</code>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">428</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">428 Precondition Required</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The request is missing conditional request headers</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc6585.html#status-428">RFC 6585: Additional HTTP Status Codes &#xA7;3. 428 Precondition Required</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 428 Precondition Required
+				Content-Type: text/plain
+
+				This request must be made with a conditional request header
+				(If-Match, If-None-Match, If-Unmodified-Since, If-Modified-Since).
+			</pre>
+		</main>
+	</body>
+</html>

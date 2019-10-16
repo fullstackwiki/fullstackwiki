@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Closing client HTTP connections</title>
+		<meta name="description" content="Conditional requests" />
+		<link rel="up" href="index.html" />
+	</head>
+	<body>
+		<main>
+			<h1>Conditional Requests</h1>
+			<p>Conditional requests allow a client to request that an HTTP request only be filled if it meets certain criteria. There are two classes of uses for conditional headers: freshining a cache, and preventing lost updates.</p>
+			<p>Conditional requests are defined by <a href="https://httpwg.org/specs/rfc7232.html">RFC 7232: HTTP/1.1 Conditional Requests</a>. Handling can be summarized into the following rules:</p>
+			<ul>
+				<li>When using GET/HEAD to request a resource that is already cached, test that the resource has been modified. When updating a resource with other requests (e.g. PUT/PATCH/DELETE), test that the resource has <i>not</i> been modified. When creating a resource, test that it does not exist.</li>
+				<li>For GET and HEAD, a condition test failure will return <a href="status-codes/304.xml">304 (Not Modified)</a>. Other methods will return <a href="status-codes/412.xml">412 (Precondition Failed)</a></li>
+				<li>The <code>*</code> forms of <code>If-Match</code> and <code>If-None-Match</code> can be used to test if the resource exists or not.</li>
+				<li>The ETag forms of <code>If-None-Match</code> and  <code>If-Match</code> can be used to test if a resource has been modified or not.</li>
+				<li>If none of the above tests are specified, <code>If-Modified-Since</code> and <code>If-Unmodified-Since</code> tests that the resource has or has not been modified since the given timestamp.</li>
+				<li><code>If-None-Match</code> takes precedence over <code>If-Modified-Since</code>; and <code>If-Match</code> takes precedence over <code>If-Unmodified-Since</code>. Multiple headers may be specified in the event the server has not implemented one or the other (however, servers are typically required to implement all conditional headers).</li>
+			</ul>
+
+			<h2>Freshining a cache</h2>
+			<p>If a client has previously requested a resource that is currently cached, but needs to be freshened from the origin server, the client may use a <a href="headers/If-None-Match.xml">If-None-Match</a> and/or a <a href="headers/If-Modified-Since.xml">If-Modified-Since</a> header instructing the server to omit the response body if no newer version is available.</p>
+
+			<h3>Headers</h3>
+			<dl>
+				<dt><a href="headers/If-None-Match.xml">If-None-Match</a></dt><dd>Sent if the client has a stored ETag for the resource</dd>
+				<dt><a href="headers/If-Modified-Since.xml">If-Modified-Since</a></dt><dd>Sent if the client has a stored Modified-Time for the resource</dd>
+				<dt><a href="headers/If-Range.xml">If-Range</a></dt><dd>Used if the client is making a Range request, but wishes for the entire resource if there's been any changes since the previous request.</dd>
+			</dl>
+
+			<h3>Methods</h3>
+			<p>GET and HEAD are the only requests that return <code>304 Not Modified</code>. Most requests will use GET; HEAD is technically permitted, but is not very useful, as you would only see if the resource changed, without seeing the new contents.</p>
+
+			<h3>Response codes</h3>
+			<dl>
+				<dt><a href="status-codes/304.xml">304 (Not Modified)</a></dt><dd>The resource has not been modified from the client's version.</dd>
+			</dl>
+
+			<h2>Lost Updates</h2>
+			<p>A "lost update" is a situation where two users request a resource, make changes, then submit the changes by uploading the entire document. The second document uploaded will overwrite the changes made by the first: the "lost update". Lost updates are avoided by making the update conditional on the resource having not changed; if the resource did change, the server will indicate as such, and the client may merge in the new changes as appropriate.</p>
+			<p>There are other ways to avoid lost updates, for example, breaking apart resources into multiple documents that can be edited independently, or using a method that allows server-directed conflict resolution, e.g. <a href="method/PATCH.xml">PATCH</a>.</p>
+
+			<h3>Headers</h3>
+			<dl>
+				<dt><a href="headers/If-Match.xml">If-Match</a></dt><dd><code>If-Match: <i>etag</i></code> is used if the server has provided an <code>ETag</code> in a previous response.</dd>
+				<dt><a href="headers/If-None-Match.xml">If-None-Match</a></dt><dd><code>If-None-Match: *</code> is used if the client is creating a resource and does not wish to overwrite an existing one.</dd>
+				<dt><a href="headers/If-Unmodified-Since.xml">If-Unmodified-Since</a></dt><dd>Used if the client does not wish to overwrite changes made since the provided date (the <code>Last-Modified</code> response header from a previous request).</dd>
+			</dl>
+
+			<h3>Methods</h3>
+			<p>Requests must be a nonsafe method, such as PUT, PATCH, DELETE, POST, etc.</p>
+
+			<h3>Response codes</h3>
+			<dl>
+				<dt><a href="status-codes/412.xml">412 (Precondition Failed)</a></dt><dd>Used in unsafe requests; the server will not apply the requested action because the condition varies from the client's version.</dd>
+				<dt><a href="status-codes/428.xml">428 (Precondition Required)</a></dt><dd>Used in unsafe requests; the server will not apply the requested action because it lacks a conditional header, and as such might overwrite another party's changes.</dd>
+			</dl>
+
+			<h2>Server Evaluation</h2>
+
+			<h3>Evaluation order</h3>
+			<p>The evaluation order for testing the conditional headers should not impact the status code, however HTTP suggests an evaluation order for performance purposes:</p>
+			<ol>
+				<li><a href="headers/If-Match.xml">If-Match</a></li>
+				<li><a href="headers/If-Unmodified-Since.xml">If-Unmodified-Since</a></li>
+				<li><a href="headers/If-None-Match.xml">If-None-Match</a></li>
+				<li><a href="headers/If-Modified-Since.xml">If-Modified-Since</a></li>
+				<li><a href="headers/If-Range.xml">If-Range</a></li>
+			</ol>
+
+			<h3>ETag Validation</h3>
+			<p>The <code>If-Match</code> and <code>If-None-Match</code> are compared against the resource's ETag using a <i>comparison function</i>.</p>
+			<p><code>If-Match</code> compares using the strong validation function: the ETags must be exactly the same.</p>
+			<p><code>If-None-Match</code> compares using the weak validation function: the ETag Weak flag (the leading <code>W/</code> ) is ignored, if any, then the rest of the ETag is compared.</p>
+			<p>Weak validators allow multiple different representations of a resource to share an ETag, for example: a cache applying JPEG compression to an image would add the <code>W/</code> flag while doing so; or a server providing realtime data may serve a weak ETag that only changes when the data changes by some threshold.</p>
+		</main>
+	</body>
+</html>

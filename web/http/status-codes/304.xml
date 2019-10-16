@@ -18,7 +18,7 @@
 			<p>The 304 Not Modified HTTP status code indicates a conditional GET or HEAD did not need to be filled because the conditional request did not require it; and the request would have resulted in a 200 otherwise. This is the expected response if the client's cached copy of a resource is up to date with the server.</p>
 
 			<h2>Writing responses (servers)</h2>
-			<p>If the request contains an <code>If-Modified-Since</code> or <code>If-None-Match</code> header, parse the header and return <code>304 Not Modified</code>. The response must not contain a payload, and additionally may omit the <code>Content-Length</code> header.</p>
+			<p>This status code is sent in response to requests with an <a href="../headers/If-Modified-Since.xml">If-Modified-Since</a> or <a href="../headers/If-None-Match.xml">If-None-Match</a> header, follow rules for those headers for usage. The response must not contain a payload, and additionally may omit the <code>Content-Length</code> header.</p>
 			<p>The <a href="../headers/Cache-Control.xml">Cache-Control</a>, <a href="../headers/Content-Location.xml">Content-Location</a>, <a href="../headers/Date.xml">Date</a>, <a href="../headers/ETag.xml">ETag</a>, <a href="../headers/Expires.xml">Expires</a>, and <a href="../headers/Vary.xml">Vary</a> headers must be the same as in a 200 OK response.</p>
 			<p>If the client is attempting to perform a nonsafe action, see <a href="412.xml">412 Precondition Failed</a> instead.</p>
 

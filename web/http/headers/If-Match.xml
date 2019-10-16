@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>If-Match</title>
+		<meta name="description" content="The If-Match HTTP header makes filling a request conditional on the resource having one of the specified ETags" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/If-Match" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>If-Match</h1>
+			<p>The "If-Match" header field makes a request conditional on a target resource (on the cache or origin) being the specified <a href="ETag.xml">ETag</a>. ETags are compared using the strong validation function (the ETags must match exactly). This form is typically used when operating on a resource, e.g. saving a new version, to prevent lost updates. If the request fails, the server will respond with <a href="../status-codes/412.xml">412 (Precondition Failed)</a>; otherwise, the request will proceed. The equivelant header for Last-Modified is <a href="If-Unmodified-Since.xml">If-Unmodified-Since</a>.</p>
+			<p>An <code>If-Match: *</code> form is also defined, which makes the request conditional on the resource existing. This only makes sense for requests that do not return <a href="../status-codes/404.xml">404 Not Found</a>, e.g. PUT or PATCH.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>A client typically uses <code>If-Match</code> header when making a change to a resource, and must not overwrite modifications made by a third party since the client's last request. Use this header with the <a href="ETag.xml">ETag</a> of the previous known document version.</p>
+			<p>If the client is creating a new resource and must not overwrite any existing resource, use <a href="If-None-Match.xml">If-None-Match</a> with <code>*</code> instead.</p>
+			<p>Refer to the appropriate <a href="../status-codes/index.xml">status code</a> for handling the response. If this condition failed, this status code will be <a href="../status-codes/412.xml">412 Precondition Failed</a>.</p>
+
+			<h2>Reading requests (intermediates)</h2>
+			<p>Caches and other intermediate nodes can typically ignore this header, as it is not used in caching.</p>
+
+			<h2>Reading requests (origin servers)</h2>
+			<!-- Can a server ignore all conditional requests? -->
+			<p>Conditional headers are evaluated after other normal checks (after method, lookup, and authentication), but before any changes are made. For performance and error messages, If-Match may be evaluated first, then If-Inmodified-Since, If-None-Match, If-Modified-Since, and If-Range.</p>
+			<p>If the requested action would have no effect on the current state of the resource, the server may choose to return success, even if there would otherwise be a comparison mismatch. For example, when handling a PUT request identical to the current document, or a PATCH request that is an effective no-op, the server may choose to respond with 200 OK instead of 412 Precondition Failed.</p>
+			<p>If the value is <code>*</code> and the resource does not exist, return <a href="../status-codes/412.xml">412 (Precondition Failed)</a>.</p>
+			<p>If the value is the ETag form, use the strong comparison function to compare each ETag to the resource's current ETag. If none of the comparisons match, return <a href="../status-codes/412.xml">412 (Precondition Failed)</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">If-Match</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">makes filling a request conditional on the resource having one of the specified ETags</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-match">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;3.1. If-Match</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				If-Match = "*" / 1#entity-tag
+			</pre>
+
+			<h2>Matching</h2>
+			<p>ETags can be matched with one of two algorithms:</p>
+
+			<h3>Strong comparison</h3>
+			<p>With a strong comparison, the ETags must match, and neither can be a weak ETag.</p>
+
+			<h3>Weak comparison</h3>
+			<p>With a weak comparison, the ETags must match, and may have a weak flag, which is otherwise ignored.</p>
+
+		</main>
+	</body>
+</html>

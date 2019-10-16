@@ -15,7 +15,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>412 Precondition Failed</h1>
-			<p>The 412 Precondition Failed HTTP status code indicates a conditional request failed and the requested action could not be performed. This typically indicates the resource changed since the previous request to this resource, and the client should re-request the representation and try again.</p>
+			<p>The 412 Precondition Failed HTTP status code indicates the requested action was not performed because a conditional test failed. This typically indicates the resource changed since the previous request to this resource, and the client should re-request the representation and try again.</p>
 			<aside><p>Nit: This status code could include an option to return the current, changed version of the resource, so that the client doesn't need to make a new request. This could perhaps be implemented with <a href="../preferences/return.xml">return=representation</a>.</p></aside>
 
 			<h2>Writing responses (origin servers)</h2>
@@ -24,7 +24,7 @@
 
 
 			<h2>Reading responses (user agents)</h2>
-			<p>A <code>412 Precondition Failed</code> indicates the resource changed from. The client needs to update the representation available, and try again.</p>
+			<p>A <code>412 Precondition Failed</code> indicates the resource changed between the last cache update and this request. The client needs to update the representation available, re-apply the changes, and try again.</p>
 			<p>See <a href="../headers/If-Unmodified-Since.xml">If-Unmodified-Since</a> and <a href="../headers/If-Match.xml">If-Match</a> for guidence on making these requests.</p>
 
 			<h2>Overview table</h2>
