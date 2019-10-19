@@ -212,4 +212,17 @@ describe('Server', function(){
 			assert(res.toString().indexOf('<span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">Link</span>') >= 0);
 		});
 	});
+	it('Page edit/history links (/http/headers/index)', function(){
+		// Pick any page with a generated table
+		return writeMessage(server, [
+			'GET /http/headers/index HTTP/1.1',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xhtml\+xml$/m));
+			// These can be adjusted as necessary, as long as it links to a source page
+			assert(res.toString().indexOf('<a rel="edit-form" href="https://github.com/fullstackwiki/fullstackwiki/blob/master/web/http/headers/index.xml">Edit</a>') >= 0);
+			assert(res.toString().indexOf('<a rel="version-history" href="https://github.com/fullstackwiki/fullstackwiki/commits/master/web/http/headers/index.xml">History</a>') >= 0);
+		});
+	});
 });
