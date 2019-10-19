@@ -18,7 +18,7 @@
 			<p>User agents do not typically use the Max-Forwards header, except by developers when debugging routing configurations. An algorithm similar to traceroute may be used to debug configurations: Try a TRACE request with <code>Max-Forwards: 0</code>, and note the response, which will be from the node being connected to. The headers that were sent will probably match those in the response message. Retry the request, incrementing the value each try.</p>
 			<p>This header is only guarenteed to work when used with the TRACE and OPTIONS methods, as servers do not have to implement it for other methods.</p>
 
-			<h2>Intermedaries</h2>
+			<h2>Intermediaries</h2>
 			<p>Intermediate nodes MUST look for the presence of the <code>Max-Forwards</code> header. If it exists and the value is 0, then respond as if the final recipient. Otherwise, the outgoing request message must include this header with the value deincremented by one.</p>
 			<p>Intermediate nodes MUST NOT add the header if they did not receive it.</p>
 			<p>Nodes may ignore the header for methods besides TRACE and OPTIONS.</p>

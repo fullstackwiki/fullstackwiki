@@ -23,7 +23,7 @@
 			<p>If the client is creating a new resource and must not overwrite any existing resource, use <a href="If-None-Match.xml">If-None-Match</a> with <code>*</code> instead.</p>
 			<p>Refer to the appropriate <a href="../status-codes/index.xml">status code</a> for handling the response. If this condition failed, this status code will be <a href="../status-codes/412.xml">412 Precondition Failed</a>.</p>
 
-			<h2>Reading requests (intermediates)</h2>
+			<h2>Reading requests (intermediaries)</h2>
 			<p>Caches and other intermediate nodes can typically ignore this header, as it is not used in caching.</p>
 
 			<h2>Reading requests (origin servers)</h2>

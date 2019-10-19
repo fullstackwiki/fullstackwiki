@@ -24,6 +24,10 @@
 			<p>There isn't currently a well-known use for OPTIONS. Clients that know an origin server returns useful information in an OPTIONS response may wish to make such a request.</p>
 			<p>Web browsers may make an OPTIONS request to fill CORS requirements. However, this is a workaround to protect a user's Web browser from making malicious requests to HTTP servers inside their private network; it does not secure HTTP servers in general, and its use is only applicable to HTTP requests made from scripts written by untrusted parties.</p>
 
+			<h2>Reading requests (intermediaries)</h2>
+			<p>If the request headers contain <code>Max-Forwards: 0</code>, then handle the request as the origin; in this case, the representation options will be information describing the message handling configuation of this server.</p>
+			<p>Otherwise the HTTP message should be forwarded as usual.</p>
+
 			<h2>Reading requests (servers)</h2>
 
 			<h3>CORS requests</h3>

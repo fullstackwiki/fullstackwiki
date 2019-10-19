@@ -22,8 +22,15 @@
 			<p>HTTP prohibits attaching sensitive information to TRACE requests if that information cannot be disclosed in the response. Clients that must send HTTP messages with ambient authority, that cannot manage this requirement, are better off prohibiting TRACE requests altogether.</p>
 			<p>Clients must not send a message body in a TRACE request.</p>
 
-			<h2>Reading requests (servers)</h2>
-			<p>TRACE should be handled after the request URI has been routed to a target destination, or if the <a href="../headers/Max-Forwards.xml">Max-Forwards request header</a> is 0.</p>
+			<h2>Reading requests (intermediaries)</h2>
+			<p>If the request contains a request body, return <a href="../status-codes/413.xml">413 (Payload Too Large)</a>.</p>
+			<p>If the request headers contain <code>Max-Forwards: 0</code>, then handle the request as the origin.</p>
+			<p>Otherwise the HTTP message should be forwarded as usual.</p>
+
+			<h2>Reading requests (origin servers)</h2>
+			<p>If the request contains a request body, return <a href="../status-codes/413.xml">413 (Payload Too Large)</a>.</p>
+			<p>If the request headers contain <code>Max-Forwards: 0</code>, then handle the request as the origin.</p>
+			<p>Otherwise the server should set <code>Content-Type: message/http</code> and write a response body listing the request-line and headers that were received. Servers are allowed to rewrite HTTP headers if the meaning is preserved, so the response can be reconstructed from available HTTP header information if the raw headers are not available in the developent enviornment.</p>
 			<p>As a security precaution for old user agents, servers should return an error for requests containing an <code>Origin</code> header should return <code>400 Client Error</code>, or otherwise deny access to the resource, unless the server can determine the response does not leak any private credentials (for example, the request does not contain any <code>Authorization</code> or <code>Cookie</code> headers).</p>
 
 			<h2>Security conscerns</h2>
