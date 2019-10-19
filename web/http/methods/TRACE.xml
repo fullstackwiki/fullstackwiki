@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>TRACE</title>
+		<meta name="description" content="TRACE requests that the request headers be written to the response body" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/TRACE" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>TRACE</h1>
+			<p>The TRACE method requests an application-level loop-back of the request message.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>TRACE may be used for debugging HTTP pipelines through proxies and gateways; is not typically used for day-to-day or automated use. It may be combined with the <a href="../headers/Max-Forwards.xml">Max-Forwards request header</a> to troubleshoot which node in the chain is seeing what request message.</p>
+			<p>HTTP prohibits attaching sensitive information to TRACE requests if that information cannot be disclosed in the response. Clients that must send HTTP messages with ambient authority, that cannot manage this requirement, are better off prohibiting TRACE requests altogether.</p>
+			<p>Clients must not send a message body in a TRACE request.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>TRACE should be handled after the request URI has been routed to a target destination, or if the <a href="../headers/Max-Forwards.xml">Max-Forwards request header</a> is 0.</p>
+			<p>As a security precaution for old user agents, servers should return an error for requests containing an <code>Origin</code> header should return <code>400 Client Error</code>, or otherwise deny access to the resource, unless the server can determine the response does not leak any private credentials (for example, the request does not contain any <code>Authorization</code> or <code>Cookie</code> headers.</p>
+
+			<h2>Security conscerns</h2>
+			<p>Some user agents allow scripts to make requests with ambient authority, and so are sent with the <code>Authorization</code> and <code>Cookie</code> headers not normally accessible to the calling script. If this request is made using TRACE, these request headers could become accessible. User agents should not add the ability to send requests with ambient authority (requests made by a script should be treated differently than requests made by the user); if they must permit such requests, they must block </p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Method-name">TRACE</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Requests a the request message be written back in the response body.</dd>
+				<dt>Safeness</dt>
+				<dd property="w:HTTP-Method-safe">Safe, Idempotent</dd>
+				<dt>Conditional fail</dt>
+				<dd property="w:HTTP-Method-conditional">Not applicable</dd>
+				<dt>Request payload</dt>
+				<dd property="w:HTTP-Method-request-payload">Prohibited</dd>
+				<dt>Response payload</dt>
+				<dd property="w:HTTP-Method-response-payload">Required</dd>
+				<dt>Cachable</dt>
+				<dd property="w:HTTP-Method-cachable">Never</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#TRACE">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.8. TRACE</a></dd>
+			</dl>
+
+		</main>
+	</body>
+</html>

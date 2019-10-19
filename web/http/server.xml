@@ -132,8 +132,9 @@
 			<p>If the authority-form is used with a method besides CONNECT, emit 405 (Method Not Allowed).</p>
 			<p>If there's no need to implement these, return 501 (Not Implemented).</p>
 
-			<h2>Message Forwarding</h2>
-			<p>If the server is forwarding the message to another node instead of handling it as an origin, it must implement the <code>Via</code> and <code>Max-Forwards</code> headers.</p>
+			<h2>Route Request-URI</h2>
+			<p>HTTP servers may act as intermediaries and forward the HTTP message to another server; if and where the message is forwarded to may vary by the scheme, authority, or path component of the URI.</p>
+			<p>If the server is forwarding the message to another node instead of handling it as an origin, it must implement the <code>Via</code> and <code>Max-Forwards</code> headers. If <code>Max-Forwards: 0</code> is specified for a <code>TRACE</code> or <code>OPTIONS</code> request, the server must not forward the message, but must act as the origin server.</p>
 			<p>Recall that connection headers (described above) cannot be forwarded since they convey information about the particular connection between nodes.</p>
 			<p>The server must also remove the <code>Connection</code> header as described above.</p>
 
