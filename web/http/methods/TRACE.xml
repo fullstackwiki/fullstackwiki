@@ -24,10 +24,10 @@
 
 			<h2>Reading requests (servers)</h2>
 			<p>TRACE should be handled after the request URI has been routed to a target destination, or if the <a href="../headers/Max-Forwards.xml">Max-Forwards request header</a> is 0.</p>
-			<p>As a security precaution for old user agents, servers should return an error for requests containing an <code>Origin</code> header should return <code>400 Client Error</code>, or otherwise deny access to the resource, unless the server can determine the response does not leak any private credentials (for example, the request does not contain any <code>Authorization</code> or <code>Cookie</code> headers.</p>
+			<p>As a security precaution for old user agents, servers should return an error for requests containing an <code>Origin</code> header should return <code>400 Client Error</code>, or otherwise deny access to the resource, unless the server can determine the response does not leak any private credentials (for example, the request does not contain any <code>Authorization</code> or <code>Cookie</code> headers).</p>
 
 			<h2>Security conscerns</h2>
-			<p>Some user agents allow scripts to make requests with ambient authority, and so are sent with the <code>Authorization</code> and <code>Cookie</code> headers not normally accessible to the calling script. If this request is made using TRACE, these request headers could become accessible. User agents should not add the ability to send requests with ambient authority (requests made by a script should be treated differently than requests made by the user); if they must permit such requests, they must block </p>
+			<p>Some user agents allow scripts to make requests with ambient authority, and so are sent with the <code>Authorization</code> and <code>Cookie</code> headers not normally accessible to the calling script. If this request is made using TRACE, these request headers could become accessible. User agents should not add the ability to send requests with ambient authority (requests made by a script should be treated differently than requests made by the user); if they must permit such requests, they must block the ability to send TRACE requests in this context.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
