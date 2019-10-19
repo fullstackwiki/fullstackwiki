@@ -42,8 +42,8 @@
 			<p>While not mandantory, FullstackWiki additionally encourages all participants to play the <a href="https://freenode.net/catalysts">role of catalyst.</a></p>
 
 			<h2>README</h2>
-			<p><a href="readme.xhtml">README.md</a></p>
-			<p><a href="../toc.xhtml">toc.md</a></p>
+			<p><a href="readme.xml">README.md</a></p>
+			<p><a href="../toc.xml">toc.md</a></p>
 		</main>
 	</body>
 </html>

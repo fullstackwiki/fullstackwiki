@@ -4,14 +4,14 @@
 		<meta charset="UTF-8" />
 		<title>HTTP Servers</title>
 		<meta name="description" content="Accepting requests from a client and generating a response" />
-		<link rel="up" href="index.html" />
+		<link rel="up" href="index.xml" />
 		<link rel="stylesheet" href="/style/highlight.js/solarized-light.css" />
 	</head>
 	<body>
 		<main>
 			<h1>HTTP Servers</h1>
 			<p>This document describes how to implement an HTTP server, from an incoming client request to closing the response.</p>
-			<p>Intermediate nodes (gateways and proxies) must also follow the behavior <a href="client.html">for clients</a>, since they are making (forwarding) requests, as well as accepting them.</p>
+			<p>Intermediate nodes (gateways and proxies) must also follow the behavior <a href="client.xml">for clients</a>, since they are making (forwarding) requests, as well as accepting them.</p>
 			<p>Not every section will be applicable to each server, read carefully.</p>
 
 			<h2>Listening for Requests</h2>
@@ -311,7 +311,7 @@
 			<h3>Date</h3>
 			<!-- Implements RFC7231 7.1.1. Origination Date -->
 			<p>The <code>Date</code> header is required for responses, unless the server doesn't have an accurate time to send. (Clients may also send this header, but it's optional for them.)</p>
-			<p>For implementation, see <a href="headers/Date.html">HTTP Date header</a>.</p>
+			<p>For implementation, see <a href="headers/Date.xml">HTTP Date header</a>.</p>
 
 			<h3>Connection</h3>
 			<p>If the server is going to close the connection at the end of the response, it must send <code>Connection: close</code> to the client.</p>

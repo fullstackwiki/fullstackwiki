@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>HTTP Clients</title>
 		<meta name="description" content="Making client HTTP requests to a server and processing the response" />
-		<link rel="up" href="index.html" />
+		<link rel="up" href="index.xml" />
 		<link rel="stylesheet" href="/style/highlight.js/solarized-light.css" />
 	</head>
 	<body>
@@ -39,8 +39,8 @@
 
 			<h2>Splitting the request-URI</h2>
 			<p>For historical reasons, HTTP requires the request URI be split up into several component parts to generate the request.</p>
-			<aside><p>Technically, you can send the full request-URI in the request-line. However, this is not well supported by many servers, and is not guaranteed to work.</p></aside>
-			<p>For background, consult <a href="headers/Host.html">the Host header</a>.</p>
+			<aside><p>Technically, it is legal to send the full request-URI in the request-line. However, this is not well supported by many servers, and is not guaranteed to work.</p></aside>
+			<p>For background, consult <a href="headers/Host.xml">the Host header</a>.</p>
 
 			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
 			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authoritatively.</p>

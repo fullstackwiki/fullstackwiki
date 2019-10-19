@@ -10,13 +10,13 @@
 			<h1>Welcome to Fullstack.wiki</h1>
 			<p>Fullstack.wiki is a repository of documentation for building reliable, accessible, cross-platform Web applications.</p>
 			<ul>
-				<li><a href="protocols/index.html">Protocols</a></li>
-				<li><a href="http/index.html">HTTP</a></li>
-				<li><a href="oauth/index.html">OAuth</a></li>
-				<li><a href="dom/index.html">DOM</a></li>
-				<li><a href="ecmascript/index.html">ECMAScript/JavaScript</a></li>
-				<li><a href="json/index.html">JSON</a></li>
-				<li><a href="json-schema/index.html">JSON Schema</a></li>
+				<li><a href="protocols/index.xml">Protocols</a></li>
+				<li><a href="http/index.xml">HTTP</a></li>
+				<li><a href="oauth/index.xml">OAuth</a></li>
+				<li><a href="dom/index.xml">DOM</a></li>
+				<li><a href="ecmascript/index.xml">ECMAScript/JavaScript</a></li>
+				<li><a href="json/index.xml">JSON</a></li>
+				<li><a href="json-schema/index.xml">JSON Schema</a></li>
 			</ul>
 		</main>
 	</body>

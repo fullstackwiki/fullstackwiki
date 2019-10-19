@@ -16,7 +16,7 @@
 
 			<h1>ETag</h1>
 			<p>The "ETag" header field provides an identifier that uniquely identifies the selected representation, typically used for caching and conditional requests. It is used to distinguish between different representations of the resource that may be selected and the changes to those resources over time.</p>
-			<p>This entity-tag is used for making subsequent requests in the <a href="If-Match.html">If-Match</a> and <a href="If-None-Match.xml">If-None-Match</a> headers.</p>
+			<p>This entity-tag is used for making subsequent requests in the <a href="If-Match.xml">If-Match</a> and <a href="If-None-Match.xml">If-None-Match</a> headers.</p>
 
 			<h2>Writing responses (origin servers)</h2>
 			<p>Use <code>ETag</code> whenever it is feasable to generate one; especially if the server expects to serve the same document to the client in the future. If clients implement ETag support and it is the case the document hasn't changed, the server can avoid re-sending the document contents in response to that request.</p>

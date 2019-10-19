@@ -22,7 +22,7 @@
 			<p>Server errors and bad requests are not always easily distinguishable, for example, <a href="404.xml">404 Not Found</a> and <a href="501.xml">501 Not Implemented</a> could both be caused either by client or server errors, depending on the circumstance. Since 4xx and 5xx both indicate the request was not filled, it is more important to use a correct, specific status code, than a generic status code from a more accurate class.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p>500 errors are generally not fixable without manual intervention by the server administrator; after which, the request may be re-tried. See the <a href="../headers/Retry-After.xhtml">Retry-After header</a> for server-indicated retry times.</p>
+			<p>500 errors are generally not fixable without manual intervention by the server administrator; after which, the request may be re-tried. See the <a href="../headers/Retry-After.xml">Retry-After header</a> for server-indicated retry times.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

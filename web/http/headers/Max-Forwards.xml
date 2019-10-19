@@ -11,14 +11,14 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Max-Forwards</h1>
-			<p>The <code>Max-Forwards</code> header limits the number of intermediate nodes an HTTP message may pass through. It is used primarially with the TRACE method to debug HTTP routing through caches and proxies.</p>
+			<p>The <code>Max-Forwards</code> header limits the number of intermediate nodes an HTTP message may pass through. It is used primarially with the <a href="../methods/TRACE.xml">TRACE</a> method to debug HTTP routing through caches and proxies.</p>
 			<p>When a node receives a message with the Max-Forwards header, it must forward the header with the value deincremented by one. If the received value is zero (and so cannot be deincremented further), the node becomes authortative for the given request, instead of the origin server.</p>
 
 			<h2>Writing requests (user agent clients)</h2>
 			<p>User agents do not typically use the Max-Forwards header, except by developers when debugging routing configurations. An algorithm similar to traceroute may be used to debug configurations: Try a TRACE request with <code>Max-Forwards: 0</code>, and note the response, which will be from the node being connected to. The headers that were sent will probably match those in the response message. Retry the request, incrementing the value each try.</p>
 			<p>This header is only guarenteed to work when used with the TRACE and OPTIONS methods, as servers do not have to implement it for other methods.</p>
 
-			<h2>Intermediate nodes</h2>
+			<h2>Intermedaries</h2>
 			<p>Intermediate nodes MUST look for the presence of the <code>Max-Forwards</code> header. If it exists and the value is 0, then respond as if the final recipient. Otherwise, the outgoing request message must include this header with the value deincremented by one.</p>
 			<p>Intermediate nodes MUST NOT add the header if they did not receive it.</p>
 			<p>Nodes may ignore the header for methods besides TRACE and OPTIONS.</p>

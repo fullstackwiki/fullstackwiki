@@ -10,7 +10,7 @@
 			<h1>ECMAScript</h1>
 			<p>ECMAScript, popularly called JavaScript (though bearing no relation to the beverage or commercial programming language), is a programming language designed for use in Web browsers. It is prototypical, event-driven, making it well suited for filling the "Code-on-Demand" constraint of REST.</p>
 			<ul>
-				<li><a href="library.html">Maintaining libraries</a></li>
+				<li><a href="library.xml">Maintaining libraries</a></li>
 			</ul>
 		</main>
 	</body>

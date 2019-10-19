@@ -50,6 +50,19 @@ function testHTMLDocument(document){
 	assert(Array.prototype.slice.call(document.getElementsByTagName('meta')).filter(function(e){
 		return e.tagName=='meta' && e.hasAttribute('charset') && e.getAttribute('charset')==='UTF-8';
 	}).length);
+	// Verify that referenced documents exist
+	Array.prototype.slice.call(document.getElementsByTagName('a')).forEach(function(e){
+		// The links may be a full URI reference,
+		// a link to a .xml document (presumably relative reference),
+		// or a blank relative reference to the current document
+		assert( e.getAttribute('href').match(/\/\//) || e.getAttribute('href').match(/\.xml($|#)/) || e.getAttribute('href')==='', e.toString() );
+	});
+	Array.prototype.slice.call(document.getElementsByTagName('link')).forEach(function(e){
+		// Same as above, but also could be a .css link to a stylesheet
+		assert( e.getAttribute('href').match(/\/\//) || e.getAttribute('href').match(/\.(xml|css)($|#)/) || e.getAttribute('href')==='', e.toString() );
+		// and must have a link relationship or reverse relationship
+		assert( e.hasAttribute('rel') || e.hasAttribute('rev'), e.toString() );
+	});
 }
 
 describe('Test HTML documents', function(){
