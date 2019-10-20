@@ -10,25 +10,73 @@
 	<body>
 		<main>
 			<h1>HTTP Effective Request URI</h1>
+			<p>The effective request URI is the URI of the resource being acted on in an HTTP request. For historical reasons (see the <a href="headers/Host.xml">Host</a> header), it is usually broken up into two or more parts, and must be reconstructed by the server.</p>
 
-			<h2>Making Requests</h2>
-			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
-			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used by proxies. That is, a request in absolute form typically indicates a request to make a proxied request, instead of an origin request the server can answer authoritatively.</p>
-			<p>Most requests will be made with the origin-form:</p>
-			<pre type="abnf"> origin-form    = absolute-path [ "?" query ]</pre>
-			<p>For example:</p>
-			<pre type="message/http" w:space="indent">
-				GET /where?q=now HTTP/1.1
-				Host: www.example.org
+			<h2>Making Requests (HTTP/1)</h2>
+			<p>HTTP/1 splits the request URI into two lines, the request-line, and the Host header. The Host header should come immediately after the request-line, for performance purposes, since they are used together.</p>
+
+			<h3>HTTP/1 requests in origin-form</h3>
+			<p>Split the URI into the scheme, authority, and request-URI.</p>
+			<ul>
+				<li>The scheme is not included in the HTTP request, though it will influence which interface, which usually accepts HTTP requests exclusively from one scheme.</li>
+				<li>The authority is written into the Host header. If there is no authority part of the URI, write a blank Host header.</li>
+				<li>The request-URI is written in the first line of the HTTP request. It includes everything after the authority, starting with a leading <code>/</code>, but excluding the fragment.</li>
+			</ul>
+
+			<h3>HTTP/1 requests in absolute-form</h3>
+			<p>This form is typically only used when addressing proxies, but technically should work for any compatible HTTP server. Use the entire request URI in the request-line, also write the authority to the Host header.</p>
+
+			<h2>Making Requests (HTTP/2)</h2>
+			<p>HTTP/2 splits apart the request-URI into several components for performance purposes, due to how HTTP header compression functions, and the fact that the scheme and authority does not typically change between requests.</p>
+
+			<h2>Reading requests (HTTP/1)</h2>
+			<p>HTTP/1 allows four forms for making requests:</p>
+			<pre type="abnf" w:space="indent">
+				request-target = origin-form
+					/ absolute-form
+					/ authority-form
+					/ asterisk-form
+				origin-form    = absolute-path [ "?" query ]
 			</pre>
-			<p>It is not possible to explicitly send the scheme being used HTTP/1.0 or HTTP/1.1 using the origin-form, however the server is usually able to detect the scheme being used.</p>
+			<p>These may be parsed as follows:</p>
+			<ol>
+				<li>If the first character is the slash <code>/</code>, parse as origin-form.</li>
+				<li>If the method is CONNECT, parse as authority-form</li>
+				<li>If the method is OPTIONS and the string is a single character <code>*</code>, parse as asterisk-form</li>
+				<li>If the string contains a colon (not as the first character), parse as absolute-form.</li>
+				<li>Otherwise, emit an error.</li>
+			</ol>
 
-			<h2>Parsing Requests</h2>
-			<h3>Parsing the headers</h3>
-			<p>If a request lacks or has more than one Host header, it MUST generate a <code>400 Bad Request</code> response.</p>
-			<p>The Host header is used to construct the effective Request-URI. This is described in <a href="../Request-URI.xml">Effective Request URI</a>.</p>
-			<!-- TODO mark this as environment-specific -->
-			<aside><p>Node.js automatically ignores repeated Host headers. For HTTP compliance, it may be necessary to scan the <code>request.rawHeaders</code> data.</p></aside>
+			<h4>From origin-form</h4>
+			<p>To reconstruct from origin-form, three pieces of data are required: the scheme, the authority, and the path.</p>
+			<p>The scheme must be detected based on how the request was made. This is typically straightforward: If the request came into port 80 over TCP, the request-URI scheme is probably <code>http:</code>, and if the request came into port 443 over TLS (over TCP), the request-URI scheme is probably <code>https:</code>.</p>
+			<p>If the server is configured to assume a fixed authority, use that. If the Host header is available, use that. HTTP/1.0 does not require the Host header, in which case the server may either opt to detect the Host, or return an error.</p>
+			<p>After validating, can be constructed from the template <code>{scheme}:{slash}{authority}{path}</code>, where:</p>
+			<dl class="inline">
+				<dt>{scheme}</dt><dd>the detected scheme</dd>
+				<!--
+					RFC7230 section 5.5 says the scheme and authority are concatenated with `://`,
+					but according to section 5.4 if the URI has no authority component (and thus no `//`),
+					the Host header is blank.
+				-->
+				<dt>{slash}</dt><dd>two slashes <code>//</code> if <code>authority</code> is non-empty, or an empty string otherwise</dd>
+				<dt>{authority}</dt><dd>value from the <code>Host</code> header</dd>
+				<dt>{path}</dt><dd>value from the request-URI</dd>
+			</dl>
+			<!-- TODO: reference TLS -->
+
+			<h4>From absolute-form</h4>
+			<p>The request-URI is what is found on the request-line.</p>
+			<p>Verify the syntax is a valid URI, and return 400 (Client Error) if not.</p>
+			<p>Verify the host and port (if any) components match the Host header, and return 400 (Client Error) if not.</p>
+			<p>If the server is configured to use a fixed scheme and authority, replace the scheme and authority in the request-line with the configured scheme and authority.</p>
+
+			<h4>Other forms</h4>
+			<p>The other forms are special cases.</p>
+			<p>If the asterisk-form is used with a method besides OPTIONS, emit 405 (Method Not Allowed).</p>
+			<p>If the authority-form is used with a method besides CONNECT, emit 405 (Method Not Allowed).</p>
+			<p>If there's no need to implement these, return 501 (Not Implemented).</p>
+
 
 			<h2>Overview table</h2>
 			<dl class="inline">

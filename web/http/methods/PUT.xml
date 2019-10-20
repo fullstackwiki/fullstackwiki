@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>PUT method</title>
+		<meta name="description" content="HTTP PUT saves the uploaded resource to the target location" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/PUT" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>PUT method</h1>
+			<p>The PUT method updates a resource with an uploaded document, creating it if it doesn't exist.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients should use PUT. If the same operation can be made with a <a href="patch.xml">PATCH</a> request, use that instead (retrying the request with PUT if the server does not support it).</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>The server should dereference the <a href="../request-uri.xml">request-URI</a>, then test the <a href="../conditional.xml">conditional request</a> headers against the result. If the resource conditional headers test false, return <a href="../status-codes/412.xml">412 (Precondition Failed)</a>. If the resource does not exist, attempt to create it.</p>
+			<p>The server may validate the uploaded document to be stored. If the uploaded resource is the wrong media type, the server may convert the resource to an acceptable media type, or return <a href="../status-codes/415.xml">415 (Unsupported Media Type)</a></p>
+			<p>Commit the resource to storage. If the server had to create the resource to fill this request, return <a href="../status-codes/201.xml">201 (Created)</a>. Otherwise, return <a href="../status-codes/200.xml">200 (OK)</a>.</p>
+			<p>The "selected representation" is considered to be the document being uploaded by the user-agent. If the server has saved the uploaded document exactly, the response may contain <a href="../headers/ETag.xml">ETag</a> and <a href="../headers/Last-Modified.xml">Last-Modified</a> headers. If the server normalizes the contents of the document in any way (for example, collapsing whitespace), then you cannot include these headers.</p>
+			<aside><p>Possibly, the server can return a weak ETag, if the meaning of the document was not changed significantly.</p></aside>
+			<p>If the <a href="../headers/Prefer.xml">Prefer request-header</a> lists <code>return=representation</code>, then return the contents of the document as it would be returned in a subsequent GET request. This is useful if the server normalizes the document, and the client needs to know how the document was normalized.</p>
+			<p>If Prefer lists <code>return=minimal</code>, then return a zero-length body on success, including <code>Content-Length: 0</code>.</p>
+			<p>Otherwise, write a description of the changes made to the server.</p>
+
+			<h2>Idempotentcy</h2>
+			<p>PUT is idempotent, in the sense that two requests back to back is the same as one request. However, the second request can still change server state if a third party made a separate modification in between the requests.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Method-name">PUT</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Save a resource to the target location.</dd>
+				<dt>Conditional fail</dt>
+				<dd property="w:HTTP-Method-conditional"><a href="../status-codes/412.xml">412 Precondition Failed</a></dd>
+				<dt>Request payload</dt>
+				<dd property="w:HTTP-Method-request-payload">Permitted</dd>
+				<dt>Response payload</dt>
+				<dd property="w:HTTP-Method-response-payload">Permitted</dd>
+				<dt>Cachable</dt>
+				<dd property="w:HTTP-Method-cachable">Never</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#PUT">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.4. PUT</a></dd>
+			</dl>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://evertpot.com/http/101-switching-protocols">HTTP 101 by Evert Pot</a></li>
+			</ul>
+		</main>
+	</body>
+</html>

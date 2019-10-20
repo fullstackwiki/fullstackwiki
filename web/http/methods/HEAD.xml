@@ -19,7 +19,7 @@
 
 			<h2>Writing requests (clients)</h2>
 			<p>HEAD may be used in any case where the client needs metadata about the resource, available from headers, but not the payload itself. The response will always end at the end of the header section, even in the presence of headers to the contrary (e.g. <a href="../headers/Content-Length.xml">Content-Length</a></p>
-			<p>This method is not guaranteed to return same payload header fields, however (Content-Length, Content-Range, Trailer, Transfer-Encoding). The same GET request might add these fields.</p>
+			<p>The server is allowed to omit several header fields related to payload, however (Content-Length, Content-Range, Trailer, Transfer-Encoding). The same GET request might add these fields.</p>
 
 			<h2>Reading requests (servers)</h2>
 			<p>Servers may implement HEAD by processing the request as a GET request, and discarding the response payload, or terminating the request after the headers are fully written out (this works because GET requests are not supposed to impact the server state).</p>

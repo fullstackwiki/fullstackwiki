@@ -32,7 +32,7 @@
 			<p>All requests in HTTP contain some sort of request URI which identifies a resource on the server to be acted on. Resource URIs are gathered from several places, typically:</p>
 			<ul>
 				<li><p>Another hypermedia document,</p></li>
-				<li><p>Created from a server-provided pattern for generating URIs (such as an HTML form or a URI Template),</p></li>
+				<li><p>A server-provided pattern for generating URIs (such as an HTML form or a URI Template),</p></li>
 				<li><p>An external source pointing to an <i>entry point</i>, typically the homepage, or</p></li>
 				<li><p>A bookmark saved during a previous use.</p></li>
 			</ul>
@@ -139,13 +139,13 @@
 			<p>The client can additionally encode the document before attaching it into the message body using a content coding; for example, compressing or encrypting the document. The <a href="headers/Content-Encoding.xml">Content-Encoding</a> header specifies how the server will need to decode the body in order to arrive at the final document.</p>
 
 			<h3>Content-Language</h3>
-			<p>If the document is known to have a specific language, it can be conveyed in the <code>Content-Language</code> header.</p>
+			<p>If the document is known to have a specific language, it can be conveyed in the <a href="headers/Content-Language.xml">Content-Language</a> header.</p>
 
 			<h3>Content-Location</h3>
 			<p>If the document was requested earlier from a particular effective request URI, it can be provided here.</p>
 			<!-- TODO: uh why would you actually do this -->
 
-			<!-- It is feasable that Content-Range might be used here -->
+			<!-- It is feasible that Content-Range might be used here -->
 
 			<h3>Set Expect header</h3>
 			<p>If the client has reason to believe the upload may be too large for the server to accept, it can indicate this with an Expect header:</p>
@@ -181,9 +181,8 @@
 			<!-- Implement RFC7231 6.2. Informational 1xx -->
 			<p>HTTP/1.1 and above defines the <i>1xx</i> status code class, which is an informational header sent before the final status code, that can encode information for the client before the final response has been generated or decided on.</p>
 
-			<h3>Compute effective request URI</h3>
-			<p>This identifies the URI that the server stores the selected representation at. If the client wants to get the same variation of the resource in the future, it should use this URI. It may be different than the URI requested by the client, if the server performed Content-Type negotiation.</p>
-			<p>However, due to lack of implementation by Web browsers, this aspect was removed. Hypermedia documents should embed their URI in the document, such as the HTML <code>&lt;base/&gt;</code> tag</p>
+			<h2>Handle status code</h2>
+			<p>How to handle the response is determined by the <a href="status-codes/index.xml">status code</a>. In most cases, the server will respond <a href="status-codes/200.xml">200 (OK)</a>, indicating the response may be used as expected. Other responses may necessitate reporting an error, retrying after some time, or changing and re-issuing the request to the server.</p>
 
 			<h2>Compute the Caching Key for response</h2>
 			<p>A caching key can be computed to determine if another future request can be served from a cache, instead of the origin server.</p>
@@ -196,8 +195,8 @@
 			<h3>Store Session Data</h3>
 			<p>The contents of the <code>Set-Cookie</code> header can be stored for subsequent requests.</p>
 
-			<h2>Determine if there is a request-body</h2>
-			<h3>If there's a request-body, decode Content-Encoding</h3>
+			<h2>Determine if there is a response-body</h2>
+			<h3>If there's a response-body, decode Content-Encoding</h3>
 			<blockquote><p>If one or more encodings have been applied to a representation, the sender that applied the encodings MUST generate a Content-Encoding header field that lists the content codings in the order in which they were applied.</p></blockquote>
 
 			<h3>Read language of request</h3>

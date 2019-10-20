@@ -27,11 +27,11 @@
 			<p>Some operations below speak of emitting an error, or emitting a status code. This means the response to that request will be a status code (4xx or 5xx if an error), generating a document describing the error (if allowed), and further handling of the request will end (except as necessary to unlock and clean up resources, etc).</p>
 
 			<h3>Retry-After</h3>
-			<p>In certain cases, especially due to server load or unrecognized parameters from the client, the server may want to advertise how long the client should wait to retry a request. Use the <code>Retry-After</code> header to specify this.</p>
+			<p>In certain cases, especially due to server load or unrecognized parameters from the client, the server may want to advertise how long the client should wait to retry a request. Use the <a href="headers/Retry-After.xml">Retry-After</a> header to specify this.</p>
 
 			<h2>Handle rate limiting and overload condition</h2>
 			<!-- Implements RFC7231 6.6.4. 503 Service Unavailable -->
-			<p>In some cases, especially for closed applications, servers may want to signal they are overloaded and the request should be retried at a later date. In this case, the server may respond with 503 (Service Unavailable). The server should accompany this with a <code>Retry-After</code> header.</p>
+			<p>In some cases, especially for closed applications, servers may want to signal they are overloaded and the request should be retried at a later date. In this case, the server may respond with <a href="status-codes/503.xml">503 (Service Unavailable)</a>. The server should accompany this with a <code>Retry-After</code> header.</p>
 
 			<h2>Parse incoming request headers (HTTP/1.x)</h2>
 			<p>Except for the simplest of embedded routers, most implementations will need to parse all of the request headers and buffer them in memory, since headers may be specified in any order.</p>
@@ -53,7 +53,7 @@
 			<pre type="message/http" w:space="indent">
 				GET /where?q=now HTTP/1.1
 			</pre>
-			<p>If the HTTP-version is not <code>HTTP/1.x</code>, where <code>x</code> is some digit, then return <code>505 (HTTP Version Not Supported)</code>.</p>
+			<p>If the HTTP-version is not <code>HTTP/1.<i>x</i></code>, where <code><i>x</i></code> is some digit, then return <code>505 (HTTP Version Not Supported)</code>.</p>
 			<!-- https://httpwg.org/specs/rfc7230.html#http.version -->
 
 			<h2>Consume Connection headers</h2>
@@ -62,106 +62,57 @@
 
 			<h3>Connection header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
-			<p>The <code>Connection</code> header lists header names and special flags that apply to the current, hop-by-hop connection.</p>
-			<p>Do not forward headers listed in <code>Connection</code>.</p>
+			<p>In HTTP/1, <a href="headers/Connection.xml">Connection header</a> lists header names and special flags that apply to the current, hop-by-hop connection (instead of the HTTP message itself).</p>
+			<p>Do not forward the <code>Connection</code> header, nor any headers named within it.</p>
 			<p><code>Connection</code> may also list <code>close</code> as a flag indicating the connection will be closed at the end of this request. See "Clean up connection" below for how to handle this flag.</p>
 
 			<h2>Verify connection requirements</h2>
 			<h3>Validate Expect header</h3>
 			<!-- Implements RFC7231 5.1.1. Expect -->
-			<p>The "Expect" header enumerates the features the client expects the endpoint to implement in order to be able to correctly parse a request or response.</p>
+			<p>The <a href="headers/Expect.xml">Expect header</a> enumerates the features the client expects the endpoint to implement in order to be able to correctly parse a request or response.</p>
 			<p>If the header is set, and is something besides <code>100-continue</code> (case-insensitive), emit 417 (Expectation Failed).</p>
 			<p>If the value is "100-continue", the server will need to emit a 100 (Continue) header before the client begins uploading its request-body (implemented below)</p>
 
 			<h3>Validate Host header</h3>
 			<!-- Implements RFC7230 5.4. -->
-			<p>HTTP/1.1 clients MUST send a Host header, even with the absolute-form or with a request URI with no authority (in which case the header will be empty).</p>
+			<p>HTTP/1.1 clients MUST send a <a href="headers/Host.xml">Host header</a>, even when using the absolute-form or with a request URI with no authority (in which case the header will be empty).</p>
 			<p>If the request lacks a Host header, or has more than one Host header, return status 400 (Bad Request).</p>
 
 			<h2>Compute effective request URI</h2>
-			<p>Two lines are used to form the effective Request URI: the request-line (the first line in the request), and the Host header.</p>
-			<p>HTTP allows requests with an absolute-form URI in the request-line, however this is not supported by very many servers, and is typically only used for requests to proxies.</p>
-			<p>Most requests will be made with the origin-form:</p>
-			<pre type="abnf" w:space="indent">
-				request-target = origin-form
-					/ absolute-form
-					/ authority-form
-					/ asterisk-form
-				origin-form    = absolute-path [ "?" query ]
-			</pre>
-			<p>Servers must support all these forms, and can be parsed as follows:</p>
-			<ol>
-				<li>If the first character is the slash <code>/</code>, parse as origin-form.</li>
-				<li>If the string contains a slash (not as the first character), parse as absolute-form.</li>
-				<li>If the string is the single character asterisk <code>*</code>, parse as asterisk-form.</li>
-				<li>Attempt to parse as authority-form.</li>
-				<li>Otherwise, emit an error.</li>
-			</ol>
-			<p>For example:</p>
-			<pre type="message/http" w:space="indent">
-				GET /where?q=now HTTP/1.1
-				Host: www.example.org
-			</pre>
-			<h4>From origin-form</h4>
-			<p>To reconstruct from origin-form, three pieces of data are required: the scheme, the authority, and the path.</p>
-			<p>The path must be configured or detected based on configuration. Ideally HTTP requests would always come in from <code>http:</code>. But this is not necessarially the case. First, it is technically possible for an HTTP server to respond to requests for any URI, for example a uuid. Second, HTTP is currently defined over two URI schemes, <code>http:</code> and <code>https:</code>, the latter of which is defined to be transported over TLS.</p>
-			<p>The server must be configured to specify which schemes it is reachable by, and how to detect which scheme it was reached over. This is typically straightforward.</p>
-			<p>The host is provided in the Host header. HTTP/1.0 does not require the Host header, in which case the server may either opt to detect the Host, or return an error.</p>
-			<p>After validating, can be constructed from the template <code>{scheme}:{slash}{authority}{path}</code>, where:</p>
-			<dl class="inline">
-				<dt>{scheme}</dt><dd>the detected scheme</dd>
-				<!--
-					RFC7230 section 5.5 says the scheme and authority are concatenated with `://`,
-					but according to section 5.4 if the URI has no authority component (and thus no `//`),
-					the Host header is blank.
-				-->
-				<dt>{slash}</dt><dd>two slashes <code>//</code> if <code>authority</code> is non-empty, or an empty string otherwise</dd>
-				<dt>{authority}</dt><dd>value from the <code>Host</code> header</dd>
-				<dt>{path}</dt><dd>value from the request-URI</dd>
-			</dl>
-			<!-- TODO: reference TLS -->
-
-			<h4>From absolute-form</h4>
-			<p>The request-URI is what is found on the request-line.</p>
-			<p>Verify the syntax is a valid URI, and return 400 (Client Error) if not.</p>
-			<p>Verify the host and port (if any) components match the Host header, and return 400 (Client Error) if not.</p>
-
-			<h4>Other forms</h4>
-			<p>The other forms are special cases.</p>
+			<p>In HTTP/1, two lines are used to form the <a href="request-uri.xml">effective Request URI</a>: the request-line (the first line in the request), and the Host header.</p>
+			<p>In HTTP/2, multiple <i>pseudo-headers</i> form the effective request URI; the URI is broken apart to take advantage of HTTP header compression.</p>
 			<p>If the asterisk-form is used with a method besides OPTIONS, emit 405 (Method Not Allowed).</p>
 			<p>If the authority-form is used with a method besides CONNECT, emit 405 (Method Not Allowed).</p>
-			<p>If there's no need to implement these, return 501 (Not Implemented).</p>
 
 			<h2>Route Request-URI</h2>
 			<p>HTTP servers may act as intermediaries and forward the HTTP message to another server; if and where the message is forwarded to may vary by the scheme, authority, or path component of the URI.</p>
 			<p>If the server is forwarding the message to another node instead of handling it as an origin, it must implement the <code>Via</code> and <code>Max-Forwards</code> headers. If <code>Max-Forwards: 0</code> is specified for a <code>TRACE</code> or <code>OPTIONS</code> request, the server must not forward the message, but must act as the origin server.</p>
-			<p>Recall that connection headers (described above) cannot be forwarded since they convey information about the particular connection between nodes.</p>
-			<p>The server must also remove the <code>Connection</code> header as described above.</p>
+			<p>Recall that connection headers (including the Connection header itself, described above) cannot be forwarded since they convey information about the particular connection between nodes.</p>
 
 			<h3>Via header</h3>
 			<!-- Implements RFC7230 5.7.1. Via -->
-			<p>The <code>Via</code> header specifies which intermediate nodes also processed the request, and will process the response. The server may use this for logging, debugging, or other informational purposes.</p>
+			<p>The <a href="headers/Via.xml">Via</a> header specifies which intermediate nodes also processed the request, and will process the response. The server may use this for logging, debugging, or other informational purposes.</p>
 			<p>If this message is going to be forwarded to another server, then append the current server information to the <code>Via</code> header.</p>
 
 			<h3>Forwarded header</h3>
 			<!-- Implements RFC7239 -->
-			<p>The <code>Forwarded</code> header specifies which intermediate nodes also processed the request and associated information about the hop. The server may use this for logging, debugging, or other informational purposes.</p>
+			<p>The <a href="headers/Forwarded.xml">Forwarded</a> header specifies which intermediate nodes also processed the request and associated information about the hop. The server may use this for logging, debugging, or other informational purposes.</p>
 			<p>This varies from the "Via" header in that the Forwarded header is extensible, and can contain information such as the client IP address, which would otherwise be lost by a proxy or gateway.</p>
 			<p>If this message is going to be forwarded to another server, then append the current server information to the <code>Forwarded</code> header.</p>
 
 			<h3>Max-Forwards header</h3>
 			<!-- Implements RFC7231 5.1.2. Max-Forwards -->
-			<p>For nodes that would normally forward the request, the <code>Max-Forwards</code> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after decrementing the value.</p>
+			<p>For nodes that would normally forward the request, the <a href="headers/Max-Forwards.xml">Max-Forwards</a> header indicates if the node may forward the request. If the received value is <code>0</code>, then the node cannot forward the message, but must act as the target recipient; otherwise it must forward the message after decrementing the value.</p>
 			<p>Origin servers may generally ignore this header.</p>
 
 			<h2>Authenticate credentials</h2>
-			<p>Users may send an <code>Authorization</code> header (or <code>Proxy-Authorization</code> header for intermediaries) that carries credentials authorizing them to perform the request.</p>
-			<p>Some user agents might identify themselves with a TLS client certificate. In these cases, all requests from that connection are authenticated, however the server should still require authorization headers in addition to the client certificate to prevent ambient authority attacks. ( Subrequests from untrusted sources should be careful to make the request over an unauthenticated connection, to prevent an ambient authority/confused deputy attack.)</p>
-			<p>The operations performed for the rest of request processing assume the server will verify these credentials before performing the operation. If an operation requires authority, but the client has not specified any credentials, or the credentials are insufficient for the requested operation, emit 401 (Unauthorized) with a <code>WWW-Authenticate</code> header.</p>
+			<p>Users may send an <a href="headers/Authorization.xml">Authorization</a> header (or <a href="headers/Proxy-Authorization.xml">Proxy-Authorization</a> header for intermediaries) that carries credentials authorizing them to perform the request.</p>
+			<p>Some user agents might identify themselves with a TLS client certificate. In these cases, that connection is authenticated, but not necessarily any individual HTTP message, which might be forwarded from a user agent, or be generated by a third party script; the server should still require authorization headers in addition to the client certificate to prevent ambient authority attacks. (Subrequests from untrusted sources should be careful to make the request over an unauthenticated connection, to prevent an ambient authority/confused deputy attack.)</p>
+			<p>The operations performed for the rest of request processing assume the server will verify these credentials before performing the operation. If an operation requires authority, but the client has not specified any credentials, or the credentials are insufficient for the requested operation, emit 401 (Unauthorized) with a <a href="headers/WWW-Authenticate.xml">WWW-Authenticate</a> header.</p>
 
 			<h3>Rate limiting users</h3>
 			<!-- Implements RFC6585 4. 429 Too Many Requests -->
-			<p>If the server is able to keep track of requests per user, it may signal a request from that specific user has exceeded limits with 429 (Too Many Requests). The server should use <code>Retry-After</code> to specify the next time a client will be able to make successful requests.</p>
+			<p>If the server is able to keep track of requests per user, it may signal a request from that specific user has exceeded limits with <a href="status-codes/429.xml">429 (Too Many Requests)</a>. The server should use <a href="headers/Retry-After.xml">Retry-After</a> to specify the next time a client will be able to make successful requests.</p>
 			<p>The server can make this determination based on routing information (like IP address), or valid credentials, whichever is favorable to the user.</p>
 
 			<h2>Request metadata</h2>
@@ -183,24 +134,25 @@
 			<p>OPTIONS is specified to permit requesting metadata about a resource as a document, such as details of Content-Type negotiation, though at present time there is no standard for how to represent such information.</p>
 
 			<h3>PUT</h3>
-			<p>Put is an operation that updates a resource with an uploaded document, creating it if it doesn't exist.</p>
+			<p>The PUT method updates a resource with an uploaded document, creating it if it doesn't exist.</p>
 			<p>The server should look up the resource being replaced (if any) and perform the necessary post-replace hooks, but this is not of concern to the client.</p>
 
 			<h2>Dereference resource</h2>
-			<p>For methods that dereference the (most methods), the server looks up the effective request URI from its routing table and/or database to determine if it exists.</p>
-			<p>If no such resource exists, return 404 (Not Found).</p>
-			<p>If a resource is marked as deleted, return 410 (Gone).</p>
-			<p>Applications should route based on the full URI and be prepared to route requests to multiple different hosts.</p>
+			<p>Most methods will need to <i>dereference</i> the resource: look up the effective request URI from the routing table and/or database, to determine if it exists.</p>
+			<p>If the resource is expected to exist, but does not exist, return <a href="status-codes/404.xml">404 (Not Found)</a>.</p>
+			<p>If a resource is marked as deleted, return <a href="status-codes/410.xml">410 (Gone)</a>.</p>
+			<p>If the resource is supposed to be created, but the server cannot create the resource (e.g. the selected URI is read-only), return <a href="status-codes/403.xml">403 (Forbidden)</a>.</p>
+			<p>Applications should route based on the full URI and be prepared to route requests for multiple different hosts.</p>
 
 			<h3>Redirects</h3>
 			<p>The server can mark some resources as having moved to a different URI, for various reasons.</p>
 			<p>Servers should avoid renaming resources if there's not a pressing problem with keeping a URI.</p>
-			<p>In service of redirects, select an appropriate 3xx redirect, and use the <code>Location</code> header to specify the resource to direct the user-agent to.</p>
+			<p>In service of redirects, select an appropriate 3xx redirect, and use the <a href="headers/Location.xml">Location</a> header to specify the resource to direct the user-agent to.</p>
 			<p>Resources and other operations can send a redirect (e.g. a service that points a user to a random webpage), these uses will be explored later.</p>
 
 			<h2>Handle Upgrade</h2>
 			<!-- Implements RFC7230 6.7. Upgrade -->
-			<p>The <code>Upgrade</code> request header asks the server to transition the protocol from HTTP/1.1 to some other protocol. Multiple protocols may be specified, which the server may choose from. The request is usually sent as a GET request.</p>
+			<p>The <a href="headers/Upgrade.xml">Upgrade</a> request header asks the server to transition the protocol from HTTP/1.1 to some other protocol. Multiple protocols may be specified, which the server may choose from. The request is usually sent as a GET request.</p>
 			<p>If the server intends to honor the request, then respond with 101 (Switching Protocols), a <code>Connection: upgrade</code> header, and an Upgrade header specifying the protocol. The server may ignore the header if it's content with the protocol as it is.</p>
 			<aside><p>Primary differences from using CONNECT is that CONNECT is hop-by-hop, and as a method, cannot be ignored.</p></aside>
 
@@ -210,7 +162,7 @@
 
 			<h3>Identify request body URI</h3>
 			<!-- Implements 3.1.4.1. Identifying a Representation -->
-			<p>It is possible for the user-agent to specify a URI for the request body with the <code>Content-Location</code> header.</p>
+			<p>It is possible for the user-agent to specify a URI for the request body with the <a href="headers/Content-Location.xml">Content-Location</a> header.</p>
 			<p>If it is present, its meaning is left largely up to the server do decide.</p>
 
 			<h3>Transfer-Encoding</h3>
@@ -219,9 +171,9 @@
 			<h3>Content-Type</h3>
 			<!-- Implements RFC7231 3.1.1.5. Content-Type -->
 			<!-- Implements RFC7231 6.5.13. 415 Unsupported Media Type -->
-			<p>The <code>Content-Type</code> header determines which <i>media type</i> will be used to decode the entity-body. Media types are listed in a non-trivial format that accepts case, whitespace, parameters, and quoted-strings, so use a library to parse and normalize the Content-Type before reading it.</p>
+			<p>The <a href="headers/Content-Type.xml">Content-Type</a> header determines which <i>media type</i> will be used to decode the entity-body. Media types are listed in a non-trivial format that accepts case, whitespace, parameters, and quoted-strings, so use a library to parse and normalize the Content-Type before reading it.</p>
 			<p>Generally for every media type, there is a single specification that specifies how to parse and use the document. Parse the Content-Type (using a library that parses media types) and resolve which parser the server should use to parse the body, if any.</p>
-			<p>If the server has no way to consume the media type, return 415 (Unsupported Media Type).</p>
+			<p>If the server has no way to consume the media type, return <a href="status-codes/415.xml">415 (Unsupported Media Type)</a>.</p>
 
 			<h4>Content-Type charset</h4>
 			<p>Most media types, especially <code>text/*</code> types, implement a character set, a method of decoding a byte to a particular character. If the media type uses a charset decoding, ensure the server is capable of decoding it. The server should support ASCII and UTF-8.</p>
@@ -237,7 +189,7 @@
 
 			<h2>Handle 100-continue</h2>
 			<p>If the client set the <code>100-continue</code> flag, that means the client has paused uploading the request-body, and is waiting on verification from the server that the proposed upload looks acceptable and fits the resource limits.</p>
-			<p>Since at this point all the headers look acceptable, emit a 100 (Continue) response: an intermediate response that will be replaced with the actual status code later on.</p>
+			<p>Since at this point all the headers look acceptable, emit a <a href="status-codes/100.xml">100 (Continue)</a> response: an intermediate response that will be replaced with the actual status code later on.</p>
 			<p>Alternatively, if the client did not ask for 100-continue and there's a serious problem with accepting a large upload, the server can close the entire TCP connection.</p>
 
 			<h3>Consume message-body</h3>

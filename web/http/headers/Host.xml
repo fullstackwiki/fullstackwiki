@@ -45,6 +45,12 @@
 
 			<h2>Syntax</h2>
 			<pre type="abnf">Host = uri-host [ ":" port ]</pre>
+
+			<h2>Implementations</h2>
+
+			<h3>Node.js (http/https)</h3>
+			<p>Node.js automatically ignores repeated Host headers. If strict HTTP compliance is required, it may be necessary to scan the <code>request.rawHeaders</code> data.</p>
+
 		</main>
 	</body>
 </html>
