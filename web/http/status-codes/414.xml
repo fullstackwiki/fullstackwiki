@@ -51,6 +51,10 @@
 			<h3>Node.js</h3>
 			<p>Node.js has a builtin HTTP parser that will respond if a header line exceeds the maximum allowed length. It treats the request-line the same as a header-line, see <a href="431.xml">431 Request Header Too Long</a> for setting this limit and generating a custom response when handling this error.</p>
 
+			<h3>Apache HTTPD</h3>
+			<p>Apache HTTPD returns <code>414 URI Too Long</code> when the total length of the request line, including HTTP method and version, but excluding the line terminator, is greater than the configured setting for <code>LimitRequestLine</code>, which defaults to 8190 bytes.</p>
+			<p>See the <a href="https://httpd.apache.org/docs/trunk/mod/core.html#limitrequestline">LimitRequestLine Directive</a> and the <code>DEFAULT_LIMIT_REQUEST_LINE</code> constant for implementation details.</p>
+
 			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
 
 			<h2>See also</h2>
