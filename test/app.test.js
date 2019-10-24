@@ -34,6 +34,18 @@ describe('Server', function(){
 			assert(res.toString().match(/^HTTP\/1.1 404 /));
 		});
 	});
+	it('/sitemap.xml', function(){
+		return writeMessage(server, [
+			'GET /sitemap.xml HTTP/1.1',
+			'Accept: application/xml',
+			'Host: fullstack.wiki',
+		]).then(function(res){
+			assert(res.toString().match(/^HTTP\/1.1 200 /));
+			assert(res.toString().match(/^Content-Type: application\/xml$/m));
+			assert(res.toString().match(/<loc>https:\/\/fullstack.wiki\/http\/client<\/loc>/));
+			assert(res.toString().match(/<url>/g).length > 80);
+		});
+	});
 	it('/ (landing page)', function(){
 		return writeMessage(server, [
 			'GET /index HTTP/1.1',
