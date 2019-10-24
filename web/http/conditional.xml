@@ -50,7 +50,8 @@
 			</dl>
 
 			<h3>Methods</h3>
-			<p>Requests must be a nonsafe method, such as PUT, PATCH, DELETE, POST, etc.</p>
+			<p>Requests must be a nonsafe method, such as PUT, PATCH, DELETE, POST, etc. The condition is tested just before changes are committed.</p>
+			<aside><p>HTTP says <quote>A server MUST ignore all received preconditions if its response to the same request without those conditions would have been a status code other than a 2xx (Successful) or 412 (Precondition Failed).</quote> This implies the entire document must be tested for validity, before the server can emit a 412 status. However it is unlikely this is a requirement that is required for interoperability; for performance, this can be done before the request entity body is tested for errors. <a href="https://lists.w3.org/Archives/Public/ietf-http-wg/2019OctDec/0031.html">See HTTP WG feedback for more.</a></p></aside>
 
 			<h3>Response codes</h3>
 			<dl>
