@@ -20,7 +20,7 @@
 
 			<h2>Writing responses (servers)</h2>
 			<p>This status code is used in response to methods that expect the request-URI to exist on the server, when the resource does not exist. This typically includes safe methods, and other methods that require a resource; including GET, HEAD, OPTIONS, and POST.</p>
-			<p>This status might also be used when disclosing the existence of a resource to an unauthorized user could be a security or privacy problem.</p>
+			<p>This status might also be used when disclosing the existence of a resource to an unauthorized user could be a security or privacy problem. If used for this purpose, authorization should be tested immediately after the resource is dereferenced, and before handling for <code>405 Method Not Allowed</code>, <code>410 Gone</code>, <code>429 Too Many Requests</code>, and so on, so that the behavior is the same as the resource truly not existing.</p>
 			<p>Servers responding with this error code may wish to log the <a href="../headers/Referer.xml">Referer header</a>, if any, which can be used to troubleshoot the presence of broken links.</p>
 			<p>If the resource has merely been deleted (for example, a "deleted" flag on the database record is set), then see <a href="410.xml">410 Gone</a> instead.</p>
 			<p>Servers may wish to keep track of links and a record of link targets that do not exist. If the request is for one of these resources, the server should provide instructions on how to create the resource, using a link rel=create-form, and should advertise the ability for clients to create the resource directly using an <code><a href="../headers/Allow.xml">Allow</a>: PUT</code> header.</p>

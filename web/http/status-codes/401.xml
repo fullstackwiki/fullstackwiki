@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>401 Unauthorized</title>
+		<meta name="description" content="The 401 (Unauthorized) HTTP status code indicates a the user lacks permission/credentials to perform the request." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/401" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>401 Unauthorized</h1>
+			<p>The 401 (Unauthorized) HTTP status code indicates the user lacks permission or credentials to perform the request.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Use <code>401 (Unauthorized)</code> when the request requires permission, and the user has not provided credentials for the operation, or has provided credentials with insufficient access.</p>
+			<p>Authorization is tested once the resource, and method handler on the resource, is known to exist; so this status code is tested after <a href="404.xml">404 (Not Found)</a>, <a href="410.xml">410 (Gone)</a>, <a href="403.xml">403 (Forbidden)</a>, and <a href="405.xml">405 (Method Not Allowed)</a>. If this reveals too much information about the resource, consider using <a href="404.xml">404 (Not Found)</a> instead.</p>
+			<p>If permitted by the <a href="../headers/Allow.xml">Allow request-header</a>, return a short response body that describes that access is denied, and how to authenticate a subsequent request.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>401 errors can be retried with different credentials. Read the <a href="../headers/WWW-Authenticate.xml">WWW-Authenticate response header</a> to determine which credentials are necessary, and show a prompt that allows the user to provide the credentials necessary. If the user did not provide any credentials, show the response body as an error message.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">401</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">401 Unauthorized</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The user lacks permission/credentials to perform the request.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7235.html#status.401">RFC 7235: HTTP Authentication &#xA7;3.1. 401 Unauthorized</a></dd>
+			</dl>
+
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://evertpot.com/http/401-unauthorized">HTTP 401 by Evert Pot</a></li>
+				<li><a href="https://httpstatusdogs.com/401-unauthorized">HTTP 401 on HTTP STATUS DOGS</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
