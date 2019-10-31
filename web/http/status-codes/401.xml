@@ -16,6 +16,7 @@
 
 			<h1>401 Unauthorized</h1>
 			<p>The 401 (Unauthorized) HTTP status code indicates the user lacks permission or credentials to perform the request.</p>
+			<p>It varies from <a href="403.xml">403 (Forbidden)</a> in that 401 implies an authorization problem that can be fixed with the correct credentials. <code>403</code>, by contrast, is not related to authorization, does not respond with a <a href="../headers/WWW-Authenticate.xml">WWW-Authenticate</a> header, and implies the request is understood, but not possible.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Use <code>401 (Unauthorized)</code> when the request requires permission, and the user has not provided credentials for the operation, or has provided credentials with insufficient access.</p>
