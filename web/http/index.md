@@ -39,6 +39,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 
 ## Specifications
 
+* BCP56: RFC3205: On the use of HTTP as a Substrate
 * RFC3230: Instance Digests in HTTP
 * RFC6249: Metalink/HTTP: Mirrors and Hashes
 * RFC6265: HTTP State Management Mechanism
