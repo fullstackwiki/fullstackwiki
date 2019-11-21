@@ -59,13 +59,16 @@ SummaryReporter.prototype.emitDone = function(){
 	process.stdout.write('\n');
 	if(this.errors.length){
 		console.log('\u2718 ' + this.errors.length + ' errors:');
+		var lasturi = null;
 		this.errors.forEach(function(err){
-			console.log(err.uri + ' ' + err.message);
+			if(err.uri !== lasturi){
+				console.log(`In <${err.uri}>:`);
+				lasturi = err.uri;
+			}
 			if(err.uri){
-				console.log(`\tat <${err.uri}>:${err.line}:${err.column}`);
+				console.log(`    \u2718 ${err.message} (line ${err.line}:${err.column})`);
 			}else{
-				const stackLines = err.stack.split("\n");
-				console.log('\t'+stackLines[2]);
+				console.log(`    \u2718${err.stack || err.message}`);
 			}
 			// console.log(err.stack);
 		});
