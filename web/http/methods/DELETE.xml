@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>DELETE</title>
+		<meta name="description" content="DELETE unlinks the target resource from the request-URI." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/DELETE" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>DELETE</h1>
+			<p>The DELETE method requests that the origin server remove the association between the target resource and its current functionality. It effectively unlinks the resource from the request-URI, the resource may still be available at another URI, or in revision control or backup systems.</p>
+			<p>Calling this method on a resource may remove other resources, too. Clients may encounter applications where resources removed from one set of resources will remove an equivalent resource from other sets. For example, calling DELETE on <code>Alpha.json</code> file may also remove <code>Alpha.html</code>.</p>
+			<p>However, DELETE should not deeply remove the resource from all the locations it is in. DELETE should not remove archival copies.</p>
+			<p>The behavior may also vary depending on which URI is deleted. If the server makes resources with particular tags available at a certain location, a DELETE from this collection should not remove the resource itself, but instead may remove the tag from the document.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>The usage of DELETE is typically dictated by the origin server. Clients may look for an <a href="../headers/Allow.xml">Allow</a> header listing the DELETE method, that indicates the resource supports DELETE. Origin servers supporting DELETE will typically be APIs and remote authoring environments (for example, WebDAV).</p>
+			<p>Clients should send <a href="../headers/If-Match.xml">If-Match</a> to ensure that if the document is changed by another party, these edits are not lost. Users may take some discretion in using this feature, you may not care if the document has further edits to it.</p>
+			<p>Clients should ignore <a href="../status-codes/404.xml">404</a> and <a href="../status-codes/410.xml">410</a> responses, or treat them similar to a success, since these indicate the resource is already gone.</p>
+
+			<h2>Reading requests (origin servers)</h2>
+			<p>Since the resource must first exist before it can be deleted, servers should return <a href="../status-codes/404.xml">404</a> and <a href="../status-codes/410.xml">410</a>, if the resource does not exist, or is flagged as deleted.</p>
+			<p>Servers may wish to consider only allowing DELETE on a negotiated resource. For example, <code>DELETE Alpha</code> will also remove <code>Alpha.json</code>, but <code>DELETE Alpha.json</code> would result in an error. In this case, the server should specify in the error description the equivalent resource URI that can allows DELETE.</p>
+			<p>Servers may implement this feature a number of ways.</p>
+
+			<h3>Unlinking relevant records</h3>
+			<p>The underlying record can simply be removed: The file can be unlinked, moved to an archive location outside of the document root, or the database record can be deleted. This will remove all variations produced from this resource; for example, if a server produces both HTML and JSON variations of a resource, then deleting one will delete the other.</p>
+
+			<h3>Set gone/deleted flag</h3>
+			<p>The origin server can tag the resource with a flag specifying that the resource is deleted. This allows the server to preserve the record in the server for administrative purposes, and to reply with a <a href="../status-codes/410.xml">410</a> status code to inform clients that the resource did previously exist. The resource may still be available in an alternate URI, for example, a collection of records. Deleting from this collection will normally be impossible, returning <a href="../status-codes/403.xml">403 (Forbidden)</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Method-name">DELETE</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Apply a specified change to a resource.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#DELETE">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.5. DELETE</a></dd>
+			</dl>
+		</main>
+	</body>
+</html>
