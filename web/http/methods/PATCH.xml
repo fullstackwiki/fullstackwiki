@@ -15,7 +15,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>PATCH</h1>
-			<p>The PATCH allows a client to modify a resource according to provided instructions. This can include a applying a diff.</p>
+			<p>The PATCH allows a client to modify a resource according to provided instructions. PATCH is often superior to PUT as semantics of changing a resource are defined by a media type, and multiple non-conflicting changes can be applied at the same time.</p>
 
 			<h2>Writing requests (clients)</h2>
 			<p>If a client wants to modify a specific part of a resource without overwriting the entire document, it should use the PATCH method with a media type that can express the desired change; if this is available on the server.</p>
@@ -23,8 +23,15 @@
 			<p>Check the error code and follow the error recovery process, <a href="../status-codes/405.xml">405 (Method Not Allowed)</a>, <a href="../status-codes/415.xml">415 (Unsupported Media Type)</a>, or <a href="../status-codes/501.xml">501 (Not Implemented)</a> may require that the request be retried with an equivelant PUT request.</p>
 
 			<h2>Reading requests (servers)</h2>
+			<p>Determine if the resource exists. If the resource does not exist, and the request allows for the media type to be created (see below), then follow the patch media type semantics for creating the resource. If the resource does exist, apply the patch to the existing resource and commit the changes.</p>
 			<p>Servers that use <a href="../status-codes/428.xml">428 (Precondition Required)</a> should judge if the patch media-type has sufficient information to avoid lost updates. If the patch can only be applied if the document is in an expected state, then the server should not require a precondition header, since this would be redundant.</p>
 			<p>Check the <a href="../preferences/return.xml">"return"</a> preference for guidence on what response should be generated. By default, return a short document summarizing the changes made.</p>
+
+			<h2>Applied to non-existent resources</h2>
+			<p>PATCH is allowed to create resources if they do not exist. This behavior may be disabled with <code><a href="../headers/If-Match.html">If-Match</a>: *</code> (by making the request conditional on a resource existing), or required with <code><a href="../headers/If-None-Match.xml">If-None-Match</a>: *</code> (by making the request conditional on no resource existing). The patch creating the resource must be able to add content from a void or zero-length file, or specify the Content-Type of the resource being created, if there is no way for the server to assume a media type (since the Content-Type of the request is the media type of the patch format, not the resource being created).</p>
+
+			<h2>Idempotentcy</h2>
+			<p>PATCH is not necessarily idempotent, however it can be with conditional request headers. A resource creating a file may use <code><a href="../headers/If-None-Match.xml">If-None-Match</a>: *</code> to ensure that no resource currently exists. Subsequent requests may use <code><a href="../headers/If-Match.html">If-Match</a>: <i>{etag}</i></code>, where <i>{etag}</i> is the ETag value read from a previous request on that resource.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

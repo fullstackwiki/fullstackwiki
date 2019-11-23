@@ -18,7 +18,7 @@
 			<p>The PUT method updates a resource with an uploaded document, creating it if it doesn't exist.</p>
 
 			<h2>Writing requests (clients)</h2>
-			<p>Clients should use PUT. If the same operation can be made with a <a href="patch.xml">PATCH</a> request, use that instead (retrying the request with PUT if the server does not support it).</p>
+			<p>Clients should use PUT. If the same operation can be made with a <a href="PATCH.xml">PATCH</a> request, use that instead (retrying the request with PUT if the server does not support it).</p>
 
 			<h2>Reading requests (servers)</h2>
 			<p>The server should dereference the <a href="../request-uri.xml">request-URI</a>, then test the <a href="../conditional.xml">conditional request</a> headers against the result. If the resource conditional headers test false, return <a href="../status-codes/412.xml">412 (Precondition Failed)</a>. If the resource does not exist, attempt to create it.</p>
