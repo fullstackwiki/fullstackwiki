@@ -41,7 +41,7 @@
 				<dt>Name</dt>
 				<dd property="w:HTTP-Method-name">DELETE</dd>
 				<dt>Description</dt>
-				<dd property="w:HTTP-Method-description">Apply a specified change to a resource.</dd>
+				<dd property="w:HTTP-Method-description">Unlinks (removes) the specified resource.</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#DELETE">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.5. DELETE</a></dd>
 			</dl>
