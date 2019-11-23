@@ -14,7 +14,7 @@
 			<p>The 'wait' HTTP preference informs the maximum duration the client is willing to wait for a response.</p>
 
 			<h2>Writing requests (clients)</h2>
-			<p>If clients anticipate making a request that will take some time, and would like to limit the amount of time to wait before getting some response from a server, then add a <a href="Prefer.xml">Prefer header</a> with <code>wait=<i>n</i></code> to the request, where <code>n</code> is a whole number in seconds.</p>
+			<p>If clients anticipate making a request that will take some time, and would like to limit the amount of time to wait before getting some response from a server, then add a <a href="../headers/Prefer.xml">Prefer header</a> with <code>wait=<i>n</i></code> to the request, where <code>n</code> is a whole number in seconds.</p>
 
 			<h2>Reading requests (servers)</h2>
 			<p>Exact handling of is left to the discretion of the server.</p>

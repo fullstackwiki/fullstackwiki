@@ -26,7 +26,7 @@
 			<p>If conditional headers are present, test them and return <a href="../status-codes/304.xml">304 Not Modified</a> as necessary.</p>
 
 			<h2>Request Payloads</h2>
-			<p>Payloads on a GET request have no defined semantics; while servers can use the request payload for any purpose, intermediate nodes may also manipulate or drop the request payload. For sending documents to a server, that cannot be encoded into the request-URI due to length, see the <a href="search.xml">SEARCH method</a>.</p>
+			<p>Payloads on a GET request have no defined semantics; while servers can use the request payload for any purpose, intermediate nodes may also manipulate or drop the request payload. For sending documents to a server, that cannot be encoded into the request-URI due to length, see the <a href="SEARCH.xml">SEARCH method</a>.</p>
 
 			<h2>Overview table</h2>
 			<dl>

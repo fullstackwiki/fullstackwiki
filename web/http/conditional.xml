@@ -40,7 +40,7 @@
 
 			<h2>Lost Updates</h2>
 			<p>A "lost update" is a situation where two users request a resource, make changes, then submit the changes by uploading the entire document. The second document uploaded will overwrite the changes made by the first: the "lost update". Lost updates are avoided by making the update conditional on the resource having not changed; if the resource did change, the server will indicate as such, and the client may merge in the new changes as appropriate.</p>
-			<p>There are other ways to avoid lost updates, for example, breaking apart resources into multiple documents that can be edited independently, or using a method that allows server-directed conflict resolution, e.g. <a href="method/PATCH.xml">PATCH</a>.</p>
+			<p>There are other ways to avoid lost updates, for example, breaking apart resources into multiple documents that can be edited independently, or using a method that allows server-directed conflict resolution, e.g. <a href="methods/PATCH.xml">PATCH</a>.</p>
 
 			<h3>Headers</h3>
 			<dl>
