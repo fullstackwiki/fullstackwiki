@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP POST</title>
+		<meta name="description" content="POST sends the server a payload to be processed by the target resource" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/POST" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>POST</h1>
+			<p>The POST method submits a payload for processing by the target resource. The POST method has few defined semantics, and can be used to support a wide variety of functionality in the event no other method is suitable.</p>
+			<p>POST is commonly used for the following:</p>
+			<ul>
+				<li>Submitting form data to a data-handling process</li>
+				<li>Posting a message to a bulletin board, newsgroup, mailing list, or blog</li>
+				<li>Creating a new resource, to be assigned a URI by the server</li>
+				<li>Appending data to an existing resource</li>
+			</ul>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients submit requests when directed by the server.</p>
+			<p>In HTML, this is indicated with a <code>&lt;form method="post"&gt;</code> element.</p>
+			<p>This can also be indicated by certain link relationships, whose relation definition includes some POST semantics.</p>
+			<p>The media type of the resource can also imply what a POST will do. In Atom, a new member is added to a collection with a POST to the collection.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>If the request results in the creation of a new resource, send <a href="../status-codes/201.xml">201 (Created)</a>.</p>
+			<p>If the client sent <a href="../preferences/respond-async.xml">Prefer: respond-async</a>, the server can choose to send a <a href="../status-codes/202.xml">202 (Accepted)</a> response.</p>
+
+			<h2>Usage in Web browsers</h2>
+			<p><code>method="post"</code> is currently the only method supported by HTML in Web browsers that is non-safe and suitable for submitting data to a server. Support for other methods, as well as HTTP headers not supported by browsers, are typically tunneled through the body of a POST request.</p>
+			<aside>
+				<p>Web browsers also support making HTTP requests with scripting, but this script does not survive a page reload, making it difficult to implement into a form.</p>
+				<p>Support for PUT in HTML would require (1) a mechanism to provide a CSRF or other authentication token in the Authorization parameter of the request, instead of placing it in the request body, (2) better support for building request bodies, in media types besides <code>application/x-www-form-urlencoded</code>.</p>
+			</aside>
+
+			<h2>Usage in collections</h2>
+			<p>In AtomPub, POST is used for new resource creation. The server fully manages its URI namespace by deciding where to place the new item, so PUT is only used for editing existing resources. See <a href="https://tools.ietf.org/html/rfc5023#section-4.3">AtomPub: Control and Publishing</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl>
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">POST</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Sends the server a payload to be processed by the target resource.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#POST">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.3. POST</a></dd>
+			</dl>
+		</main>
+	</body>
+</html>

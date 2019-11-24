@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>201 Created</title>
+		<meta name="description" content="201 Created indicates a request resulted in one or more resources being created" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/201" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>201 Created</h1>
+			<p>The 201 Created status code indicates that the request has been fulfilled with one or more new resources being created. The primary created resource is identified by the <a href="../headers/Location.xml">Location header</a>. The response body is a document describing the results of the action, including links to created resources.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>If the request was successful and resulted in the creation of one or more resources, use the 201 (Created) status code.</p>
+			<p>If the request was a POST request or similar request that created a resource different than the request-URI, put the URI of the created resource in the <a href="../headers/Location.xml">Location header</a>. If the request created more than one resource, pick a <i>primary resource</i> to use in the Location header, a resource that contains links to the other created resources.</p>
+			<p>If the request was a PUT, PATCH, or similar request that created the request URI, the Location header may be omitted, the created resource is understood to be the request URI.</p>
+			<p>Use the <a href="../headers/ETag.xml">ETag</a> and <a href="../headers/Last-Modified.xml">Last-Modified</a> headers to send the metadata of the newly created resource (the resource in the Location header, if present, or the request target otherwise).</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p><code>201 Created</code> indicates the operation resulted in the creation of a new resource.</p>
+			<p>If the request method was PUT, </p>
+			<p>It is cachable, however 201 will not typically be sent in response a cachable methods.</p>
+			<p>If the response includes <a href="../headers/ETag.xml">ETag</a> or <a href="../headers/Last-Modified.xml">Last-Modified</a> headers, this refers to the metadata of the primary resource created by the request. They may be used to populate <a href="../conditional.xml">conditional request headers</a> in subsequent requests to that resource.</p>
+			<!-- TODO: describe how to handle caching headers -->
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">201</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">201 Created</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">One or more resources were created.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.201">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.3.2. 201 Created</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 201 Created
+			</pre>
+		</main>
+	</body>
+</html>
