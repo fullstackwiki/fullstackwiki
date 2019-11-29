@@ -55,11 +55,14 @@ function testHTMLDocument(document){
 		// The links may be a full URI reference,
 		// a link to a .xml document (presumably relative reference),
 		// or a blank relative reference to the current document
-		assert( e.getAttribute('href').match(/\/\//) || e.getAttribute('href').match(/\.xml($|#)/) || e.getAttribute('href')==='', e.toString() );
+		const uriref = e.getAttribute('href');
+		if(uriref.match(/^mailto:/)) return;
+		assert( uriref.match(/\/\//) || uriref.match(/\.xml($|#)/) || uriref==='', e.toString() );
 	});
 	Array.prototype.slice.call(document.getElementsByTagName('link')).forEach(function(e){
+		const uriref = e.getAttribute('href');
 		// Same as above, but also could be a .css link to a stylesheet
-		assert( e.getAttribute('href').match(/\/\//) || e.getAttribute('href').match(/\.(xml|css)($|#)/) || e.getAttribute('href')==='', e.toString() );
+		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|css)($|#)/) || uriref==='', e.toString() );
 		// and must have a link relationship or reverse relationship
 		assert( e.hasAttribute('rel') || e.hasAttribute('rev'), e.toString() );
 	});
