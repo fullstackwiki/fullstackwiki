@@ -38,6 +38,8 @@ Topics:
 		* HTTP headers
 	* https://www.w3.org/2001/tag/doc/mime-respect
 	* Subscribing to events with webhooks
+	* Content negotiation
+		* http://www.ltg.ed.ac.uk/~ht/reactive_conneg.html
 * Media types
 	* media type name syntax
 	* multipart
@@ -46,6 +48,7 @@ Topics:
 * ASCII
 * Unicode
 	* http://www.unicode.org/reports/tr36/
+	* Text direction and mixed text directions
 * Media types
 * Internationalization concerns
 	* Differences in names in US, Japan, China, India, Russia, Arabic, Hebrew, ...
@@ -108,6 +111,9 @@ Topics:
 * Naming things
 	* Names should have a function and a type - just "date" is ambiguous, just "uri" is ambiguous
 * Blog/papers section for name & dated opinion pieces
+* Testing
+	* Testing payment systems
+	* UI testing
 * Error correction
 	* IP error detection
 	* https://quiet.github.io/quiet-blog/2018/09/16/How-Libcorrect-Does-Forward-Error-Correction.html
@@ -131,6 +137,7 @@ Topics:
 	* https://howtojsonapi.com/
 	* https://apisyouwonthate.com/
 	* http://standards.rest/
+	* https://github.com/goldbergyoni/javascript-testing-best-practices
 * How to write Internet Standards
 	* IETF process
 	* One media type, one specification for all versions

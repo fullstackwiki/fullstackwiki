@@ -29,13 +29,12 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [Modifying Resources](modifying-resources.xml)
 * [Listing Resources](modifying-resources.xml)
 * [Creating Resources](modifying-resources.xml)
-* [HTTP/1.1 Protocol](http-syntax-1.xml)
-* [HTTP/2 Protocol](http-syntax-2.xml)
 * [Clients](client.xml)
 * [Servers](server.xml)
 * [Conditional requests](conditional.xml)
 * [Conceptual Model](stack.xml)
 * [Closing client connections](close.xml)
+* [Query resources and server-side query evaluation](query.xml)
 
 ## Specifications
 

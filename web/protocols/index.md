@@ -19,5 +19,3 @@
 	* Sending email
 	* Not turning into a spambot
 	* Validating email addresses
-* [HTTP/1.1](../http/http-syntax-1.html)
-* [HTTP/2](../http/http-syntax-2.html)
