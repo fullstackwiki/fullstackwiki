@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP Redirection</title>
+		<meta name="description" content="When and how to implement redirection in HTTP" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>HTTP Redirection</h1>
+			<p>There are several different uses for redirection:</p>
+			<ul>
+				<li>Signaling that a domain name or path has changed</li>
+				<li>URL shortening</li>
+				<li>Privacy protection relating to use of the <a href="headers/Referer.xml">Referer header</a></li>
+			</ul>
+
+			<h2>Status codes</h2>
+			<p>There's three broad classes of redirects, where a server will want the client to make a new HTTP request:</p>
+
+			<h3>303 See Other</h3>
+			<p><a href="status-codes/303.xml">303 (See Other)</a> is used when the request has been fully processed, and the results of the operation are available at another URI. This is typically used for redirecting Web browsers that have submitted a POST request. This is called a <i>POST/redirect/GET flow</i>. Web browsers are able to handle displaying the response of a POST request, however if the client navigates backwards to the page, the browser may ask the user if they wish to re-submit the request. For most correct usage of the POST method, this is not what the user will want to do.</p>
+			<p>As an alternative to placing the result of a POST request in the response, it can be made available at another URI, which the Web browser will then request with a GET request. Since the POST request is dropped from the history, this typically avoids the prompt to re-submit the request.</p>
+
+			<h3>307 Temporary Redirect</h3>
+			<p><a href="status-codes/307.xml">307 (Temporary Redirect)</a> is used when the server would like the client to re-issue the request at a new URI, but for some reason does not want the client to rewrite bookmarks.</p>
+
+			<h3>308 Permanent Redirect</h3>
+			<p><a href="status-codes/308.xml">308 (Permanent Redirect)</a> is used to indicate the server did not process the request because the resource that handles the request has moved to a different URI. The client should re-issue the request at the new URI, and re-write any references it has on the old URI to the new one.</p>
+
+			<h3>Other redirection mechanisms</h3>
+			<p>Scripting and HTML meta tags are also capable of automatically redirecting users to a new webpage. These mechanisms typically keep the page in the history stack, which frustrates users trying to navigate backwards; and they are less descriptive than their HTTP counterparts. If at all possible, Web applications should always use HTTP status codes to perform redirection.</p>
+
+			<h2>Server Implementation</h2>
+			<p>For the main article on server-side implementation of redirects, see the page for the respective HTTP status code.</p>
+
+			<h2>Client implementation</h2>
+			<p>Clients should be prepared for <i>any</i> request to result in a redirection. This allows the server increased flexibility in deciding how to manage its application space, and reduces the chance that server changes will cause client breakage.</p>
+
+			<h3>Re-requests</h3>
+			<p>Unless otherwise specified by the application or user, the HTTP library should transparently handle the redirect, discarding the contents of the redirecting response (if any), and re-making the request at the redirect target, providing the contents of the redirect target (if it is not itself a redirect).</p>
+			<p>If the redirect target itself is a redirect, redirect logic should be applied recursively until either a maximum number of redirects have been applied (typically 10), or until a page is re-requested twice with the same method (which indicates a redirect loop). These cases should result in a client-emitted error describing a problem with the server.</p>
+
+			<h3>History stack</h3>
+			<p>Users typically use the history stack to re-view the same content they had seen previously. So unless otherwise specified, the client's history stack should store the redirected location <i>in place of</i> the requested one.</p>
+
+			<h3>Permanent redirect handling</h3>
+			<p>Libraries should allow applications to specify a <i>permanent redirect handler</i> which notifies the application that a URI has been renamed. Libraries emitting this event should make available the requested, old URI; the new URI to update to; and the response body that may provide information on why the permanent redirect is being issued.</p>
+			<p>Applications receiving this event should log the event, then modify old URIs to point to the new one.</p>
+
+			<h2>Open Redirects</h2>
+			<p>An open redirect is a case where a Web server accepts an option for where to redirect requests to, including off-site. For example, this PHP file will redirect the user to a target as specified in the URL parameters:</p>
+			<pre>&lt;?php
+header('HTTP/ 303 See Other');
+header('Location: ' . $_GET['target']);
+?&gt;</pre>
+			<p>An open redirect is not <em>by itself</em> a vulnerability, however open redirects are a serious code smell; they are frequently combined with other vulnerabilities as part of a larger attack; and attackers may use an open redirect that prey's on a user's trust of the authority to get them to click on the link, which then redirects to a malicious website.</p>
+			<p>In general, you should not permit applications with an open redirect.</p>
+			<!-- TODO: write a page specifically about open redirects, including purported use cases, and better alternatives -->
+
+			<h2>Referenced specifications</h2>
+			<ul class="inline">
+				<li><a href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">IANA: Hypertext Transfer Protocol (HTTP) Status Code Registry</a></li>
+				<li><a href="https://httpwg.org/specs/rfc7231.html">RFC 7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a></li>
+				<li><a href="https://httpwg.org/specs/rfc7538.html">RFC 7538: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a></li>
+			</ul>
+		</main>
+	</body>
+</html>

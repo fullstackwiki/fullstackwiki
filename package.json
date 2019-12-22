@@ -2,7 +2,7 @@
   "dependencies": {
     "bluebird": "^3.5.5",
     "browserify": "^16.2.3",
-    "dive-httpd": "^0.0.21",
+    "dive-httpd": "^0.0.23",
     "highlight.js": "^9.15.8",
     "http-link": "^0.3.0",
     "isomorphic-git": "^0.55.2",

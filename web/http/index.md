@@ -32,6 +32,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [Clients](client.xml)
 * [Servers](server.xml)
 * [Conditional requests](conditional.xml)
+* [Redirecting requests](redirect.xml)
 * [Conceptual Model](stack.xml)
 * [Closing client connections](close.xml)
 * [Query resources and server-side query evaluation](query.xml)

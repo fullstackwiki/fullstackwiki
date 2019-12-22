@@ -45,6 +45,14 @@
 			</pre>
 
 			<!-- TODO: client support -->
+			<h2>Implementations</h2>
+
+			<h3>cURL</h3>
+			<p>cURL correctly supports 308 redirects by following generic 300 semantics, if the response includes a Location header. It does not provide an explicit mechanism to rewrite or update URL references. A test to ensure this behavior was added in <a href="https://github.com/curl/curl/commit/f1092b387e1fa82db35c75a217bda91e94f0ee6e">cURL 7.24.0</a>.</p>
+
+			<h2>History</h2>
+			<p>This status code largely replaces the <code>301 Moved Permanently</code> status code, which has a more ambiguous definition, and is inconsistently implemented by Web browsers. See the specification text for more information.</p>
+
 		</main>
 	</body>
 </html>
