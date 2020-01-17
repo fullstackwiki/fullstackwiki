@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP resumable uploads</title>
+		<meta name="description" content="Different ways to break apart a single HTTP upload into multiple parts." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>HTTP resumable uploads</h1>
+			<p><i>Also called multi-part uploads (not to be confused with the <code>multipart/</code> top-level media type).</i></p>
+			<p>There is no standard way to resume an upload to a server after it has been interrupted. Implementations commonly utilize a POST request to allocate space on the server, then issue several more requests to write the data onto that space. The implementation will typically provide a way of reading the status of the upload, including: parts uploaded, amount remaining, errors, and result document.</p>
+
+			<h2>Option: PUT with "Length" header</h2>
+			<p>A PUT request could be used to indicate a new resource should be created at the given request-URI. A <code>Length</code> header would indicate how much space is to be allocated to the new representation. Then, issue PATCH requests that append data to the resource. The server would need a mechanism that indicates how many bytes are written versus expected.</p>
+
+			<h2>Option: Expect header with Range header</h2>
+			<p>The client could use the <a href="headers/Expect.xml">Expect header</a> header to indicate it is using the <a href="headers/Range.xml">Range header</a> in a non-compatible manner. Servers would stop the request if they don't understand the Expect or Range header in a request.</p>
+
+			<h2>Option: POST with 201 Accepted response</h2>
+			<p>The client can send a POST request indicating a resource was created that may be used to send uploaded data.</p>
+
+			<h2>Option: URI Template</h2>
+			<p>A PUT request could be used to indicate a new resource should be created at the given request-URI. A <code>Length</code> header would indicate how much space is to be allocated to the new representation. Then, issue PATCH requests that append data to the resource. The server would need a mechanism that indicates how many bytes are written versus expected.</p>
+
+			<h2>Option: URI query parameter</h2>
+			<p>A subset of the URI template option, where a server exposes a URI parameter that selects a specific range of the document. For example, you could use <code>PUT http://example.com/IMG2000.jpg?range=0-999</code> to write to only the first 1000 bytes of the document. Clients must have some way of knowing the server will apply the range, as servers typically ignore unknown URI query parameters.</p>
+
+			<h2>Option: PUT with "Length" header</h2>
+			<p>A PUT request could be used to indicate a new resource should be created at the given request-URI. A <code>Length</code> header would indicate how much space is to be allocated to the new representation. Then, issue PATCH requests that append data to the resource. The server would need a mechanism that indicates how many bytes are written versus expected.</p>
+
+			<h2>Option: PATCH with a segmented upload media type</h2>
+			<p>A PATCH request is capable of creating a new resource; combined with a media type that describes the specific byte ranges to be written to, a client would be capable of creating a new document split across several PATCH requests. See <a href="https://datatracker.ietf.org/doc/draft-wright-http-partial-upload/">draft-wright-http-partial-upload</a>.</p>
+
+			<h2>Range header in requests</h2>
+			<p>Clients cannot use the Range header in requests, because the server is not obligated to understand the Range header. If the server ignores the header, it would overwrite the contents outside the given range, and the client would misinterpert the <code>200 OK</code> response.</p>
+
+			<h2>References</h2>
+			<ul>
+				<li><a href="https://tus.io/protocols/resumable-upload.html">TUS protocol</a></li>
+				<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html">AWS S3 multipart upload (MPU) protocol</a></li>
+				<li><a href="https://developers.google.com/drive/api/v3/manage-uploads#resumable">Google Drive protocol</a></li>
+				<li><a href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range">Microsoft Azure protocol</a></li>
+				<li><a href="https://datatracker.ietf.org/doc/draft-wright-http-partial-upload/">draft-wright-http-partial-upload</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
