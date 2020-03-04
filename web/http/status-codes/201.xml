@@ -15,19 +15,21 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>201 Created</h1>
-			<p>The 201 Created status code indicates that the request has been fulfilled with one or more new resources being created. The primary created resource is identified by the <a href="../headers/Location.xml">Location header</a>. The response body is a document describing the results of the action, including links to created resources.</p>
+			<p>The 201 Created status code indicates that the request has been fulfilled with one or more new resources being created. The primary created resource is identified by the <a href="../headers/Location.xml">Location header</a> if it exists, otherwise it is the request URI that was created. The response body is a document describing the results of the action, including links to other created resources.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>If the request was successful and resulted in the creation of one or more resources, use the 201 (Created) status code.</p>
 			<p>If the request was a POST request or similar request that created a resource different than the request-URI, put the URI of the created resource in the <a href="../headers/Location.xml">Location header</a>. If the request created more than one resource, pick a <i>primary resource</i> to use in the Location header, a resource that contains links to the other created resources.</p>
-			<p>If the request was a PUT, PATCH, or similar request that created the request URI, the Location header may be omitted, the created resource is understood to be the request URI.</p>
+			<p>If the request was a PUT, PATCH, or similar request that created the request URI, the Location header may be omitted; the created resource is understood to be the request URI.</p>
 			<p>Use the <a href="../headers/ETag.xml">ETag</a> and <a href="../headers/Last-Modified.xml">Last-Modified</a> headers to send the metadata of the newly created resource (the resource in the Location header, if present, or the request target otherwise).</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p><code>201 Created</code> indicates the operation resulted in the creation of a new resource.</p>
-			<p>If the request method was PUT, </p>
-			<p>It is cachable, however 201 will not typically be sent in response a cachable methods.</p>
+			<p>If the request method was <a href="../methods/PUT.xml">PUT</a> or <a href="../methods/PATCH.xml">PATCH</a> without a Location header, the request target was created to fill the request.</p>
+			<p>If the request method was <a href="../methods/POST.xml">POST</a> or a similar method on an existing resource, and contains a <a href="../headers/Location.xml">Location header</a>, then one or more resources were created; read the document at the Location header for information.</p>
+			<p>It is cachable, however 201 will not typically be sent in response to cachable methods.</p>
 			<p>If the response includes <a href="../headers/ETag.xml">ETag</a> or <a href="../headers/Last-Modified.xml">Last-Modified</a> headers, this refers to the metadata of the primary resource created by the request. They may be used to populate <a href="../conditional.xml">conditional request headers</a> in subsequent requests to that resource.</p>
+			<p>The response body may be empty, or a document that describes the result of the operation. There is no standardized format, so it may be a simple HTML document, or application-specific JSON document.</p>
 			<!-- TODO: describe how to handle caching headers -->
 
 			<h2>Overview table</h2>
