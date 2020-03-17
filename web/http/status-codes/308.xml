@@ -48,7 +48,21 @@
 			<h2>Implementations</h2>
 
 			<h3>cURL</h3>
-			<p>cURL correctly supports 308 redirects by following generic 300 semantics, if the response includes a Location header. It does not provide an explicit mechanism to rewrite or update URL references. A test to ensure this behavior was added in <a href="https://github.com/curl/curl/commit/f1092b387e1fa82db35c75a217bda91e94f0ee6e">cURL 7.24.0</a>.</p>
+			<p>cURL correctly supports 308 redirects by following generic 300 semantics, if the response includes a Location header. It does not provide an explicit mechanism to rewrite or update URL references. A test for this status code was added in <a href="https://github.com/curl/curl/commit/f1092b387e1fa82db35c75a217bda91e94f0ee6e">cURL 7.24.0</a>.</p>
+
+			<h3>Nginx</h3>
+			<p>Nginx will send 308 Permanent Redirect when you use a rewrite rule with the <code>permanent</code> flag:</p>
+			<pre w:space="indent">
+				# Redirect www.example.com to example.com
+				server {
+					listen 80;
+					server_name www.example.com;
+				
+					location / {
+						rewrite  ^(/.*)  https://example.com$1  permanent;
+					}
+				}
+			</pre>
 
 			<h2>History</h2>
 			<p>This status code largely replaces the <code>301 Moved Permanently</code> status code, which has a more ambiguous definition, and is inconsistently implemented by Web browsers. See the specification text for more information.</p>
