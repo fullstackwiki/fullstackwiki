@@ -2,14 +2,14 @@
 <html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Closing client HTTP connections</title>
-		<meta name="description" content="Conditional requests" />
+		<title>Conditional requests</title>
+		<meta name="description" content="Conditional requests allow a client to request that an HTTP request be filled only if certain criteria are met." />
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
 		<main>
 			<h1>Conditional Requests</h1>
-			<p>Conditional requests allow a client to request that an HTTP request only be filled if it meets certain criteria. There are two classes of uses for conditional headers: freshining a cache, and preventing lost updates.</p>
+			<p>Conditional requests allow a client to request that an HTTP request be filled only when certain criteria are met. There are two classes of uses for conditional headers: freshining a cache, and preventing lost updates.</p>
 			<p>Conditional requests are defined by <a href="https://httpwg.org/specs/rfc7232.html">RFC 7232: HTTP/1.1 Conditional Requests</a>. Handling can be summarized into the following rules:</p>
 			<ul>
 				<li>When using GET/HEAD to request a resource that is already cached, test that the resource has been modified. When updating a resource with other requests (e.g. PUT/PATCH/DELETE), test that the resource has <i>not</i> been modified. When creating a resource, test that it does not exist.</li>
