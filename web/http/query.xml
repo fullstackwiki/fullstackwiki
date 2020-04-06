@@ -16,7 +16,7 @@
 			<p>For short queries that do fit in the request URI, query resources should support GET requests that allow query parameters added to the endpoint URI.</p>
 			<p>For example, if the endpoint is <code>http://example.com/foo</code>, then the resource representing the query results could be <code>http://example.com/foo?q={query}</code>. The name of the parameter is arbitrary, but <code>q</code> is short and common. The parameter name can be omitted entirely: <code>http://example.com/foo?{query}</code> is also acceptable, but this is not compatible with HTML forms.</p>
 			<p>A GET request to the query resource (without a provided query) must describe the syntax with a URI Template or an HTML form. The response should also include a description of the data that will be queried over, and the query syntax.</p>
-			<aside><p>While GET permits a request body, queries should not be put in the body of a GET request: the semantics are undefined, meaning intermediate nodes are allowed to discard it. Additionally, caches may have a hard time storing responses, because this is very atypical behavior.</p></aside>
+			<aside><p>While GET permits a request body, the semantics are undefined, meaning intermediate nodes are allowed to discard it. Additionally, caches may have a hard time storing responses, because this is very atypical behavior.</p></aside>
 
 			<h2>POST requests (redirect version)</h2>
 			<p>This version is most friendly to Web browsers. Follow the typical POST behavior: create a new resource, then perform a <a href="status-codes/303.xml">303 (See Other) redirect</a> to that resource. A <a href="status-codes/201.xml">201 (Created)</a> or <a href="status-codes/200.xml">200 (OK)</a> response would also be acceptable (depending on if the resource was created or not), but See Other is more compatible with Web browsers without losing significant functionality.</p>
@@ -47,7 +47,9 @@
 
 			<h2>SEARCH requests</h2>
 			<p>This method is similar to REPORT: you simply upload the query as the request-body. This method is specifically defined to run a query over a set of resources, but it requires a WebDAV multi-status response.</p>
-			<aside><p><a href="https://tools.ietf.org/html/rfc5323#section-2">SEARCH is defined in WebDAV</a>, but is acceptable for general use in HTTP. It requires all responses to be a WebDAV multi-status response. It is possible some clients may try calling it if the server supports it, but this is unlikely to cause harm since it is a safe method. In any event, using REPORT is the technically correct solution.</p></aside>
+			<aside><p><a href="https://tools.ietf.org/html/rfc5323#section-2">SEARCH is defined in WebDAV</a>, but is acceptable for general use in HTTP. It requires all responses to be a WebDAV multi-status response. It is possible some clients may try calling it if the server supports it, but this is unlikely to cause harm since it is a safe method. <a href="https://tools.ietf.org/html/draft-snell-search-method-00">An Internet-Draft draft-snell-search-method-00</a> proposes changing this behavior to be more generic, and introduces an Accept-Search response header.</p></aside>
+
+			<h2></h2>
 
 			<h2>Examples</h2>
 
