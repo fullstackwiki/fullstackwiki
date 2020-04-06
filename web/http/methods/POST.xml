@@ -15,17 +15,18 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
 
 			<h1>POST</h1>
-			<p>The POST method submits a payload for processing by the target resource. The POST method has few defined semantics, and can be used to support a wide variety of functionality in the event no other method is suitable.</p>
-			<p>POST is commonly used for the following:</p>
+			<p>The POST method submits a payload for processing by the target resource. The POST method has few defined semantics, and can be used to support a wide variety of functionality in the event no other method is suitable. Common uses include:</p>
 			<ul>
-				<li>Submitting form data to a data-handling process</li>
+				<li>Submitting form data to a server</li>
 				<li>Posting a message to a bulletin board, newsgroup, mailing list, or blog</li>
 				<li>Creating a new resource, to be assigned a URI by the server</li>
-				<li>Appending data to an existing resource</li>
+				<li>Appending an event to a log</li>
+				<li>Purging a cache</li>
+				<li>Conditionally deleting multiple resources at once</li>
 			</ul>
 
 			<h2>Writing requests (clients)</h2>
-			<p>Clients submit requests when directed by the server.</p>
+			<p>Clients may submit POST requests when indicated by the server.</p>
 			<p>In HTML, this is indicated with a <code>&lt;form method="post"&gt;</code> element.</p>
 			<p>This can also be indicated by certain link relationships, whose relation definition includes some POST semantics.</p>
 			<p>The media type of the resource can also imply what a POST will do. In Atom, a new member is added to a collection with a POST to the collection.</p>
@@ -45,8 +46,7 @@
 			<p>In AtomPub, POST is used for new resource creation. The server fully manages its URI namespace by deciding where to place the new item, so PUT is only used for editing existing resources. See <a href="https://tools.ietf.org/html/rfc5023#section-4.3">AtomPub: Control and Publishing</a>.</p>
 
 			<h2>Safe usage</h2>
-			<p>In cases where the method is safe, the server can also consider listening on the REPORT or SEARCH methods. Both of these methods are safe and accept a request body, though the semantics may be slightly different than the intended use.</p>
-			<!-- TODO: Write a page for this -->
+			<p>In cases where the method is safe, the server can also consider listening on the REPORT or SEARCH methods, or using a query parameter in a GET request. For more information, see <a href="../query.xml">Queries in HTTP</a>.</p>
 
 			<h2>Overview table</h2>
 			<dl>

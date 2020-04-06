@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTTP REPORT</title>
+		<meta name="description" content="Request a transfer of the target resource" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/methods/REPORT" typeof="w:HTTP-Method">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href=""></a>
+
+			<h1>REPORT</h1>
+			<p>Generates a response to a payload. Unlike POST, this method is safe; and unlike GET, a request body must be supported. Initially defined for WebDAV, this method is usable by any application where a client needs to submit a document to the server with a safe method (that will not change the server state).</p>
+			<p>See <a href="../query.xml">Queries in HTTP</a> for alternative methods of implementing server-evaluated queries.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients may use the REPORT method when it sees <code>Allow: REPORT</code> in a response; when a form specifies a query may be submitted using the REPORT method; or when there is out-of-band knowledge that the resource supports it.</p>
+			<aside><p>Presently, no known hypermedia formats specifically support the REPORT method. However, it seems feasible to specify <code>REPORT</code> in any place <code>POST</code> would be an acceptable value.</p></aside>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Servers should implement REPORT when there is a possibility that a GET query would be or cause performance problems. REPORT is not known to be well supported, and servers should implement alternate mechanisms of making a query (see <a href="../query.xml">Queries in HTTP</a>).</p>
+			<p>Servers that support REPORT on a resource should list so in an <a href="../headers/Allow.xml">Allow response header</a>, and a GET response should describe how to format and make the request.</p>
+
+			<h2>Example</h2>
+			<p>First, the client makes a request:</p>
+			<pre w:space="indent">
+				REPORT /query HTTP/1.1
+				Content-Type: application/json
+
+				{ "id": { "$gt": 200 } }
+			</pre>
+			<p>The server evaluates the query according to the semantics of the resource and content type, and generates a response:</p>
+			<pre w:space="indent">
+				HTTP/1.1 200 OK
+				Content-Type: application/json
+
+				{
+					"recordset": [
+						{"id": 100, "name": "root"},
+						{"id", 1000, "name":"Alice"},
+						{"id", 1001, "name":"Bob"}
+					]
+				}
+			</pre>
+
+			<h2>Overview table</h2>
+			<dl>
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">REPORT</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Method-description">Generates a response to a payload.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://tools.ietf.org/html/rfc3253#section-3.6">RFC 3253: Versioning Extensions to WebDAV &#xA7;3.6: REPORT Method</a></dd>
+			</dl>
+		</main>
+	</body>
+</html>

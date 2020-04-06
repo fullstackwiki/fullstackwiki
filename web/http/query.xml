@@ -10,15 +10,17 @@
 		<main>
 			<h1>Queries in HTTP</h1>
 			<p>Typically in HTTP, a client downloads resources, and processes them locally. The query resource paradigm instead allows a client to submit a query, which is processed on the server side, returning results in the response body. The resource that processes the query is called an <i>endpoint</i>. Query endpoints are typically used when the data set that must be computed is truly massive, or if the query is very complicated and too long to fit into a URI.</p>
+			<p>A single HTTP endpoint may choose to implement all of the below solutions, or just one.</p>
 
-			<h2>SEARCH requests</h2>
-			<p>For using this form, simply upload the query as the request-body.</p>
-			<p>If the evaluation of the query results in a query resource being created where the same query (and response format) may be accessed again, this can be expressed in the <a href="headers/Content-Location.xml">Content-Location header</a>.</p>
-			<aside><p>HTTP does not have a well-defined method to transport safe requests with a body. GET can accept a request body, however intermediate nodes are allowed to ignore it, since the semantics are undefined (neither permitted nor prohibited). <a href="https://tools.ietf.org/html/rfc4918#section-9.1">SEARCH is defined in WebDAV</a>, and has a requirement that the response be a WebDAV multi-status response. It seems that this can be revised without breakage to existing tools. <a href="https://tools.ietf.org/html/rfc3253#section-3.6">WebDAV also defines the REPORT method</a> as an "extensible mechanism", but it is more specifically for information <em>about</em> a resource, rather than a payload for evaluation <em>by</em> the resource. Again, this can likely be ignored without breakage to existing tools.</p></aside>
+			<h2>GET requests</h2>
+			<p>For short queries that do fit in the request URI, query resources should support GET requests that allow query parameters added to the endpoint URI.</p>
+			<p>For example, if the endpoint is <code>http://example.com/foo</code>, then the resource representing the query results could be <code>http://example.com/foo?q={query}</code>. The name of the parameter is arbitrary, but <code>q</code> is short and common. The parameter name can be omitted entirely: <code>http://example.com/foo?{query}</code> is also acceptable, but this is not compatible with HTML forms.</p>
+			<p>A GET request to the query resource (without a provided query) must describe the syntax with a URI Template or an HTML form. The response should also include a description of the data that will be queried over, and the query syntax.</p>
+			<aside><p>While GET permits a request body, queries should not be put in the body of a GET request: the semantics are undefined, meaning intermediate nodes are allowed to discard it. Additionally, caches may have a hard time storing responses, because this is very atypical behavior.</p></aside>
 
 			<h2>POST requests (redirect version)</h2>
-			<p>This version is most friendly to Web browsers. Follow the typical POST behavior and create a new resource, and perform a <a href="status-codes/303.xml">303 (See Other) redirect</a> to that resource. A <a href="status-codes/201.xml">201 (Created)</a> or <a href="status-codes/200.xml">200 (OK)</a> response would also be acceptable (depending on if the resource was created or not), but this is better compatible with Web browsers without losing significant functionality.</p>
-			<p>The best URI to mint is a content-addressable resource based on the contents of the query, so that a potential attacker would have to know the query in order to predict the URI being created. A simple hash of the query contents should suffice:</p>
+			<p>This version is most friendly to Web browsers. Follow the typical POST behavior: create a new resource, then perform a <a href="status-codes/303.xml">303 (See Other) redirect</a> to that resource. A <a href="status-codes/201.xml">201 (Created)</a> or <a href="status-codes/200.xml">200 (OK)</a> response would also be acceptable (depending on if the resource was created or not), but See Other is more compatible with Web browsers without losing significant functionality.</p>
+			<p>The best URI to mint is a content-addressable resource, one based on the contents of the query, so that a potential attacker would have to know the query in order to predict the URI being created. A simple hash of the query contents should suffice:</p>
 			<pre w:space="indent">
 				POST /query HTTP/1.1
 				Content-Type: application/json
@@ -29,16 +31,23 @@
 				HTTP/1.1 303 See Other
 				Location: /query/01ba4719c80b6fe911b091a7c0
 			</pre>
-			<p>The resource may be deleted once it has been read by the client; or it may be cleaned out some time after. Queries may also be retained, like more traditional POST requests that create a resource, and treated as first-class resources that can be deleted by the client when no longer necessary, or shared amongst users.</p>
+			<p>The resource may be deleted once it has been read by the client; or it may be cleaned out some time after as part of a normal cache clearing process.</p>
+			<p>Queries may also be retained indefinitely, like more traditional POST requests that create a resource, and treated as first-class resources that can be shared amongst users. They may then be deleted by the user when no longer necessary.</p>
 			<p>The server should keep a distinction between the resource that is the query, and the resource that is the query results. If the server needs to make the text of the original query available, it should be provided as a separate resource, linked to and from the query results resource.</p>
+			<p>To support HTML forms, servers should also support <code>Content-Type: application/x-www-urlencoded</code> requests, accepting the same syntax seen in the query component of a GET request.</p>
 
 			<h2>POST requests (safe version)</h2>
-			<p>This form is the same as the SEARCH method, but uses POST instead. It is intended for workflows where the client or server do not support the SEARCH method, but must use a similar workflow. For use in Web browsers, the redirect version (above) is preferred.</p>
+			<p>This form is the same as the REPORT method below, but uses POST instead. It is intended for workflows where the client or server do not support the REPORT method, but must use a similar workflow. For use in Web browsers, the redirect version (above) is preferred.</p>
+			<p>For servers supporting both the redirect and safe variants, servers may use a <a href="headers/Prefer.xml">Prefer request-header</a> to specify the behavior to use.</p>
 
-			<h2>GET requests</h2>
-			<p>For short queries that do fit in the request URI, query resources should support GET requests that allow query parameters added to the endpoint URI.</p>
-			<p>For example, if the endpoint is <code>http://example.com/foo</code>, then the resource representing the query results could be <code>http://example.com/foo?q={query}</code>. The name of the parameter is arbitrary, but <code>q</code> is short and common. The parameter name can be omitted entirely: <code>http://example.com/foo?{query}</code> is also acceptable, but this is not compatible with HTML forms.</p>
-			<p>A GET request to the query resource (without a provided query) should describe the data that the query covers over, the permitted query languages, and a form to facilitate the query submission.</p>
+			<h2>REPORT requests</h2>
+			<p><i>Main article: <a href="methods/REPORT.xml">REPORT method</a></i></p>
+			<p>REPORT is an "extensible mechanism for obtaining information about a resource". When using this method, simply upload the query as the request-body.</p>
+			<aside><p><a href="https://tools.ietf.org/html/rfc3253#section-3.6">REPORT is defined in WebDAV</a>, but is acceptable for general use in HTTP.</p></aside>
+
+			<h2>SEARCH requests</h2>
+			<p>This method is similar to REPORT: you simply upload the query as the request-body. This method is specifically defined to run a query over a set of resources, but it requires a WebDAV multi-status response.</p>
+			<aside><p><a href="https://tools.ietf.org/html/rfc5323#section-2">SEARCH is defined in WebDAV</a>, but is acceptable for general use in HTTP. It requires all responses to be a WebDAV multi-status response. It is possible some clients may try calling it if the server supports it, but this is unlikely to cause harm since it is a safe method. In any event, using REPORT is the technically correct solution.</p></aside>
 
 			<h2>Examples</h2>
 
