@@ -1,6 +1,6 @@
 # HTTP (Hypertext Transfer Protocol)
 
-HTTP (Hypertext Transfer Protocol) is an application-level Internet protocol for transferring and manipulating representations of resources, such as webpages. HTTP supports many features, including retreiving and manipulating resources, caching, content negotiation, range (subset) requests, link relationships, authentication, and more.
+HTTP (Hypertext Transfer Protocol) is an application-level Internet protocol for transferring and manipulating representations of resources, such as webpages. HTTP supports many features, including retrieving and manipulating resources, caching, content negotiation, range (subset) requests, link relationships, authentication, and more.
 
 Use HTTP whenever you need to download files from another system on a network, or let clients manipulate the documents, settings, or devices on the network.
 
@@ -63,3 +63,20 @@ Use HTTP whenever you need to download files from another system on a network, o
 * RFC8246: HTTP Immutable Responses
 * RFC8288: Web Linking
 * RFC8470: Using Early Data in HTTP
+
+## History
+
+### 1992-06-11
+[HTTP/0.9](https://www.w3.org/DesignIssues/HTTP0.9Summary.html) is described. It only supports GET.
+
+### 1996-05
+[RFC 1945 (HTTP/1.0)](https://tools.ietf.org/html/rfc1945#section-10.13) is published.
+
+### 1997-01
+[RFC 2068 (HTTP/1.1)](https://tools.ietf.org/html/rfc2068#section-14.37) is published.
+
+### 1999-06
+[RFC 2616 (HTTP/1.1)](https://tools.ietf.org/html/rfc2616#section-14.36) is published.
+
+### 2014-06
+[RFC 7231 (HTTP Semantics)](https://tools.ietf.org/html/rfc7231#section-5.5.2) is published.

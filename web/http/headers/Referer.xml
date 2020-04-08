@@ -11,7 +11,72 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Referer</h1>
-			<p>The "Referer" header allows the user agent to specify the URI reference of the resource where the request-URI was obtained (i.e. the "referrer").</p>
+			<p>The "Referer" header allows the user agent to specify the URI of the resource where the request-URI of the current request was obtained (i.e. the <i>referring resource</i>).</p>
+			<p>Links on the Web are directional from one document to another. A user following a link on a webpage will generate a request to the link target, and the request will contain a Referer header pointing back to the page where the link was found. This allows websites to understand how pages link to each other, how links from other websites are used, and for fixing broken links.</p>
+			<p>The Referer header is typically logged by servers for later analysis.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients should send a Referer header when a user follows a link relation from one document to another.</p>
+			<p>URIs gathered from other sources may also warrant storing the re, so if the link becomes broken, you can re-import the source webpage.</p>
+			<p>However, sending a Referer header is prohibited if the referring page is encrypted, and the target page is not; as this would expose the page that the user was visiting from.</p>
+			<p>The Referer may be either a relative-reference or an absolute-URI, clients should send an absolute-URI because it is less likely to be mishandled by servers.</p>
+			<p>The Referer URI must not include the userinfo component (username or password), which is not supposed to be sent in the request-line.</p>
+			<p>While URIs are not secrets, the fact that a user has visited one might be. A client must not leak URIs through cleartext not previously received through cleartext. A user agent MUST NOT send a Referer header field in an unsecured HTTP request if the referring page was received with a secure protocol.</p>
+
+			<h3>Referrer Policy</h3>
+			<p><a href="https://w3c.github.io/webappsec-referrer-policy/">Referrer Policy (W3C Editor's Draft)</a> specifies a mechanism that allows webpages to control the Referer behavior for links followed from the same webpage. The policy may be specified with:</p>
+			<ul>
+				<li>A <code>Referrer-Policy</code> HTTP header, e.g. <code>Referrer-Policy: no-referrer-when-downgrade</code></li>
+				<li>A meta tag, e.g. <code>&lt;meta name="referrer" content="no-referrer-when-downgrade" /&gt;</code></li>
+				<li>a <code>referrerpolicy</code> content attribute on an a, area, img, iframe, or link element, e.g. <code>&lt;a href="http://example.com/" referrerpolicy="unsafe-url"&gt;&lt;/a&gt;</code></li>
+				<li>the <code>noreferrer</code> link relation on an a, or area element.</li>
+			</ul>
+			<aside><p><code>noreferrer</code> is not an IANA registered link relation; it is defined by HTML. Specifying the referrer policy with the rel attribute is discouraged since it is not a standard feature of Web hyperlinks.</p></aside>
+
+			<h2>Reading requests (servers)</h2>
+			<p>Servers that generate a 404 response to a request may wish to record the Referer header, so that the referring page might be checked for a broken link.</p>
+			<p>The value of this header should not be shared, even in aggregated form. For example, websites should never list the "top referring websites" on a webpage. The header is strictly informative, and can be set to any value by any person; publishing the usage of the header encourages attackers to make requests with bad values.</p>
+
+			<h3>Broken link tracking</h3>
+			<p>Web servers responding to responses with <a href="../status-codes/404.xml">404 Not Found</a> may wish to log the Referer header to understand which webpages are linking to the missing webpage, so that broken links may be fixed.</p>
+
+			<h3>Marketing/analytics</h3>
+			<p>Aggregating the Referer header values is a simple way to see which other websites are providing you traffic.</p>
+
+			<h3>Anti-leech</h3>
+			<p>Using the Referer header to block requests made from other websites is called anti-leeching; since a large website embedding an image from a small server is said to "leech" bandwidth.</p>
+			<p>Since the Referer header is sent by the user-agent and is ultimately under control of the user, there is no reliable way to block cross-domain requests. A common anti-leeching technique is to block any requests containing a Referer header that mismatches the server where the image is hosted.</p>
+
+			<h2>Writing Documents (users &amp; servers)</h2>
+
+			<h3>Scripting</h3>
+			<p>The value of the referer header is available to scripting through the <code>document.referrer</code> property (note spelling). This is may be used by analytics scripts when recording a page hit, to also record the referring page.</p>
+
+			<h3>Referrer Policy</h3>
+			<p>Documents and servers that wish to change the Referer header behavior from the default, may use one of a few mechanisms:</p>
+			<ul>
+				<li>A <code>Referrer-Policy</code> HTTP header, e.g. <code>Referrer-Policy: no-referrer-when-downgrade</code></li>
+				<li>A meta tag, e.g. <code>&lt;meta name="referrer" content="no-referrer-when-downgrade" /&gt;</code></li>
+				<li>a <code>referrerpolicy</code> content attribute on an a, area, img, iframe, or link element, e.g. <code>&lt;a href="http://example.com/" referrerpolicy="unsafe-url"&gt;&lt;/a&gt;</code></li>
+			</ul>
+			<p>See <a href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policies">W3C Referrer Policy: List of Referrer Policies</a> for valid values and more information.</p>
+			<p>Referrer Policy is supported in <a href="https://caniuse.com/#feat=mdn-html_elements_a_referrerpolicy">most Web browsers since 2018</a>.</p>
+
+			<h3>De-referers</h3>
+			<p>An alternate, older mechanism of hiding the referring webpage from link targets is by linking to a redirecting webpage. The ultimate target will see the URL of the redirecting webpage, and not the .</p>
+			<p>Suppose a user clicks a link on <code>http://example.com/faq</code>, generating this request:</p>
+			<pre type="message/http" w:space="indent">
+				GET http://example.com/redirect?target=http://example.net/ HTTP/1.1
+				Referer: http://example.com/faq
+				
+			</pre>
+			<p>This page will issue a redirect using a <a href="../status-codes/303.xml">303 See Other</a> redirect, which the client will follow with this request:</p>
+			<pre type="message/http" w:space="indent">
+				GET http://example.net/ HTTP/1.1
+				Referer: http://example.com/redirect?target=http://example.net/
+				
+			</pre>
+			<p>The original page <code>http://example.com/faq</code> is now hidden from the target page at example.net.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -25,6 +90,16 @@
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.referer">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.5.2. Referer</a></dd>
 			</dl>
 
+			<h2>History</h2>
+			<dl>
+				<dt>1995-03-09</dt>
+				<dd>Roy T. Fielding (editor) clarifies that the spellchecker didn't understand "Referrer" either. [<a href="https://lists.w3.org/Archives/Public/ietf-http-wg-old/1995JanApr/0107.html">http-wg mailing list</a>]</dd>
+
+				<dt>1996-05</dt>
+				<dd>"Referer" header appears in <a href="https://tools.ietf.org/html/rfc1945#section-10.13">RFC 1945 (HTTP/1.0)</a></dd>
+			</dl>
+			<p>"Referer" is a misspelling of "Referrer" that happens to save a byte over the wire. <a href=""></a></p>
+
 			<h2>Syntax</h2>
 			<pre type="abnf" w:space="indent">
 				Referer = absolute-URI / partial-URI
@@ -36,6 +111,16 @@
 				Referer: /
 				
 			</pre>
+
+			<h2>Implementations</h2>
+
+			<h3>Apache HTTPD</h3>
+			<p>Apache HTTPD supports logging the referring webpage using the <code>%{Referer}i</code> variable with the <code>CustomLog</code> functionality. This is included in the Combined Log Format.</p>
+			<p>See the <a href="https://httpd.apache.org/docs/current/logs.html">Apache HTTP Server Log Files documentation</a> for more information.</p>
+
+			<h3>Nginx</h3>
+			<p>Nginx by default writes using the Combined Log Format, which includes the value of the Referer header. The log format may be customized, the <code>$http_referer</code> variable in the <ccode>log_format</ccode> directive provides the value of the Referer header.</p>
+			<p>See the <a href="http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format">ngx_http_log_module documentation</a> for more information.</p>
 		</main>
 	</body>
 </html>
