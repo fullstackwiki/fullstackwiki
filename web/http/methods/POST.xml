@@ -45,8 +45,14 @@
 			<h2>Usage in collections</h2>
 			<p>In AtomPub, POST is used for new resource creation. The server fully manages its URI namespace by deciding where to place the new item, so PUT is only used for editing existing resources. See <a href="https://tools.ietf.org/html/rfc5023#section-4.3">AtomPub: Control and Publishing</a>.</p>
 
+			<h2>Idempotent usage</h2>
+			<p>There is no standardized, reliable way to re-issue a POST request if the request failed.</p>
+			<p>As a general principle, servers should not allow two identical POST requests to be made: Some Web browsers may heuristically re-issue POST requests if they don't think the server received the request at all; or some users may accidentally double-click the Submit button. Servers may accept a "nonce" (number used once) or a timestamp field, to distinguish between otherwise identical messages.</p>
+			<!-- When do Web browsers re-issue POST requests? -->
+			<p>For most cases where POST is used, a PUT request can offer the same functionality, by using a client-selected UUID with <code>If-None-Match: *</code>. See <a href="../idempotent.xml">Idempotent Requests</a> for more information.</p>
+
 			<h2>Safe usage</h2>
-			<p>In cases where the method is safe, the server can also consider listening on the REPORT or SEARCH methods, or using a query parameter in a GET request. For more information, see <a href="../query.xml">Queries in HTTP</a>.</p>
+			<p>In cases where the method is safe (does not change the state of the server), the server can also consider accepting the REPORT or SEARCH methods, or using a query parameter in a GET request. For more information, see <a href="../query.xml">Queries in HTTP</a>.</p>
 
 			<h2>Overview table</h2>
 			<dl>
@@ -55,7 +61,7 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-Method-description">Sends the server a payload to be processed by the target resource.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#POST">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content. 4.3.3. POST</a></dd>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#POST">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content &#xA7;4.3.3. POST</a></dd>
 			</dl>
 		</main>
 	</body>

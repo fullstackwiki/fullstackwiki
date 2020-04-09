@@ -47,7 +47,7 @@
 
 			<h2>SEARCH requests</h2>
 			<p>This method is similar to REPORT: you simply upload the query as the request-body. This method is specifically defined to run a query over a set of resources, but it requires a WebDAV multi-status response.</p>
-			<aside><p><a href="https://tools.ietf.org/html/rfc5323#section-2">SEARCH is defined in WebDAV</a>, but is acceptable for general use in HTTP. It requires all responses to be a WebDAV multi-status response. It is possible some clients may try calling it if the server supports it, but this is unlikely to cause harm since it is a safe method. <a href="https://tools.ietf.org/html/draft-snell-search-method-00">An Internet-Draft draft-snell-search-method-00</a> proposes changing this behavior to be more generic, and introduces an Accept-Search response header.</p></aside>
+			<aside><p><a href="https://tools.ietf.org/html/rfc5323#section-2">SEARCH is defined in WebDAV</a>, but is acceptable for general use in HTTP. It requires all responses to be a WebDAV multi-status response. It is possible some clients may try calling it if the server supports it, but this is unlikely to cause harm since it is a safe method. <a href="https://tools.ietf.org/html/draft-snell-search-method-01">An Internet-Draft draft-snell-search-method-00</a> proposes changing this behavior to be more generic, and introduces an Accept-Search response header.</p></aside>
 
 			<h2></h2>
 

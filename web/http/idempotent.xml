@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Idempotent Requests in HTTP</title>
+		<meta name="description" content="A request is idempotent when multiple identical requests have the same effect as one request." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>Idempotent Requests in HTTP</h1>
+			<p>A request is considered <i>idempotent</i> when multiple identical requests have the same effect as one request. This is a desirable property of requests, because clients may re-try any requests that have failed due to a network error.</p>
+			<p>Idempotent methods are specified in <a href="https://tools.ietf.org/html/rfc7231#section-4.2.2">RFC 7231 (HTTP Semantics) &#xA7;4.2.2. Idempotent Methods</a></p>
+
+			<h2>Safe methods</h2>
+			<p>As a logical rule, safe methods (that do not alter server state) are also idempotent:</p>
+			<ul>
+				<li>GET</li>
+				<li>HEAD</li>
+				<li>OPTIONS</li>
+				<li>SEARCH</li>
+				<li>REPORT</li>
+			</ul>
+
+			<h2>PUT</h2>
+			<p>The <a href="methods/PUT.xml">PUT method</a> is considered idempotent because two requests in a row bring the server to the same state as just one request.</p>
+			<p>Using PUT does not, by itself, prevent lost updates: A situation where the second PUT request can overwrite changes made by another user since the first request was made. If you wish to protect against inadvertently overwriting other's changes, see <a href="conditional.xml">Conditional Requests</a>.</p>
+
+			<h2>PUT to UUID</h2>
+			<p>For most cases where <a href="methods/POST.xml">POST</a> is required (where an action is being carried out or a server must create a new resource), APIs may still use PUT to ensure the idempotency of the request. Normally you would make the request to an endpoint:</p>
+			<pre w:space="indent">
+				POST /query HTTP/1.1
+				Content-Type: application/json
+
+				{ "from": "Alice", "to": "Bob", "amount": 22.00 }
+			</pre>
+			<p>The server may instead accept a UUID in the URI, for example <code>/query/{uuid}</code>, which the user-agent fills in with a random value, and specifies <code><a href="headers/If-None-Match.xml">If-None-Match</a>: *</code>:</p>
+			<pre w:space="indent">
+				PUT /query/2F0B31F4-38A2-4065-9EEF-71CC6AC2745F HTTP/1.1
+				If-None-Match: *
+				Content-Type: application/json
+
+				{ "from": "Alice", "to": "Bob", "amount": 22.00 }
+			</pre>
+			<p>The server may otherwise handle the request as a normal POST request, creating resources at other URIs:</p>
+			<pre w:space="indent">
+				HTTP/1.1 303 See Other
+				Location: /transactions/42
+
+			</pre>
+			<p>Subsequent GET requests will return the same response. The transaction resource may then be deleted by the user-agent, or automatically pruned by the server after a period of time.</p>
+			<p>This technique is mostly limited to APIs, since HTML does not support the PUT method, or a randomly generated form target (without scripting).</p>
+
+
+			<h2>Transaction/conditional headers</h2>
+			<p>Some vendors have introduced proprietary solutions, for example Stripe will recognize an <a href="https://stripe.com/docs/api/idempotent_requests">Idempotency-Key</a> header, and not perform a request if a previous request has been made with the same key. User-agents randomly generate a string for the header value, re-trying the request with the same header and payload until the server responds.</p>
+			<aside>
+				<p>There is no machine-readable way to determine if a server will recognize such a header, so standardized support for such a header would involve creating a new method.</p>
+				<p>Servers supporting this method would be required to support a conditional header, for example, <code>If-New-Transaction</code>. Re-requests with the same header value and request payload would return the same result, without further changing the state of the server; this could be served from a cache. The response would specify <code>Vary: If-New-Transaction</code> (for example).</p>
+			</aside>
+
+		</main>
+	</body>
+</html>

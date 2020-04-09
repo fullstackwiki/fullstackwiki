@@ -42,8 +42,8 @@
 				{
 					"recordset": [
 						{"id": 100, "name": "root"},
-						{"id", 1000, "name":"Alice"},
-						{"id", 1001, "name":"Bob"}
+						{"id": 1000, "name":"Alice"},
+						{"id": 1001, "name":"Bob"}
 					]
 				}
 			</pre>
