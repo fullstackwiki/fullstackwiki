@@ -57,9 +57,13 @@
 			<h2>Overview table</h2>
 			<dl>
 				<dt>Name</dt>
-				<dd property="w:HTTP-Header-name">POST</dd>
+				<dd property="w:HTTP-Method-name">POST</dd>
 				<dt>Description</dt>
 				<dd property="w:HTTP-Method-description">Sends the server a payload to be processed by the target resource.</dd>
+				<dt>Safeness</dt>
+				<dd property="w:HTTP-Method-safe">Unsafe</dd>
+				<dt>Conditional fail</dt>
+				<dd property="w:HTTP-Method-conditional"><a href="../status-codes/412.xml">412 Precondition Failed</a></dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#POST">RFC 5789: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content &#xA7;4.3.3. POST</a></dd>
 			</dl>

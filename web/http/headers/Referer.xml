@@ -11,8 +11,8 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Referer</h1>
-			<p>The "Referer" header allows the user agent to specify the URI of the resource where the request-URI of the current request was obtained (i.e. the <i>referring resource</i>).</p>
 			<p>Links on the Web are directional from one document to another. A user following a link on a webpage will generate a request to the link target, and the request will contain a Referer header pointing back to the page where the link was found. This allows websites to understand how pages link to each other, how links from other websites are used, and for fixing broken links.</p>
+			<p>Referer is a misspelling of "Referrer" that happens to save a byte over the wire, see <a href="#history">History</a> for details.</p>
 			<p>The Referer header is typically logged by servers for later analysis.</p>
 
 			<h2>Writing requests (clients)</h2>
@@ -90,7 +90,7 @@
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.referer">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.5.2. Referer</a></dd>
 			</dl>
 
-			<h2>History</h2>
+			<h2 id="history">History</h2>
 			<dl>
 				<dt>1995-03-09</dt>
 				<dd>Roy T. Fielding (editor) clarifies that the spellchecker didn't understand "Referrer" either. [<a href="https://lists.w3.org/Archives/Public/ietf-http-wg-old/1995JanApr/0107.html">http-wg mailing list</a>]</dd>
@@ -98,7 +98,6 @@
 				<dt>1996-05</dt>
 				<dd>"Referer" header appears in <a href="https://tools.ietf.org/html/rfc1945#section-10.13">RFC 1945 (HTTP/1.0)</a></dd>
 			</dl>
-			<p>"Referer" is a misspelling of "Referrer" that happens to save a byte over the wire. <a href=""></a></p>
 
 			<h2>Syntax</h2>
 			<pre type="abnf" w:space="indent">
@@ -114,6 +113,11 @@
 
 			<h2>Implementations</h2>
 
+			<h3>Analyzing HTTP server logs</h3>
+			<ul>
+				<li><a href="https://goaccess.io/">GoAccess</a> is a real-time log analyzer that can run in your terminal or in a web browser. Run <code>goaccess <i>&lt;logfile&gt;</i></code> and follow the on-screen setup.</li>
+			</ul>
+
 			<h3>Apache HTTPD</h3>
 			<p>Apache HTTPD supports logging the referring webpage using the <code>%{Referer}i</code> variable with the <code>CustomLog</code> functionality. This is included in the Combined Log Format.</p>
 			<p>See the <a href="https://httpd.apache.org/docs/current/logs.html">Apache HTTP Server Log Files documentation</a> for more information.</p>
@@ -121,6 +125,7 @@
 			<h3>Nginx</h3>
 			<p>Nginx by default writes using the Combined Log Format, which includes the value of the Referer header. The log format may be customized, the <code>$http_referer</code> variable in the <ccode>log_format</ccode> directive provides the value of the Referer header.</p>
 			<p>See the <a href="http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format">ngx_http_log_module documentation</a> for more information.</p>
+			
 		</main>
 	</body>
 </html>

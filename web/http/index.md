@@ -31,6 +31,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [Creating Resources](modifying-resources.xml)
 * [Clients](client.xml)
 * [Servers](server.xml)
+* [Idempotent requests](idempotent.xml)
 * [Conditional requests](conditional.xml)
 * [Redirecting requests](redirect.xml)
 * [Resumable uploads](resumable-uploads.xml)
@@ -68,6 +69,9 @@ Use HTTP whenever you need to download files from another system on a network, o
 
 ### 1992-06-11
 [HTTP/0.9](https://www.w3.org/DesignIssues/HTTP0.9Summary.html) is described. It only supports GET.
+
+### 1993-03
+[Gopher](https://tools.ietf.org/html/rfc1436) is first published.
 
 ### 1996-05
 [RFC 1945 (HTTP/1.0)](https://tools.ietf.org/html/rfc1945#section-10.13) is published.

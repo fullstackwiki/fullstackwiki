@@ -19,7 +19,7 @@
 
 			<h2>Writing requests (clients)</h2>
 			<p>TRACE may be used for debugging HTTP pipelines through proxies and gateways; is not typically used for day-to-day or automated use. It may be combined with the <a href="../headers/Max-Forwards.xml">Max-Forwards request header</a> to troubleshoot which node in the chain is seeing what request message.</p>
-			<p>HTTP prohibits attaching sensitive information to TRACE requests if that information cannot be disclosed in the response. Clients that must send HTTP messages with ambient authority, that cannot manage this requirement, are better off prohibiting TRACE requests altogether.</p>
+			<p>HTTP prohibits attaching sensitive information to TRACE requests if that information is not supposed to be disclosed in the response. Clients that must send HTTP messages with ambient authority, that cannot manage this requirement, are better off prohibiting TRACE requests altogether.</p>
 			<p>Clients must not send a message body in a TRACE request.</p>
 
 			<h2>Reading requests (intermediaries)</h2>
@@ -30,11 +30,11 @@
 			<h2>Reading requests (origin servers)</h2>
 			<p>If the request contains a request body, return <a href="../status-codes/413.xml">413 (Payload Too Large)</a>.</p>
 			<p>If the request headers contain <code>Max-Forwards: 0</code>, then handle the request as the origin.</p>
-			<p>Otherwise the server should set <code>Content-Type: message/http</code> and write a response body listing the request-line and headers that were received. Servers are allowed to rewrite HTTP headers if the meaning is preserved, so the response can be reconstructed from available HTTP header information if the raw headers are not available in the developent enviornment.</p>
-			<p>As a security precaution for old user agents, servers should return an error for requests containing an <code>Origin</code> header should return <code>400 Client Error</code>, or otherwise deny access to the resource, unless the server can determine the response does not leak any private credentials (for example, the request does not contain any <code>Authorization</code> or <code>Cookie</code> headers).</p>
+			<p>Otherwise the server should set <code>Content-Type: message/http</code> and write a response body listing the request-line and headers that were received. Servers are allowed to rewrite HTTP headers if the meaning is preserved, so the response may be reconstructed from available HTTP header information if the raw headers are not available to the application.</p>
+			<p>As a security precaution for old user agents, servers should return an error for requests containing an <code>Origin</code> header, such as <code>400 Client Error</code>, or otherwise deny access to the resource, unless the server can determine the response does not leak any private credentials (for example, the response does not disclose any <code>Authorization</code> or <code>Cookie</code> headers).</p>
 
-			<h2>Security conscerns</h2>
-			<p>Some user agents allow scripts to make requests with ambient authority, and so are sent with the <code>Authorization</code> and <code>Cookie</code> headers not normally accessible to the calling script. If this request is made using TRACE, these request headers could become accessible. User agents should not add the ability to send requests with ambient authority (requests made by a script should be treated differently than requests made by the user); if they must permit such requests, they must block the ability to send TRACE requests in this context.</p>
+			<h2>Security concerns</h2>
+			<p>Some user agents allow scripts to make requests with ambient authority: The user-agent will attach <code>Authorization</code> and <code>Cookie</code> headers not normally accessible to the calling script. If this request is made using TRACE, these request headers could be sent back and become accessible to the script. User agents should not send requests with ambient authority (since they are not being made on behalf of the user); if they must permit such requests, they must block the ability to send TRACE requests in this context.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
