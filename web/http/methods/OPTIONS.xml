@@ -18,14 +18,14 @@
 			<p>The OPTIONS requests communication options about the target URI.</p>
 			<p>OPTIONS is not often implemented as intended, and is not well defined. Typically resources options are communicated through HTTP headers, eliminating the need for an additional OPTIONS request. Additionally, no media type has been defined for OPTIONS responses, making automated use of the method difficult.</p>
 			<p>"Communication options" is not well defined, but could include things like content negotiation configuration, media types, metadata, alternate versions of a resource, supported encodings, required permissions, and so forth.</p>
-			<p>wThe most common use of an OPTIONS request in the wild is a "CORS pre-flight request," typically by Web browsers when a webpage wants to make an HTTP request to another origin.</p>
+			<p>The most common use of an OPTIONS request in the wild is a "CORS pre-flight request," typically by Web browsers when a webpage wants to make an HTTP request to another origin.</p>
 
 			<h2>Writing requests (clients)</h2>
-			<p>There isn't currently a well-known use for OPTIONS. Clients that know an origin server returns useful information in an OPTIONS response may wish to make such a request.</p>
+			<p>There isn't currently a well-known use for OPTIONS as it is defined. Clients will typically only make an OPTIONS request when there is a specific application that requires it.</p>
 			<p>Web browsers may make an OPTIONS request to fill CORS requirements. However, this is a workaround to protect a user's Web browser from making malicious requests to HTTP servers inside their private network; it does not secure HTTP servers in general, and its use is only applicable to HTTP requests made from scripts written by untrusted parties.</p>
 
 			<h2>Reading requests (intermediaries)</h2>
-			<p>If the request headers contain <code>Max-Forwards: 0</code>, then handle the request as the origin; in this case, the representation options will be information describing the message handling configuation of this server.</p>
+			<p>If the request headers contain <code>Max-Forwards: 0</code>, then handle the request as the origin; in this case, the representation options will be information describing the message handling configuration of this server.</p>
 			<p>Otherwise the HTTP message should be forwarded as usual.</p>
 
 			<h2>Reading requests (servers)</h2>
@@ -38,7 +38,7 @@
 			</pre>
 
 			<h3>Other requests</h3>
-			<p>Servers wish to implement OPTIONS as intended may wish to return a document containing a list of resources that could be negotiated, and their negotiating metadata. For example:</p>
+			<p>Servers that wish to implement OPTIONS as intended may wish to return a document containing a list of resources that could be negotiated, and their negotiating metadata. For example:</p>
 			<pre type="application/link-format" w:space="indent"><![CDATA[
 				<http://www.example.com/index.txt>;type="text/plain"
 				<http://www.example.com/index.html>;type="application/xhtml+xml"

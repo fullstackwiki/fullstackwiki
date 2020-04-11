@@ -15,11 +15,13 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>303 See Other</h1>
-			<p>The 303 See Other HTTP status code indicates the result of the operation is available at another location. The client should interpret the request as completed, and then make a new request to another resource identified by the <a href="../headers/Location.xml">Location header</a>. The new request must be made with GET (or HEAD)</p>
-			<aside><p>This status code should typically be treated as a 2xx status, since it conveys the request was handled by the server.</p></aside>
+			<p>The 303 (See Other) HTTP status code indicates that the result of the operation is available at another location. The client should interpret the request as completed, then make a new request to the resource identified by the <a href="../headers/Location.xml">Location header</a>. The new request is made with GET (or HEAD).</p>
+			<p>See <a href="../redirect.xml">HTTP Redirection</a> for more information on redirects.</p>
+			<aside><p>This status code may be treated like a 2xx status, since it conveys the request was handled by the server.</p></aside>
 
 			<h2>Writing responses (servers)</h2>
-			<p>Servers will typically only produce <code>303 See Other</code> in response to POST requests, so that after a browser has submitted from a form, the browser can make a safe request to show the user the result; whereas if the resource generated a response to the POST request directly, the browser would not be able to re-request the page that was returned.</p>
+			<p>Servers should typically produce <code>303 See Other</code> in response to POST requests, so that after a browser has submitted a form, the browser can make a subsequent safe request with the result. If the server were to write a response to POST directly, the user would be asked to re-submit the form if they refreshed the page or navigated back in history. Using a 303 redirect avoids this. This is called a <i>POST-redirect-GET</i> flow.</p>
+			<p>If instead the resource has moved and the client needs to re-make the same request (with the same method and headers) at a different URI, use <a href="307.xml">307 (Temporary Redirect)</a> or <a href="308.xml">308 (Permanent Redirect)</a>.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p>A <code>303 See Other</code> will be accompanied by a <a href="../headers/Location.xml">Location header</a> that indicates the next page that should be loaded.</p>
@@ -41,6 +43,10 @@
 			<pre type="message/http" w:space="indent">
 				HTTP/1.1 303 See Other
 			</pre>
+
+			<h2>Implementations</h2>
+			<h3>Web browsers</h3>
+			<p>Most Web browsers will not save a page returning 303 in the history stack; servers may take advantage of this when handling POST requests to ensure that queries will not be re-submitted by users navigating backwards. This is called a Post-Redirect-Get workflow.</p>
 
 			<h2>See also</h2>
 			<ul>

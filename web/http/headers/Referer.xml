@@ -63,20 +63,21 @@
 			<p>Referrer Policy is supported in <a href="https://caniuse.com/#feat=mdn-html_elements_a_referrerpolicy">most Web browsers since 2018</a>.</p>
 
 			<h3>De-referers</h3>
-			<p>An alternate, older mechanism of hiding the referring webpage from link targets is by linking to a redirecting webpage. The ultimate target will see the URL of the redirecting webpage, and not the .</p>
-			<p>Suppose a user clicks a link on <code>http://example.com/faq</code>, generating this request:</p>
+			<p>An alternate, older mechanism of hiding the referring webpage from link targets is by linking to a webpage that itself redirects to the final destination. That server will see a Referer header for the page that has performed the redirection, instead of the page with the link.</p>
+			<p>Suppose a user is on <code>http://example.com/faq</code> and clicks a link, generating this request:</p>
 			<pre type="message/http" w:space="indent">
 				GET http://example.com/redirect?target=http://example.net/ HTTP/1.1
 				Referer: http://example.com/faq
 				
 			</pre>
-			<p>This page will issue a redirect using a <a href="../status-codes/303.xml">303 See Other</a> redirect, which the client will follow with this request:</p>
+			<p>This page will issue a redirect using a <a href="../status-codes/303.xml">303 See Other</a> redirect. The final destination server will only see this request:</p>
 			<pre type="message/http" w:space="indent">
 				GET http://example.net/ HTTP/1.1
 				Referer: http://example.com/redirect?target=http://example.net/
 				
 			</pre>
-			<p>The original page <code>http://example.com/faq</code> is now hidden from the target page at example.net.</p>
+			<p>The server can see that the traffic came from <code>example.com</code>, but the specific page <code>http://example.com/faq</code> is now omitted.</p>
+			<p>This is a form of <a href="../redirect.xml#open-redirect">open redirect</a>, and should be avoided in favor of Referrer Policy if possible.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

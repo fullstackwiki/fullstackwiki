@@ -11,7 +11,7 @@
 
 <h2>Intro</h2>
 
-<p>OAuth is a framework for granting third party Web services access to your resources. For example, allowing Twitter to make Facebook posts on your behalf.</p>
+<p>OAuth is a framework for granting third party Web services access to your resources. For example, allowing Twitter to make Facebook posts on your behalf. It is used as an alternative to providing 3rd party services the user's login credentials directly.</p>
 
 <h2>Authenticating to Web Services</h2>
 

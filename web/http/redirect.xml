@@ -20,8 +20,7 @@
 			<p>There's three broad classes of redirects, where a server will want the client to make a new HTTP request:</p>
 
 			<h3>303 See Other</h3>
-			<p><a href="status-codes/303.xml">303 (See Other)</a> is used when the request has been fully processed, and the results of the operation are available at another URI. This is typically used for redirecting Web browsers that have submitted a POST request. This is called a <i>POST/redirect/GET flow</i>. Web browsers are able to handle displaying the response of a POST request, however if the client navigates backwards to the page, the browser may ask the user if they wish to re-submit the request. For most correct usage of the POST method, this is not what the user will want to do.</p>
-			<p>As an alternative to placing the result of a POST request in the response, it can be made available at another URI, which the Web browser will then request with a GET request. Since the POST request is dropped from the history, this typically avoids the prompt to re-submit the request.</p>
+			<p><a href="status-codes/303.xml">303 (See Other)</a> is used when the request has been fully processed, and the results of the operation are available at another URI. This is typically used for redirecting Web browsers that have submitted a POST request. This is called a <i>POST/redirect/GET flow</i>. Using this flow ensures that the page being displayed to the user is not associated with a POST request, ensuring that refreshing the page or navigating backwards does not prompt the user to re-submit the form.</p>
 
 			<h3>307 Temporary Redirect</h3>
 			<p><a href="status-codes/307.xml">307 (Temporary Redirect)</a> is used when the server would like the client to re-issue the request at a new URI, but for some reason does not want the client to rewrite bookmarks.</p>
@@ -40,16 +39,18 @@
 
 			<h3>Re-requests</h3>
 			<p>Unless otherwise specified by the application or user, the HTTP library should transparently handle the redirect, discarding the contents of the redirecting response (if any), and re-making the request at the redirect target, providing the contents of the redirect target (if it is not itself a redirect).</p>
-			<p>If the redirect target itself is a redirect, redirect logic should be applied recursively until either a maximum number of redirects have been applied (typically 10), or until a page is re-requested twice with the same method (which indicates a redirect loop). These cases should result in a client-emitted error describing a problem with the server.</p>
+			<p>If the target of the redirect is itself a redirect, redirect logic should be applied recursively until either a maximum number of redirects have been applied (typically 10), or until a page is re-requested twice with the same method (which indicates a redirect loop). These cases should result in a client-emitted error describing a problem with the server.</p>
 
 			<h3>History stack</h3>
-			<p>Users typically use the history stack to re-view the same content they had seen previously. So unless otherwise specified, the client's history stack should store the redirected location <i>in place of</i> the requested one.</p>
+			<p>Users typically use the history stack to re-view the same content they had seen previously. So unless otherwise specified, the user's history stack should store the redirected location <i>in place of</i> the requested one.</p>
 
 			<h3>Permanent redirect handling</h3>
 			<p>Libraries should allow applications to specify a <i>permanent redirect handler</i> which notifies the application that a URI has been renamed. Libraries emitting this event should make available the requested, old URI; the new URI to update to; and the response body that may provide information on why the permanent redirect is being issued.</p>
-			<p>Applications receiving this event should log the event, then modify old URIs to point to the new one.</p>
+			<p>Applications receiving this event should log it, then modify old URIs to point to the new one.</p>
 
-			<h2>Open Redirects</h2>
+			<!-- TODO: what if two pages get merged together? Is 307 the best, or is 303 better? -->
+
+			<h2 id="open-redirects">Open Redirects</h2>
 			<p>An open redirect is a case where a Web server accepts an option for where to redirect requests to, including off-site. For example, this PHP file will redirect the user to a target as specified in the URL parameters:</p>
 			<pre>&lt;?php
 header('HTTP/ 303 See Other');
