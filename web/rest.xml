@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/" lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>REST (Representational State Transfer)</title>
+		<meta name="description" content="REST (Representational State Transfer) is the networked application architecture that underlies the Web" />
+	</head>
+	<body>
+		<main>
+			<h1>REST (Representational State Transfer)</h1>
+			<p>REST (Representational State Transfer) is a networked, client-server application architecture that allows operations on resources. It is the formal definition that underlies the World Wide Web and influences the design of Web technology including HTTP, the URI, and HTML.</p>
+			<p>It is one of several networked application architectures defined in a <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Ph.D. dissertation by Roy T. Fielding</a>, an editor on the HTTP specification.</p>
+			<p>REST is often used to describe a property of API designs, this is called a RESTful API. REST more accurately describes how Web browsers and Web servers work together.</p>
+
+			<h2>Properties of a RESTful Application</h2>
+			<h3>Client-Server</h3>
+			<h3>Stateless</h3>
+			<h3>Cache</h3>
+			<h3>Uniform Interface</h3>
+			<h3>Layered System</h3>
+			<h3>Code-On-Demand</h3>
+			<h3>Additional constraints</h3>
+		</main>
+	</body>
+</html>

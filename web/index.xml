@@ -16,6 +16,7 @@
 				<li><a href="dom/index.xml">DOM</a></li>
 				<li><a href="ecmascript/index.xml">ECMAScript/JavaScript</a></li>
 				<li><a href="json-schema/index.xml">JSON Schema</a></li>
+				<li><a href="json-schema/index.xml">REST (REpresentational State Transfer)</a></li>
 			</ul>
 		</main>
 	</body>
