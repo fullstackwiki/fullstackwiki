@@ -24,7 +24,7 @@ var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
 var RouteSitemapXML = require( "./lib/RouteSitemapXML.js" ).RouteSitemapXML;
 var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
 
-const docroot = __dirname + '/web';
+const docroot = __dirname + '/htdocs';
 
 var options = new Application;
 options.fixedScheme = 'http';
