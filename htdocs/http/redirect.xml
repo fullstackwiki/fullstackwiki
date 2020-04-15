@@ -12,6 +12,7 @@
 			<p>There are several different uses for redirection:</p>
 			<ul>
 				<li>Signaling that a domain name or path has changed</li>
+				<li>Pointing a client to the result of an operation</li>
 				<li>URL shortening</li>
 				<li>Privacy protection relating to use of the <a href="headers/Referer.xml">Referer header</a></li>
 			</ul>

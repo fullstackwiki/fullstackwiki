@@ -2,16 +2,20 @@
 
 HTTP (Hypertext Transfer Protocol) is an application-level Internet protocol for transferring and manipulating representations of resources, such as webpages. HTTP supports many features, including retrieving and manipulating resources, caching, content negotiation, range (subset) requests, link relationships, authentication, and more.
 
-Use HTTP whenever you need to download files from another system on a network, or let clients manipulate the documents, settings, or devices on the network.
 
 ## Uses for HTTP
 
+Use HTTP whenever you need to download files from another system on a network, or let clients manipulate the documents, settings, or devices on the network. It supports:
+
 * Downloading & uploading documents
 * Making changes to documents
-* Changing the state of a resource
+* Changing the state of a device
 * Authenticating users making requests
 * Checking if a document has changed
 * Publishing link relationships between resources
+* Segmented downloads
+* Caching with private and shared caches
+
 
 ## Table of Contents
 
@@ -23,12 +27,9 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [HTTP Authentication Schemes](authschemes/index.xml)
 * [HTTP Preferences](preferences/index.xml)
 
+
 ### Articles
 
-* [Requesting Resources](retreiving-resources.xml)
-* [Modifying Resources](modifying-resources.xml)
-* [Listing Resources](modifying-resources.xml)
-* [Creating Resources](modifying-resources.xml)
 * [Clients](client.xml)
 * [Servers](server.xml)
 * [Idempotent requests](idempotent.xml)
