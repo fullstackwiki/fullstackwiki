@@ -32,6 +32,7 @@
 			<p>If the requested action would have no effect on the current state of the resource, the server may choose to return success, even if there would otherwise be a comparison mismatch. For example, when handling a PUT request identical to the current document, or a PATCH request that is an effective no-op, the server may choose to respond with 200 OK instead of 412 Precondition Failed.</p>
 			<p>If the value is <code>*</code> and the resource does not exist, return <a href="../status-codes/412.xml">412 (Precondition Failed)</a>.</p>
 			<p>If the value is the ETag form, use the strong comparison function to compare each ETag to the resource's current ETag. If none of the comparisons match, return <a href="../status-codes/412.xml">412 (Precondition Failed)</a>.</p>
+			<p>If the request is <i>missing</i> a precondition header and the server requires one to protect against lost updates, see <a href="../status-codes/428.xml">428 (Precondition Required)</a>.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

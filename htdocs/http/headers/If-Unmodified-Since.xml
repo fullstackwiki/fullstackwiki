@@ -29,6 +29,7 @@
 			<p>If the client also specified the <a href="If-Match.xml">If-Match</a> header, ignore this header and follow that one instead.</p>
 			<p>If the request method is not a valid HTTP-date, ignore this header.</p>
 			<p>If the header value is a date earlier or equal to the <code>Last-Modified</code> date of the selected representation, then return <a href="../status-codes/412.xml">412 (Precondition Failed).</a> <code>304 (Not Modified)</code> is not applicable because this header is not used in caching.</p>
+			<p>If the request is <i>missing</i> a precondition header and the server requires one to protect against lost updates, see <a href="../status-codes/428.xml">428 (Precondition Required)</a>.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
