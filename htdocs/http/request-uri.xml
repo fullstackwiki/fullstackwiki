@@ -5,7 +5,7 @@
 		<title>HTTP Effective Request URI</title>
 		<meta name="description" content="Calculation and proper handling of the effective Request-URI" />
 		<link rel="up" href="index.xml" />
-		<link rel="stylesheet" href="/style/highlight.js/solarized-light.css" />
+		<link rel="stylesheet" href="/+/highlight.js/solarized-light.css" />
 	</head>
 	<body>
 		<main>

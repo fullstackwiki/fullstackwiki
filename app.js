@@ -121,24 +121,24 @@ var routeRecent = new RouteApplyTheme('http://fullstack.wiki/recent', indexRDFa.
 options.addRoute(routeRecent);
 
 // Codemirror dependencies
-// routes.addTemplate('http://fullstack.wiki/style/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
-// routes.addTemplate('http://fullstack.wiki/style/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
-// routes.addTemplate('http://fullstack.wiki/style/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
+// routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
+// routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
+// routes.addTemplate('http://fullstack.wiki/+/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
 
 // Render files
-// routes.addTemplate('http://fullstack.wiki/style/app.js', {}, RouteBrowserify(docroot+'/style/main.js', "App", 'application/ecmascript') );
+// routes.addTemplate('http://fullstack.wiki/+/app.js', {}, RouteBrowserify(docroot+'/+/main.js', "App", 'application/ecmascript') );
 
 var routeScript = RouteStaticFile({
-	uriTemplate: 'http://fullstack.wiki/style{/path*}.js',
-	fileroot: docroot+'/style',
+	uriTemplate: 'http://fullstack.wiki/+{/path*}.js',
+	fileroot: docroot+'/+',
 	pathTemplate: "{/path*}.js",
 	contentType: 'application/ecmascript',
 });
 options.addRoute(routeScript);
 
 var routeStyle = RouteStaticFile({
-	uriTemplate: 'http://fullstack.wiki/style{/path*}.css',
-	fileroot: docroot+'/style',
+	uriTemplate: 'http://fullstack.wiki/+{/path*}.css',
+	fileroot: docroot+'/+',
 	pathTemplate: "{/path*}.css",
 	contentType: 'text/css',
 });

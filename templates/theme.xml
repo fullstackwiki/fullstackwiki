@@ -5,7 +5,7 @@
 		<title>${eTitleString} | Fullstack.wiki</title>
 		${links}
 		<!-- the search runner will use this id= to get the src attribute -->
-		<script id="search-runner-script" type="application/ecmascript" src="/style/search-runner.js"></script>
+		<script id="search-runner-script" type="application/ecmascript" src="/+/search-runner.js"></script>
 	</head>
 	<body class="pagewidth">
 		<div class="site-header">
