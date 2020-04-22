@@ -18,7 +18,7 @@
 			<p>The 206 Partial Content status code indicates that the request contains only the subsets of the representation requested by the client in the <a href="../headers/Range.xml">Range request-header</a>.</p>
 
 			<h2>Writing responses (servers)</h2>
-			<p></p>
+			<p>The 206 (Partial Content) response must be used any time the <a href="../headers/Range.xml">Range request-header</a> is honored. See that page for more information.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p><code>206 Partial Content</code> indicates the operation resulted in the creation of a new resource.</p>

@@ -21,6 +21,7 @@
 			<h2>Reading responses (clients)</h2>
 			<p>The Content-Range header may appear either in the headers of a <a href="../status-codes/206.xml">206 (Partial Content)</a> response, the entire response body is the partial response.</p>
 			<p>If the 206 response lacks a Content-Range header, then the body is a document that includes multiple ranges. When multiple ranges are returned, note that they may sometimes be out-of-order from the requested order. Clients must look at the Content-Range field of each part to determine what to do with that part.</p>
+			<p>Clients that issue a Range request must understand the Content-Range header; this includes caches that are forwarding requests from an upstream client. If caches do not want to implement partial response logic, they may simply not cache <code>206</code> responses from the server.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -29,7 +30,7 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-Header-description">Indicates the offset of the returned part from the entire representation.</dd>
 				<dt>Direction</dt>
-				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.content-range">RFC 7233: HTTP Range Requests &#xA7;4.2. Content-Range</a></dd>
 			</dl>

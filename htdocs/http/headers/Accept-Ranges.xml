@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Accept-Ranges</title>
+		<meta name="description" content="The Accept-Ranges HTTP response-header indicates that the resource supports Range requests." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/http/headers/Accept-Ranges" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Accept-Ranges</h1>
+			<p>The Accept-Ranges header indicates that the resource supports <a href="Range.xml">Range</a> requests; the values specify which range units are supported when making a Range request.</p>
+			<p>The special value <code>none</code> indicates the resource does not support Range requests.</p>
+
+			<h2>Writing requests (clients)</h2>
+			<p>Clients use the Accept-Ranges header to indicate the media type responses the user is capable of reading, and order of preference. This should be configurable by the user, either directly, or read from a system setting; if no preference is known, it is better to omit this header.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p></p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Accept-Ranges</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Indicates that the resource supports Range requests.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.accept-ranges">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.5. Accept-Ranges</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre class="abnf-definition" w:space="indent">
+				Accept-Ranges     = acceptable-ranges
+				acceptable-ranges = 1#range-unit / "none"
+			</pre>
+
+			<h2>Examples</h2>
+			<p></p>
+			<pre>Accept-Ranges: da, en-gb;q=0.8, en;q=0.7</pre>
+
+			<h2>Implementations</h2>
+			<h3>Node.js</h3>
+			<ul>
+				<li>accept</li>
+				<li>negotiator</li>
+			</ul>
+		</main>
+	</body>
+</html>

@@ -15,7 +15,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>428 Precondition Required</h1>
-			<p>The 428 Precondition Required HTTP status code indicates request was not filled, and must be re-issued with a conditional request header.</p>
+			<p>The 428 Precondition Required HTTP status code indicates request was not filled, and must be re-issued with a <a href="../conditional.xml">conditional request header</a>.</p>
 
 			<h2>Writing responses (origin servers)</h2>
 			<p>Serers may respond with <code>428 Precondition Required</code> at the time conditional headers would normally be tested, and if the server is processing an unsafe request, and expects conditional headers for the purpose of avoiding a "lost update" situation.</p>

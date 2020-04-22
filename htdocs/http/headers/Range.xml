@@ -21,6 +21,8 @@
 			<h2>Usage in requests</h2>
 
 			<h3>Writing requests (clients)</h3>
+			<p>Clients may issue Range requests for a variety of reasons. They may need to seek to a specific offset in a file, for example when streaming media, or accessing a large database file.</p>
+			<p>The <a href="Accept-Ranges.xml">Accept-Ranges response header</a> can indicate if the server supports Range requests or not; this can be used to avoid making a Range request in cases where the client is uninterested in downloading the entire document if the server does not support Range requests, which is indicated with <code>Accept-Ranges: none</code>. Range requests are frequently supported even in its absence, and clients may still optimistically try a Range request (the header will be ignored if Range requests are not supported).</p>
 			<p>The Range header is only meaningful for GET. Servers may ignore the Range header, and are supposed to ignore it for methods besides GET.</p>
 			<p>A server has honored the Range header if it sends back a <a href="../status-codes/206.xml">206 (Partial Content)</a> response. If the response is any other status code, then the request for a Range was ignored.</p>
 			<p>If the client asked for a single range, or if server is only willing to fill one of the ranges, the response will include a <a href="Content-Range.xml">Content-Range response header</a> that indicates the offset of the enclosed body from the entire representation.</p>
@@ -36,7 +38,6 @@
 			<p>If the request has an <a href="If-Range.xml">If-Range</a> header, then evaluation of this header becomes conditional on the outcome of processing If-Range. If the condition evaluates false, then ignore this header and prepare a full response normally. See that page for more information.</p>
 			<p>Servers are not required to implement Range headers, especially for dynamic content where the entire response would have to be buffered in memory. In this case, simply ignore the header and continue processing normally.</p>
 			<p>If the request does not contain an If-Range header, or if the If-Range condition evaluates true, then the server may respond with a Partial Content response. <a href="https://httpwg.org/specs/rfc7233.html#header.range">See the HTTP Range Request specification for details</a>.</p>
-			<p>If the </p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
