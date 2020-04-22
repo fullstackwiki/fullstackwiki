@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>If-Range</title>
+		<meta name="description" content="The If-Range HTTP header lists makes the Range header conditional on the document being unmodified since the specified revision." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/If-Range" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>If-Range</h1>
+			<p>The "If-Range" header field in a request indicates that the <a href="Range.xml">Range</a> header should only be considered if the document has not been modified since the specified Etag or Last-Modified date.</p>
+			<p>It is used when <a href="../resumable-downloads.xml">resuming downloads</a>, where the user-agent has a portion of a document, and wants the rest. In the event that the server's copy of the download has changed, this header asks the server to respond with the entire document.</p>
+			<p>By using If-Range instead of <a href="If-Match.xml">If-Match</a>, clients can avoid issuing a second request in response to 304 (Not Modified)</p>
+
+			<h2>Usage in requests</h2>
+
+			<h3>Writing requests (clients)</h3>
+			<p>Use the If-Range header in situations where a user-agent has a fraction of a download, and is making a request for additional parts. For example, if a user has paused a download, then resumes it. The resumed download will be a Range request, and should include If-range to ensure the download contents have not changed.</p>
+			<p>The If-Range header must accompany a <a href="Range.xml">Range request-header</a>, clients must not send an If-Range header outside of a Range request.</p>
+			<p>For details on using the If-Range header in making a request, see <a href="../resumable-downloads.xml">Resumable Downloads with HTTP Range</a>.</p>
+
+			<h3>Reading requests (servers)</h3>
+			<p>Requests with If-Range must be accompanied by a <a href="Range.xml">Range header</a>; if the request is missing it, the server may ignore If-Range, or may return <a href="../status-codes/400.xml">400 (Client Error)</a> to let the client know it's possibly trying to do something that doesn't make sense.</p>
+			<p>To determine which format the value is in, you only need to examine the first three characters:</p>
+			<p>If the If-Range value begins with <code>W/"</code> (case-sensitive) or <code>"</code>, then the value is an ETag; and should be processed similar to <a href="If-Match.xml">If-Match</a>.</p>
+			<p>Values that begin with three characters of the day of the week, <code>/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)/</code> (case-sensitive), are HTTP dates, and should be processed similar to <a href="If-Unmodified-Since.xml">If-Unmodified-Since</a>.</p>
+			<p>If the value could not be parsed, then treat it like a mismatch and return the full document, or return <a href="../status-codes/400.xml">400 (Client Error)</a>; since ignoring If-Match but processing Match could possibly corrupt the client's reassembled document.</p>
+			<p>If the condition tests true, then process the <a href="Range.xml">Range header</a> normally. If the test fails, then the document on the server has been changed since the client's copy, and so the Range header must be ignored; the entire document is sent in response.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">If-Range</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Makes the Range header conditional on the document being unmodified since the specified revision.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.if-range">RFC 7233: HTTP Range Requests &#xA7;3.2. If-Range</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				If-Range = entity-tag / HTTP-date
+			</pre>
+
+			<h3>Implementations</h3>
+			<h2></h2>
+
+		</main>
+	</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Range</title>
+		<meta name="description" content="The Range HTTP header requests a specified subset of the representation." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Range" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Range</h1>
+			<p>The "Range" header field requests only one or more subranges of the selected representation data, rather than the entire selected representation. It is only meaningful in a GET request. Requests that include a Range header are called "Range requests."</p>
+			<p>Range requests are analogous to a seek operation on the filesystem; they are typically issued when skipping to certain time in a video or audio file; or when <a href="../resumable-downloads.xml">resuming a download</a>.</p>
+
+			<h2>Usage in requests</h2>
+
+			<h3>Writing requests (clients)</h3>
+			<p>The Range header is only meaningful for GET. Servers may ignore the Range header, and are supposed to ignore it for methods besides GET.</p>
+			<p>A server has honored the Range header if it sends back a <a href="../status-codes/206.xml">206 (Partial Content)</a> response. If the response is any other status code, then the request for a Range was ignored.</p>
+			<p>If the client asked for a single range, or if server is only willing to fill one of the ranges, the response will include a <a href="Content-Range.xml">Content-Range response header</a> that indicates the offset of the enclosed body from the entire representation.</p>
+			<p>If the client asked for multiple ranges, the server will send back a <code>multipart/byteranges</code> response. You must parse the <a href="Content-Range.xml">Content-Range response header</a> in each part, since the ordering of the parts is allowed to mismatch and recombine the requested order, or not include every requested part.</p>
+			<p>Servers will typically respond to most Range requests in the same order. However, servers that generate a response as a stream may reorder Range parts in sequential order, so they do not have to buffer an entire response in memory or on disk.</p>
+			<aside>
+				<p>If you have a situation where the response order is important, please add it here.</p>
+			</aside>
+
+			<h3>Reading requests (servers)</h3>
+			<p>If the request is not GET, ignore the header.</p>
+			<aside><p>There's probably no good reason to make a Range request with a HEAD request. Using it for any other method is just asking for trouble.</p></aside>
+			<p>If the request has an <a href="If-Range.xml">If-Range</a> header, then evaluation of this header becomes conditional on the outcome of processing If-Range. If the condition evaluates false, then ignore this header and prepare a full response normally. See that page for more information.</p>
+			<p>Servers are not required to implement Range headers, especially for dynamic content where the entire response would have to be buffered in memory. In this case, simply ignore the header and continue processing normally.</p>
+			<p>If the request does not contain an If-Range header, or if the If-Range condition evaluates true, then the server may respond with a Partial Content response. <a href="https://httpwg.org/specs/rfc7233.html#header.range">See the HTTP Range Request specification for details</a>.</p>
+			<p>If the </p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Range</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies a subset of the representation to return in the response, instead of the entire document.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Request</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.range">RFC 7233: HTTP Range Requests &#xA7;3.1. Range</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Range = byte-ranges-specifier / other-ranges-specifier
+				other-ranges-specifier = other-range-unit "=" other-range-set
+				other-range-set = 1*VCHAR
+			</pre>
+			<p>Both the lower and upper indexes are inclusive; so there is no way to specify a zero-length range.</p>
+
+			<h3>"other-content-range"</h3>
+			<p>The ABNF suggests that it is possible to use units besides bytes. This is intended for future support of systems that might not natively use bytes, or perhaps documents with fixed-size multibyte characters (e.g. UTF-32). Some people have pointed out it is feasible to use this with other invented bytes, for example to do pagination.</p>
+			<p>In all cases, clients must be able to reconstruct the exact same document, byte-for-byte. This makes it difficult to use for pagination, depending on the syntax.</p>
+			<p>For example in JSON, array items must be joined with a comma, but cannot end with a comma. A hypothetical Range request for the first item of a JSON array (e.g. <code>Range: item 0-0</code>) would have to include the array-opening bracket, and a trailing comma (if the next item does not include a leading comma); which is invalid JSON. Such a solution would only make sense with streaming JSON parser that doesn't need the entire document to produce useful results.</p>
+
+		</main>
+	</body>
+</html>

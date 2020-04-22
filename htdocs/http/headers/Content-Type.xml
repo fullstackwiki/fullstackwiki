@@ -28,7 +28,7 @@
 			<h2>Reading responses (clients)</h2>
 			<p>The Content-Type header is used to determine how to parse the final document of bytes into useful data. Each type (top type and subtype, without parameters) is described by a single specification that specifies how to read data out of the document, and what kind of data is available.</p>
 			<p>Use a parser to read the media type; top-level types, subtypes, and parameter names are all case-insensitive. Keep a map of normalized media types to parsers; then normalize the top-level and subtype, and lookup the normalized string in the parser map.</p>
-			<p>This value may be influeuenced by the <a href="Accept.xml">Accept header</a>; if this is the case, the server will usually send <code>Vary: Accept</code> in the response.</p>
+			<p>This value may be influenced by the <a href="Accept.xml">Accept header</a>; if this is the case, the server will usually send <code>Vary: Accept</code> in the response.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

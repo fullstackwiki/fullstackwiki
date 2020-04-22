@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Content-Range</title>
+		<meta name="description" content="The Content-Range HTTP header indicates the offset of the returned part from the entire representation" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Content-Range" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Content-Range</h1>
+			<p>The Content-Range header indicates the which bytes are part of the response part, out of the entire selected representation. It is used in response to a <a href="Range.xml">Range request</a>.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>The Content-Range header is only meaningful in an <a href="../status-codes/206.xml">206 (Partial Content)</a> response.</p>
+			<p>The Content-Range header is only used in the headers for the message body that is the partial content. For responses with a single range, it will be found in the HTTP message headers. For responses with multiple parts, it will be placed inside the <code>multipart/byteranges</code> document, in the message headers for each part.</p>
+			<p>See the HTTP Range Requests specification for details.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>The Content-Range header may appear either in the headers of a <a href="../status-codes/206.xml">206 (Partial Content)</a> response, the entire response body is the partial response.</p>
+			<p>If the 206 response lacks a Content-Range header, then the body is a document that includes multiple ranges. When multiple ranges are returned, note that they may sometimes be out-of-order from the requested order. Clients must look at the Content-Range field of each part to determine what to do with that part.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Content-Range</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Indicates the offset of the returned part from the entire representation.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Both</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.content-range">RFC 7233: HTTP Range Requests &#xA7;4.2. Content-Range</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<!-- TODO: Link to media type page -->
+			<pre type="abnf" w:space="indent">
+				Content-Range       = byte-content-range / other-content-range
+					
+				byte-content-range  = bytes-unit SP ( byte-range-resp / unsatisfied-range )
+
+				byte-range-resp     = byte-range "/" ( complete-length / "*" )
+				byte-range          = first-byte-pos "-" last-byte-pos
+				unsatisfied-range   = "*/" complete-length
+					
+				complete-length     = 1*DIGIT
+
+				other-content-range = other-range-unit SP other-range-resp
+				other-range-resp    = *CHAR
+			</pre>
+
+			<h3>Example</h3>
+			<p>In this example, the complete length of the selected representation is 1234 bytes, but the response omits the first 42 bytes (i.e. bytes 0 through 41 inclusive).</p>
+			<pre type="message/http">Content-Range: bytes 42-1233/1234</pre>
+
+			<p>In this response, the complete length of the selected representation is unknown:</p>
+			<pre type="message/http">Content-Range: bytes 42-1233/*</pre>
+		</main>
+	</body>
+</html>

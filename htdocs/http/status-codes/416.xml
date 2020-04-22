@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>416 Range Not Satisfiable</title>
+		<meta name="description" content="The 416 (Range Not Satisfiable) HTTP status code indicates an unacceptable Range header." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/416" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>416 Range Not Satisfiable</h1>
+			<p>The 416 Range Not Satisfiable status code indicates the client made a request with a Content-Type or Content-Encoding that is unknown or invalid for the resource.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>A request for a range is not satisfiable when the requested starting offset is past the end of the document. If the client has requested multiple ranges, the ranges not satisfiable may simply be ignored if the server can satisfy at least one range. If all of the ranges are not satisfiable, or if the client's only requested range is not satisfiable, the server may return <code>416 Range Not Satisfiable</code>.</p>
+			<p>Instead of producing an error, servers are allowed to simply ignore the Range request, and handle the GET request normally.</p>
+			<p>Emitting an error is preferable for situations where the document is long, and the client may not be interested in downloading the entire thing.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Given a 416 (Range Not Satisfiable) response, a client made a Range request for bytes that are not within the requested document. This may happen because the file changed on the server since the previous request; consider using <a href="../headers/If-Range.xml">If-Range</a> to avoid this. Clients should clear their cache of any resources for the request-URI; and retry the download for the document once. If the error persists, manual intervention may be needed by the user and/or server operator.</p>
+			<p>Since Range requests are optional to support, servers may also simply ignore invalid Range requests, and treat them normally.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">416</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">416 Range Not Satisfiable</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The requested Range is not acceptable.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#status.416">RFC 7233: HTTP Range Requests &#xA7;4.4. 416 Range Not Satisfiable</a></dd>
+			</dl>
+		</main>
+	</body>
+</html>

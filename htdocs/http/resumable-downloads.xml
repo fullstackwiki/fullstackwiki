@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Resumable Downloads with HTTP Range</title>
+		<meta name="description" content="Different ways to break apart a single HTTP upload into multiple parts." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>HTTP resumable downloads</h1>
+			<p><i>Also called Range requests, partial downloads, or partial content requests.</i></p>
+			<p>HTTP has a standard mechanism for being able to stop download of a file, and resume the download in a separate request. This is performed with a <i>Range request</i>.</p>
+			<p>This technique cannot be mixed with uploads; for implementing resumable uploads, see <a href="resumable-uploads.xml">HTTP resumable uploads</a>.</p>
+
+			<h2>Reading requests (servers)</h2>
+			<p>To support partial downloads, resumable downloads, and Range requests, servers merely need to support the following features:</p>
+			<ul>
+				<li><a href="headers/Range.xml">Range request-header</a></li>
+				<li><a href="headers/If-Range.xml">If-Range request-header</a></li>
+				<li><a href="headers/Content-Range.xml">Content-Range response-header</a></li>
+				<li><a href="status-codes/206.xml">206 (Partial Content) status code</a></li>
+				<li><a href="status-codes/416.xml">416 (Range Not Satisfiable) status code</a></li>
+				<li><a href="close.xml">See also: Closing client connections</a></li>
+			</ul>
+
+			<h2>Resuming a Download</h2>
+			<p>In order to resume a download, a client needs to know the ETag or Last-Modified date according to the server, if it provided one; </p>
+
+			<h2>implementations</h2>
+			<ul>
+				<li>Most Web browsers are known </li>
+			</ul>
+
+			<h2>References</h2>
+			<ul>
+				<li><a href="https://httpwg.org/specs/rfc7233.html">RFC 7233: HTTP Range Requests</a></li>
+			</ul>
+		</main>
+	</body>
+</html>

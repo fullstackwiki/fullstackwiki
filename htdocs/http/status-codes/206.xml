@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>206 Partial Content</title>
+		<meta name="description" content="206 Partial Content indicates the request contains only the requested ranges" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/206" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>206 Partial Content</h1>
+			<p>The 206 Partial Content status code indicates that the request contains only the subsets of the representation requested by the client in the <a href="../headers/Range.xml">Range request-header</a>.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p></p>
+
+			<h2>Reading responses (clients)</h2>
+			<p><code>206 Partial Content</code> indicates the operation resulted in the creation of a new resource.</p>
+			<p>If the response contains a <a href="Content-Range">Content-Range</a> header, then the response body is range that was requested. If there is no header, the response body will be a "multi-part" response that must be parsed to read the requested ranges; this will be a <code>multipart/byteranges</code> document.</p>
+			<!--TODO: Link to document for multipart/byteranges-->
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">206</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">206 Partial Content</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">One or more resources were partial content.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#status.206">RFC 7233: HTTP Range Requests &#xA7;4.1. 206 Partial Content</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 206 Partial Content
+			</pre>
+		</main>
+	</body>
+</html>
