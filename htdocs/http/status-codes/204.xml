@@ -20,7 +20,7 @@
 			<h2>Writing responses (servers)</h2>			
 			<p><code>204 No Content</code> may be used when the payload size is zero, and the status would otherwise be <a href="200.xml">200 OK</a>. These are typically <code>PUT</code>, <code>PATCH</code>, or <code>DELETE</code> requests made with <a href="../preferences/return.xml">return=minimal</a>.</p>
 			<p>It is typically more straightforward to always use <a href="200.xml">200 OK</a> with an explicit <code><a href="../headers/Content-Length.xml">Content-Length</a>: 0</code> header.</p>
-			<p>This status code implies the request has been filled; the result just has no content. If the request is omitted because of a conditional header, but would otherwise have content, see <a href="304.xml">304 Not Modified</a>.</p>
+			<p>This status code implies the request has been filled; the result just has no content. If the response is omitted because of a conditional header, but would otherwise have content, see <a href="304.xml">304 Not Modified</a>.</p>
 
 			<h3>In HTTP/1</h3>
 			<p>This status code may be used as an alternative to a <a href="200.xml">200 OK</a> response with a zero-length payload; in this case, the <a href="../headers/Content-Length.xml">Content-Length</a> header may be omitted. However, it is more consistent to simply send <a href="200.xml">200 OK</a> instead.</p>
