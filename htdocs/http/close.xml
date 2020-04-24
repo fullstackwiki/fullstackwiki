@@ -9,7 +9,8 @@
 	<body>
 		<main>
 			<h1>Closing client connections</h1>
-			<p>Responses that are closing the connection without a message body may be sent without any Content-Length header. Correctly implementing connection closes can ensure that clients get a chance to read error messages sent prior to the socket teardown.</p>
+			<p>In HTTP, connections are typically closed by the client, when they have no further requests to make and all the responses have been processed.</p>
+			<p>HTTP servers may occasionally wish to close the connection on the client instead. Care should be taken when doing this, as incorrectly closing the connection may result in the client not receiving all the information written by the server.</p>
 
 			<h2>Lost data after a connection close</h2>
 			<p>If, while a client is uploading data, the server prematurely writes a response then closes the connection, the client may not ever see that written data, due to how TCP implemented by operating systems: If the server closes the connection, then receives additional data from the client, the server kernel will reply with a TCP RST packet. Servers normally send RST when they receive data on a closed connection to indicate that the data was lost. However, this has the effect of wiping out any data buffered by the client kernel.</p>

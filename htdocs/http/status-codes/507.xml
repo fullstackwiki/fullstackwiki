@@ -27,7 +27,7 @@
 
 			<h2>Reading responses (clients)</h2>
 			<p>Typically this requires user intervention, either the attention of the system administrator, or the user confirming out-of-band that the system is back into regular operation, before retrying the request.</p>
-			<p>If the server specifies <a href="../headers/Retry-After.xml">Retry-After</a>, this might signal that additional storage is being automatically provisioned, and clients may automatically retry an upload after the given duration. Clients should send <code>Expect: 100-continue</code> when making uploads, to not waste bandwidth on a request that will likely be rejected.</p>
+			<p>If the server specifies <a href="../headers/Retry-After.xml">Retry-After</a>, this might signal that additional storage is being automatically provisioned, and clients may automatically retry an upload after the given duration. Clients should send <a href="../headers/Expect.xml">Expect: 100-continue</a> when making uploads, to not waste bandwidth on a request that will likely be rejected.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

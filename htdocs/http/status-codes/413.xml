@@ -24,7 +24,7 @@
 			<p>If the method is not one that allows a request body (such as TRACE), then send <code>413 Payload Too Large</code> along with a message explaining that no message body is allowed in the request.</p>
 
 			<h3>Message body exceeds resource limits</h3>
-			<p>If the server has resource limits, or sets resource limits on users, and the upload size exceeds these limits, send <code>413 Payload Too Large</code> along with a document describing the maximum permitted size.</p>
+			<p>If the resource has limits on what it is able to accept, or the server has per-user limits on what they may upload, and the upload size exceeds these limits, then send <code>413 Payload Too Large</code> along with a document describing the maximum permitted size.</p>
 			<p>If the client did not send a Content-Length and the upload becomes too large to accept, close the connection after writing the response.</p>
 
 			<h3>See also: Server is out of storage space</h3>

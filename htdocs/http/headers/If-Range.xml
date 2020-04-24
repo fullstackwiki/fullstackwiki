@@ -29,10 +29,10 @@
 			<h3>Reading requests (servers)</h3>
 			<p>Requests with If-Range must be accompanied by a <a href="Range.xml">Range header</a>; if the request is missing it, the server may ignore If-Range, or may return <a href="../status-codes/400.xml">400 (Client Error)</a> to let the client know it's possibly trying to do something that doesn't make sense.</p>
 			<p>To determine which format the value is in, you only need to examine the first three characters:</p>
-			<p>If the If-Range value begins with <code>W/"</code> (case-sensitive) or <code>"</code>, then the value is an ETag; and should be processed similar to <a href="If-Match.xml">If-Match</a>.</p>
-			<p>Values that begin with three characters of the day of the week, <code>/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)/</code> (case-sensitive), are HTTP dates, and should be processed similar to <a href="If-Unmodified-Since.xml">If-Unmodified-Since</a>.</p>
-			<p>If the value could not be parsed, then treat it like a mismatch and return the full document, or return <a href="../status-codes/400.xml">400 (Client Error)</a>; since ignoring If-Match but processing Match could possibly corrupt the client's reassembled document.</p>
-			<p>If the condition tests true, then process the <a href="Range.xml">Range header</a> normally. If the test fails, then the document on the server has been changed since the client's copy, and so the Range header must be ignored; the entire document is sent in response.</p>
+			<p>If the If-Range value begins with <code>W/"</code> (case-sensitive) or <code>"</code>, then the value is an ETag; and is tested like <a href="If-Match.xml">If-Match</a>.</p>
+			<p>Values that begin with three characters of the day of the week, <code>/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)/</code> (case-sensitive), are HTTP dates, and is tested like <a href="If-Unmodified-Since.xml">If-Unmodified-Since</a>.</p>
+			<p>If the value could not be parsed, then treat it as a test failure, or return <a href="../status-codes/400.xml">400 (Client Error)</a>; since ignoring If-Match but processing Match could corrupt the client's reassembled document.</p>
+			<p>If the condition tests true, then process the <a href="Range.xml">Range header</a> normally. If the test fails, then the document on the server has been changed since the client's copy, so the Range header must be ignored; the entire document is sent in response.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">

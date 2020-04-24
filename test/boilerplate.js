@@ -69,7 +69,7 @@ function testHTMLDocument(document){
 }
 
 describe('Test HTML documents', function(){
-	listHTMLFiles('web').filter(function(f){
+	listHTMLFiles('htdocs').filter(function(f){
 		// Specify a list of files here to be ignored, if needed
 		// Or, you know, don't
 		return true;

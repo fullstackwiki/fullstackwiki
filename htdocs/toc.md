@@ -3,6 +3,8 @@ Topics:
 * Technical Specifications
 * IEEE floating point numbers
 * DNS
+	* Public Suffix List
+	* Pitfalls of Public Suffix List: https://www.icann.org/en/system/files/files/sac-070-en.pdf
 * Email
 	* Running a mail server
 	* Sending email
@@ -11,10 +13,13 @@ Topics:
 	* double-opt-in
 	* Setting up DNS records
 * URI
+	* Program to visually break down a URI into components
+	* History
 	* URI Base
 	* absolute URI
 	* URI References
 	* Resolving URI References
+	* URI equality testing e.g. https://issues.apache.org/jira/browse/HTTPCLIENT-1995
 * TLS
 	* Encryption certificates
 	* Server Name Indication (SNI)
@@ -117,6 +122,7 @@ Topics:
 * Error correction
 	* IP error detection
 	* https://quiet.github.io/quiet-blog/2018/09/16/How-Libcorrect-Does-Forward-Error-Correction.html
+* OpenSearch
 * Dweb - SOLID
 	* https://github.com/solid/solid-spec
 	* https://solid.inrupt.com/docs/intro-to-solid-spec
