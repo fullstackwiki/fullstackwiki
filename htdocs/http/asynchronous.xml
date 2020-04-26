@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Asynchronous Operations in HTTP</title>
+		<meta name="description" content="Asynchronous Operations in HTTP" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>Asynchronous Operations in HTTP</h1>
+
+			<p>An <i>asynchronous operation</i> in HTTP is a request that the server will continue processing after the request returns, and can change the state of the server over time as the operation is being processed. This is in contrast to the typical "synchronous"  request whose effects, if any, do not occur after the response.</p>
+
+			<p>Asynchronous operations are useful for any sort of operation that runs a very long time (which is anything than a few seconds for many applications), or when recovering from a network failure is important.</p>
+
+			<p>Suppose a person owns a newfangled electric tea kettle running an HTTP server; how can other devices use this to listen for when the kettle is finished boiling water? We don't know quite when the task will complete; but we want to receive a message when the <i>operation</i> completes. This is called an <i>asynchronous operation</i> in HTTP.</p>
+
+			<p>Use the "asynchronous operation workflow" when you need to support:</p>
+			<ul>
+				<li>Receiving a notification when an operation finishes, e.g. when a tea kettle has finished boiling water</li>
+				<li>Receiving a notification when an event happens, e.g. when a new blog post is published</li>
+			</ul>
+
+			<h2>Mechanisms for returning an Asynchronous Response</h2>
+			<ul>
+				<li><a href="preferences/respond-async.xml">Prefer: respond-async</a></li>
+				<li>102 (Processing)</li>
+				<li><a href="status-codes/202.xml">202 (Accepted)</a></li>
+				<li>Websockets</li>
+				<li>Web Push</li>
+				<li>Hook endpoints (Webhooks)</li>
+				<li>Polling with exponential backoff</li>
+				<li>Long polling</li>
+				<li>Email</li>
+			</ul>
+
+			<h2>Glossary</h2>
+			<dl>
+				<dt>Event</dt><dd>When a service has come upon some condition that a user may wish to know about as soon as possible.</dd>
+				<dt>Service</dt><dd>The party that is initially a server; but may also be a client when delivering a notification to a user of the service.</dd>
+				<dt>User</dt><dd>The party that is initially the client; but may also be a server in order to receive a notification from the service.</dd>
+				<dt>Request</dt><dd>A standard HTTP request that synchronously returns a response; the request may kick off new operations and subscriptions that run after the request has returned.</dd>
+				<dt>Operation</dt><dd>A request by a user for the service to perform a task; that may generate events until the operation completes.</dd>
+				<dt>Subscription</dt><dd>A request by a user to receive events from a service, until the user decides to stop listening.</dd>
+			</dl>
+
+			<h3>Status Codes</h3>
+			<p>This is an overview on how clients should handle status codes relating to an operation they requested.</p>
+			<p>What important distinctions does a client need to know about?</p>
+			<ul>
+				<li>Operation finished</li>
+				<li>Operation successful</li>
+				<li>Operation result URI with additional information about the request</li>
+			</ul>
+			<table>
+				<thead>
+					<tr><th>Status Code</th><th>Complete</th><th>Successful</th></tr>
+				</thead>
+				<tbody>
+					<tr><th>200 OK</th><td>Yes✅</td><td>Yes👍</td></tr>
+					<tr><th>201 Created</th><td>Yes✅</td><td>Yes👍</td></tr>
+					<tr><th>202 Accepted</th><td>No👎</td><td>Indeterminate</td></tr>
+					<tr><th>303 See Other</th><td>Yes✅</td><td>Unknown</td></tr>
+				</tbody>
+			</table>
+
+			<h2>Examples/Implementations</h2>
+			<ul>
+				<li><a href="https://developer.github.com/webhooks/">GitHub's Webhooks</a></li>
+			</ul>
+			<aside><p>If you know of additional examples, please add or submit them.</p></aside>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://requestbin.com/blog/working-with-webhooks/">RequestBin: Webhooks — The Definitive Guide</a></li>
+				<li><a href="https://tools.ietf.org/html/rfc8030">Generic Event Delivery Using HTTP Push</a></li>
+				<li><a href="https://tools.ietf.org/html/rfc8291">Message Encryption for Web Push</a></li>
+				<li><a href="https://tools.ietf.org/html/rfc8292">Voluntary Application Server Identification (VAPID) for Web Push</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
