@@ -57,7 +57,7 @@ function testHTMLDocument(document){
 		// or a blank relative reference to the current document
 		const uriref = e.getAttribute('href');
 		if(uriref.match(/^mailto:/)) return;
-		assert( uriref.match(/\/\//) || uriref.match(/\.xml($|#)/) || uriref.match(/^($|#)/), e.toString() );
+		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md)($|#)/) || uriref.match(/^($|#)/), e.toString() );
 	});
 	Array.prototype.slice.call(document.getElementsByTagName('link')).forEach(function(e){
 		const uriref = e.getAttribute('href');

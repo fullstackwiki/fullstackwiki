@@ -119,6 +119,13 @@
 			<pre type="message/http">Date: Tue, 15 Nov 1994 08:12:31 GMT</pre>
 
 			<h2>Implementations</h2>
+			<h3>strftime</h3>
+			<p>Compatible with C <a href="https://linux.die.net/man/3/strftime">strftime</a>/<a href="https://linux.die.net/man/3/strptime">strptime</a>,  <a href="https://www.php.net/manual/en/function.gmstrftime.php">PHP gmstrftime</a></p>
+			<pre w:space="indent">
+				%a, %d %b %Y %H:%M:%S %Z
+			</pre>
+			<p>The locale for formatting this template must be set to GMT. If the return value ends in anything except <code> GMT</code>, then the value is invalid, and locale is not configured properly.</p>
+
 			<h3>Node.js</h3>
 			<p>V8's implementation of <code>Date#toUTCString</code> function produces an IMF-fixdate compatible string.</p>
 			<p>All three versions can be parsed by V8's <code>new Date(string)</code>, so test that the header matches one of the legal input formats, then pass the entire string to a new Date instance.</p>
