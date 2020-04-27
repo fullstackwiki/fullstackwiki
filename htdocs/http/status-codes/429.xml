@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>429 Too Many Requests</title>
+		<meta name="description" content="The 429 (Too Many Requests) HTTP status code indicates the client has exceeded request limits, and to wait to try again." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/429" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>429 Too Many Requests</h1>
+			<p>The 429 Too Many Requests HTTP status code indicates request was not filled and that the client exceeded request limits, and should retry its request at a later time.</p>
+
+			<h2>Writing responses (origin servers)</h2>
+			<p>Servers may respond with <code>429 Too Many Requests</code> at any time during handling. For performance, this may be tested as early as possible, as soon as the user is authenticated.</p>
+
+			<h2>Reading responses (user agents)</h2>
+			<p>The client has been making too many requests recently. This might be calculated based on the authenticated user, IP address, or some other mechanism. It does not imply the existence of the resource, but the error might not apply to another resource. However, the error is typically applied to all requests to that authority.</p>
+			<p>This request may be re-tried after a period of time; increase the duration between re-requests if the Too Many Requests error persists. Consider techniques like using a shared cache, observing caching headers, and exponential backoff.</p>
+			<p>A specific wait time may be listed in the <a href="../headers/Retry-After.xml">Retry-After response header</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">429</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">429 Too Many Requests</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The client has exceeded request limits</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc6585.html#status-429">RFC 6585: Additional HTTP Status Codes &#xA7;3. 429 Too Many Requests</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.1 429 Too Many Requests
+				Retry-After: 2829
+				Content-Type: text/plain
+
+				Clients on the free plan are limited to 2000 requests per hour.
+				Try again next hour.
+			</pre>
+		</main>
+	</body>
+</html>

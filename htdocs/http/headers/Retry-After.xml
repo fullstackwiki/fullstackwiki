@@ -13,6 +13,13 @@
 			<h1>Retry-After</h1>
 			<p>In the case of certain errors, this header specifies a length of time after which the client can re-try the request.</p>
 
+			<h2>Writing responses (origin servers)</h2>
+			<p>If the server enforces request limits, specify the soonest time after which the client using those credentials will be able to make a successful request.</p>
+			<p>This header should be used with the <a href="../status-codes/429.xml">429 (Too Many Requests)</a> status code.</p>
+
+			<h2>Reading responses (user agents)</h2>
+			<p>The header implies that the same request may be successful if retried later; wait at least the specified number of seconds before trying this.</p>
+
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Name</dt>
