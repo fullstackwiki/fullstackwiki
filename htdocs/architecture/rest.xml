@@ -13,13 +13,30 @@
 			<p>REST is often used to describe a property of API designs, this is called a RESTful API. REST more accurately describes how Web browsers and Web servers work together.</p>
 
 			<h2>Properties of a RESTful Application</h2>
+			<p>When an application architecture adds a constraint, it also gains useful features since other parts of the applications may make useful assumptions about how the application will behave.</p>
+			<p>For example, a constraint of the Web is that a GET request is "safe" and does not change the state of the application (in a visible way). The benefit of this is that users may make GET requests without worrying they may change the state of the server.</p>
+			<p>REST is an application architecture of six such constraints:</p>
+			
 			<h3>Client-Server</h3>
+			<p>A client-server architecture is one of the key constraints that enforces separation of concerns. A single <i>server</i> retains data, and a <i>client</i> presents the interface around interacting with the data. The client is <i>portable</i>, and may be physically or logically separate from the server.</p>
+
 			<h3>Stateless</h3>
+			<p>All communication must be stateless—each request must carry all the information necessary to process the request.</p>
+
 			<h3>Cache</h3>
+			<p>Caching allows for better network efficiency, by allowing servers to communicate when a resource from a previous request may be re-used in the future. For individual nodes, it is a feature.</p>
+
 			<h3>Uniform Interface</h3>
+			<p>The uniform interface means that a generic user agent is able to make use of the data on any server, without any prior knowledge of what the server does or how it operates.</p>
+
 			<h3>Layered System</h3>
+			<p>A layered system allows an application to be composed of multiple, hierarchical layers of nodes, for example caches, gateways, delivery networks, or proxies.</p>
+
 			<h3>Code-On-Demand</h3>
-			<h3>Additional constraints</h3>
+			<p>Code-on-demand allows servers to ship a program that clients may run to make additional use of the data in a response. For individual nodes, it is a feature. Servers and clients may or may not decide to use code-on-demand.</p>
+
+			<h3>Overview</h3>
+			<p><img src="rest_derivation.svg" /></p>
 		</main>
 	</body>
 </html>

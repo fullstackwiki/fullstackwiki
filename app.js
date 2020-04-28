@@ -144,6 +144,14 @@ var routeStyle = RouteStaticFile({
 });
 options.addRoute(routeStyle);
 
+var routeSVG = RouteStaticFile({
+	uriTemplate: 'http://fullstack.wiki{/path*}.svg',
+	fileroot: docroot,
+	pathTemplate: "{/path*}.svg",
+	contentType: 'image/svg+xml',
+});
+options.addRoute(routeSVG);
+
 var routeLunrIndex = RouteLunrIndex({
 	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
