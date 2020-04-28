@@ -232,7 +232,7 @@ pre {
 	border: 1px dotted #9b9689;
 	font-family: Consolas, Monaco, 'Andale Mono', monospace;
 	overflow-x: auto;
-	font-size: 90%;
+	font-size: 80%;
 }
 pre code {
 	border: none;
@@ -275,51 +275,36 @@ table {
 	margin-bottom: 1rem;
 	border-radius: 3px;
 }
+table caption {
+	padding: 0.5rem 0.625rem 0.625rem;
+	font-weight: bold;
+}
 table thead,
 table tbody,
 table tfoot {
 	border: 1px solid #f1f1f1;
 	background-color: #fefefe;
 }
-table caption {
-	padding: 0.5rem 0.625rem 0.625rem;
-	font-weight: bold;
-}
-table thead {
-	background: #f8f8f8;
-	color: #0a0a0a;
-}
+table thead,
 table tfoot {
-	background: #f1f1f1;
+	background: #ebebeb;
 	color: #0a0a0a;
 }
-table thead tr,
-table tfoot tr {
-	background: transparent;
-}
-table thead th,
+table th,
 table thead td,
-table tfoot th,
 table tfoot td {
 	padding: 0.5rem 0.625rem 0.625rem;
 	font-weight: bold;
 	text-align: left;
 }
-table tbody th,
-table tbody td {
+table td,
+table th {
 	padding: 0.5rem 0.625rem 0.625rem;
+	/* border: 1px solid #e6e6e6; */
+	border-width: 0 1px;
 }
 table tbody tr:nth-child(even) {
-	border-bottom: 0;
 	background-color: #f1f1f1;
-}
-table.unstriped tbody {
-	background-color: #fefefe;
-}
-table.unstriped tbody tr {
-	border-bottom: 0;
-	border-bottom: 1px solid #f1f1f1;
-	background-color: #fefefe;
 }
 
 /* Theme styles - header */
