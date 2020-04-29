@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Caching in HTTP</title>
+		<meta name="description" content="HTTP caching allows a client or server to re-use a previous response, for improving performance." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>Caching</h1>
+			<p>HTTP caching allows a client or server to re-use a previous response, with the benefit of improving performance.</p>
+			<p>The process for setting if a response may be cached, when to store a response, and when to re-use a stored response, is defined in <a href="https://httpwg.org/specs/rfc7234.html">RFC 7234: HTTP Caching</a>.</p>
+
+			<h2>HTTP Features</h2>
+			<ul>
+				<li><a href="headers/Cache-Control.xml">Cache-Control</a></li>
+				<li><a href="headers/Expires.xml">Expires</a></li>
+				<li><a href="headers/Age.xml">Age</a></li>
+				<li><a href="status-codes/304.xml">304 Not Modified</a></li>
+				<li><a href="headers/ETag.xml">ETag</a></li>
+				<li><a href="headers/Last-Modified.xml">Last-Modified</a></li>
+				<li><a href="headers/If-None-Match.xml">If-None-Match</a></li>
+				<li><a href="headers/If-Modified-Since.xml">If-Modified-Since</a></li>
+			</ul>
+
+			<h2>Stages</h2>
+			<p>There's several components to caching a response and determining if a previous, cached response may be reused:</p>
+
+			<h3>Public/Shared Cache</h3>
+			<p>A public cache (typically synonymous with a <i>shared cache</i>) stores responses that may be made anonymously, or are otherwise available to the public, and can be re-used for other users. It is typically implemented by CDNs (content delivery networks), caching proxies, caching gateways, and origin servers (for requests to dynamic pages, to avoid re-computing a response).</p>
+
+			<h3>Private Cache</h3>
+			<p>A private cache additionally allows user-agents to cache responses available only to a certain users, or that are not accessible by the general public. For example, a list of private messages for a single user that may be cached—but only by that user.</p>
+
+			<h3>Freshing a Cached Response</h3>
+			<p>Sometimes a client wants to check with the origin server to verify if a previous response may be re-used, and possibly to update metadata associated with it (especially the cache entry expiration date). This is called <i>freshing a response</i> and is implemented with <a href="conditional.xml">conditional requests</a>.</p>
+
+			<h2>Implementations</h2>
+
+			<h3>Local Private Caches</h3>
+			<ul>
+				<li>Firefox</li>
+				<li>Chrome</li>
+				<li>Safari</li>
+			</ul>
+
+			<h3>Public/Gateway/Server Cache</h3>
+			<ul>
+				<li><a href="https://httpd.apache.org/docs/current/caching.html">Apache httpd</a></li>
+				<li>nginx</li>
+				<li>Squid</li>
+				<li>ATS</li>
+				<li>Varnish</li>
+			</ul>
+
+			<h3>CDN Cache services</h3>
+			<ul>
+				<li>Fastly</li>
+				<li>Akamai</li>
+				<li>AWS CloudFront</li>
+				<li>Cloudflare</li>
+			</ul>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://httpwg.org/specs/rfc7234.html">RFC 7234: HTTP Caching</a></li>
+				<li><a href="https://cache-tests.fyi/">HTTP Caching Tests</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
