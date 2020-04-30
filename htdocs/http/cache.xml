@@ -10,7 +10,7 @@
 		<main>
 			<h1>Caching</h1>
 			<p>HTTP caching allows a client or server to re-use a previous response, with the benefit of improving performance.</p>
-			<p>The process for setting if a response may be cached, when to store a response, and when to re-use a stored response, is defined in <a href="https://httpwg.org/specs/rfc7234.html">RFC 7234: HTTP Caching</a>.</p>
+			<p>The process for setting if a response may be stored, when to re-use a stored response, and when to freshen a stored response with the origin server, is defined in <a href="https://httpwg.org/specs/rfc7234.html">RFC 7234: HTTP Caching</a>.</p>
 
 			<h2>HTTP Features</h2>
 			<ul>
@@ -50,7 +50,7 @@
 				<li><a href="https://httpd.apache.org/docs/current/caching.html">Apache httpd</a></li>
 				<li>nginx</li>
 				<li>Squid</li>
-				<li>ATS</li>
+				<li>ATS (Apache Traffic Server)</li>
 				<li>Varnish</li>
 			</ul>
 
@@ -66,6 +66,7 @@
 			<ul>
 				<li><a href="https://httpwg.org/specs/rfc7234.html">RFC 7234: HTTP Caching</a></li>
 				<li><a href="https://cache-tests.fyi/">HTTP Caching Tests</a></li>
+				<li><a href="https://www.mnot.net/cache_docs/">Caching Tutorial by Mark Nottingham (HTTP WG chair)</a></li>
 			</ul>
 		</main>
 	</body>

@@ -24,7 +24,7 @@
 			<p>If instead the resource has moved and the client needs to re-make the same request (with the same method and headers) at a different URI, use <a href="307.xml">307 (Temporary Redirect)</a> or <a href="308.xml">308 (Permanent Redirect)</a>.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p>A <code>303 See Other</code> will be accompanied by a <a href="../headers/Location.xml">Location header</a> that indicates the next page that should be loaded.</p>
+			<p>A <code>303 See Other</code> will be accompanied by a <a href="../headers/Location.xml">Location header</a> that indicates the next page that should be loaded. This page is requested with a GET request; unless the original request was HEAD, in which case user agents may wish to make another HEAD request.</p>
 			<p>The request-URI should not be pushed to the history, so that navigation brings the user to the redirect target, instead of re-issuing the request that caused the 303. If the user intends to re-issue the request, they can re-submit the form.</p>
 
 			<h2>Overview table</h2>
