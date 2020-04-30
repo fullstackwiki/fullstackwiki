@@ -39,11 +39,10 @@
 
 			<h2>Code of Conduct</h2>
 			<p>Participation on FullstackWiki communication channels shall abide by <a href="https://www.rfc-editor.org/rfc/rfc7154.txt">RFC7154: IETF Guidelines for Conduct</a>. FullstackWiki members will enforce this code by least restrictive means necessary, but reserve the right to use any means necessary up to and including termination of service to ensure that behavior on our communication channels follows the code.</p>
-			<p>While not mandantory, FullstackWiki additionally encourages all participants to play the <a href="https://freenode.net/catalysts">role of catalyst.</a></p>
+			<p>While not mandatory, FullstackWiki additionally encourages all participants to play the <a href="https://freenode.net/catalysts">role of catalyst.</a></p>
 
 			<h2>README</h2>
-			<p><a href="readme.xml">README.md</a></p>
-			<p><a href="../toc.xml">toc.md</a></p>
+			<p><a href="../toc.md">toc.md</a></p>
 		</main>
 	</body>
 </html>

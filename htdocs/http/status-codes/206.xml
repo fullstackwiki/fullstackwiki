@@ -22,7 +22,7 @@
 
 			<h2>Reading responses (clients)</h2>
 			<p><code>206 Partial Content</code> indicates the operation resulted in the creation of a new resource.</p>
-			<p>If the response contains a <a href="Content-Range.xml">Content-Range</a> header, then the response body is range that was requested. If there is no header, the response body will be a "multi-part" response that must be parsed to read the requested ranges; this will be a <code>multipart/byteranges</code> document.</p>
+			<p>If the response contains a <a href="../headers/Content-Range.xml">Content-Range</a> header, then the response body is range that was requested. If there is no header, the response body will be a "multi-part" response that must be parsed to read the requested ranges; this will be a <code>multipart/byteranges</code> document.</p>
 			<!--TODO: Link to document for multipart/byteranges-->
 
 			<h2>Overview table</h2>

@@ -45,7 +45,7 @@
 				const messageAge = Number.parseInt(response.getHeader('Age') || 0, 10);
 				const messageDate = Date.parse(response.getHeader('Date'));
 				assert(messageDate > 0);
-				const serverDate = new Date(messageDate + messageAge);
+				const serverDate = new Date(messageDate + messageAge*1000);
 			</pre>
 			<p>The produced value should always be accurate plus or minus a second, plus or minus the duration of the request.</p>
 
