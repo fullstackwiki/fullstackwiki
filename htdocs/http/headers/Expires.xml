@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Expires</title>
+		<meta name="description" content="Specifies freshness of a document when served from a cache" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/headers/Expires" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Expires</h1>
+			<p>The "Expires" response header specifies how long a response may be cached. After the expiration date, the response may be re-used after it is freshened with revalidation from the origin server. The <code>max-age</code> and <code>s-maxage</code> directives in <a href="Cache-Control.xml">Cache-Control</a> are preferred.</p>
+			<!-- This header isn't considered deprecated, but there's not much need for it, just use Cache-Control instead -->
+
+			<h2>Reading responses</h2>
+			<p>The <code>Expires</code> header does not affect how a client handles the response to a request, except for storing the response for future re-use; and if the response is stored, it is used to determine for how long it may be re-used without revalidating the request with the origin.</p>
+			<p>If the response <a href="Cache-Control.xml">Cache-Control</a> specifies a <code>max-age</code> directive, then ignore this header, since it takes precedence. If Cache-Control specifies an <code>s-maxage</code> directive, then shared caches must ignore this header, since it takes precedence.</p>
+			<p>The syntax follows the HTTP-date production, the same as in the <a href="Date.xml">Date</a> header. Interpret an invalid value as already expired.</p>
+
+			<h2>Writing responses</h2>
+			<p>Servers may only generate an Expires header if they know the date is accurate. Servers that do not have a reliable clock may only send Expires if it is a date known to be in the past, or if the date to be used is from an outside source that does have a reliable clock. For specifying a relative offset, use <a href="Cache-Control.xml">Cache-Control with max-age</a>.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Expires</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">How long a response may be cached without revalidation.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7234.html#header.expires">RFC 7234: HTTP/1.1 Caching &#xA7;5.3. Expires</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre type="abnf" w:space="indent">
+				Expires = HTTP-date
+			</pre>
+			<h3>Example</h3>
+			<pre type="messexpires/http">Expires: Thu, 01 Dec 1994 16:00:00 GMT</pre>
+		</main>
+	</body>
+</html>
