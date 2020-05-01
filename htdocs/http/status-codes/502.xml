@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>502 Bad Gateway</title>
+		<meta name="description" content="The 502 Bad Gateway HTTP status code indicates an intermediate server received an invalid response from an inbound server." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/502" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>502 Bad Gateway</h1>
+			<p>The 502 (Bad Gateway) status code indicates the message was forwarded to an inbound server (usually the origin server), which produced an invalid response.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>This status code is only used by intermediate nodes when they received an invalid HTTP response from the origin server, and cannot pass it through. For example, the node tries to contact the origin, but receives a response in an unknown protocol, or an unsupported version of HTTP.</p>
+			<p>Intermediate servers may wish to provide a debugging mode, which shows the response it received, and why it could not be parsed.</p>
+
+			<h3>See also: 504 Gateway Timeout</h3>
+			<p>If the origin could not be contacted at all, or no response at all was generated within a reasonable time, see <a href="504.xml">504 Gateway Timeout</a>.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Clients using a proxy may try to use a different proxy, or issue the request directly to the origin, if the problem is at the proxy. Otherwise, clients may try to re-request at a later time; a system administrator must correct the configuration of the proxy, gateway, or origin.</p>
+			<p>Users may try to use TRACE with <a href="../headers/Max-Forwards.xml">Max-Forwards</a> to isolate the problematic node.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">502</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">502 Bad Gateway</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">An intermediate server received an invalid response from an inbound server.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.502">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.6.3. 502 Bad Gateway</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.0 503 Bad Gateway
+				Content-Type: text/plain
+
+				The received upstream response from &lt;http://origin.example.com/search&gt;
+				could not be parsed from line 5.
+
+				Request id: 30
+			</pre>
+
+			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
+		</main>
+	</body>
+</html>
