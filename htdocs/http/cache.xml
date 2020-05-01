@@ -17,6 +17,7 @@
 				<li><a href="headers/Cache-Control.xml">Cache-Control</a></li>
 				<li><a href="headers/Expires.xml">Expires</a></li>
 				<li><a href="headers/Age.xml">Age</a></li>
+				<li><a href="headers/Vary.xml">Vary</a></li>
 				<li><a href="status-codes/304.xml">304 Not Modified</a></li>
 				<li><a href="headers/ETag.xml">ETag</a></li>
 				<li><a href="headers/Last-Modified.xml">Last-Modified</a></li>

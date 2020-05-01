@@ -62,7 +62,7 @@ function testHTMLDocument(document){
 	Array.prototype.slice.call(document.getElementsByTagName('link')).forEach(function(e){
 		const uriref = e.getAttribute('href');
 		// Same as above, but also could be a .css link to a stylesheet
-		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|css)($|#)/) || uriref==='', e.toString() );
+		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md|css)($|#)/) || uriref==='', e.toString() );
 		// and must have a link relationship or reverse relationship
 		assert( e.hasAttribute('rel') || e.hasAttribute('rev'), e.toString() );
 	});

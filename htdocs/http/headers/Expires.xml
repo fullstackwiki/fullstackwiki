@@ -43,7 +43,7 @@
 				Expires = HTTP-date
 			</pre>
 			<h3>Example</h3>
-			<pre type="messexpires/http">Expires: Thu, 01 Dec 1994 16:00:00 GMT</pre>
+			<pre type="message/http">Expires: Thu, 01 Dec 1994 16:00:00 GMT</pre>
 		</main>
 	</body>
 </html>
