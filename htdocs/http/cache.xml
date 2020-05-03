@@ -37,6 +37,41 @@
 			<h3>Freshing a Cached Response</h3>
 			<p>Sometimes a client wants to check with the origin server to verify if a previous response may be re-used, and possibly to update metadata associated with it (especially the cache entry expiration date). This is called <i>freshing a response</i> and is implemented with <a href="conditional.xml">conditional requests</a>.</p>
 
+			<h2>Common Caching Directives</h2>
+
+			<p>This documents different suggested ways to configure caching-related headers. See the Implementations section for specifying this header in your particular environment.</p>
+
+			<h3>Static, Unchanging Document</h3>
+			<p>Use this if the resource is content-addressable (the filename is based on the contents of the file), or the contents of the file are not expected to change (e.g. changes are tracked by uploading a new document with a unique version number).</p>
+			<pre type="message/http" w:space="indent">
+				Cache-Control: public, max-age=31104000
+			</pre>
+			<p>This response allows a cache to store the response for about one year (31104000 seconds is 360 days).</p>
+
+			<h3>Requiring revalidation</h3>
+			<p>Use this if the resource has a modest possibility of changing, and the user should know that right away, then you can require that the user-agent checks for changes before using a stored response. For example, a currently playing song, task being worked on, or other thing. "Infrequent" is relative to how often the resource is accessed—if a user checks the resource every few seconds, infrequent could mean every few minutes.</p>
+			<pre type="message/http" w:space="indent">
+				ETag: {etag}
+				Last-Modified: {mtime}
+				Cache-Control: public, max-age=0
+			</pre>
+			<p><code>max-age=0</code> forces a stored response to always be considered "stale". This will cause the cache to send a conditional request to the origin server to check if the resource has changed; if it has not, the server will respond with <a href="status-codes/304.xml">304 (Not Modified)</a>, and the stored response will be re-used.</p>
+			<p>The <code>{etag}</code> and <code>{mtime}</code> placeholders must be filled with a unique value that changes whenever the document does. Most HTTP servers automatically do this when serving files off the filesystem. See <a href="conditional.xml">conditional requests</a> for more information.</p>
+
+			<h3>Disabling storage</h3>
+			<p>If the response contains private information that must not be stored, use the no-store directive:</p>
+			<pre type="message/http" w:space="indent">
+				Cache-Control: private, no-store
+			</pre>
+			<p>If it's OK for clients to store the response, consider using the "requiring revalidation" technique above instead.</p>
+
+			<h3>Personalized document behind Cookie authorization</h3>
+			<p>Use this if the resource is a personalized document that doesn't change very often, you may want to allow clients to cache the response. Use the <code>private</code> directive to ensure that it is not stored by a shared cache; and use <a href="headers/Vary.xml">Vary: Cookie</a> to ensure that the response is no longer served if the user logs out.</p>
+			<pre type="message/http" w:space="indent">
+				Cache-Control: private
+				Vary: Cookie
+			</pre>
+
 			<h2>Implementations</h2>
 
 			<h3>Local Private Caches</h3>
@@ -61,6 +96,38 @@
 				<li>Akamai</li>
 				<li>AWS CloudFront</li>
 				<li>Cloudflare</li>
+			</ul>
+
+			<h2>Configuring Caching Headers</h2>
+
+			<h3>AWS S3</h3>
+			<p>With aws-cli/2 accepts several arguments for setting cache-related headers on S3 objects, namely <code>--cache-control</code> and <code>--expires</code>. For example:</p>
+			<pre w:space="indent">
+				aws s3 sync &lt;src&gt; &lt;dst&gt; --cache-control "public, max-age=31104000"
+				aws s3 cp &lt;src&gt; &lt;dst&gt; --cache-control "public, max-age=31104000"
+			</pre>
+
+			<h3>Apache httpd</h3>
+			<p>Apache has extensive configuration options available for configuring caching options based on the type of document being served. See:</p>
+			<ul>
+				<li><a href="https://httpd.apache.org/docs/current/mod/mod_headers.html#header">mod_headers</a></li>
+				<li><a href="https://httpd.apache.org/docs/current/mod/mod_expires.html">mod_expires</a></li>
+			</ul>
+			<p>An example directive with mod_headers and mod_expires:</p>
+			<pre w:space="indent">
+				Header merge Cache-Control "public"
+			</pre>
+
+			<h2>Configuring Cache Storage</h2>
+
+			<h3>Nginx</h3>
+			<p>Caches are configured separately in each module, for example, the <code>fastcgi_cache</code> and <code>proxy_cache</code> directives. (Note that what Nginx calls a "proxy" is actually a "gateway".)</p>
+
+			<h3>Apache httpd</h3>
+			<p>Apache has a single mechanism to cache responses from any inbound source, like requests forwarded to an origin server, a CGI script, or even resources from a slower filesystem (like spinning media or a network filesystem) when cached on a faster filesystem (like solid state media). See:</p>
+			<ul>
+				<li><a href="https://httpd.apache.org/docs/2.4/caching.html">httpd Caching Guide</a></li>
+				<li><a href="https://httpd.apache.org/docs/2.4/mod/mod_cache.html">mod_cache</a></li>
 			</ul>
 
 			<h2>See also</h2>
