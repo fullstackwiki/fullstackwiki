@@ -25,7 +25,7 @@
 			<h2>Mechanisms for returning an Asynchronous Response</h2>
 			<ul>
 				<li><a href="preferences/respond-async.xml">Prefer: respond-async</a></li>
-				<li>102 (Processing)</li>
+				<li><a href="status-codes/102.xml">102 (Processing)</a></li>
 				<li><a href="status-codes/202.xml">202 (Accepted)</a></li>
 				<li>Websockets</li>
 				<li>Web Push</li>
@@ -37,12 +37,36 @@
 
 			<h2>Glossary</h2>
 			<dl>
-				<dt>Event</dt><dd>When a service has come upon some condition that a user may wish to know about as soon as possible.</dd>
-				<dt>Service</dt><dd>The party that is initially a server; but may also be a client when delivering a notification to a user of the service.</dd>
-				<dt>User</dt><dd>The party that is initially the client; but may also be a server in order to receive a notification from the service.</dd>
+				<dt>Event</dt><dd>A change in the state of the service, that a user may wish to know about as soon as possible.</dd>
+				<dt>Service</dt><dd>The party that is typically the server; but may use a client when delivering a notification to a user of the service.</dd>
+				<dt>User</dt><dd>The party that is typically the client; but may also run a server in order to receive notifications from the service.</dd>
 				<dt>Request</dt><dd>A standard HTTP request that synchronously returns a response; the request may kick off new operations and subscriptions that run after the request has returned.</dd>
 				<dt>Operation</dt><dd>A request by a user for the service to perform a task; that may generate events until the operation completes.</dd>
-				<dt>Subscription</dt><dd>A request by a user to receive events from a service, until the user decides to stop listening.</dd>
+				<dt>Notification</dt><dd>A message that a service wants to deliver to a user, conveying newly available information.</dd>
+				<dt>Subscription</dt><dd>A request by a user to receive notifications from a service, until the user decides to stop listening.</dd>
+			</dl>
+
+			<h2>Mechanisms for real-time notifications</h2>
+			<p>The simplest mechanism is to make the results of the operation available from a resource that the user must poll: re-request until the resource says the operation is complete.</p>
+			<p>The other way to receive a <i>notification</i> from the service. The user must either run a server listening for a message, or the user must connect to a service where they may receive an message in real time.</p>
+			<dl>
+				<dt>Websockets</dt>
+				<dd>A datagram protocol specifically designed for shuttling arbitrary messages asynchronously, tunneled over HTTP.</dd>
+
+				<dt>Web Push</dt>
+				<dd>A protocol optimized for sending notifications to mobile devices.</dd>
+
+				<dt>Hook endpoints (Webhooks)</dt>
+				<dd>A technique where a user registers a URL endpoint with a service, with which notifications are delivered using a POST request to that endpoint. Implementations must be careful to check the authenticity of notifications, since the endpoint is typically accessible on the public Internet.</dd>
+
+				<dt>Polling with exponential backoff</dt>
+				<dd>The first purely-HTTP method of checking for updates. This is typically combined with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a> to only receive a response if the server has new information to be read.</dd>
+
+				<dt>Long polling</dt>
+				<dd>A technique where an HTTP server waits to respond to a request until it has new information. This may be implemented with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a> and a header that specifies to wait until there is an update that permits a 200 OK response, or some status besides 304 Not Modified.</dd>
+
+				<dt>Email</dt>
+				<dd>Perhaps the oldest and most well known real-time notification mechanism. Email supports sending signed machine-readable documents, but is typically used for sending formatted messages for people to read.</dd>
 			</dl>
 
 			<h3>Status Codes</h3>
@@ -58,8 +82,8 @@
 					<tr><th>Status Code</th><th>Complete</th><th>Successful</th></tr>
 				</thead>
 				<tbody>
-					<tr><th>200 OK</th><td>Yes✅</td><td>Yes👍</td></tr>
-					<tr><th>201 Created</th><td>Yes✅</td><td>Yes👍</td></tr>
+					<tr><th>200 OK</th><td>Yes✅</td><td>Yes✅</td></tr>
+					<tr><th>201 Created</th><td>Yes✅</td><td>Yes✅</td></tr>
 					<tr><th>202 Accepted</th><td>No👎</td><td>Indeterminate</td></tr>
 					<tr><th>303 See Other</th><td>Yes✅</td><td>Unknown</td></tr>
 				</tbody>
@@ -77,6 +101,7 @@
 				<li><a href="https://tools.ietf.org/html/rfc8030">Generic Event Delivery Using HTTP Push</a></li>
 				<li><a href="https://tools.ietf.org/html/rfc8291">Message Encryption for Web Push</a></li>
 				<li><a href="https://tools.ietf.org/html/rfc8292">Voluntary Application Server Identification (VAPID) for Web Push</a></li>
+				<li><a href="https://w3c.github.io/push-api/">Push API</a></li>
 			</ul>
 		</main>
 	</body>
