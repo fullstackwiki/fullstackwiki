@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>503 Service Unavailable</title>
+		<meta name="description" content="The 503 Service Unavailable HTTP status code indicates a temporary problem with the server that will likely improve after some delay." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/503" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>503 Service Unavailable</h1>
+			<p>The 503 (Service Unavailable) status code indicates a temporary problem with the server that will likely improve after some delay; for example, scheduled or unscheduled maintenance, or general overload.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>Use this status code for things like scheduled maintenance, when the request queue is too long, or when the server is above CPU or I/O capacity.</p>
+			<p>Servers should use the <a href="../headers/Retry-After.xml">Retry-After response header</a> with a sensible value. For an overload condition, values of a few seconds are sensible. If down for maintenance, values of 60-300 seconds are sensible. Think about the tasks that your users are likely trying to run, when picking a value.</p>
+			<p>The response headers may include a <a href="../headers/Link.xml">Link header</a> with <a href="https://tools.ietf.org/html/rfc8631#section-6.4">rel=status</a> pointing to a service status page, that provides uptime, availability, and maintenance information.</p>
+			<p>The response body should also include a link to the uptime or status page for the service, if any; and a description of a nature of the outage.</p>
+			<p>Most load balancers can be configured to return this status code, to avoid forwarding requests to application servers while they are being worked on.</p>
+			<p>If the request contains a long payload, consider <a href="../close.xml">terminating the request</a> to avoid consuming network resources.</p>
+
+			<h3>See also: 507 (Insufficient Storage)</h3>
+			<p>If the server can serve most requests, but it cannot accept incoming payloads because it has no storage to do so, see <a href="507.xml">507 (Insufficient Storage)</a>.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Clients may retry the request after the duration specified by the <a href="../headers/Retry-After.xml">Retry-After response header</a>; or else retry the request after a short period (e.g. one second), with exponential backoff for subsequent failed requests.</p>
+			<p>If there is a response body, show it to the user, so they may make a decision about how to modify the request. For example, maybe there is important information about the scheduled maintenance window that the users can act on.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">503</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">503 Service Unavailable</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">Indicates a temporary problem with the server that will likely improve after a delay</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.503">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.6.3. 503 Service Unavailable</a></dd>
+			</dl>
+
+			<h2>Example</h2>
+			<pre type="message/http" w:space="indent">
+				HTTP/1.0 503 Service Unavailable
+				Retry-After: 3600
+				Content-Type: text/plain
+				Link: &lt;http://status.example.com/>;rel=status
+
+				Our servers are currently down for scheduled maintenance.
+				Maintenance begins Tue, 15 Nov 1994 08:12:31 GMT
+				Estimated outage time: 6 hours
+				Service status page: http://status.example.com/
+			</pre>
+
+			<!-- TODO: list implementations and how do you configure the page -->
+
+		</main>
+	</body>
+</html>
