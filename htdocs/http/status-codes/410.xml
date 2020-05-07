@@ -15,16 +15,23 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>410 Gone</h1>
-			<p>The 410 (Gone) HTTP status code indicates the requested resource previously existed on the server, but no longer does.</p>
+			<p>The 410 (Gone) HTTP status code indicates the requested resource previously existed on the server, but no longer does. It is handled the same way as <a href="404.xml">404 (Not Found)</a>, but serves to reassure users that the resource has not disappeared by mistake.</p>
 			<p>This status code is considered a 4xx client error because it is not a server error; the resource was deliberately removed and it is expected to be gone indefinitely.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>This status code is a more specific variation of <a href="404.xml">404 Not Found</a> which implies the resource previously existed.</p>
 			<p>If the resource was merely moved, servers should use <a href="308.xml">308 Permanent Redirect</a> instead.</p>
 
+			<h3>Implementing with a Database</h3>
+			<p>Implementing the 410 status code is most straightforward with a database that has a "deleted" flag. See <a href="#database-backed-applications">Database-backed applications</a> below.</p>
+
+			<h3>Implementing with a filesystem</h3>
+			<p>The simplest way to keep track of individual files that have been removed is to register them in a <code>.htaccess</code> file in the same directory (or similar file, if supported by your HTTP server), or else enter the file into the configuration file. See <i>Implementations</i> below for details.</p>
+			<p>Most users settle for returning a 404 response.</p>
+
 			<h2>Reading responses (clients)</h2>
 			<p>This is the expected error code after a resource has been deleted by a client.</p>
-			<p>See <a href="404.xml">404 Not Found</a> for additional handling.</p>
+			<p>Handling is similar to <a href="404.xml">404 Not Found</a>, see that status code for handling details.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -38,6 +45,34 @@
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#status.410">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;6.5.9. 410 Gone</a></dd>
 			</dl>
 
+			<h2>Implementations</h2>
+			
+			<h3 id="database-backed-applications">Database-backed applications</h3>
+			<p>Resources backed by a database may include a "deleted" flag to indicate the resource should no longer be accessible. An example SQL query:</p>
+			<pre w:space="indent">
+				SELECT deleted, data
+				FROM documents
+				WHERE id=?
+			</pre>
+			<p>
+				If there are no results, return <code>404</code>. If the "deleted" flag on the returned result is nonzero, return <code>410</code>. Otherwise, continue processing the result towards a <code>200 OK</code> response.
+			</p>
+
+			<h3>Apache httpd</h3>
+			<p>With mod_rewrite enabled, you may list regular expressions to file paths that will return 410 with the server-default error page. This may be used in a <code>.htaccess</code> file, if permitted by <a href="http://httpd.apache.org/docs/2.4/mod/core.html#AllowOverride">AllowOverride</a>. The error document may be specified by <a href="http://httpd.apache.org/docs/2.4/mod/core.html#errordocument">ErrorDocument</a>.</p>
+			<pre w:space="indent">
+				# G flag to set the status code to 410 Gone
+				RewriteRule "index\.html$" "-" [G]
+				ErrorDocument 410 /errors/removed.html
+			</pre>
+			
+			<h3>Nginx</h3>
+			<p>Use a <code>return</code> statement inside a <code>location</code> block to match patterns of files:</p>
+			<pre w:space="indent">
+				location /file/ {
+					return 410;
+				}
+			</pre>
 		</main>
 	</body>
 </html>

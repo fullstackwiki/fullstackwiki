@@ -27,9 +27,9 @@
 			<p>The exact contents of this error will likely vary by the namespace that the URI falls under. For example, a server might reserve URIs beginning with <code>http://example.com/~</code> for usernames; so when handling requests for users that do not exist, the server may opt to theme 404 responses in a different HTML theme than the rest of the website.</p>
 
 			<h2>Reading responses (clients)</h2>
-			<p>A <code>404 Not Found</code> or <code><a href="410.xml">410 Gone</a></code> response indicates that the resource was not found on the server. Clients that want to know if the resource exists or not should check both of these status codes.</p>
+			<p>A <code>404 Not Found</code> or <code><a href="410.xml">410 Gone</a></code> response indicates that the resource was not found on the server. In contrast, a 2xx response implies the resource does exist; any other status code is indeterminate.</p>
 			<p>If the client found this resource from a link on another page, it may be an invitation for the client to create the resource. Otherwise, the user may want to inform the server operator of a broken link.</p>
-			<p>If the client generated the URI from a URI template (such as an HTML form), it means the server has not created a resource with the specified parameters yet; the client may try creating the given resource using a PUT request.</p>
+			<p>If the client generated the URI from a URI template (such as an HTML form), it means the server has not created a resource with the specified parameters yet; the client may try creating the given resource using a <a href="../methods/PUT.xml">PUT request</a>.</p>
 			<p>Some servers are known to hide the existence of resources until a user is sufficiently authorized to view the resource. If the server is known to require credentials, verify that the credentials work before trying other error recovery options.</p>
 
 			<h2>Overview table</h2>

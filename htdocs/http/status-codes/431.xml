@@ -15,19 +15,22 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>431 Request Header Fields Too Large</h1>
-			<p>The 431 status code indicates that the server is unwilling to process the request because its header fields are too large.</p>
+			<p>The 431 status code indicates that the server is unwilling to process the request because there are too many headers to process, or one of the headers is too long to process.</p>
+			<p>Most HTTP requests by a Web browser will not contain more than a dozen headers, and will be less than a few hundred characters each. Servers will typically not accept more than a hundred headers, or a thousand characters on a line, because there is typically no affect on the response, and it only serves to negatively impact performance. So to prevent excessive resource usage, servers may reject these requests entirely.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Servers produce this status code when the server would have to consume an excessive amount of resources buffering the request headers. This can be triggered in two cases:</p>
 
 			<h3>Parsing terminated</h3>
-			<p>If the client request wrote too many headers, or a header that is too long, in such a way that then terminate parsing, return <code>431 Request Header Fields Too Large</code> with <code>Connection: close</code>, and close the stream.</p>
+			<p>If the client request wrote too many headers, or a header that is too long, in such a way that then terminate parsing, return <code>431 Request Header Fields Too Large</code> with <code>Connection: close</code>, and <a href="../close.xml">close the connection</a>.</p>
+			<p>It is an important feature that clients are able to provide information opportunistically, even if a server might not use it; so servers should accept many more headers than is needed to fill the request. Most HTTP servers allow a minimum of 100 headers at several thousand bytes each.</p>
 
 			<h3>Request fully parsed</h3>
-			<p>If the server fully parsed the request headers, the server may still indicate one of the headers is too long to be used in processing the request.</p>
+			<p>If the server fully parsed the request headers, but one of the headers is too long for the application to use, it may still indicate this with a 431 status. Include a response body describing the header, its proper usage, and a link to more information.</p>
 
 			<h2>Reading responses (clients)</h2>
 			<p>The request was not filled. The client may retry the request with fewer or shorter headers, but typically this requires user intervention to determine what part of the request triggered the error.</p>
+			<p>If the error happens because one of the headers is too long, some headers may be broken apart onto multiple lines. First look at the Cookie header, since its value changes over time at the direction of the server, which may not be aware of the sort of request it's asking the client to make.</p>
 
 			<h2>In HTTP/2</h2>
 			<p>Similar circumstances in HTTP/2 might instead generate a stream or connection error of <code>x000B (ENHANCE_YOUR_CALM)</code></p>
@@ -79,7 +82,7 @@
 			<p>The actual limit is configurable by two methods: a <code>--max-http-header-size</code> CLI argument passed to Node.js configures the maximum size of the request-line and each header (this is not configurable at runtime), and the <code>Server#maxHeadersCount</code> property configures the total number of allowed headers.</p>
 
 			<h3>Apache httpd</h3>
-			<p>httpd sends <a href="400.xml">400 (Client Error)</a> in this situation. <a href="https://github.com/apache/httpd/blob/ac762c1ae12b6620d6c7212f40b2d46e031d8d6c/server/protocol.c#L1207-L1208">This  status code is hard coded in the httpd source,</a> but the <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfields">LimitRequestFields</a> and <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize">LimitRequestFieldSize</a> directives configure the maximum number and size of headers; up to 100 headers of 8190 bytes each are permitted by default.</p>
+			<p>httpd sends <a href="400.xml">400 (Client Error)</a> in this situation. <a href="https://github.com/apache/httpd/blob/ac762c1ae12b6620d6c7212f40b2d46e031d8d6c/server/protocol.c#L1207-L1208">This  status code is hard coded in the httpd source,</a> but the <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfields">LimitRequestFields</a> and <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize">LimitRequestFieldSize</a> directives configure the maximum number and size of headers; up to 100 headers of 4094 bytes each are permitted by default.</p>
 
 			<h2>See also</h2>
 			<ul>

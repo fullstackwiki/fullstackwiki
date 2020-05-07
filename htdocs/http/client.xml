@@ -63,18 +63,24 @@
 
 			<h2>Connection options</h2>
 			<h3>Connect header</h3>
-			<p>This is a hop-by-hop header and must be consumed and, if necessary, emitted by every intermediate node (gateways and proxies).</p>
+			<p><i>Main article: <a href="headers/Connection.xml">the Connection header</a>.</i></p>
+			<p>This is a hop-by-hop header: a header describing the connection details, instead of the message itself. This header, and any headers named by it, must be consumed.</p>
 
 			<h2>List acceptable responses</h2>
 			<p>Clients may specify the kinds of responses they'd prefer to receive, along a variety of dimensions:</p>
 
 			<h3>Accept-Charset</h3>
-			<p>The client can list the kinds of charsets it supports, so that the server may send a variation the client is known to understand.</p>
+			<p><i>Main article: <a href="headers/Accept-Charset.xml">Accept-Charset</a>.</i></p>
+			<p>The client can list the kinds of character sets it supports, so that the server may send a variation the client is known to understand.</p>
+			<p>This is typically omitted by Web browsers; most servers will use UTF-8 which is suitable for virtually all uses.</p>
 
 			<h3>Accept-Encoding</h3>
+			<p><i>Main article: <a href="headers/Accept-Encoding.xml">Accept-Encoding</a>.</i></p>
 			<p>The client can list the kinds of content-codings it supports, for example, compressed streams.</p>
+			<p>Most clients will want to support <code>Accept-Encoding: gzip, deflate</code></p>
 
 			<h3>Accept-Language</h3>
+			<p><i>Main article: <a href="headers/Accept-Language.xml">Accept-Language</a>.</i></p>
 			<p>The client can list the kinds of natural languages the user would prefer to receive.</p>
 
 			<h3>TE</h3>

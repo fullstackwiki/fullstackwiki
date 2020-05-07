@@ -16,6 +16,7 @@
 
 			<h1>Accept-Charset</h1>
 			<p>The Accept-Charset header describes which character sets are acceptable in textual response content.</p>
+			<p>As most servers have standardized on using UTF-8, use of this header has disappeared.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
