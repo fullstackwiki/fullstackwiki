@@ -47,7 +47,7 @@
 			<h2>Example</h2>
 			<pre type="message/http" w:space="indent">
 				HTTP/1.1 431 Request Header Fields Too Large
-				Server: httpd
+				Server: httpd/2.4.1
 				Connection: close
 			</pre>
 
@@ -78,8 +78,8 @@
 			<p>The same error is generated for too long a request URI, too many headers, or a header that is too long; these cannot be distinguished.</p>
 			<p>The actual limit is configurable by two methods: a <code>--max-http-header-size</code> CLI argument passed to Node.js configures the maximum size of the request-line and each header (this is not configurable at runtime), and the <code>Server#maxHeadersCount</code> property configures the total number of allowed headers.</p>
 
-			<!-- TODO: Link Apache size limits -->
-			<!-- <h3>Apache HTTP Server</h3> -->
+			<h3>Apache httpd</h3>
+			<p>httpd sends <a href="400.xml">400 (Client Error)</a> in this situation. <a href="https://github.com/apache/httpd/blob/ac762c1ae12b6620d6c7212f40b2d46e031d8d6c/server/protocol.c#L1207-L1208">This  status code is hard coded in the httpd source,</a> but the <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfields">LimitRequestFields</a> and <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize">LimitRequestFieldSize</a> directives configure the maximum number and size of headers; up to 100 headers of 8190 bytes each are permitted by default.</p>
 
 			<h2>See also</h2>
 			<ul>

@@ -19,6 +19,7 @@
 
 			<h2>Writing responses (servers)</h2>
 			<p>Use this status code for things like scheduled maintenance, when the request queue is too long, or when the server is above CPU or I/O capacity.</p>
+			<p>For alleviating very high capacity, the server may simply decide to refuse connections. Servers may have to balance this option against the possibility that clients do not implement exponential backoff, and immediately try to establish new connections.</p>
 			<p>Servers should use the <a href="../headers/Retry-After.xml">Retry-After response header</a> with a sensible value. For an overload condition, values of a few seconds are sensible. If down for maintenance, values of 60-300 seconds are sensible. Think about the tasks that your users are likely trying to run, when picking a value.</p>
 			<p>The response headers may include a <a href="../headers/Link.xml">Link header</a> with <a href="https://tools.ietf.org/html/rfc8631#section-6.4">rel=status</a> pointing to a service status page, that provides uptime, availability, and maintenance information.</p>
 			<p>The response body should also include a link to the uptime or status page for the service, if any; and a description of a nature of the outage.</p>
