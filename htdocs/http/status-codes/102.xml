@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>102 Processing</title>
+		<meta name="description" content="102 Processing is an intermediate message" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main about="tag:fullstack.wiki,2018:ns/http/status-codes/102" typeof="w:HTTP-StatusCode">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>102 Processing</h1>
+			<p>The 102 (Processing) provides a way for the server to indicate it is still working on the request, without committing to a final response code. It can serve to confirm that processing has begun or is in progress, but it may take some time to generate a response.</p>
+			<p>This status code was defined by WebDAV, but available for use in any application.</p>
+
+			<h2>Writing responses (servers)</h2>
+			<p>This status code may be used whenever the server may wish to indicate it received the request, but handling is just taking a long time. If handling is going to take more than 5 seconds, it can serve to reassure users and user-agents that there's no need to cancel the operation.</p>
+			<p>Servers may send this header multiple times, as often as necessary to convey that the request is still being processed. Servers should not wait so long that the client may timeout, but it should not be so quick that it uses excess bandwidth, or leaves multiple 102 Processing messages unacknowledged by the client at the same time. Somewhere between 1-10 seconds is reasonable.</p>
+			<p>It is not the final status code. Only HTTP/1.1 and HTTP/2 support the protocol elements necessary to send a 1xx request.</p>
+
+			<h2>Reading responses (clients)</h2>
+			<p>Most clients receiving will ignore 1xx status codes. If applicable, clients may wish to increment a spinner, or offer some sort of status update whenever 102 (Processing) is received.</p>
+			<p>Even without application level handling, it can still serve to reset an inactivity timer at the operating system or network level.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-StatusCode-value">102</dd>
+				<dt>Message</dt>
+				<dd property="w:HTTP-StatusCode-line">102 Processing</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-StatusCode-description">The server is still processing the request.</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://tools.ietf.org/html/rfc2518#section-10.1">RFC 2518: WebDAV (obsoleted) &#xA7;10.1. 102 Processing</a></dd>
+			</dl>
+
+			<h2>History</h2>
+			<h3>RFC 2518 (1999-02)</h3>
+			<p>The 102 (Processing) status code appears in the first publication of WebDAV, <a href="https://tools.ietf.org/html/rfc2518">RFC 2518</a>.</p>
+
+			<h3>RFC 4918 (2007-06)</h3>
+			<p>The 102 (Processing) code had not seen any implementations since it was first defined almost a decade prior, and so was omitted from the subsequent revision to WebDAV, <a href="https://tools.ietf.org/html/rfc4918">RFC 4918</a>. It was not removed from the IANA registry however, and remains legal to use for compatible purposes.</p>
+
+			<h3>draft-wright-http-progress (2020)</h3>
+			<p>An <a href="https://tools.ietf.org/html/draft-wright-http-progress-02">Internet-Draft draft-wright-http-progress</a> proposes to revive the usage of 102 (Processing), now that more user-agents and HTTP utilities support 1xx status codes.</p>
+
+			<h2>See also</h2>
+			<ul>
+				<li><a href="https://evertpot.com/http/102-processing">HTTP 102 by Evert Pot</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
