@@ -58,8 +58,8 @@
 			<h2>Implementations</h2>
 
 			<h3>Node.js (http/https)</h3>
-			<p>Node.js automatically handles too-long or too-many headers with a 431 status code and a blank body.</p>
-			<p>A custom response may be sent in HTTP/1.1 responses for a <code>clientError</code> event; header size or count overflows will emit an error with <code>err.code === "HPE_HEADER_OVERFLOW"</code>. The second argument will be the raw socket, which must be written to, then destroyed.</p>
+			<p>Node.js automatically handles too-long or too-many headers with a 431 status code and a blank body. This error is also generated when the request-line is too long, instead of a <a href="414.xml">414 (URI Too Long)</a> error. These cannot be distinguished, either by the client, or the application.</p>
+			<p>A custom response may be sent in HTTP/1.1 responses by listening for the <code>clientError</code> event; request-line overflows, header size overflows, or exceeding the maximum header count will emit an error where <code>err.code === "HPE_HEADER_OVERFLOW"</code>. The second argument will be the raw socket, which must be written to, then destroyed.</p>
 			<pre type="application/ecmascript" w:space="indent">
 				var http = require('http');
 				var server = http.createServer(/* ... */);
@@ -78,11 +78,10 @@
 					socket.destroy(err);
 				});
 			</pre>
-			<p>The same error is generated for too long a request URI, too many headers, or a header that is too long; these cannot be distinguished.</p>
-			<p>The actual limit is configurable by two methods: a <code>--max-http-header-size</code> CLI argument passed to Node.js configures the maximum size of the request-line and each header (this is not configurable at runtime), and the <code>Server#maxHeadersCount</code> property configures the total number of allowed headers.</p>
+			<p>Two limits are configurable: a <code>--max-http-header-size</code> CLI argument passed to Node.js configures the maximum size of the request-line and each header (this is not configurable at runtime), and the <code>Server#maxHeadersCount</code> property configures the total number of allowed headers.</p>
 
 			<h3>Apache httpd</h3>
-			<p>httpd sends <a href="400.xml">400 (Client Error)</a> in this situation. <a href="https://github.com/apache/httpd/blob/ac762c1ae12b6620d6c7212f40b2d46e031d8d6c/server/protocol.c#L1207-L1208">This  status code is hard coded in the httpd source,</a> but the <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfields">LimitRequestFields</a> and <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize">LimitRequestFieldSize</a> directives configure the maximum number and size of headers; up to 100 headers of 4094 bytes each are permitted by default.</p>
+			<p>httpd sends <a href="400.xml">400 (Client Error)</a> in this situation. <a href="https://github.com/apache/httpd/blob/ac762c1ae12b6620d6c7212f40b2d46e031d8d6c/server/protocol.c#L1207-L1208">This status code is hard coded in the httpd source,</a> but the <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfields">LimitRequestFields</a> and <a href="https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize">LimitRequestFieldSize</a> directives configure the maximum number and size of headers; up to 100 headers of 4094 bytes each are permitted by default.</p>
 
 			<h2>See also</h2>
 			<ul>

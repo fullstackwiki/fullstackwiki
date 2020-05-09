@@ -63,7 +63,7 @@
 				<dd>The first purely-HTTP method of checking for updates. This is typically combined with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a> to only receive a response if the server has new information to be read.</dd>
 
 				<dt>Long polling</dt>
-				<dd>A technique where an HTTP server waits to respond to a request until it has new information. This may be implemented with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a> and a header that specifies to wait until there is an update that permits a 200 OK response, or some status besides 304 Not Modified.</dd>
+				<dd>A technique where an HTTP server waits to respond to a request until it has new information. This may be implemented with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a>, and a request header specifying to wait until there is new data, instead of responding with 304 (Not Modified).</dd>
 
 				<dt>Email</dt>
 				<dd>Perhaps the oldest and most well known real-time notification mechanism. Email supports sending signed machine-readable documents, but is typically used for sending formatted messages for people to read.</dd>
@@ -88,6 +88,42 @@
 					<tr><th>303 See Other</th><td>Yes✅</td><td>Unknown</td></tr>
 				</tbody>
 			</table>
+
+			<h2>Suggested Asynchronous Flow</h2>
+			<p>An asynchronous workflow begins when a client makes an unsafe request (typically POST, but potentially any unsafe method). Handling begins by collecting data necessary to begin the operation. Typically, the user should provide all the information necessary for the service to run the entire operation.</p>
+			<p>The information collected should include the client's preferences for reading the result. Many of these preferences are provided in a <a href="headers/Prefer.xml">Prefer request header</a>. Other service-specific preferences should be accepted in the request body.</p>
+			<p>Once the service has received data from the user's client, the operation may be split up into multiple phases:</p>
+
+			<h3>Synchronous return</h3>
+			<p>The <i>synchronous return phase</i> is the phase the short period of time (preferably less than one second) where the service is acting similar to a synchronous request. This includes reading the upload (if any), parsing it, checking for obvious errors, and responding to errors that prevent a background operation from being kicked off.</p>
+
+			<h3>Wait</h3>
+			<p>The <i>wait phase</i> occurs after the client has determined it may begin working on the operation, but does not know how long the operation will take to complete. At this point, the server should send a <a href="status-codes/102.xml">102 (Processing)</a> intermediate response to let the client know that processing has begun. The server may send a 102 (Processing) every few seconds to keep the client informed that the operation is still processing.</p>
+			<p>The client may specify a maximum duration for this phase with the <a href="preferences/wait.xml">wait</a> HTTP preference. The server may also enforce its own maximum wait time, typically to conserve server resources and mitigate risk of network failures. If the operation completes within this time, the service may generate a synchronous response.</p>
+			<p>If the operation exceeds the "wait" duration, or it becomes clear the operation will take longer than this, the service may immediately move to the next phase, to background the operation.</p>
+			<p>In many cases, the operation will always be longer than the duration the server is prepared to wait, in which case this phase will always be very short.</p>
+
+			<h3>Accepted into background</h3>
+			<p>The <i>accepted into background phase</i> occurs once the service knows that the operation will take a very long time to finish; and so wishes to end the initial request with a <a href="status-codes/202.xml">202 (Accepted)</a> response. This tells the client that the operation is still being processed, and it will need to make additional requests or listen for notifications in order to know when the operation finishes.</p>
+			<p>This response may include a few elements:</p>
+			<dl>
+				<dt>Content-Location header</dt>
+				<dd>Specifies where the representation of this response may be re-requested from. It may change over time as the operation progresses, but cannot be content-type negotiated.</dd>
+				<dt>Location header</dt>
+				<dd>Presumably, this specifies a resource related to the current one, in a similar fashion to 201 (Created).</dd>
+				<dt>Link header</dt>
+				<dd>The Link header may specify additional resources and their relationship to the current request.</dd>
+			</dl>
+			<aside>
+				<p>There is no standardized mechanism to follow-up on requests, so clients will have to be service/application specific. In particular, the meaning of the Location header is undefined in 202 responses.</p>
+				<p>The semantics of the Link header aren't immediately clear for responses besides GET/HEAD requests: is the link from the response body, the Content-Location, or the effective request URI?</p>
+			</aside>
+			<p>With this information, the client may make additional information to retrieve the status of the request.</p>
+			<p>The client may also receive notifications from the service when the status of the operation changes in a significant way, for example, it has completed, failed, or requires additional information. Depending on the notification method, the client registers contact information with the service during the initial request.</p>
+
+			<h3>Information collection</h3>
+			<p>An <i>information collection event</i> occurs when the service requires additional information in order to continue processing. Typically, the initial request should provide all the information necessary to complete the request, so this usually indicates that human intervention is necessary.</p>
+			<p>If this occurs during the synchronous or wait phases, this immediately accepts the operation into the background, since this pauses operation indefinitely. The client at this point will read the response, and determine how to respond to it.</p>
 
 			<h2>Examples/Implementations</h2>
 			<ul>

@@ -49,7 +49,7 @@
 			<p>This response allows a cache to store the response for about one year (31104000 seconds is 360 days).</p>
 
 			<h3>Requiring revalidation</h3>
-			<p>Use this if the resource has a modest possibility of changing, and the user should know that right away, then you can require that the user-agent checks for changes before using a stored response. For example, a currently playing song, task being worked on, or other thing. "Infrequent" is relative to how often the resource is accessed—if a user checks the resource every few seconds, infrequent could mean every few minutes.</p>
+			<p>Use this if the resource has a modest possibility of changing, and you always want the user-agent to check if there's a newer version available. For example, a currently playing song, task being worked on, or other thing. "Infrequent" is relative to how often the resource is accessed—if a user checks the resource every few seconds, infrequent could mean every few minutes.</p>
 			<pre type="message/http" w:space="indent">
 				ETag: {etag}
 				Last-Modified: {mtime}
@@ -135,6 +135,7 @@
 				<li><a href="https://httpwg.org/specs/rfc7234.html">RFC 7234: HTTP Caching</a></li>
 				<li><a href="https://cache-tests.fyi/">HTTP Caching Tests</a></li>
 				<li><a href="https://www.mnot.net/cache_docs/">Caching Tutorial by Mark Nottingham (HTTP WG chair)</a></li>
+				<li><a href="https://redbot.org/">REDbot: linter for HTTP resources</a></li>
 			</ul>
 		</main>
 	</body>
