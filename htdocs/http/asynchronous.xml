@@ -16,23 +16,12 @@
 
 			<p>Suppose a person owns a newfangled electric tea kettle running an HTTP server; how can other devices use this to listen for when the kettle is finished boiling water? We don't know quite when the task will complete; but we want to receive a message when the <i>operation</i> completes. This is called an <i>asynchronous operation</i> in HTTP.</p>
 
-			<p>Use the "asynchronous operation workflow" when you need to support:</p>
-			<ul>
-				<li>Receiving a notification when an operation finishes, e.g. when a tea kettle has finished boiling water</li>
-				<li>Receiving a notification when an event happens, e.g. when a new blog post is published</li>
-			</ul>
-
 			<h2>Mechanisms for returning an Asynchronous Response</h2>
 			<ul>
 				<li><a href="preferences/respond-async.xml">Prefer: respond-async</a></li>
 				<li><a href="status-codes/102.xml">102 (Processing)</a></li>
 				<li><a href="status-codes/202.xml">202 (Accepted)</a></li>
-				<li>Websockets</li>
-				<li>Web Push</li>
-				<li>Hook endpoints (Webhooks)</li>
-				<li>Polling with exponential backoff</li>
-				<li>Long polling</li>
-				<li>Email</li>
+				<li><a href="../web/notifications.xml">Notifications</a></li>
 			</ul>
 
 			<h2>Glossary</h2>
@@ -47,27 +36,9 @@
 			</dl>
 
 			<h2>Mechanisms for real-time notifications</h2>
+			<p>In order to make the results of an operation available, the user must have some way of receiving the results outside the context of the response. This is called a <a href="../web/notifications.xml">transactional notification</a>, and may be implemented in a variety of ways.</p>
 			<p>The simplest mechanism is to make the results of the operation available from a resource that the user must poll: re-request until the resource says the operation is complete.</p>
 			<p>The other way to receive a <i>notification</i> from the service. The user must either run a server listening for a message, or the user must connect to a service where they may receive an message in real time.</p>
-			<dl>
-				<dt>Websockets</dt>
-				<dd>A datagram protocol specifically designed for shuttling arbitrary messages asynchronously, tunneled over HTTP.</dd>
-
-				<dt>Web Push</dt>
-				<dd>A protocol optimized for sending notifications to mobile devices.</dd>
-
-				<dt>Hook endpoints (Webhooks)</dt>
-				<dd>A technique where a user registers a URL endpoint with a service, with which notifications are delivered using a POST request to that endpoint. Implementations must be careful to check the authenticity of notifications, since the endpoint is typically accessible on the public Internet.</dd>
-
-				<dt>Polling with exponential backoff</dt>
-				<dd>The first purely-HTTP method of checking for updates. This is typically combined with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a> to only receive a response if the server has new information to be read.</dd>
-
-				<dt>Long polling</dt>
-				<dd>A technique where an HTTP server waits to respond to a request until it has new information. This may be implemented with <a href="headers/If-Modified-Since.xml">If-Modified-Since</a>, and a request header specifying to wait until there is new data, instead of responding with 304 (Not Modified).</dd>
-
-				<dt>Email</dt>
-				<dd>Perhaps the oldest and most well known real-time notification mechanism. Email supports sending signed machine-readable documents, but is typically used for sending formatted messages for people to read.</dd>
-			</dl>
 
 			<h3>Status Codes</h3>
 			<p>This is an overview on how clients should handle status codes relating to an operation they requested.</p>
@@ -91,7 +62,7 @@
 
 			<h2>Suggested Asynchronous Workflow</h2>
 			<p>An asynchronous workflow begins when a client makes an unsafe request (typically POST, but potentially any unsafe method). Handling begins by collecting data necessary to begin the operation. Typically, the user should provide all the information necessary for the service to run the entire operation.</p>
-			<p>The information collected should include the client's preferences for reading the result. Many of these preferences are provided in a <a href="headers/Prefer.xml">Prefer request header</a>. Other service-specific preferences should be accepted in the request body.</p>
+			<p>The information collected should include the client's preferences for reading the result. Many of these preferences are provided in a <a href="headers/Prefer.xml">Prefer request header</a>. Other preferences are service-specific, and should be accepted in the request body. If the client wishes to receive <a href="../web/notifications.xml">push notifications</a>, it should be specified at this time.</p>
 			<p>Once the service has received data from the user's client, the operation may be split up into multiple phases:</p>
 
 			<h3>Synchronous return</h3>
@@ -156,19 +127,8 @@
 			</pre>
 
 			<h2>Examples/Implementations</h2>
-			<ul>
-				<li><a href="https://developer.github.com/webhooks/">GitHub's Webhooks</a></li>
-			</ul>
 			<aside><p>If you know of additional examples, please add or submit them.</p></aside>
 
-			<h2>See also</h2>
-			<ul>
-				<li><a href="https://requestbin.com/blog/working-with-webhooks/">RequestBin: Webhooks — The Definitive Guide</a></li>
-				<li><a href="https://tools.ietf.org/html/rfc8030">Generic Event Delivery Using HTTP Push</a></li>
-				<li><a href="https://tools.ietf.org/html/rfc8291">Message Encryption for Web Push</a></li>
-				<li><a href="https://tools.ietf.org/html/rfc8292">Voluntary Application Server Identification (VAPID) for Web Push</a></li>
-				<li><a href="https://w3c.github.io/push-api/">Push API</a></li>
-			</ul>
 		</main>
 	</body>
 </html>
