@@ -19,6 +19,7 @@
 			<h2>Mechanisms for returning an Asynchronous Response</h2>
 			<ul>
 				<li><a href="preferences/respond-async.xml">Prefer: respond-async</a></li>
+				<li><a href="preferences/wait.xml">Prefer: wait=<i>n</i></a></li>
 				<li><a href="status-codes/102.xml">102 (Processing)</a></li>
 				<li><a href="status-codes/202.xml">202 (Accepted)</a></li>
 				<li><a href="../web/notifications.xml">Notifications</a></li>
@@ -38,7 +39,18 @@
 			<h2>Mechanisms for real-time notifications</h2>
 			<p>In order to make the results of an operation available, the user must have some way of receiving the results outside the context of the response. This is called a <a href="../web/notifications.xml">transactional notification</a>, and may be implemented in a variety of ways.</p>
 			<p>The simplest mechanism is to make the results of the operation available from a resource that the user must poll: re-request until the resource says the operation is complete.</p>
-			<p>The other way to receive a <i>notification</i> from the service. The user must either run a server listening for a message, or the user must connect to a service where they may receive an message in real time.</p>
+			<p>The other way to receive a <i>notification</i> from the service. The user must either run a server listening for a message (realtime response), or the user must connect to a service where they may receive an message in real time (realtime push).</p>
+			<p>If the client intends to listen for a realtime push, it must register the notification settings with the service:</p>
+			<dl>
+				<dt>Callback (webhook)</dt>
+				<dd>A field in the request body may specify an address to make POST requests to. The service may wish to test this endpoint with a GET request before returning.</dd>
+				<dt>Email</dt>
+				<dd>A field in the request body may specify an address to deliver emails to. The <a href="headers/From.xml">From</a> header may also contain an email address, but do not send transactional notifications to this address unless specified by the user; it is typically understood to be a human's mailbox.</dd>
+				<dt>Web Push</dt>
+				<dd>The service has to receive the push service address, somehow.</dd>
+				<dt>Chat service</dt>
+				<dd>A chat protocol such as XMPP, IRC, or a proprietary Web-based service is designed for delivering notifications. Users have to specify various connection details and delivery targets, depending on the protocol and service used.</dd>
+			</dl>
 
 			<h3>Status Codes</h3>
 			<p>This is an overview on how clients should handle status codes relating to an operation they requested.</p>
@@ -56,7 +68,7 @@
 					<tr><th>200 OK</th><td>Yes✅</td><td>Yes✅</td></tr>
 					<tr><th>201 Created</th><td>Yes✅</td><td>Yes✅</td></tr>
 					<tr><th>202 Accepted</th><td>No⏰</td><td>Indeterminate</td></tr>
-					<tr><th>303 See Other</th><td>Yes✅</td><td>Unknown</td></tr>
+					<tr><th>303 See Other</th><td>Indeterminate</td><td>Unknown</td></tr>
 				</tbody>
 			</table>
 
@@ -66,7 +78,7 @@
 			<p>Once the service has received data from the user's client, the operation may be split up into multiple phases:</p>
 
 			<h3>Synchronous return</h3>
-			<p>The <i>synchronous return phase</i> is the phase the short period of time (preferably less than one second) where the service is acting similar to a synchronous request. This includes reading the upload (if any), parsing it, checking for obvious errors, and responding to errors that prevent a background operation from being kicked off.</p>
+			<p>The <i>synchronous return phase</i> is the phase the short period of time (preferably less than one second) where the service behaves like a synchronous request. This includes reading the upload (if any), parsing it, checking for obvious errors, and responding to errors that prevent a background operation from being kicked off.</p>
 
 			<h3>Wait</h3>
 			<p>The <i>wait phase</i> occurs after the client has determined it may begin working on the operation, but does not know how long the operation will take to complete. At this point, the server should send a <a href="status-codes/102.xml">102 (Processing)</a> intermediate response to let the client know that processing has begun. The server may send a 102 (Processing) every few seconds to keep the client informed that the operation is still processing.</p>
@@ -74,6 +86,10 @@
 			<p>If the operation exceeds the "wait" duration, or it becomes clear the operation will take longer than this, the service may immediately move to the next phase, to background the operation.</p>
 			<p>In many applications, the operation will always be longer than the duration the server is prepared to wait, in which case this phase will always be very short.</p>
 			<p>If the request does not contain a <a href="headers/Prefer.xml">Prefer</a> header, then choose values sensible for a Web browser. Most people are not willing to wait more than a few seconds before becoming impatient, so two seconds is suggested.</p>
+			<p>Clients that do not support notifications and asynchronous responses (e.g. robots or simple scripts) may send <code>Prefer: wait=3600</code> or some similar large value. Requests that end up taking longer than the specified time may be considered an error.</p>
+			<aside>
+				<p>There's currently no standard way to specify "no-asynchronous-response, prefer to wait an indefinitely long time"; but a large wait value should be sufficient for most clients.</p>
+			</aside>
 
 			<h3>Accepted into background</h3>
 			<p>The <i>accepted into background phase</i> occurs once the service knows that the operation cannot complete within the wait phase; and so wishes to direct the user to a resource that will be updated as the operation progresses. This tells the client that the operation is still being processed, and it will need to make additional requests or listen for notifications in order to know when the operation finishes.</p>
@@ -103,7 +119,7 @@
 			<p>The user may wish to modify the operation while it is in progress, such as canceling further work on the operation, or changing how the user receives notifications. This may be done with standard hypermedia features, such as a POST target. This information should be available inside the status document, or in a Link response header with a rel describing the action, for example:</p>
 			<pre w:space="indent">
 				HTTP/1.1 200 OK
-				Link: &lt;http://example.com/op/42?action=cancel&gt;;rel="http://example.com/ns/cancel"
+				Link: &lt;http://example.com/op/42.cancel&gt;;rel="http://example.com/ns/cancel"
 			</pre>
 			<p>In this example, the client sees a link with the rel <code>http://example.com/ns/cancel</code> which it understands as pointing to a resource that will cancel the operation via a POST request.</p>
 			<p>If the status page is represented in HTML, it may contain forms for each of the permitted state changes.</p>
