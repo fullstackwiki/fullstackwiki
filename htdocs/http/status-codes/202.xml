@@ -16,18 +16,13 @@
 
 			<h1>202 Accepted</h1>
 			<p>The 202 Accepted status code indicates that the request has been queued for processing, but final results are not yet available.</p>
-
 			<p>A 202 response is noncommittal; there may be an error or other problem that prevents the operation from completing successfully. However, there is currently no standard way of correlating the final outcome to an HTTP status code.</p>
-
-
 			<p>There is currently no standard for waiting on asynchronous operations, see <a href="../asynchronous.xml">Asynchronous Operations in HTTP</a> for suggestions on how to implement this feature.</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Applications may find the 202 status code useful for any situation where they need to respond to a request, but needs to be noncommittal with how the operation will eventually resolve.</p>
-			<p>Servers implementing this status code will want to observe the <a href="../preferences/respond-async.xml">respond-async</a> and <a href="../preferences/wait.xml">wait</a> tokens in the Prefer header.</p>
-
+			<p>Use of this status may be affected by the <a href="../preferences/respond-async.xml">respond-async</a> and <a href="../preferences/wait.xml">wait</a> tokens in the Prefer header.</p>
 			<p>If the operation can be considered completed instead, see <a href="201.xml">201 (Created)</a>.</p>
-
 			<p>Services may also consider <a href="303.xml">303 (See Other)</a> to redirect the client to a page that contains information about the current status of the request. Servers may wish to use 303 by default (for Web browser support), unless you know a 202 status code is desired (for example, because of the presence of the respond-async preference).</p>
 
 			<h2>Reading responses (clients)</h2>

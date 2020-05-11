@@ -17,6 +17,7 @@
 			<p>If clients anticipate making a request that will take some time, and would like to limit the amount of time to wait before getting some response from a server, then add a <a href="../headers/Prefer.xml">Prefer header</a> with <code>wait=<i>n</i></code> to the request, where <code>n</code> is a whole number in seconds.</p>
 
 			<h2>Reading requests (servers)</h2>
+			<p><i>Main article: <a href="../asynchronous.xml">asynchronous responses</a></i></p>
 			<p>Exact handling of is left to the discretion of the server.</p>
 			<p>If a server might in some cases return a status code signaling completion, and in other cases return an asynchronous <code>202 Accepted</code>, depending on runtime conditions, then the value of the <code>wait</code> preference should influence how long the server will wait before sending <code>202 Accepted</code>. Send <a href="../headers/Preference-Applied.xml">Preference-Applied</a> if this preference was used to select a behavior.</p>
 			<p>Servers may implement this by scheduling a timeout at the start of the request, and if at the end of the timeout, the response has not started, then trigger the asynchronous response.</p>

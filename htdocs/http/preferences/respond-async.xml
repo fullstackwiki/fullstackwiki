@@ -19,6 +19,7 @@
 			<p>Clients should also send a <a href="wait.xml">wait preference</a> so that fast operations bypass the extra request necessary to process <code>202 Accepted</code>.</p>
 
 			<h2>Reading requests (servers)</h2>
+			<p><i>Main article: <a href="../asynchronous.xml">asynchronous responses</a></i></p>
 			<p>If the server has functionality to return <code>202 Accepted</code>, in addition to <code>200 OK</code>, <code>201 Created</code>, or a similar status code that indicates the request was completed successfully, then the presence of the <code>respond-async</code> preference should cause the server to select the <code>202 Accepted</code> variation. Include <code>Preference-Applied: respond-async</code> in the response to indicate this was a result of the client's request header.</p>
 			<p>Absent the <code>respond-async</code> preference, servers should avoid sending <code>202 Accepted</code> responses, since clients that do not implement asynchronous responses might see the unknown 2xx status code and treat it the same as a <a href="../status-codes/200.xml">200 OK</a>, even though the requested action hasn't been completed yet.</p>
 
