@@ -39,7 +39,8 @@
 			<h2>Mechanisms for real-time notifications</h2>
 			<p>In order to make the results of an operation available, the user must have some way of receiving the results outside the context of the response. This is called a <a href="../web/notifications.xml">transactional notification</a>, and may be implemented in a variety of ways.</p>
 			<p>The simplest mechanism is to make the results of the operation available from a resource that the user must poll: re-request until the resource says the operation is complete.</p>
-			<p>The other way to receive a <i>notification</i> from the service. The user must either run a server listening for a message (realtime response), or the user must connect to a service where they may receive an message in real time (realtime push).</p>
+			<p>The other way to receive a <i>notification</i> from the service. The user must either connect to a service where they may receive an message in real time (realtime request), or run a server listening for a message (realtime push).</p>
+			<p>For on-demand and realtime requests, the server simply needs to wait for the client to connect, nothing special needs to be configured.</p>
 			<p>If the client intends to listen for a realtime push, it must register the notification settings with the service:</p>
 			<dl>
 				<dt>Callback (webhook)</dt>
@@ -53,13 +54,7 @@
 			</dl>
 
 			<h3>Status Codes</h3>
-			<p>This is an overview on how clients should handle status codes relating to an operation they requested.</p>
-			<p>What important distinctions does a client need to know about?</p>
-			<ul>
-				<li>Operation finished</li>
-				<li>Operation successful</li>
-				<li>Operation result URI with additional information about the request</li>
-			</ul>
+			<p>A resource that supports asynchronous operations may return different responses, depending on how the operation is being handled:</p>
 			<table>
 				<thead>
 					<tr><th>Status Code</th><th>Complete</th><th>Successful</th></tr>
