@@ -73,10 +73,11 @@
 			<p>The client may specify a maximum duration for this phase with the <a href="preferences/wait.xml">wait</a> HTTP preference. The server may also enforce its own maximum wait time, typically to conserve server resources and mitigate risk of network failures. If the operation completes within this time, the service may generate a synchronous response.</p>
 			<p>If the operation exceeds the "wait" duration, or it becomes clear the operation will take longer than this, the service may immediately move to the next phase, to background the operation.</p>
 			<p>In many applications, the operation will always be longer than the duration the server is prepared to wait, in which case this phase will always be very short.</p>
+			<p>If the request does not contain a <a href="headers/Prefer.xml">Prefer</a> header, then choose values sensible for a Web browser. Most people are not willing to wait more than a few seconds before becoming impatient, so two seconds is suggested.</p>
 
 			<h3>Accepted into background</h3>
-			<p>The <i>accepted into background phase</i> occurs once the service knows that the operation cannot complete within the wait phase; and so wishes to end the initial request with a <a href="status-codes/202.xml">202 (Accepted)</a> response, and a link to a resource that will be updated as the operation progresses. This tells the client that the operation is still being processed, and it will need to make additional requests or listen for notifications in order to know when the operation finishes.</p>
-			<p>This response may include a few elements:</p>
+			<p>The <i>accepted into background phase</i> occurs once the service knows that the operation cannot complete within the wait phase; and so wishes to direct the user to a resource that will be updated as the operation progresses. This tells the client that the operation is still being processed, and it will need to make additional requests or listen for notifications in order to know when the operation finishes.</p>
+			<p>If the initial request contains a <a href="preferences/respond-async.xml">respond-async preference</a>, then return <a href="status-codes/202.xml">202 (Accepted)</a> response, and relevant information:</p>
 			<dl>
 				<dt>Content-Location header</dt>
 				<dd>Specifies where the representation of this response may be re-requested from. It may change over time as the operation progresses, but cannot be content-type negotiated.</dd>
@@ -92,6 +93,7 @@
 			</aside>
 			<p>With this information, the client may retrieve the status of the request.</p>
 			<p>The client may also receive notifications from the service when the status of the operation changes in a significant way, for example, it has completed, failed, or requires additional information. Depending on the notification method, the client registers contact information with the service during the initial request.</p>
+			<p>If the initial request lacks a Prefer header, then treat the request as if it's from a Web browser, and return a <a href="status-codes/303.xml">303 (See Other)</a> response. The redirect target should be able to show the current status in HTML (or other formats, if Content-Type negotiated); and may include a script that subscribes to updates (for example, over WebSockets).</p>
 
 			<h3>Information request</h3>
 			<p>An <i>information request</i> occurs when the service requires additional information in order to continue processing. Typically, the initial request should provide all the information necessary to complete the request, so this usually indicates that human intervention is necessary.</p>
