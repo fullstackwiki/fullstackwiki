@@ -1,21 +1,23 @@
 "use strict";
 var fs = require('fs');
+var assert = require('assert');
 
 const {
 	Application,
-	RouteStaticFile,
+	RouteFilesystem,
 	RouteLocalReference,
-	RoutePipeline,
 	First,
 	Negotiate,
-	RoutePermanentRedirect,
+	Resource,
+	ResponsePassThrough,
 } = require('dive-httpd');
+const { TransformRoute } = require('dive-httpd/lib/TransformRoute');
 
 var RouteApplyMarkdown = require( "./lib/Markdown.js" ).RouteApplyMarkdown;
 var RouteApplyMacros = require( "./lib/RenderMacros.js" ).RouteApplyMacros;
 var RouteApplyBindings = require( "./lib/RenderBindings.js" ).RouteApplyBindings;
 var RouteApplyTheme = require( "./lib/RenderTheme.js" ).RouteApplyTheme;
-var RenderEditLink = require( "./lib/RenderEditLink.js" ).RenderEditLink;
+var RouteAddLinks = require( "./lib/RenderEditLink.js" ).RouteAddLinks;
 var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
 var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
 var RouteTTL = require( "./lib/RouteTTL.js" ).RouteTTL;
@@ -32,22 +34,17 @@ options.fixedAuthority = 'fullstack.wiki';
 
 var indexRDFa = new IndexRDFa(options);
 
-// Define a function that will resolve a Resource that generates the 404 Not Found error page
-// This is set in `defaultNotFound` for static file generators, but this will mostly be called from
-// the `error` handler of the <http://fullstack.wiki{/path*}> route.
-function prepareNotFound(){
-	return routeBest.prepare('http://fullstack.wiki/error.notfound');
-}
-options.defaultNotFound = prepareNotFound;
-
-function gRenderEditLink(res){
-	return new RenderEditLink(__dirname, {
+function gRenderEditLink(innerRoute){
+	return new RouteAddLinks({
+		// uriTemplate: innerRoute.uriTemplate,
+		fileroot: __dirname, // specify the root of the Git repository, not the docroot
 		'edit-form': 'https://github.com/fullstackwiki/fullstackwiki/blob/master',
 		'version-history': 'https://github.com/fullstackwiki/fullstackwiki/commits/master',
+		innerRoute
 	});
 }
 
-const HTMLSource = RoutePipeline(RouteStaticFile({
+const HTMLSource = gRenderEditLink(RouteFilesystem({
 	uriTemplate: 'http://fullstack.wiki{/path*}.xml',
 	contentType: 'application/xml',
 	fileroot: docroot,
@@ -55,11 +52,11 @@ const HTMLSource = RoutePipeline(RouteStaticFile({
 	filepathLink: true,
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
-}), gRenderEditLink);
-HTMLSource.name = 'RenderEditLink';
+}));
+HTMLSource.name = 'RenderEditLink.html';
 options.addRoute(HTMLSource);
 
-const MarkdownSource = RoutePipeline(RouteStaticFile({
+const MarkdownSource = gRenderEditLink(RouteFilesystem({
 	uriTemplate: 'http://fullstack.wiki{/path*}.md',
 	contentType: 'text/markdown',
 	fileroot: docroot,
@@ -67,8 +64,8 @@ const MarkdownSource = RoutePipeline(RouteStaticFile({
 	filepathLink: true,
 	filepathAuthority: 'fullstack.wiki',
 	filepathRel: 'tag:fullstack.wiki,2018:ns/source',
-}), gRenderEditLink);
-MarkdownSource.name = 'RenderEditLink';
+}));
+MarkdownSource.name = 'RenderEditLink.md';
 options.addRoute(MarkdownSource);
 
 // Source code
@@ -88,13 +85,13 @@ var routeTemplate = new RouteApplyMacros('http://fullstack.wiki{/path*}.tpl.xml'
 options.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
-var routePlain = new RouteApplyBindings('http://fullstack.wiki{/path*}.plain.xml', indexRDFa.graph, routeTemplate);
+var routePlain = new RouteApplyBindings('http://fullstack.wiki{/path*}.plain.xml', indexRDFa, routeTemplate);
 options.addRoute(routePlain);
 
 // Fully rendered theme
 // Later, put this on <http://fullstack.wiki{/path*}.xhtml> and
 // make <http://fullstack.wiki{/path*}> a Content-Type negotiation version
-var routeThemed = new RouteApplyTheme('http://fullstack.wiki{/path*}.xhtml', indexRDFa.graph, routePlain);
+var routeThemed = new RouteApplyTheme('http://fullstack.wiki{/path*}.xhtml', indexRDFa, routePlain);
 options.addRoute(routeThemed);
 
 var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
@@ -103,7 +100,7 @@ var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
 	routeTemplate,
 	routeSourceHTML,
 ]);
-routeBest.error = prepareNotFound;
+// routeBest.error = prepareNotFound;
 options.addRoute(routeBest);
 
 // Alias / to /index.xml
@@ -111,7 +108,7 @@ var routeIndex = RouteLocalReference("http://fullstack.wiki{/path*}/", routeBest
 options.addRoute(routeIndex);
 
 // The Recent Changes page, which is a Git log
-var routeRecent = new RouteApplyTheme('http://fullstack.wiki/recent', indexRDFa.graph, RouteGitLog({
+var routeRecent = new RouteApplyTheme('http://fullstack.wiki/recent', indexRDFa, RouteGitLog({
 	uriTemplate: 'http://fullstack.wiki/recent',
 	title: 'Recent Changes',
 	fs: fs,
@@ -121,14 +118,14 @@ var routeRecent = new RouteApplyTheme('http://fullstack.wiki/recent', indexRDFa.
 options.addRoute(routeRecent);
 
 // Codemirror dependencies
-// routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.css', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
-// routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.js', {}, RouteStaticFile(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
-// routes.addTemplate('http://fullstack.wiki/+/highlight.js/{path}.css', {}, RouteStaticFile(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
+// routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.css', {}, RouteFilesystem(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
+// routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.js', {}, RouteFilesystem(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
+// routes.addTemplate('http://fullstack.wiki/+/highlight.js/{path}.css', {}, RouteFilesystem(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
 
 // Render files
 // routes.addTemplate('http://fullstack.wiki/+/app.js', {}, RouteBrowserify(docroot+'/+/main.js', "App", 'application/ecmascript') );
 
-var routeScript = RouteStaticFile({
+var routeScript = RouteFilesystem({
 	uriTemplate: 'http://fullstack.wiki/+{/path*}.js',
 	fileroot: docroot+'/+',
 	pathTemplate: "{/path*}.js",
@@ -136,7 +133,7 @@ var routeScript = RouteStaticFile({
 });
 options.addRoute(routeScript);
 
-var routeStyle = RouteStaticFile({
+var routeStyle = RouteFilesystem({
 	uriTemplate: 'http://fullstack.wiki/+{/path*}.css',
 	fileroot: docroot+'/+',
 	pathTemplate: "{/path*}.css",
@@ -144,7 +141,7 @@ var routeStyle = RouteStaticFile({
 });
 options.addRoute(routeStyle);
 
-var routeSVG = RouteStaticFile({
+var routeSVG = RouteFilesystem({
 	uriTemplate: 'http://fullstack.wiki{/path*}.svg',
 	fileroot: docroot,
 	pathTemplate: "{/path*}.svg",
@@ -180,8 +177,31 @@ options.addRoute(routeGraphNT);
 
 options.addRoute(new RouteSitemapXML('http://fullstack.wiki/sitemap.xml', routeBest));
 
-options.before(function(){
-	return indexRDFa.import(routeBest);
+indexRDFa.import(routeBest);
+
+// Define a function that will resolve a Resource that generates the 404 Not Found error page
+// This is set in `defaultNotFound` for static file generators, but this will mostly be called from
+// the `error` handler of the <http://fullstack.wiki{/path*}> route.
+const defaultNotFound = new TransformRoute({
+	innerRoute: routeBest,
+	error(uri, error){
+		// uri and error arguments are not provided by defaultNotFound
+		return this.innerRoute.prepare('http://fullstack.wiki/error.notfound').then((inner) => {
+			assert(inner);
+			return new Resource(this, {inner}, {error});
+		});
+	},
+	render(resource, req){
+		const input = resource.inner.render(req);
+		const output = new ResponsePassThrough;
+		input.headersReady.then(function(inner){
+			inner.pipeMessage(output);
+			output.statusCode = 404;
+			output.flushHeaders(); // Lock the headers from further modification
+		});
+		return output.clientReadableSide;
+	},
 });
+options.defaultNotFound = ()=>defaultNotFound.error();
 
 module.exports = options;

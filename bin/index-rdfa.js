@@ -13,7 +13,10 @@ files.forEach(function(filepath){
 	try {
 		//console.error(filepath);
 		var inputContents = fs.readFileSync(filepath, 'UTF-8');
-		var document = new DOMParser().parseFromString(inputContents, 'text/xml');
+		var document = new DOMParser({
+			locator: { systemId: filepath },
+			errorHandler: function(level,msg){ throw new Error(msg); },
+		}).parseFromString(inputContents, 'text/xml');
 		var baseURI = filepath.replace(/^web\//, 'http://fullstack.wiki/');
 		var result = parse(baseURI, document);
 		console.log(result.outputGraph.toArray().map(function(t){ return t.toString()+'\n'; }).join(''));
