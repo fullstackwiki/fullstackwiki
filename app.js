@@ -10,21 +10,23 @@ const {
 	Negotiate,
 	Resource,
 	ResponsePassThrough,
+	TransformRoute,
 } = require('dive-httpd');
-const { TransformRoute } = require('dive-httpd/lib/TransformRoute');
 
-var RouteApplyMarkdown = require( "./lib/Markdown.js" ).RouteApplyMarkdown;
-var RouteApplyMacros = require( "./lib/RenderMacros.js" ).RouteApplyMacros;
-var RouteApplyBindings = require( "./lib/RenderBindings.js" ).RouteApplyBindings;
-var RouteApplyTheme = require( "./lib/RenderTheme.js" ).RouteApplyTheme;
-var RouteAddLinks = require( "./lib/RenderEditLink.js" ).RouteAddLinks;
-var RouteGitLog = require( "./lib/RouteGitLog.js" ).RouteGitLog;
-var RouteLunrIndex = require( "./lib/RouteLunrIndex.js" ).RouteLunrIndex;
-var RouteTTL = require( "./lib/RouteTTL.js" ).RouteTTL;
-var RouteNT = require( "./lib/RouteNT.js" ).RouteNT;
-var RouteNQ = require( "./lib/RouteNQ.js" ).RouteNQ;
-var RouteSitemapXML = require( "./lib/RouteSitemapXML.js" ).RouteSitemapXML;
-var IndexRDFa = require( "./lib/IndexRDFa.js" ).IndexRDFa;
+const { RouteApplyMarkdown } = require('./lib/Markdown.js');
+const { RouteApplyMacros } = require('./lib/RenderMacros.js');
+const { RouteApplyBindings } = require('./lib/RenderBindings.js');
+const { RouteApplyTheme } = require('./lib/RenderTheme.js');
+const { RouteAddLinks } = require('./lib/RenderEditLink.js');
+const { RouteGitLog } = require('./lib/RouteGitLog.js');
+const { RouteSearchResults } = require('./lib/RouteSearchResults.js');
+const { RouteLunrIndex } = require('./lib/RouteLunrIndex.js');
+const { RouteTTL } = require('./lib/RouteTTL.js');
+const { RouteNT } = require('./lib/RouteNT.js');
+const { RouteNQ } = require('./lib/RouteNQ.js');
+const { RouteSitemapXML } = require('./lib/RouteSitemapXML.js');
+const { IndexRDFa } = require('./lib/IndexRDFa.js');
+const { IndexLunr } = require('./lib/IndexLunr.js');
 
 const docroot = __dirname + '/htdocs';
 
@@ -33,6 +35,7 @@ options.fixedScheme = 'http';
 options.fixedAuthority = 'fullstack.wiki';
 
 var indexRDFa = new IndexRDFa(options);
+var indexLunr = new IndexLunr(options);
 
 function gRenderEditLink(innerRoute){
 	return new RouteAddLinks({
@@ -152,10 +155,15 @@ options.addRoute(routeSVG);
 var routeLunrIndex = RouteLunrIndex({
 	uriTemplate: 'http://fullstack.wiki/search-index.js',
 	exportName: 'searchIndex',
-	route: routeBest,
-	// app: options,
+	index: indexLunr,
 });
 options.addRoute(routeLunrIndex);
+
+var routeSearch = RouteSearchResults({
+	uriTemplate: 'http://fullstack.wiki/search{?q}',
+	index: indexLunr,
+});
+options.addRoute(routeSearch);
 
 var RouteGraphTTL = RouteTTL({
 	uriTemplate: 'http://fullstack.wiki/graph.ttl',
@@ -178,6 +186,7 @@ options.addRoute(routeGraphNT);
 options.addRoute(new RouteSitemapXML('http://fullstack.wiki/sitemap.xml', routeBest));
 
 indexRDFa.import(routeBest);
+indexLunr.import(routeBest);
 
 // Define a function that will resolve a Resource that generates the 404 Not Found error page
 // This is set in `defaultNotFound` for static file generators, but this will mostly be called from
@@ -194,6 +203,7 @@ const defaultNotFound = new TransformRoute({
 	render(resource, req){
 		const input = resource.inner.render(req);
 		const output = new ResponsePassThrough;
+		input.on('error', (err)=>output.destroy(err))
 		input.headersReady.then(function(inner){
 			inner.pipeMessage(output);
 			output.statusCode = 404;
