@@ -17,6 +17,7 @@
 				<li><a href="ecmascript/index.xml">ECMAScript/JavaScript</a></li>
 				<li><a href="json-schema/index.xml">JSON Schema</a></li>
 				<li><a href="architecture/rest.xml">REST (REpresentational State Transfer)</a></li>
+				<li><a href="configuration.xml">Configuration file formats</a></li>
 			</ul>
 		</main>
 	</body>

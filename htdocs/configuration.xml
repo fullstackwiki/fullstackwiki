@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Configuration File Formats</title>
+		<meta name="description" content="Overview of different file formats for managing configuration data" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main id="main-content">
+			<h1>Configuration File Formats</h1>
+			<p>Software often needs to store various settings or configurations to adapt to the user's needs.</p>
+
+			<h2>TOML</h2>
+			<p>TOML is a configuration file format designed to be highly user-editable and -readable.</p>
+			<p><a href="https://toml.io/en/">TOML Website</a></p>
+			<p><a href="https://en.wikipedia.org/wiki/TOML">TOML on Wikipedia</a></p>
+
+			<h2>JSON</h2>
+			<p>JSON works well when the configuration information is simply being serialized from memory, and is not typically used directly. It's plain text format means it is easily debugged, and can be hand-edited if necessary. However, it lacks comments, multi-line strings, and other features that make it good for user-maintained files.</p>
+		</main>
+	</body>
+</html>
