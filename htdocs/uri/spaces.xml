@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>URI Spaces</title>
+		<meta name="description" content="" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main>
+			<h1>URI Spaces</h1>
+			<p>Through the course of an HTTP Request, the document being acted on, as it exists on disk, over the network, or in a user's Web browser, may have one of several different <i>URI spaces</i>:</p>
+			<ol>
+				<li>What the Web browser requests</li>
+				<li>What the HTTP server sees</li>
+				<li>Sometimes, which representation the HTTP server negotiates</li>
+				<li>And if relevant, the resource on the filesystem, or the address the author uses</li>
+			</ol>
+			<p>These URIs might look something like this:</p>
+			<ol>
+				<li><code>http://example.com:8080/users</code></li>
+				<li><code>http://example.com/users</code></li>
+				<li><code>http://example.com/users.html</code></li>
+				<li><code>file://example.com/var/www/users.html</code></li>
+			</ol>
+			<p>URI references may be used to refer to resources, regardless of the current URI base.</p>
+			<p>However, there are several places where the mapping may diverge:</p>
+			<ul>
+				<li>Document aliases, including directory listings. e.g. <code>/</code> becomes <code>/index</code>.</li>
+				<li>Content-type negotiation or other negotiation, mapping a name onto a file. e.g. <code>users</code> becomes <code>users.html</code>.</li>
+				<li>Filesystem directory mapping. e.g. <code>http://example.com/</code> becomes <code>file://example.com/var/www/</code>, which prohibits using relative references beginning with <code>/</code>.</li>
+				<li>Filesystem character set encoding, e.g. <code>%F0%9F%90%B2.txt</code> becomes <code>&#x1F432;.txt</code> or vice-versa.</li>
+			</ul>
+		</main>
+	</body>
+</html>

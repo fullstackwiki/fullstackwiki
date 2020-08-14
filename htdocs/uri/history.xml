@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>History of the URI</title>
+		<meta name="description" content="An unillustrated history of the URI (Uniform Resource Identifier)" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main>
+			<h1>History of the URI</h1>
+
+			<h2>Specifications</h2>
+			<p><a href="https://tools.ietf.org/html/rfc3986">STD 66 (RFC 3986)</a></p>
+			<p><a href="https://tools.ietf.org/html/rfc6874">RFC 6874</a></p>
+			<p><a href="https://tools.ietf.org/html/rfc7320">RFC 7320</a></p>
+			<p><a href="https://tools.ietf.org/html/rfc1738">RFC 1738: Uniform Resource Locators (URL)</a></p>
+			<p><a href="https://tools.ietf.org/html/rfc1808">RFC 1808: Relative Uniform Resource Locators</a></p>
+			<p><a href="https://tools.ietf.org/html/rfc2396">RFC 2396: Uniform Resource Identifiers (URI): Generic Syntax</a></p>
+			<p><a href="https://tools.ietf.org/html/rfc2732">RFC 2732: Format for Literal IPv6 Addresses in URL's</a></p>
+
+			<h2>References</h2>
+			<a href="https://www.w3.org/People/Berners-Lee/FAQ.html">WWW FAQ by TimBL</a>
+			<a href="https://blog.cloudflare.com/the-history-of-the-url/">History of the URL, from Cloudflare</a>
+		</main>
+	</body>
+</html>
