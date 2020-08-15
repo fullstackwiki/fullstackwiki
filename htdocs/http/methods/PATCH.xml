@@ -19,13 +19,21 @@
 
 			<h2>Writing requests (clients)</h2>
 			<p>If a client wants to modify a specific part of a resource without overwriting the entire document, it should use the PATCH method with a media type that can express the desired change; if this is available on the server.</p>
-			<p>If applicable, send the request with a <a href="../conditional.xml">conditional test (e.g. If-Match)</a>, to avoid creating the resource in the event it does not exist.</p>
-			<p>Check the error code and follow the error recovery process, <a href="../status-codes/405.xml">405 (Method Not Allowed)</a>, <a href="../status-codes/415.xml">415 (Unsupported Media Type)</a>, or <a href="../status-codes/501.xml">501 (Not Implemented)</a> may require that the request be retried with an equivelant PUT request.</p>
+			<p>Select a media type to use for the patch. It must be a media type that supports patching semantics:</p>
+			<ul>
+				<li>JSON Patch (<code>application/json-patch+json</code>, <a href="https://tools.ietf.org/html/rfc6902">RFC 6902</a>)</li>
+				<li>JSON Merge Patch (<code>application/patch+json</code>, <a href="https://tools.ietf.org/html/rfc7396">RFC 7396</a>)</li>
+				<li>XML Patch (<code>application/xml-patch+xml</code>, <a href="https://tools.ietf.org/html/rfc7351">RFC 7351</a>)</li>
+			</ul>
+			<p>For the request to work, the server must support the selected media type. This is advertised with the <a href="../headers/Accept-Patch.xml">Accept-Patch</a> header. If a client is forming a patch but it is not ready to send yet, clients may request this in an OPTIONS request. Clients that already know what to send should pick a client-preferred patch media type and opportunistically send it to the server. If it is not supported, the request should be retried with a supported media type while handling the response status code (see below).</p>
+			<p>Depending on the round-trip time and payload size, send a <a href="../headers/Expect.xml">Expect: 100-continue</a> header, so that if your preference is not supported, you can avoid uploading the entire patch.</p>
+			<p>Patches may create resources or cause edit conflicts. If applicable, send the request with a <a href="../conditional.xml">conditional test (e.g. If-Match)</a>, to avoid creating the resource in the event it does not exist.</p>
+			<p>Check the error code and follow the error recovery process, if necessary. A <a href="../status-codes/405.xml">405 (Method Not Allowed)</a>, <a href="../status-codes/415.xml">415 (Unsupported Media Type)</a>, or <a href="../status-codes/501.xml">501 (Not Implemented)</a> status may require that the request be retried with a different media type, or with an equivalent PUT request.</p>
 
 			<h2>Reading requests (servers)</h2>
 			<p>Determine if the resource exists. If the resource does not exist, and the request allows for the media type to be created (see below), then follow the patch media type semantics for creating the resource. If the resource does exist, apply the patch to the existing resource and commit the changes.</p>
 			<p>Servers that use <a href="../status-codes/428.xml">428 (Precondition Required)</a> should judge if the patch media-type has sufficient information to avoid lost updates. If the patch can only be applied if the document is in an expected state, then the server should not require a precondition header, since this would be redundant.</p>
-			<p>Check the <a href="../preferences/return.xml">"return"</a> preference for guidence on what response should be generated. By default, return a short document summarizing the changes made.</p>
+			<p>Check the <a href="../preferences/return.xml">"return"</a> preference for guidance on what response should be generated. By default, return a short document summarizing the changes made.</p>
 
 			<h2>Applied to non-existent resources</h2>
 			<p>PATCH is allowed to create resources if they do not exist. This behavior may be disabled with <code><a href="../headers/If-Match.xml">If-Match</a>: *</code> (by making the request conditional on a resource existing), or required with <code><a href="../headers/If-None-Match.xml">If-None-Match</a>: *</code> (by making the request conditional on no resource existing). The patch creating the resource must be able to add content from a void or zero-length file, or specify the Content-Type of the resource being created, if there is no way for the server to assume a media type (since the Content-Type of the request is the media type of the patch format, not the resource being created).</p>

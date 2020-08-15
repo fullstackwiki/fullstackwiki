@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Accept-Patch</title>
+		<meta name="description" content="The Accept-Patch HTTP request-header specifies which media types are allowed in a PATCH request." />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/http/headers/Accept-Patch" typeof="w:HTTP-Header">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>Accept-Patch</h1>
+			<p>The Accept-Patch header specifies which patch media types the server accepts for use in a PATCH request.</p>
+
+			<h2>Usage in responses</h2>
+			<p>Unlike the Accept header, but more like the Allow header, this is a response header that specifies what a client may use in a request.</p>
+
+			<h3>Writing responses (servers)</h3>
+			<p>Servers send Accept-Patch to the client in <a href="../status-codes/415.xml">415 Unsupported Media Type</a> responses, especially to PATCH requests. The header could also be sent in response to OPTIONS.</p>
+			<p>The server should first ensure the resource exists, that the user-agent has the proper credentials to make the request, and any other checks that can be performed without needing to know the exact details of the request-body.</p>
+			<p>If the server receives a request from a client with a <a href="Content-Encoding.xml">Content-Encoding value</a> that it does not understand, send <code>415 Unsupported Media Type</code> with an <code>Accept-Patch</code> header listing the content codings the server can accept from clients.</p>
+			<p>The 415 Unsupported Media Type status can be used for other purposes (e.g. an invalid Content-Type), do not supply this header in these other cases.</p>
+
+			<h3>Reading responses (clients)</h3>
+			<p>Clients use this header to select a media type to use when making a PATCH request.</p>
+			<p>Clients should make a request with their favored media type first, then if the server does not support, see the <a href="../methods/PATCH.xml">PATCH method</a> for more information.</p>
+			<p>In cases where Clients may also read this header from a response to an <a href="../methods/OPTIONS.xml">OPTIONS</a> request, if it was not present in responses to other methods.</p>
+			<p>This header is advisory, clients should always be prepared to retry a PATCH request in the case the allowable media types changes between requests.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:HTTP-Header-name">Accept-Patch</dd>
+				<dt>Description</dt>
+				<dd property="w:HTTP-Header-description">Specifies which media types are acceptable to send in a PATCH request.</dd>
+				<dt>Direction</dt>
+				<dd property="w:HTTP-Header-direction">Response</dd>
+				<dt>Advertises</dt>
+				<dd property="w:HTTP-Header-advertises" resource="w:http/headers/Content-Type"><a href="Content-Type.xml">Content-Type</a></dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc5789.html#accept-patch">RFC 5789: PATCH Method for HTTP &#xA7;3.1. Accept-Patch</a></dd>
+			</dl>
+
+			<h2>Syntax</h2>
+			<pre class="abnf-definition" w:space="indent">
+				Accept-Patch = 1#media-type
+			</pre>
+		</main>
+	</body>
+</html>

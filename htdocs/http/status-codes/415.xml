@@ -33,7 +33,8 @@
 			<p>Clients should handle <code>415 Unsupported Media Type</code> with the following process:</p>
 			<ol>
 				<li>Look for an <a href="../headers/Accept-Encoding.xml">Accept-Encoding header</a>. If present, and the initial coding does not appear, re-make the request with a different <a href="../headers/Content-Encoding.xml">Content-Encoding</a> from codings listed in Accept-Encoding.</li>
-				<li>Otherwise, re-make the request with a different Content-Type. Show the user the returned error page and prompt them to re-make the request with a different upload media type.</li>
+				<p>If the request is a PATCH request, look for the <a href="../headers/Accept-Patch.xml">Accept-Patch header</a>. If present, and the attempted media type does not appear in this list, try to re-make the request with one of the listed media types.</p>
+				<li>Otherwise, re-make the request with a different Content-Type and/or method. Show the user the returned error page and prompt them to re-make the request with a different upload media type.</li>
 			</ol>
 
 			<h2>Overview table</h2>
