@@ -507,7 +507,11 @@ body.pagewidth .columns #main-col {
 /* Table of Content */
 .toc > ol {
 	/* Don't show the numbering for the first level */
-	list-style-type: none;
+	list-style-type: "▼";
+}
+.toc > ol.up {
+	/* Don't show the numbering for the first level */
+	list-style-type: "►";
 }
 ol.nav-up {
 	margin: 0;
