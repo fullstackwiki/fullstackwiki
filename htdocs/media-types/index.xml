@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:w="tag:fullstack.wiki,2018:ns/"
+	xmlns:q="http://fullstack.wiki/rdfq/"
+	xmlns:xht="http://www.w3.org/1999/xhtml/vocab#"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Media Types</title>
+		<meta name="description" content="A list of Internet media types" />
+		<link rel="up" href="../index.xml" />
+	</head>
+	<body>
+		<main id="main-content">
+<h1>Internet Media Types</h1>
+
+<p>Internet Media Types are also known as MIME Types, or the <a href="../http/headers/Content-Type.xml">Content-Type</a> of a resource.</p>
+
+<table class="table-http-headers">
+	<thead>
+		<tr><th>Media Name</th><th>Description</th></tr>
+	</thead>
+	<tbody>
+		<tr subquery="each" subquery-order="ASC(?name)" about-bind="{?h}" typeof="tag:fullstack.wiki,2018:ns/Media-Type">
+			<td><a property="http://www.w3.org/1999/xhtml/vocab#describedby" href-bind="{?href}"><span property="tag:fullstack.wiki,2018:ns/Media-Type-name">{?name}</span></a></td>
+			<!-- <td><span property="tag:fullstack.wiki,2018:ns/HTTP-Header-name">{?name}</span></td> -->
+			<td property="tag:fullstack.wiki,2018:ns/Media-Type-description">{?desc}</td>
+		</tr>
+	</tbody>
+</table>
+
+		</main>
+	</body>
+</html>

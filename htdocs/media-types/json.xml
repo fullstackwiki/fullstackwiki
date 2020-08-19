@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>ECMAScript Libraries</title>
+		<meta name="description" content="" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/media-types/application/json" vocab="tag:fullstack.wiki,2018:ns/" typeof="w:Media-Type">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+			<h1>Configuration File Formats</h1>
+			<p>Software often needs to store various settings or configurations to adapt to the user's needs.</p>
+
+			<h2>JSON</h2>
+			<p>JSON works well when the configuration information is simply being serialized from memory, and is not typically used directly. It's plain text format means it is easily debugged, and can be hand-edited if necessary. However, it lacks comments, multi-line strings, and other features that make it good for user-maintained files.</p>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:Media-Type-name">application/json</dd>
+				<dt>Description</dt>
+				<dd property="w:Media-Type-description">JSON</dd>
+				<dt>Text Encoding</dt>
+				<dd property="w:Media-Type-direction">UTF-8</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://tools.ietf.org/html/rfc8259">RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format</a></dd>
+			</dl>
+
+		</main>
+	</body>
+</html>
