@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Web concepts</title>
+		<meta name="description" content="Web concepts" />
+	</head>
+	<body>
+		<main>
+			<h1>Web (a.k.a. the World Wide Web)</h1>
+
+			<p>This section discusses concepts central to the Web and hypermedia systems in general, that are not specific to a particular technology.</p>
+
+			<h2>Articles</h2>
+			<ul>
+				<li><a href="notifications.xml">Notifications</a></li>
+			</ul>
+
+		</main>
+	</body>
+</html>
