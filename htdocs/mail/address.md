@@ -1,6 +1,54 @@
 
+# E-Mail Addresses
 
-# Deriving an email address regular expression
+## Syntax
+
+The syntax for E-Mail addresses is derived from RFC 5322, which specifies the syntax for an address inside a MIME message.
+
+The `mailbox` production should be used if you intend to allow the name of the user to be specified:
+
+	mailbox         =   name-addr / addr-spec
+
+This allows addresses like `abob@example.com` or `Alice Bob <abob@example.com>`.
+
+To match only the email address portion, for example if you've collected the user's name in a different input, use the `addr-spec` production:
+
+	addr-spec       =   local-part "@" domain
+
+The `CFWS`, `FWS`, and `comment` productions represent strings that may be added to a MIME message, but are not technically part of the email address. To validate an email address outside the context of a MIME message, remove these productions from the ABNF.
+
+Additionally, the productions starting with `obs-` are obsolete forms that must not be generated, though they may be read by servers for historical reasons. In most cases, also remove these.
+
+The ABNF with these rules removed becomes:
+
+	local-part      =   dot-atom / quoted-string
+	domain          =   dot-atom / domain-literal
+
+	quoted-string   =   DQUOTE *qcontent DQUOTE
+	qcontent        =   qtext / quoted-pair
+	qtext           =   %d33 / %d35-91 / %d93-126
+	quoted-pair     =   "\" (VCHAR / WSP)
+
+	dot-atom        =   1*atext *("." 1*atext)
+	atext           =   ALPHA / DIGIT / "!" / "#" / "$" / "%" / "&" / "'" / "*" / "+" / "-" / "/" /
+	                    "=" / "?" / "^" / "_" / "`" / "{" / "|" / "}" / "~"
+
+	domain-literal  =   "[" *dtext "]"
+	dtext           =   %d33-90 / %d94-126
+
+### Internationalized Email
+
+In order to support internationalized E-Mail addresses, you must amend these rules with the rules in [RFC 6532](https://tools.ietf.org/html/rfc6532#section-3.2):
+
+	VCHAR   =/  UTF8-non-ascii
+	atext   =/  UTF8-non-ascii
+	qtext   =/  UTF8-non-ascii
+	dtext   =/  UTF8-non-ascii
+
+`UTF8-non-ascii` is a production that matches UTF-8 byte multi-byte sequences (code points U+0080 and above), excluding single-byte ASCII characters. It assumes the ABNF is matching octets; so for systems that use UTF-16, UTF-32, or another encoding, [the official definition](https://tools.ietf.org/html/rfc3629) needs to be adapted.
+
+
+## Deriving an email address regular expression
 
 To make a regular expression for an email address, you should follow two rules:
 
@@ -15,6 +63,21 @@ By removing the `CFWS`, `BWS`, and `obs-*` rules from the `addr-spec` in RFC 532
 
     ("(?:[!#-\[\]-~]|\\[\t -~])*"|[!#-'*+\-/-9=?A-Z\^-~](?:\.?[!#-'*+\-/-9=?A-Z\^-~])*)@([!#-'*+\-/-9=?A-Z\^-~](?:\.?[!#-'*+\-/-9=?A-Z\^-~])*|\[[!-Z\^-~]*\])
 
+
+### Internationalized Regular Expression
+
+Since the first `UTF8-non-ascii` character is immediately after the tilde, and since all Unicode U+0080 and above are matched, it suffices to substitute each occurrence of the tilde with the highest unicode character, `\u{10FFFF}`.
+
+In ECMAScript, using UTF-32 characters requires the "u" flag:
+
+	/^("(?:[!#-\[\]-\u{10FFFF}]|\\[\t -\u{10FFFF}])*"|[!#-'*+\-/-9=?A-Z\^-\u{10FFFF}](?:\.?[!#-'*+\-/-9=?A-Z\^-\u{10FFFF}])*)@([!#-'*+\-/-9=?A-Z\^-\u{10FFFF}](?:\.?[!#-'*+\-/-9=?A-Z\^-\u{10FFFF}])*|\[[!-Z\^-\u{10FFFF}]*\])$/u
+
+For environments that only support UTF-16 (.Net, older ECMAScript without the "u" flag), simply use `\uFFFF`, this will match surrogate pairs:
+
+	/^("(?:[!#-\[\]-\uFFFF]|\\[\t -\uFFFF])*"|[!#-'*+\-/-9=?A-Z\^-\uFFFF](?:\.?[!#-'*+\-/-9=?A-Z\^-\uFFFF])*)@([!#-'*+\-/-9=?A-Z\^-\uFFFF](?:\.?[!#-'*+\-/-9=?A-Z\^-\uFFFF])*|\[[!-Z\^-\uFFFF]*\])$/
+
+### Regular Expression Breakdown
+
 It contains the following components:
 
 * The user part before the @ may be a dot-atom or a quoted-string
@@ -28,4 +91,4 @@ It contains the following components:
 
 This RegExp allows all spec-compliant email addresses, and can be used verbatim in a MIME message (except for line length limits, in which case folding whitespace must be added).
 
-This also sets non-capturing groups such that `match[1]` will be the user, `match[2]` will be the host. (However if `match[1]` starts with a double quote, then filter out backslash escapes, and the start and end double quotes.)
+This also sets non-capturing groups such that `match[1]` will be the user, `match[2]` will be the host. However if `match[1]` starts with a double quote, then filter out backslash escapes, and the start and end double quotes.
