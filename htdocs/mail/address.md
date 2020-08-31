@@ -17,7 +17,23 @@ To match only the email address portion, for example if you've collected the use
 
 The `CFWS`, `FWS`, and `comment` productions represent strings that may be added to a MIME message, but are not technically part of the email address. To validate an email address outside the context of a MIME message, remove these productions from the ABNF.
 
+RFC 5322 explains:
+
+> Both atom and dot-atom are interpreted as a single unit, comprising
+   the string of characters that make it up.  Semantically, the optional
+   comments and FWS surrounding the rest of the characters are not part
+   of the atom; the atom is only the run of atext characters in an atom,
+   or the atext and "." characters in a dot-atom.
+
 Additionally, the productions starting with `obs-` are obsolete forms that must not be generated, though they may be read by servers for historical reasons. In most cases, also remove these.
+
+RFC 5322 explains:
+
+> In some of the definitions, there will be non-terminals whose names
+	start with "obs-".  These "obs-" elements refer to tokens defined in
+	the obsolete syntax in section 4.  In all cases, these productions
+	are to be ignored for the purposes of generating legal Internet
+	messages and MUST NOT be used as part of such a message.
 
 The ABNF with these rules removed becomes:
 
@@ -47,19 +63,37 @@ In order to support internationalized E-Mail addresses, you must amend these rul
 
 `UTF8-non-ascii` is a production that matches UTF-8 byte multi-byte sequences (code points U+0080 and above), excluding single-byte ASCII characters. It assumes the ABNF is matching octets; so for systems that use UTF-16, UTF-32, or another encoding, [the official definition](https://tools.ietf.org/html/rfc3629) needs to be adapted.
 
+### Length Limits
 
-## Deriving an email address regular expression
+[RFC 5321](https://tools.ietf.org/html/rfc5321) specifies a maximum size for the local-part of 64 octets, and a maximum size for the domain of 255 octets. To compute this for Unicode addresses (see below), the address must be converted to UTF-8.
+
+
+## Validating an Email Address
+
+0. Verify a maximum length of 320 characters (64 + 1 + 255).
+0. For Unicode addresses, verify well-formed UTF-8.
+0. Match the pattern
+0. Verify length limits of each component (64 bytes for the user portion, 255 for the domain portion).
+0. To verify that the mailbox exists, send it an email.
+
+Remember, validating the email address only verifies that it will not cause a syntax error with compliant E-Mail servers.
+It does not actually verify that mail to the address will be received.
+In order to verify that an email address is valid _for a particular user_, you must send an email address.
+Do not consider this finalized until the user is able to confirm receipt.
+
+
+### ASCII Regular Expression
 
 To make a regular expression for an email address, you should follow two rules:
 
 - The pattern must only disallow forms that are guaranteed to be non-deliverable, now and in the future
 - The pattern must match the actual email address, not necessarily how it is encoded in the MIME message.
 
-To start, RFC 5322 specifies what is legal to send in a MIME message; consider this the upper bound on what is a legal email address.
+RFC 5322 specifies what is legal to send in a MIME message; consider this the upper bound on what is a legal email address.
 
-However, to follow this ABNF exactly would be a mistake: this pattern technically represents how you encode an email address _in a MIME message_, and allows strings not part of the email address, like folding whitespace and comments; and support for obsolete forms that are not legal to generate (but that servers read for historical reasons). When most people ask for an email address, they do not likely include these.
+You must remove the `CFWS`, `BWS`, and `obs-*` rules, because these are parts of MIME message that are specified to be transparent.
 
-By removing the `CFWS`, `BWS`, and `obs-*` rules from the `addr-spec` in RFC 5322, you can produce this regular expression:
+This produces the following regular expression:
 
     ("(?:[!#-\[\]-~]|\\[\t -~])*"|[!#-'*+\-/-9=?A-Z\^-~](?:\.?[!#-'*+\-/-9=?A-Z\^-~])*)@([!#-'*+\-/-9=?A-Z\^-~](?:\.?[!#-'*+\-/-9=?A-Z\^-~])*|\[[!-Z\^-~]*\])
 
