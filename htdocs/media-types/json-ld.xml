@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>JSON-LD media type</title>
+		<meta name="description" content="" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/media-types/application/json-ld" vocab="tag:fullstack.wiki,2018:ns/" typeof="w:Media-Type">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+
+			<h1>JSON-LD</h1>
+			<p>JSON-LD is a media type that allows link relations and RDF data to be stored inside JSON documents. It intends to add Web semantics to existing JSON documents with minimal changes.</p>
+
+			<h2>History</h2>
+			<p>JSON-LD begun as a W3C Community Group.</p>
+			<p>In 2018, work was moved to a newly formed group at the W3C, the <a href="https://www.w3.org/2018/json-ld-wg/">JSON-LD Working Group</a>.</p>
+
+			<h2>See Also</h2>
+			<ul>
+				<li><a href="https://json-ld.org/">Official JSON-LD website</a></li>
+			</ul>
+
+		</main>
+	</body>
+</html>

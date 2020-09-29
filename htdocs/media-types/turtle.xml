@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Turtle media type</title>
+		<meta name="description" content="" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/media-types/application/turtle" vocab="tag:fullstack.wiki,2018:ns/" typeof="w:Media-Type">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+			<h1>Turtle</h1>
+			<p>Turtle is a media type for representing an RDF graph, by listing each edge in the graph. It is a superset of <a href="N-Triples.xml">N-Triples</a> that allows subjects and predicates to be factored out.</p>
+			<pre w:space="indent"><![CDATA[
+				<http://example.org/about> <http://purl.org/dc/terms/title> "Anna's Homepage"@en .
+			]]></pre>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:Media-Type-name">application/turtle</dd>
+				<dt>Description</dt>
+				<dd property="w:Media-Type-description">Turtle</dd>
+				<dt>Text Encoding</dt>
+				<dd property="w:Media-Type-direction">UTF-8</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://www.w3.org/TR/turtle/">RDF 1.1 Turtle</a></dd>
+			</dl>
+
+			<h2 id="implementations">Implementations</h2>
+			<ul>
+				<li><a href="https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-turtle/reports/index.html">Official implementation report</a></li>
+			</ul>
+		</main>
+	</body>
+</html>

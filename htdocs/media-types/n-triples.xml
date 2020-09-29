@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Turtle media type</title>
+		<meta name="description" content="" />
+		<link rel="up" href="index.xml"/>
+	</head>
+	<body>
+		<main id="main-content" about="tag:fullstack.wiki,2018:ns/media-types/application/n-triples" vocab="tag:fullstack.wiki,2018:ns/" typeof="w:Media-Type">
+			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
+			<h1>N-Triples</h1>
+			<p><i>N-Triples</i>, also known as <i>NT</i>, is a media type for representing an RDF graph, by listing each edge in the graph. It is one of the simplest formats for serializing an RDF graph, but is often more verbose than similar formats such as <a href="turtle.xml">Turtle</a>, if uncompressed.</p>
+			<p>Each edge in the graph is represented by one statement, which consists of the subject, predicate, object, and a terminating period, optionally separated by whitespace.</p>
+			<p>For example, this document describes two edges:</p>
+			<pre w:space="indent"><![CDATA[
+				<http://example.org/about> <http://purl.org/dc/terms/title> "Anna's Homepage"@en .
+				<http://example.org/about> <http://purl.org/dc/terms/title> "Annas hjemmeside"@da .
+			]]></pre>
+
+			<h2>Overview table</h2>
+			<dl class="inline">
+				<dt>Name</dt>
+				<dd property="w:Media-Type-name">application/n-triples</dd>
+				<dt>Description</dt>
+				<dd property="w:Media-Type-description">N-Triples</dd>
+				<dt>Text Encoding</dt>
+				<dd property="w:Media-Type-direction">UTF-8</dd>
+				<dt>Specification</dt>
+				<dd property="w:specification"><a href="https://www.w3.org/TR/n-triples/">RDF 1.1 N-Triples</a></dd>
+			</dl>
+
+			<h2 id="implementations">Implementations</h2>
+			<ul>
+				<li>See also <a href="turtle.xml">Turtle</a>, which is a superset of N-Triples.</li>
+			</ul>
+		</main>
+	</body>
+</html>

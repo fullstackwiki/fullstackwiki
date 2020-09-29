@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Semantic Web</title>
+		<meta name="description" content="Semantic Web" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>Semantic Web</h1>
+			<p>The Semantic Web is an extension of the Web, designed so that data is easily machine-readable. Semantic Web technology is most prominently used for displaying summaries of webpages (e.g. social media previews and search engine results). A core concept of Semantic Web is <i>Linked Data</i>, where data is represented as a graph, and nodes are given universal identifiers. Linked Data can be used to store data about any concept in an unambiguous form.</p>
+			<p>The technology used for Linked Data is RDF (Resource Description Framework). It is a superset of standard link relations found on the Web. It extends the concept of link relationships to allow links to point to strings of data, in addition to a URI. For example, in the classic Web, a webpage might have a rel=author link pointing to the author's homepage. In RDF, the target may also be a date, number, label, or similar piece of data.</p>
+
+			<h2>Media Types</h2>
+			<ul>
+				<li><a href="../media-types/json-ld.xml">JSON-LD</a></li>
+				<li><a href="../media-types/turtle.xml">Turtle</a></li>
+				<li><a href="../media-types/twig.xml">Twig</a></li>
+			</ul>
+
+			<h2>Resources</h2>
+			<ul>
+				<li><a href="https://www.w3.org/TR/rdf11-primer/">RDF 1.1 Primer</a></li>
+				<li><a href="https://www.w3.org/TR/ldp-primer/">Linked Data Platform Primer 1.0</a></li>
+			</ul>
+
+			<h2>Specifications</h2>
+			<ul>
+				<li><a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts</a></li>
+				<li><a href="https://tools.ietf.org/html/rfc5005">RFC 5005: Feed Paging and Archiving</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
