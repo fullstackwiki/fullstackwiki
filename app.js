@@ -43,7 +43,7 @@ function gRenderEditLink(innerRoute){
 		fileroot: __dirname, // specify the root of the Git repository, not the docroot
 		'edit-form': 'https://github.com/fullstackwiki/fullstackwiki/blob/master',
 		'version-history': 'https://github.com/fullstackwiki/fullstackwiki/commits/master',
-		innerRoute
+		innerRoute,
 	});
 }
 
@@ -203,7 +203,7 @@ const defaultNotFound = new TransformRoute({
 	render(resource, req){
 		const input = resource.inner.render(req);
 		const output = new ResponsePassThrough;
-		input.on('error', (err)=>output.destroy(err))
+		input.on('error', (err)=>output.destroy(err));
 		input.headersReady.then(function(inner){
 			inner.pipeMessage(output);
 			output.statusCode = 404;
