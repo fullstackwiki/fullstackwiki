@@ -18,7 +18,10 @@
 			<p>451 (Unavailable For Legal Reasons) status code indicates a resource or server is inaccessible or censored under threat of legal action or other great threat against the server operator.</p>
 
 			<h2>Writing responses (servers)</h2>
-			<p>Use <code>451 Unavailable For Legal Reasons</code> if legal authorities have demanded content be taken down under some sort of threat of legal action.</p>
+			<p>Use <code>451 Unavailable For Legal Reasons</code> if legal authorities have demanded content be taken down under some sort of threat of legal action:</p>
+			<ul>
+				<li>DMCA Takedown</li>
+			</ul>
 			<p>This can be implemented at a router level, before any resource is dereferenced, or set as a custom status code on a document, similar to handling for <code>410 Gone</code>.</p>
 			<p>If available, attach a link with the <code>blocked-by</code> link relation, linking to the entity or order blocking the request (see example).</p>
 
@@ -39,7 +42,9 @@
 				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7725.html">RFC 7725: An HTTP Status Code to Report Legal Obstacles</a></dd>
 			</dl>
 
-			<h2>Example</h2>
+			<h2>Examples</h2>
+
+			<h3>Specification example</h3>
 			<pre type="message/http" w:space="indent">
 				HTTP/1.1 451 Unavailable For Legal Reasons
 				Link: &lt;https://spqr.example.org/legislatione&gt;; rel="blocked-by"
@@ -55,7 +60,11 @@
 						operated by the People&apos;s Front of Judea.&lt;/p&gt;
 					&lt;/body&gt;
 				&lt;/html&gt;
-				</pre>
+			</pre>
+
+			<h3>GitHub</h3>
+			<p>GitHub uses the 451 status code when returning pages subject to a DMCA takedown. All pages that would ordinarily return 200 return <code>451 Unavailable for Legal Reasons</code>. Notice how the page links to the request causing the blocked page, and instructions on how to counter-request.</p>
+			<img src="451-example.svg" style="max-width: 100%;" />
 
 			<!-- TODO: If there are any clients that can re-make a request with the correct Content-Type or Content-Encoding, list them here -->
 		</main>
