@@ -1,16 +1,18 @@
 {
   "dependencies": {
     "bluebird": "^3.5.5",
-    "browserify": "^16.5.2",
+    "browserify": "^17.0.0",
     "dive-httpd": "^0.0.26",
     "highlight.js": "^10.2.0",
     "http-link": "^0.3.0",
     "isomorphic-git": "^1.7.8",
     "lunr": "^2.3.9",
     "markdown": "^0.5.0",
+    "nearley": "^2.19.7",
     "rdf": "^4.1.0",
     "rdfa": "^0.0.10",
     "rdfa-template": "^0.0.8",
+    "regexp-tree": "^0.1.21",
     "strip-indent": "^3.0.0",
     "xmldom": "^0.3.0"
   },
