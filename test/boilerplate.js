@@ -6,6 +6,8 @@ const mocha = require('mocha');
 
 const {DOMParser} = require('xmldom');
 
+function toArray(arrayLike){ return Array.prototype.slice.call(arrayLike); }
+
 // TODO: Test that each document fills necessary conditions:
 // UTF-8 is valid
 // XML is well-formed and valid,
@@ -47,11 +49,11 @@ function testHTMLDocument(document){
 	// Verify the <title/> tag exists and has text content
 	assert(document.getElementsByTagName('title')[0].textContent.length);
 	// Verify the <meta charset="UTF-8" /> tag exists
-	assert(Array.prototype.slice.call(document.getElementsByTagName('meta')).filter(function(e){
+	assert(toArray(document.getElementsByTagName('meta')).filter(function(e){
 		return e.tagName=='meta' && e.hasAttribute('charset') && e.getAttribute('charset')==='UTF-8';
 	}).length);
 	// Verify that referenced documents exist
-	Array.prototype.slice.call(document.getElementsByTagName('a')).forEach(function(e){
+	toArray(document.getElementsByTagName('a')).forEach(function(e){
 		// The links may be a full URI reference,
 		// a link to a .xml document (presumably relative reference),
 		// or a blank relative reference to the current document
@@ -59,7 +61,7 @@ function testHTMLDocument(document){
 		if(uriref.match(/^mailto:/)) return;
 		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md)($|#)/) || uriref.match(/^($|#)/), e.toString() );
 	});
-	Array.prototype.slice.call(document.getElementsByTagName('link')).forEach(function(e){
+	toArray(document.getElementsByTagName('link')).forEach(function(e){
 		const uriref = e.getAttribute('href');
 		// Same as above, but also could be a .css link to a stylesheet
 		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md|css)($|#)/) || uriref==='', e.toString() );
