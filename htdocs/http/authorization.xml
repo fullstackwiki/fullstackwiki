@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/">
+	<head>
+		<meta charset="UTF-8" />
+		<title>User Authorization and Authentication in HTTP</title>
+		<meta name="description" content="Authorization in HTTP" />
+		<link rel="up" href="index.xml" />
+	</head>
+	<body>
+		<main>
+			<h1>User Authorization and Authentication</h1>
+			<p>HTTP provides a standard way to authenticate the user issuing a request, and there are multiple standard ways to prove authorization.</p>
+
+			<h2>Mechanisms for Access Control</h2>
+			<p>This is a broad overview of different paradigms that control access to server resources and operations on them; including how a user is granted credentials, presents them to the server, and invalidates the credential when no longer necessary.</p>
+
+			<h3>Basic authorization</h3>
+			<p>The "Basic" authorization scheme is, as suggested, the simplest of the user authorization schemes. It allows a username and password to be presented to the server. The username and password is typically checked against the credential database, for example, an LDAP directory.</p>
+
+			<h3>Bearer authorization</h3>
+			<p>The "Bearer" authorization scheme grants authorization to requests that demonstrate possession of a <i>bearer token</i>, a secret string known only to the server, and an authorized user. Unlike a password, it is supposed to be a high-entropy value assigned by the server.</p>
+
+			<h3>Cookie/form access control</h3>
+			<p>The Cookie/form access paradigm uses HTTP's state management mechanism, Cookies, to associate requests to a session. The session in turn may be associated with a user, who carries authorization sufficient to carry out the request.</p>
+			<p>Using cookies for access control has significant security considerations; Web browsers will attach the cookie to all requests made to the origin server, even requests made by attackers. This means that additional mechanisms must be used to ensure the request came from the user, such as a CSRF token.</p>
+			<p>Additionally, since the Authorization is not used, this thwarts HTTP's security features built into caching.</p>
+
+			<h3>OAuth</h3>
+			<p><i>Main article: <a href="../oauth/index.xml">OAuth</a></i></p>
+			<p>OAuth (specifically OAuth2, as opposed to OAuth 1) is a standard way to grant access to user resources to a third party.</p>
+
+			<h3>Proprietary mechanisms</h3>
+			<p>Several Web APIs deploy their own authorization mechanisms. This is not suggested because it is very difficult to engineer new secure authorization schemes, and user agents may not understand the nature of the data they are handling.</p>
+
+		</main>
+	</body>
+</html>

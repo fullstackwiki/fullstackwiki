@@ -38,6 +38,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [Resumable downloads with Range](resumable-downloads.xml)
 * [Resumable uploads](resumable-uploads.xml)
 * [Caching responses](cache.xml)
+* [Authorization & access control](authorization.xml)
 * [Asynchronous Responses](asynchronous.xml)
 * [Conceptual Model](stack.xml)
 * [Closing client connections](close.xml)
