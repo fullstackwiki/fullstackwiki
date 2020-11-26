@@ -1,10 +1,10 @@
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
-const util = require('util');
-const mocha = require('mocha');
+const stripIndent = require('strip-indent');
 
 const {DOMParser} = require('xmldom');
+const { parseABNF } = require('../lib/nearley-abnf/index.js');
 
 function toArray(arrayLike){ return Array.prototype.slice.call(arrayLike); }
 
@@ -59,14 +59,30 @@ function testHTMLDocument(document){
 		// or a blank relative reference to the current document
 		const uriref = e.getAttribute('href');
 		if(uriref.match(/^mailto:/)) return;
-		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md)($|#)/) || uriref.match(/^($|#)/), e.toString() );
+		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md)($|#|\?)/) || uriref.match(/^($|#)/), e.toString() );
 	});
 	toArray(document.getElementsByTagName('link')).forEach(function(e){
 		const uriref = e.getAttribute('href');
 		// Same as above, but also could be a .css link to a stylesheet
-		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md|css)($|#)/) || uriref==='', e.toString() );
+		assert( uriref.match(/\/\//) || uriref.match(/\.(xml|md|css)($|#|\?)/) || uriref==='', e.toString() );
 		// and must have a link relationship or reverse relationship
 		assert( e.hasAttribute('rel') || e.hasAttribute('rev'), e.toString() );
+	});
+	// Test syntax
+	toArray(document.getElementsByTagName('pre')).forEach(function(e){
+		const pre_type = e.getAttribute('type');
+		if(pre_type && e.textContent.indexOf("\n")>=0){
+			// As a rule, all multi-line code samples should have w:space="indent"
+			// so that the macro parser will strip out the leading whitespace.
+			assert.equal(e.getAttribute('w:space'), 'indent');
+		}
+		const pre_text = stripIndent(e.textContent);
+		switch(pre_type){
+			case 'abnf': {
+				const rules_abnf = parseABNF(pre_text+'\r\n');
+				break;
+			}
+		}
 	});
 }
 
@@ -76,4 +92,75 @@ describe('Test HTML documents', function(){
 		// Or, you know, don't
 		return true;
 	}).forEach(testHTMLFilepath);
+});
+
+describe('Test syntax index pages', function(){
+	listHTMLFiles('htdocs').filter(function(f){
+		return f.match(/htdocs\/syntax\/.*\/index\.xml/);
+	}).forEach(function(filepath){
+		it(filepath, function(){
+			const document = new DOMParser({
+				locator:{
+					systemId: filepath,
+				},
+				errorHandler: function(level,msg){ throw new Error(msg); },
+			}).parseFromString(fs.readFileSync(filepath, 'UTF-8'));
+
+			// Ensure the required "rules-abnf" element is present and well-formed
+			const e_abnf = document.getElementById('rules-abnf');
+			assert(e_abnf);
+			// Walk the DOM and ensure that elements are opened in this order, if they exist
+			const elementOrder = [
+				'h1',
+				'overview-table',
+				'main-article',
+				'specification',
+				'syntax-imports',
+				'syntax',
+				'rules-abnf',
+			];
+			var last_found_i = -1;
+			for(var e = document; e;){
+				if(e.nodeType==e.ELEMENT_NODE){
+					var e_id = e.hasAttribute('id') ? e.getAttribute('id') : null;
+					if(e_id){
+						var e_i = elementOrder.indexOf(e_id);
+						if(e_i >= 0){
+							assert(e_i > last_found_i, `Element ${e_id} out of order`);
+							last_found_i = e_i;
+						}
+					}
+				}
+				if(e.firstChild){
+					e = e.firstChild;
+				}else{
+					while(e && !e.nextSibling) e = e.parentNode;
+					if(e) e = e.nextSibling;
+				}
+			}
+
+		});
+	});
+});
+
+describe('Test syntax rule pages', function(){
+	listHTMLFiles('htdocs').filter(function(f){
+		return f.startsWith('htdocs/syntax/') && !f.endsWith('/index.xml');
+	}).forEach(function(filepath){
+		it(filepath, function(){
+			const document = new DOMParser({
+				locator:{
+					systemId: filepath,
+				},
+				errorHandler: function(level,msg){ throw new Error(msg); },
+			}).parseFromString(fs.readFileSync(filepath, 'UTF-8'));
+
+			const e_abnf = document.getElementById('definition-abnf');
+			assert(e_abnf);
+
+			// Title form should be "${standardName} Syntax: ${ruleName}"
+			const e_title = document.getElementsByTagName('title')[0];
+			assert(e_title);
+		});
+	});
 });

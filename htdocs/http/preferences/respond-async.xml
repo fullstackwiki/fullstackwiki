@@ -39,7 +39,7 @@
 			</pre>
 
 			<h3>Example</h3>
-			<pre type="abnf" w:space="indent">
+			<pre type="message/http" w:space="indent">
 				POST /some-resource HTTP/1.1
 				Host: example.org
 				Content-Type: text/plain

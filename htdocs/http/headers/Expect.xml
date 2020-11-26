@@ -87,9 +87,9 @@
 			<pre type="abnf" w:space="indent">
 				Expect       =  "Expect" ":" 1#expectation
 
-				expectation  =  "100-continue" | expectation-extension
-				expectation-extension =  token [ "=" ( token | quoted-string ) *expect-params ]
-				expect-params =  ";" token [ "=" ( token | quoted-string ) ]
+				expectation  =  "100-continue" / expectation-extension
+				expectation-extension =  token [ "=" ( token / quoted-string ) *expect-params ]
+				expect-params =  ";" token [ "=" ( token / quoted-string ) ]
 			</pre>
 		</main>
 	</body>
