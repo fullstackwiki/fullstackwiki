@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/" lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Syntax/Grammar Definitions</title>
+		<meta name="description" content="Reference and breakdown for different grammars defined in all different specifications" />
+	</head>
+	<body>
+		<main>
+
+<h1>Grammar Definitions</h1>
+
+<p>Internet standards are frequently preoccupied with defining file formats and syntaxes for various purposes. These may be used to validate entire documents, or indefinite streams of data from a network connection.</p>
+
+<h2>Index of specifications defining syntaxes</h2>
+
+<ul>
+	<li><a href="abnf-builtin/index.xml">ABNF builtin rules</a></li>
+	<li><a href="rfc3986/index.xml">RFC 3986: Uniform Resource Identifier (URI): Generic Syntax</a></li>
+	<li><a href="rfc3987/index.xml">RFC 3987: Internationalized Resource Identifier (URI): Generic Syntax</a></li>
+	<li><a href="rfc5234/index.xml">RFC 5234: Augmented BNF for Syntax Specifications: ABNF</a></li>
+	<li><a href="rfc8259/index.xml">RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format</a></li>
+</ul>
+
+				</main>
+			</div>
+		</div>
+	</body>
+</html>

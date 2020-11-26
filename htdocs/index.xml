@@ -11,6 +11,7 @@
 			<p>Fullstack.wiki is a repository of documentation for building reliable, accessible, cross-platform Web applications.</p>
 			<ul>
 				<li><a href="protocols/index.xml">Protocols</a></li>
+				<li><a href="syntax/index.xml">Syntaxes</a></li>
 				<li><a href="mail/index.md">E-Mail</a></li>
 				<li><a href="web/index.xml">Web</a></li>
 				<li><a href="uri/index.xml">URI</a></li>

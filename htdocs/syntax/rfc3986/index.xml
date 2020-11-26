@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:w="tag:fullstack.wiki,2018:ns/" lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>RFC 3986: Grammar Definitions</title>
+		<meta name="description" content="Grammar rules for RFC3986: URIs" />
+		<link rel="up" href="../index.xml" />
+		<link rel="stylesheet" href="/+/highlight.js/solarized-light.css" />
+		<link rel="item" href="URI.xml" />
+		<link rel="item" href="URI-reference.xml" />
+	</head>
+	<body>
+		<main>
+
+<h1 id="h1">RFC 3986: URI syntax</h1>
+
+<dl id="overview-table" class="inline">
+	<dt>Main Article</dt>
+	<dd id="main-article"><a href="../../uri/index.xml">URI (Uniform Resource Identifier)</a></dd>
+	<dt>Specification</dt>
+	<dd id="specification" property="w:specification"><a href="https://tools.ietf.org/html/rfc3986">RFC 3986: Uniform Resource Identifier (URI): Generic Syntax</a></dd>
+	<dt>Obsoletes</dt>
+	<dd>
+		<ul>
+			<li><a href="https://tools.ietf.org/html/rfc1738">RFC 1738: Uniform Resource Locators (URL)</a></li>
+			<li><a href="https://tools.ietf.org/html/rfc1808">RFC 1808: Relative Uniform Resource Locators</a></li>
+			<li><a href="https://tools.ietf.org/html/rfc2396">RFC 2396: Uniform Resource Identifiers (URI): Generic Syntax</a></li>
+			<li><a href="https://tools.ietf.org/html/rfc2732">RFC 2732: Format for Literal IPv6 Addresses in URL's</a></li>
+		</ul>
+	</dd>
+	<dt id="syntax-imports">Imported</dt>
+	<dd>
+		<ul>
+			<li><a href="../abnf-builtin/index.xml">ABNF core</a></li>
+		</ul>
+	</dd>
+</dl>
+
+<h2 id="syntax">Defined rules</h2>
+
+<pre id="rules-abnf" type="abnf" w:space="indent"><code>
+URI         = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+
+hier-part     = "//" authority path-abempty
+				  / path-absolute
+				  / path-rootless
+				  / path-empty
+
+URI-reference = URI / relative-ref
+
+absolute-URI  = scheme ":" hier-part [ "?" query ]
+
+relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
+
+relative-part = "//" authority path-abempty
+				  / path-absolute
+				  / path-noscheme
+				  / path-empty
+
+scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+
+authority     = [ userinfo "@" ] host [ ":" port ]
+userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+host          = IP-literal / IPv4address / reg-name
+port          = *DIGIT
+
+IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+
+IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+
+IPv6address   =                            6( h16 ":" ) ls32
+				  /                       "::" 5( h16 ":" ) ls32
+				  / [               h16 ] "::" 4( h16 ":" ) ls32
+				  / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+				  / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+				  / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+				  / [ *4( h16 ":" ) h16 ] "::"              ls32
+				  / [ *5( h16 ":" ) h16 ] "::"              h16
+				  / [ *6( h16 ":" ) h16 ] "::"
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 ":" h16 ) / IPv4address
+IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+
+dec-octet     = DIGIT                 ; 0-9
+              / %x31-39 DIGIT         ; 10-99
+              / "1" 2DIGIT            ; 100-199
+              / "2" %x30-34 DIGIT     ; 200-249
+              / "25" %x30-35          ; 250-255
+
+reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+path          = path-abempty    ; begins with "/" or is empty
+              / path-absolute   ; begins with "/" but not "//"
+              / path-noscheme   ; begins with a non-colon segment
+              / path-rootless   ; begins with a segment
+              / path-empty      ; zero characters
+
+path-abempty  = *( "/" segment )
+path-absolute = "/" [ segment-nz *( "/" segment ) ]
+path-noscheme = segment-nz-nc *( "/" segment )
+path-rootless = segment-nz *( "/" segment )
+path-empty    = 0&lt;pchar&gt;
+
+segment       = *pchar
+segment-nz    = 1*pchar
+segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+              ; non-zero-length segment without any colon ":"
+
+pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+
+query         = *( pchar / "/" / "?" )
+
+fragment      = *( pchar / "/" / "?" )
+
+pct-encoded   = "%" HEXDIG HEXDIG
+
+unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+reserved      = gen-delims / sub-delims
+gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+              / "*" / "+" / "," / ";" / "="
+</code></pre>
+
+
+				</main>
+			</div>
+		</div>
+	</body>
+</html>
