@@ -123,7 +123,12 @@ options.addRoute(routeRecent);
 // Codemirror dependencies
 // routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.css', {}, RouteFilesystem(__dirname+'/codemirror', "{/path*}.css", 'text/css') );
 // routes.addTemplate('http://fullstack.wiki/+/codemirror{/path*}.js', {}, RouteFilesystem(__dirname+'/codemirror', "{/path*}.js", 'application/ecmascript') );
-// routes.addTemplate('http://fullstack.wiki/+/highlight.js/{path}.css', {}, RouteFilesystem(__dirname+'/node_modules/highlight.js/styles/', "/{path}.css", 'text/css') );
+options.addRoute(RouteFilesystem({
+	uriTemplate: 'http://fullstack.wiki/+/highlight.js/{path}.css',
+	fileroot: __dirname+'/node_modules/highlight.js/styles/',
+	pathTemplate: "/{path}.css",
+	contentType: 'text/css',
+}));
 
 // Render files
 // routes.addTemplate('http://fullstack.wiki/+/app.js', {}, RouteBrowserify(docroot+'/+/main.js', "App", 'application/ecmascript') );
