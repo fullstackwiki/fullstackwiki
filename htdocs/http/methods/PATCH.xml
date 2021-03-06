@@ -26,7 +26,7 @@
 				<li>XML Patch (<code>application/xml-patch+xml</code>, <a href="https://tools.ietf.org/html/rfc7351">RFC 7351</a>)</li>
 			</ul>
 			<p>For the request to work, the server must support the selected media type. This is advertised with the <a href="../headers/Accept-Patch.xml">Accept-Patch</a> header. If a client is forming a patch but it is not ready to send yet, clients may request this in an OPTIONS request. Clients that already know what to send should pick a client-preferred patch media type and opportunistically send it to the server. If it is not supported, the request should be retried with a supported media type while handling the response status code (see below).</p>
-			<p>Depending on the round-trip time and payload size, send a <a href="../headers/Expect.xml">Expect: 100-continue</a> header, so that if your preference is not supported, you can avoid uploading the entire patch.</p>
+			<p>Depending on the round-trip time and payload size, send a <a href="../headers/Expect.xml">Expect: 100-continue</a> header, so that if your choice of patch media type is not supported, you can avoid uploading the entire patch.</p>
 			<p>Patches may create resources or cause edit conflicts. If applicable, send the request with a <a href="../conditional.xml">conditional test (e.g. If-Match)</a>, to avoid creating the resource in the event it does not exist.</p>
 			<p>Check the error code and follow the error recovery process, if necessary. A <a href="../status-codes/405.xml">405 (Method Not Allowed)</a>, <a href="../status-codes/415.xml">415 (Unsupported Media Type)</a>, or <a href="../status-codes/501.xml">501 (Not Implemented)</a> status may require that the request be retried with a different media type, or with an equivalent PUT request.</p>
 
