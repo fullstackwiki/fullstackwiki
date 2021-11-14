@@ -44,7 +44,7 @@
 			<h3>Static, Unchanging Document</h3>
 			<p>Use this if the resource is content-addressable (the filename is based on the contents of the file), or the contents of the file are not expected to change (e.g. changes are tracked by uploading a new document with a unique version number).</p>
 			<pre type="message/http" w:space="indent">
-				Cache-Control: public, max-age=31104000
+				Cache-Control: max-age=31104000
 			</pre>
 			<p>This response allows a cache to store the response for about one year (31104000 seconds is 360 days).</p>
 
@@ -53,7 +53,7 @@
 			<pre type="message/http" w:space="indent">
 				ETag: {etag}
 				Last-Modified: {mtime}
-				Cache-Control: public, max-age=0
+				Cache-Control: max-age=0
 			</pre>
 			<p><code>max-age=0</code> forces a stored response to always be considered "stale". This will cause the cache to send a conditional request to the origin server to check if the resource has changed; if it has not, the server will respond with <a href="status-codes/304.xml">304 (Not Modified)</a>, and the stored response will be re-used.</p>
 			<p>The <code>{etag}</code> and <code>{mtime}</code> placeholders must be filled with a unique value that changes whenever the document does. Most HTTP servers automatically do this when serving files off the filesystem. See <a href="conditional.xml">conditional requests</a> for more information.</p>
@@ -61,7 +61,7 @@
 			<h3>Disabling storage</h3>
 			<p>If the response contains private information that must not be stored, use the no-store directive:</p>
 			<pre type="message/http" w:space="indent">
-				Cache-Control: private, no-store
+				Cache-Control: no-store
 			</pre>
 			<p>If it's OK for clients to store the response, consider using the "requiring revalidation" technique above instead.</p>
 
@@ -103,8 +103,8 @@
 			<h3>AWS S3</h3>
 			<p>With aws-cli/2 accepts several arguments for setting cache-related headers on S3 objects, namely <code>--cache-control</code> and <code>--expires</code>. For example:</p>
 			<pre w:space="indent">
-				aws s3 sync &lt;src&gt; &lt;dst&gt; --cache-control "public, max-age=31104000"
-				aws s3 cp &lt;src&gt; &lt;dst&gt; --cache-control "public, max-age=31104000"
+				aws s3 sync &lt;src&gt; &lt;dst&gt; --cache-control "max-age=31104000"
+				aws s3 cp &lt;src&gt; &lt;dst&gt; --cache-control "max-age=31104000"
 			</pre>
 
 			<h3>Apache httpd</h3>
@@ -115,7 +115,7 @@
 			</ul>
 			<p>An example directive with mod_headers and mod_expires:</p>
 			<pre w:space="indent">
-				Header merge Cache-Control "public"
+				Header merge Cache-Control "max-age=31104000"
 			</pre>
 
 			<h2>Configuring Cache Storage</h2>
