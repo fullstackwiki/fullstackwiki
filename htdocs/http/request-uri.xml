@@ -55,9 +55,8 @@
 			<dl class="inline">
 				<dt>{scheme}</dt><dd>the detected scheme</dd>
 				<!--
-					RFC7230 section 5.5 says the scheme and authority are concatenated with `://`,
-					but according to section 5.4 if the URI has no authority component (and thus no `//`),
-					the Host header is blank.
+					<https://www.rfc-editor.org/rfc/rfc9112#section-3.3> says the scheme and authority are concatenated with `://`,
+					but not all URIs will have an authority component; HTTP can technically respond to URIs that are not <http:> or <https:>.
 				-->
 				<dt>{slash}</dt><dd>two slashes <code>//</code> if <code>authority</code> is non-empty, or an empty string otherwise</dd>
 				<dt>{authority}</dt><dd>value from the <code>Host</code> header</dd>
@@ -81,7 +80,7 @@
 			<h2>Overview table</h2>
 			<dl class="inline">
 				<dt>Specification</dt>
-				<dd property="specification"><a href="https://httpwg.org/specs/rfc7230.html#effective.request.uri">RFC 7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing &#xA7;5.5. Effective Request URI</a></dd>
+				<dd property="specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-7.1">RFC 9110: HTTP Semantics &#xA7; 7.1. Determining the Target Resource </a>, <a href="https://www.rfc-editor.org/rfc/rfc9112#section-3.3">RFC 9112: HTTP/1.1 &#xA7;3.3. Reconstructing the Target URI</a></dd>
 			</dl>
 		</main>
 	</body>
