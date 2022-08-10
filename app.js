@@ -13,6 +13,8 @@ const {
 	TransformRoute,
 } = require('dive-httpd');
 
+const UriRoute = require('uri-template-router').Route;
+
 const { RouteApplyMarkdown } = require('./lib/Markdown.js');
 const { RouteApplyMacros } = require('./lib/RenderMacros.js');
 const { RouteApplyBindings } = require('./lib/RenderBindings.js');
@@ -29,6 +31,7 @@ const { IndexRDFa } = require('./lib/IndexRDFa.js');
 const { IndexLunr } = require('./lib/IndexLunr.js');
 
 const docroot = __dirname + '/htdocs';
+const defaultRoute = new UriRoute('http://fullstack.wiki{/path*}');
 
 var options = new Application;
 options.fixedScheme = 'http';
@@ -37,18 +40,21 @@ options.fixedAuthority = 'fullstack.wiki';
 var indexRDFa = new IndexRDFa(options);
 var indexLunr = new IndexLunr(options);
 
+// Most resources are Content-Type negotiated
+var routeBest = Negotiate(defaultRoute);
+options.addRoute(routeBest);
+
 function gRenderEditLink(innerRoute){
 	return new RouteAddLinks({
-		// uriTemplate: innerRoute.uriTemplate,
+		innerRoute,
 		fileroot: __dirname, // specify the root of the Git repository, not the docroot
 		'edit-form': 'https://github.com/fullstackwiki/fullstackwiki/blob/master',
 		'version-history': 'https://github.com/fullstackwiki/fullstackwiki/commits/master',
-		innerRoute,
 	});
 }
 
 const HTMLSource = gRenderEditLink(RouteFilesystem({
-	uriTemplate: 'http://fullstack.wiki{/path*}.xml',
+	uriRoute: new UriRoute('http://fullstack.wiki{/path*}.xml', {parent: defaultRoute}),
 	contentType: 'application/xml',
 	fileroot: docroot,
 	pathTemplate: "{/path*}.xml",
@@ -60,7 +66,7 @@ HTMLSource.name = 'RenderEditLink.html';
 options.addRoute(HTMLSource);
 
 const MarkdownSource = gRenderEditLink(RouteFilesystem({
-	uriTemplate: 'http://fullstack.wiki{/path*}.md',
+	uriRoute: new UriRoute('http://fullstack.wiki{/path*}.md', {parent: defaultRoute}),
 	contentType: 'text/markdown',
 	fileroot: docroot,
 	pathTemplate: "{/path*}.md",
@@ -72,11 +78,12 @@ MarkdownSource.name = 'RenderEditLink.md';
 options.addRoute(MarkdownSource);
 
 // Source code
-var routeSourceHTML = First('http://fullstack.wiki{/path*}.src.xml', [
+var routeSourceHTML = First(new UriRoute('http://fullstack.wiki{/path*}.src.xml', {parent: defaultRoute}), [
 	HTMLSource,
 	new RouteApplyMarkdown('http://fullstack.wiki{/path*}.src.xml', MarkdownSource),
 ]);
 options.addRoute(routeSourceHTML);
+// routeBest.addRoute(routeSourceHTML);
 
 // Rendering happens in three stages:
 // 1. Macro substitution: substitute in manipulations that will make it into the RDF index
@@ -84,30 +91,26 @@ options.addRoute(routeSourceHTML);
 // 3. Theme: generate themed page for Web browsers
 
 // Macros applied, waiting for RDFa Templates to be applied
-var routeTemplate = new RouteApplyMacros('http://fullstack.wiki{/path*}.tpl.xml', routeSourceHTML);
+var routeTemplate = new RouteApplyMacros(new UriRoute('http://fullstack.wiki{/path*}.tpl.xml', {parent:defaultRoute}), routeSourceHTML);
 options.addRoute(routeTemplate);
+// TODO: Add these back in
+// routeBest.addRoute(routeTemplate);
 
 // Rendered HTML but plain (no) theme
-var routePlain = new RouteApplyBindings('http://fullstack.wiki{/path*}.plain.xml', indexRDFa, routeTemplate);
+var routePlain = new RouteApplyBindings(new UriRoute('http://fullstack.wiki{/path*}.plain.xml', {parent:defaultRoute}), indexRDFa, routeTemplate);
 options.addRoute(routePlain);
+// TODO: Add these back in
+// routeBest.addRoute(routePlain);
 
 // Fully rendered theme
 // Later, put this on <http://fullstack.wiki{/path*}.xhtml> and
 // make <http://fullstack.wiki{/path*}> a Content-Type negotiation version
-var routeThemed = new RouteApplyTheme('http://fullstack.wiki{/path*}.xhtml', indexRDFa, routePlain);
+var routeThemed = new RouteApplyTheme(new UriRoute('http://fullstack.wiki{/path*}.xhtml', {parent:defaultRoute}), indexRDFa, routePlain);
 options.addRoute(routeThemed);
-
-var routeBest = Negotiate('http://fullstack.wiki{/path*}', [
-	routeThemed,
-	routePlain,
-	routeTemplate,
-	routeSourceHTML,
-]);
-// routeBest.error = prepareNotFound;
-options.addRoute(routeBest);
+routeBest.addRoute(routeThemed);
 
 // Alias / to /index.xml
-var routeIndex = RouteLocalReference("http://fullstack.wiki{/path*}/", routeBest, "http://fullstack.wiki{/path*}/index");
+var routeIndex = RouteLocalReference(new UriRoute("http://fullstack.wiki{/path*}/", {parent: defaultRoute}), routeBest, "http://fullstack.wiki{/path*}/index");
 options.addRoute(routeIndex);
 
 // The Recent Changes page, which is a Git log
@@ -150,7 +153,7 @@ var routeStyle = RouteFilesystem({
 options.addRoute(routeStyle);
 
 var routeSVG = RouteFilesystem({
-	uriTemplate: 'http://fullstack.wiki{/path*}.svg',
+	uriRoute: new UriRoute('http://fullstack.wiki{/path*}.svg', {parent: defaultRoute}),
 	fileroot: docroot,
 	pathTemplate: "{/path*}.svg",
 	contentType: 'image/svg+xml',
@@ -165,7 +168,8 @@ var routeLunrIndex = RouteLunrIndex({
 options.addRoute(routeLunrIndex);
 
 var routeSearch = RouteSearchResults({
-	uriTemplate: 'http://fullstack.wiki/search{?q}',
+	// FIXME Using the ?q parameter does not match any route in defaultRoute so it doesn't work
+	uriRoute: new UriRoute('http://fullstack.wiki/search/json{?q}', {parent: defaultRoute}),
 	index: indexLunr,
 });
 options.addRoute(routeSearch);
