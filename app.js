@@ -29,6 +29,7 @@ const { RouteNQ } = require('./lib/RouteNQ.js');
 const { RouteSitemapXML } = require('./lib/RouteSitemapXML.js');
 const { IndexRDFa } = require('./lib/IndexRDFa.js');
 const { IndexLunr } = require('./lib/IndexLunr.js');
+const { env } = require('process');
 
 const docroot = __dirname + '/htdocs';
 const defaultRoute = new UriRoute('http://fullstack.wiki{/path*}');
@@ -196,6 +197,16 @@ options.addRoute(new RouteSitemapXML('http://fullstack.wiki/sitemap.xml', routeB
 
 indexRDFa.import(routeBest);
 indexLunr.import(routeBest);
+
+if(env.UPDATE_BRANCH_SCRIPT){
+	// This allows a running server to receive a GitHub-formatted Webhook and run a script to update in-place
+	// Trigger with an event like:
+	// curl -XPOST -v http://localhost:8080/about:hook/commit -H'Content-Type: application/json' -d'{"ref":"refs/heads/master","repository":"fullstack.wiki","head_commit":{"id":"6698676b1ed28d09eb0f0f0c38686465e35cdfd8"}}'
+	options.addRoute(require('./lib/RouteGitHubHook.js').RouteGitHubHook({
+		uriTemplate: 'http://fullstack.wiki/about:hook/commit',
+		UPDATE_BRANCH_SCRIPT: env.UPDATE_BRANCH_SCRIPT,
+	}));
+}
 
 // Define a function that will resolve a Resource that generates the 404 Not Found error page
 // This is set in `defaultNotFound` for static file generators, but this will mostly be called from
