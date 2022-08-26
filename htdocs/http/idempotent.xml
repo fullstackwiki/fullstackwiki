@@ -10,10 +10,10 @@
 		<main>
 			<h1>Idempotent Requests in HTTP</h1>
 			<p>A request is considered <i>idempotent</i> when multiple identical requests have the same effect as one request. This is a desirable property of requests, because clients may re-try any requests that have failed due to a network error.</p>
-			<p>Idempotent methods are specified in <a href="https://tools.ietf.org/html/rfc7231#section-4.2.2">RFC 7231 (HTTP Semantics) &#xA7;4.2.2. Idempotent Methods</a></p>
+			<p>Idempotent methods are specified in <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods">RFC 9110 (HTTP Semantics) &#xA7;9.2.2. Idempotent Methods</a></p>
 
 			<h2>Safe methods</h2>
-			<p>As a logical rule, safe methods (that do not alter server state) are also idempotent:</p>
+			<p>By definition, safe methods (which do not alter server state) are also idempotent:</p>
 			<ul>
 				<li>GET</li>
 				<li>HEAD</li>
@@ -34,7 +34,7 @@
 
 				{ "from": "Alice", "to": "Bob", "amount": 22.00 }
 			</pre>
-			<p>The server may instead accept a UUID in the URI, for example <code>/query/{uuid}</code>, which the user-agent fills in with a random value, and specifies <code><a href="headers/If-None-Match.xml">If-None-Match</a>: *</code>:</p>
+			<p>One technique to make this idempotent would be for the server to accept a client-generated UUID in the URI, for example <code>/query/{uuid}</code>. The user-agent picks a random value, and specifies <code><a href="headers/If-None-Match.xml">If-None-Match</a>: *</code> as so:</p>
 			<pre w:space="indent">
 				PUT /query/2F0B31F4-38A2-4065-9EEF-71CC6AC2745F HTTP/1.1
 				If-None-Match: *

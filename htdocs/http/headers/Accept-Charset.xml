@@ -31,7 +31,7 @@
 				<dt>List usage in</dt>
 				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.accept-charset">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.3. Accept-Charset</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.accept-charset">RFC 9110: HTTP Semantics &#xA7;12.5.2. Accept-Charset</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -50,9 +50,6 @@
 			<pre><code>Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c</code></pre>
 			<p>Prefer XHTML or HTML, or generic XML with a reduced preference, or else any content:</p>
 			<pre><code>Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8</code></pre>
-
-			<h2>Related specifications</h2>
-			<p><a href="http://tools.ietf.org/html/rfc7231#section-5.3.2">HTTP/1.1 Semantics and Content</a>:</p>
 		</main>
 	</body>
 </html>

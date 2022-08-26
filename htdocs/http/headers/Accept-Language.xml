@@ -23,13 +23,13 @@
 
 			<h2>Reading requests (servers)</h2>
 			<p>Use the Accept-Language header in cases where multiple versions of a resource are available and the server wants to serve a version the user is likely to understand. This does not happen often; typically, users linking to a resource want to link to the resource in <em>that</em> language, and if another user needs a translation, they can consult a list of translations (for example, see Wikipedia).</p>
-			<p>Cases where this header should be used is a language selection screen, for example, the landing page of a corporate website:</p>
+			<p>Cases where this header should be used is a language selection screen, for example, the landing page of an international corporation website:</p>
 			<ol>
 				<li><p>The resource can return a localized page asking the user to confirm their language; the selected version should be identified with a <code>Content-Location</code> header, and the server must add a <a href="Vary.xml">Vary header</a> of <code>Vary: Accept-Language</code>.</p></li>
 				<li><p>The resource can automatically redirect the user to the localized version of the website, using a <code>303 See Other</code> and a <code>Vary: Accept-Language</code> header.</p></li>
 			</ol>
 			<p>The server can also suggest translations to the client using a <code>hreflang</code> link attribute in a <code>rel="alternate"</code> link, see <a href="Content-Language.xml">Content-Language</a> for more information.</p>
-			<!-- Additional guidence on when to deploy Content-Language negotiation is necessary -->
+			<!-- Additional guidance on when to deploy Content-Language negotiation is necessary -->
 
 			<h2>Overview table</h2>
 			<dl class="inline">

@@ -27,15 +27,13 @@
 			<p>For HTTP/Web applications, consider using a transforming HTTP gateway or cache to perform this step, instead of adding this complexity in the application.</p>
 			<!-- TODO: link to list of content codings -->
 
-
 			<h2>Usage in responses</h2>
-			<p>RFC 7231 only specifies the request form of this header. RFC 7694 specifies usage in a response to indicate the client's selected content coding is not understood, and the client may re-make the request with one of the listed content codings.</p>
+			<p>When used in a response, Accept-Encoding indicates that the client's selected content coding is not understood, and the client should re-make the request with one of the listed content codings.</p>
 
 			<h3>Writing responses (servers)</h3>
-			<p>Servers send Accept-Encoding to the client in <a href="../status-codes/415.xml">415 Unsupported Media Type</a> responses. The header could also be sent in response to OPTIONS.</p>
 			<p>The server should first ensure the resource exists, that the user-agent has the proper credentials to make the request, and any other checks that can be performed without needing to know the exact details of the request-body.</p>
 			<p>If the server receives a request from a client with a <a href="Content-Encoding.xml">Content-Encoding value</a> that it does not understand, send <code>415 Unsupported Media Type</code> with an <code>Accept-Encoding</code> header listing the content codings the server can accept from clients.</p>
-			<p>The 415 Unsupported Media Type status can be used for other purposes (e.g. an invalid Content-Type), do not supply this header in these other cases.</p>
+			<p>Clients will see the presence of this header in a 415 Unsupported Media Type response as an indication that the Content-Encoding specifically was invalid. So, for reasons besides a Content-Encoding errors (e.g. an invalid Content-Type), do not supply this header.</p>
 
 			<h3>Reading responses (clients)</h3>
 			<p>Reading the Accept-Encoding header is only necessary from a response with <code>415 Unsupported Media Type</code>. In this case, the client should re-make the request with one of the listed content codings listed in the response <code>Accept-Encoding</code> header.</p>
@@ -54,7 +52,7 @@
 				<dt>List usage in</dt>
 				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.Accept-Encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept-Encoding</a>, <a href="https://httpwg.org/specs/rfc7694.html">RFC 7694: HTTP Client-Initiated Content-Encoding</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept-encoding">RFC 9110: HTTP Semantics &#xA7;12.5.3. Accept-Encoding</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -76,6 +74,14 @@
 				<li>accepts</li>
 				<li>negotiator</li>
 			</ul>
+
+			<h2>History</h2>
+			<ol>
+				<li>2014-06: <a href="http://httpwg.org/specs/rfc7231.html#header.Accept-Encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept-Encoding</a> describes usage in requests, for listing responses that the client finds acceptable.</li>
+				<li>2015-11: <a href="https://httpwg.org/specs/rfc7694.html">RFC 7694: HTTP Client-Initiated Content-Encoding</a> describes usage in responses, for the server to indicate which encodings the client may pick for encoding its request.</li>
+				<li>2022-06: Usage in both directions is combined into <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept-encoding">RFC 9110: HTTP Semantics &#xA7;12.5.3. Accept-Encoding</a></li>
+			</ol>
+			
 		</main>
 	</body>
 </html>
