@@ -44,12 +44,12 @@
 				<dt>List usage in</dt>
 				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.accept-language">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.5. Accept-Language</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.accept-language">RFC 9110: HTTP Semantics &#xA7;5.3.5. Accept-Language</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
 			<pre class="abnf-definition" w:space="indent">
-				Accept-Language = 1#( language-range [ weight ] )
+				Accept-Language = #( language-range [ weight ] )
 				language-range  = &lt;language-range, see [RFC4647], Section 2.1&gt;
 				weight = OWS ";" OWS "q=" qvalue
 				qvalue = ( "0" [ "." 0*3DIGIT ] )
@@ -57,7 +57,9 @@
 			</pre>
 
 			<h2>Examples</h2>
-			<p></p>
+			<p>
+				A request where the user prefers Danish, then British English, or finally any variation of English:
+			</p>
 			<pre>Accept-Language: da, en-gb;q=0.8, en;q=0.7</pre>
 
 			<h2>Implementations</h2>

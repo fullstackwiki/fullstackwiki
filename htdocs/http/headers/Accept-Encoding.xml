@@ -77,7 +77,7 @@
 
 			<h2>History</h2>
 			<ol>
-				<li>2014-06: <a href="http://httpwg.org/specs/rfc7231.html#header.Accept-Encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept-Encoding</a> describes usage in requests, for listing responses that the client finds acceptable.</li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.accept-encoding">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.4. Accept-Encoding</a> describes usage in requests, for listing responses that the client finds acceptable.</li>
 				<li>2015-11: <a href="https://httpwg.org/specs/rfc7694.html">RFC 7694: HTTP Client-Initiated Content-Encoding</a> describes usage in responses, for the server to indicate which encodings the client may pick for encoding its request.</li>
 				<li>2022-06: Usage in both directions is combined into <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept-encoding">RFC 9110: HTTP Semantics &#xA7;12.5.3. Accept-Encoding</a></li>
 			</ol>
