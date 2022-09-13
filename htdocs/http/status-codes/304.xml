@@ -35,7 +35,7 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">The client already has an up-to-date copy of the representation.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#status.304">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;4.1. 304 Not Modified</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110#name-304-not-modified">RFC 9110: HTTP Semantics &#xA7;15.4.5. 304 Not Modified</a></dd>
 			</dl>
 
 			<h2>Example</h2>
@@ -48,6 +48,13 @@
 				<li><a href="https://evertpot.com/http/304-not-modified">HTTP 303 by Evert Pot</a></li>
 				<li><a href="https://httpstatusdogs.com/304-not-modified">HTTP 303 on HTTP STATUS DOGS</a></li>
 			</ul>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-10.3.5">RFC 2616 &#xA7;10.3.5. 304 Not Modified</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7232.html#status.304">RFC 7231 &#xA7;4.1. 304 Not Modified</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110#name-304-not-modified">RFC 9110 &#xA7;15.4.5. 304 Not Modified</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

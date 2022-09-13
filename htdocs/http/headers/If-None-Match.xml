@@ -45,7 +45,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-none-match">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;3.1. If-None-Match</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110#section-13.1.2">RFC 9110: HTTP Semantics &#xA7;13.1.2. If-None-Match</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -61,6 +61,13 @@
 				If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
 				If-None-Match: *
 			</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.26">RFC 2616 &#xA7;14.26. If-None-Match</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7232.html#header.if-none-match">RFC 7232 &#xA7;3.2. If-None-Match</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110#name-if-none-match">RFC 9110 &#xA7;13.1.2. If-None-Match</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

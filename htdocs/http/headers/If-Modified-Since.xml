@@ -45,6 +45,13 @@
 				If-Modified-Since = HTTP-date
 			</pre>
 
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.25">RFC 2616 &#xA7;14.25. If-Modified-Since</a></li>
+				<li>2014-06: Revised and split apart in <a href="https://httpwg.org/specs/rfc7232.html#header.if-modified-since">RFC 7232: Conditional Requests &#xA7;3.3. If-Modified-Since</a></li>
+				<li>2014-06: Moved back into HTTP Semantics as part of the new cluster, in <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-if-modified-since">RFC 9110: HTTP Semantics</a></li>
+			</ol>
+
 		</main>
 	</body>
 </html>

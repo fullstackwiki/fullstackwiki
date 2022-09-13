@@ -35,7 +35,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.last-modified">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;2.2. Last-Modified</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110#name-last-modified">RFC 9110: HTTP Semantics &#xA7;8.8.2. Last-Modified</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -46,6 +46,12 @@
 			<h3>Example</h3>
 			<pre>Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT</pre>
 
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.29">RFC 2616 &#xA7;14.29. Last-Modified</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7232.html#header.last-modified">RFC 7232 &#xA7;2.2. Last-Modified</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110#name-last-modified">RFC 9110 &#xA7;8.8.2. Last-Modified</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

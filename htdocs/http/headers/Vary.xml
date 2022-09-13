@@ -40,12 +40,18 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.vary">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.1.4. Vary</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110#name-vary">RFC 9110: HTTP Semantics &#xA7;13.1. Vary</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
 			<pre type="abnf">Vary = "*" / 1#field-name</pre>
 
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.44">RFC 2616 &#xA7;14.44. Vary</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.vary">RFC 7231 &#xA7;7.1.4. Vary</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110#name-vary">RFC 9110 &#xA7;12.5.5. Vary</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

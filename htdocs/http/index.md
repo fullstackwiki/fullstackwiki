@@ -100,7 +100,7 @@ Use HTTP whenever you need to download files from another system on a network, o
 * [RFC 7239 (Forwarded HTTP Extension)](https://www.rfc-editor.org/rfc/rfc7239.html)
 * [RFC 7240 (Prefer Header for HTTP)](https://www.rfc-editor.org/rfc/rfc7240.html)
 
-### 2020-06
+### 2022-06
 [RFC 9110 (HTTP Semantics)](https://www.rfc-editor.org/rfc/rfc9110.html) is published, along with others:
 
 * [RFC 9111 (HTTP Caching)](https://www.rfc-editor.org/rfc/rfc9111.html)

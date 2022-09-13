@@ -68,6 +68,13 @@
 				<li>accept</li>
 				<li>negotiator</li>
 			</ul>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.4">RFC 2616 &#xA7;14.4. Accept-Language</a>. This version requires at least one item in the list.</li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.accept-language">RFC 7231 &#xA7;5.3.5. Accept-Language</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept-encoding">RFC 9110 &#xA7;12.5.3. Accept-Encoding</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

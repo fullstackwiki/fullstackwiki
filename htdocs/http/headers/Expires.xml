@@ -35,7 +35,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7234.html#header.expires">RFC 7234: HTTP/1.1 Caching &#xA7;5.3. Expires</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9111#name-expires">RFC 9111: HTTP Caching &#xA7;5.3. Expires</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -44,6 +44,13 @@
 			</pre>
 			<h3>Example</h3>
 			<pre type="message/http">Expires: Thu, 01 Dec 1994 16:00:00 GMT</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.21">RFC 2616 &#xA7;14.21. Expires</a></li>
+				<li>2014-06: <a href="hthttps://httpwg.org/specs/rfc7234.html#header.expires">RFC 7234 &#xA7;5.3. Expires</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9111#name-expires">RFC 9111 &#xA7;5.3. Expires</a></li>
+			</ol>
 		</main>
 	</body>
 </html>
