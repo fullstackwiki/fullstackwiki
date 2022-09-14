@@ -31,14 +31,14 @@
 			<h2>Resuming a Download</h2>
 			<p>In order to resume a download, a client needs to know the ETag or Last-Modified date according to the server, if it provided one; </p>
 
-			<h2>implementations</h2>
+			<h2>Implementations</h2>
 			<ul>
-				<li>Most Web browsers are known </li>
+				<li>Most Web browsers are known to use the Range header when resuming an interrupted upload.</li>
 			</ul>
 
 			<h2>References</h2>
 			<ul>
-				<li><a href="https://httpwg.org/specs/rfc7233.html">RFC 7233: HTTP Range Requests</a></li>
+				<li><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-range-requests">RFC 9110: HTTP Semantics &#xA7;14. Range Requests</a></li>
 			</ul>
 		</main>
 	</body>

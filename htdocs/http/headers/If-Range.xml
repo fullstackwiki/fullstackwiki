@@ -43,7 +43,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.if-range">RFC 7233: HTTP Range Requests &#xA7;3.2. If-Range</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-if-range">RFC 9110: HTTP Semantics &#xA7;13.1.5. If-Range</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -54,6 +54,12 @@
 			<h3>Implementations</h3>
 			<h2></h2>
 
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.27">RFC 2616 &#xA7;14.27. If-Range</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7233.html#header.if-range">RFC 7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests &#xA7;3.2. If-Range</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-if-range">RFC 9110 &#xA7;13.1.5. If-Range</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

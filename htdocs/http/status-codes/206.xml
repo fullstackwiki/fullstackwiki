@@ -34,13 +34,20 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">One or more resources were partial content.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#status.206">RFC 7233: HTTP Range Requests &#xA7;4.1. 206 Partial Content</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-206-partial-content">RFC 9110: HTTP Semantics &#xA7;15.3.7. 206 Partial Content</a></dd>
 			</dl>
 
 			<h2>Example</h2>
 			<pre type="message/http" w:space="indent">
 				HTTP/1.1 206 Partial Content
 			</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-10.2.7">RFC 2616 &#xA7;14.4. 206 Partial Content</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7233.html#status.206">RFC 7233: HTTP Range Requests &#xA7;4.1. 206 Partial Content</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-206-partial-content">RFC 9110 &#xA7;15.3.7. 206 Partial Content</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

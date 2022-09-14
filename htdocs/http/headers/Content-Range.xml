@@ -32,7 +32,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Response</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.content-range">RFC 7233: HTTP Range Requests &#xA7;4.2. Content-Range</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.content-range">RFC 9110: HTTP Semantics &#xA7;14.4. Content-Range</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -58,6 +58,13 @@
 
 			<p>In this response, the complete length of the selected representation is unknown:</p>
 			<pre type="message/http">Content-Range: bytes 42-1233/*</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.16">RFC 2616 &#xA7;14.16. Content-Range</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7233.html#header.content-range">RFC 7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests &#xA7;4.2. Content-Range</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.content-range">RFC 9110 &#xA7;14.4. Content-Range</a>. This update describes use in requests.</li>
+			</ol>
 		</main>
 	</body>
 </html>

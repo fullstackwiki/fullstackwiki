@@ -35,8 +35,15 @@
 				<dt>Description</dt>
 				<dd property="w:HTTP-StatusCode-description">The requested Range is not acceptable.</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#status.416">RFC 7233: HTTP Range Requests &#xA7;4.4. 416 Range Not Satisfiable</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-416-range-not-satisfiable">RFC 9110: HTTP Semantics &#xA7;15.5.17. 416 Range Not Satisfiable</a></dd>
 			</dl>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-10.4.17">RFC 2616 &#xA7;10.4.17. 416 Requested Range Not Satisfiable</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7233.html#status.416">RFC 7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests &#xA7;4.4. 416 Range Not Satisfiable</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-416-range-not-satisfiable">RFC 9110 &#xA7;12.5.17. 416 Range Not Satisfiable</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

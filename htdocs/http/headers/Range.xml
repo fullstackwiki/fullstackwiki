@@ -48,7 +48,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7233.html#header.range">RFC 7233: HTTP Range Requests &#xA7;3.1. Range</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-range">RFC 9110: HTTP Semantics &#xA7;14.2. Range</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -64,6 +64,12 @@
 			<p>In all cases, clients must be able to reconstruct the exact same document, byte-for-byte. This makes it difficult to use for pagination, depending on the syntax.</p>
 			<p>For example in JSON, array items must be joined with a comma, but cannot end with a comma. A hypothetical Range request for the first item of a JSON array (e.g. <code>Range: item 0-0</code>) would have to include the array-opening bracket, and a trailing comma (if the next item does not include a leading comma); which is invalid JSON. Such a solution would only make sense with streaming JSON parser that doesn't need the entire document to produce useful results.</p>
 
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.35">RFC 2616 &#xA7;14.35. Range</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7233.html#header.range">RFC 7233 &#xA7;3.1. Range</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-range">RFC 9110 &#xA7;14.2. Range</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

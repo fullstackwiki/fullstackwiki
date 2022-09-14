@@ -33,7 +33,8 @@
 
 			<h2>See also</h2>
 			<ul>
-				<li><a href="https://httpwg.org/specs/rfc7230.html#persistent.tear-down">HTTP/1.1 connection tear-down</a></li>
+				<li><a href="https://www.rfc-editor.org/rfc/rfc9112.html#name-tear-down">HTTP/1.1 connection tear-down</a></li>
+				<li><a href="https://httpwg.org/specs/rfc7230.html#persistent.tear-down">HTTP/1.1 connection tear-down (in older RFC 7230)</a></li>
 				<li><a href="https://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable">The ultimate SO_LINGER page, or: why is my tcp not reliable</a></li>
 			</ul>
 		</main>
