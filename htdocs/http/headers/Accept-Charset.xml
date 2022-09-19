@@ -16,7 +16,7 @@
 
 			<h1>Accept-Charset</h1>
 			<p>The Accept-Charset header describes which character sets are acceptable in textual response content.</p>
-			<p>As most servers have standardized on using UTF-8, use of this header has disappeared.</p>
+			<p>As most servers have standardized on using UTF-8, use of this header has disappeared. Since RFC 9110, use of this header is discouraged.</p>
 
 			<h2>Overview table</h2>
 			<dl class="inline">
@@ -31,7 +31,7 @@
 				<dt>List usage in</dt>
 				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.accept-charset">RFC 9110: HTTP Semantics &#xA7;12.5.2. Accept-Charset</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept-charset">RFC 9110: HTTP Semantics &#xA7;12.5.2. Accept-Charset</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -50,6 +50,13 @@
 			<pre><code>Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c</code></pre>
 			<p>Prefer XHTML or HTML, or generic XML with a reduced preference, or else any content:</p>
 			<pre><code>Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8</code></pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.2">RFC 2616 &#xA7;14.1. Accept-Charset</a>.</li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.accept-charset">RFC 7231 &#xA7;5.3.3. Accept-Charset</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept-charset">RFC 9110 &#xA7;12.5.2. Accept-Charset</a>. The use of this header is now formally discouraged when not strictly necessary.</li>
+			</ol>
 		</main>
 	</body>
 </html>

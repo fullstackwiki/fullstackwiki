@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Accept</title>
-		<meta name="description" content="The Accept HTTP request-header specify response media types that are acceptable to the user-agent." />
+		<meta name="description" content="The Accept HTTP request-header specifies which media types that the user-agent would prefer to receive." />
 		<link rel="up" href="index.xml" />
 	</head>
 	<body>
@@ -15,7 +15,7 @@
 			<a rel="http://www.w3.org/1999/xhtml/vocab#describedby" href="" />
 
 			<h1>Accept</h1>
-			<p>The Accept header specifies which response media types are acceptable to the client.</p>
+			<p>The Accept header specifies which media types that the user-agent would prefer to receive.</p>
 
 			<h2>Writing requests (clients)</h2>
 			<p>Clients use the Content-Type header to indicate the media type responses they are capable of reading, and what they would prefer to receive.</p>
@@ -37,7 +37,7 @@
 				<dt>List usage in</dt>
 				<dd property="w:HTTP-Header-list-in" resource="w:http/headers/Vary"><a href="Vary.xml">Vary</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="http://httpwg.org/specs/rfc7231.html#header.accept">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.3.2. Accept</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept">RFC 9110: HTTP Semantics &#xA7;12.5.1. Accept</a></li></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -63,6 +63,13 @@
 				<li>accepts</li>
 				<li>negotiator</li>
 			</ul>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.1">RFC 2616 &#xA7;14.1. Accept</a>.</li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.accept">RFC 7231 &#xA7;5.3.2. Accept</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-accept">RFC 9110 &#xA7;12.5.1. Accept</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

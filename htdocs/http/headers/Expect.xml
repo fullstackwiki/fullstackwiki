@@ -21,6 +21,7 @@
 			<h3>Writing requests (clients)</h3>
 			<p>The Expect header is designed to indicate to the server that the client expects a specific behavior in order to function properly.</p>
 			<p>In the case of <code>100-continue</code>, the client is signaling that it won't begin uploading the request-body until the server signals it is acceptable to do so. Servers that do not support this would send 417, and the client can retry the request without 100-continue.</p>
+			<!-- TODO: Link to document on how to make uploads with 100-continue -->
 
 			<h3>Reading requests (servers)</h3>
 			<p>If the header exists, and is a value not <code>100-continue</code>, return <a href="../status-codes/417.xml">417 Expectation Failed</a>.</p>
@@ -34,7 +35,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.expect">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;5.1.1. Expect</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-expect">RFC 9110: HTTP Semantics &#xA7;10.1.1. Expect</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -85,12 +86,30 @@
 			<h3>History</h3>
 			<p>RFC7231 removed the "expectation-extension" rule previously defined by RFC2616:</p>
 			<pre type="abnf" w:space="indent">
-				Expect       =  "Expect" ":" 1#expectation
+				Expect =      #expectation
+				expectation = token [ "=" ( token / quoted-string ) parameters ]
 
-				expectation  =  "100-continue" / expectation-extension
-				expectation-extension =  token [ "=" ( token / quoted-string ) *expect-params ]
-				expect-params =  ";" token [ "=" ( token / quoted-string ) ]
+				token          = 1*tchar
+				tchar          = "!" / "#" / "$" / "%" / "&" / "'" / "*"
+									/ "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
+									/ DIGIT / ALPHA
+									; any VCHAR, except delimiters
+
+				quoted-string  = DQUOTE *( qdtext / quoted-pair ) DQUOTE
+				qdtext         = HTAB / SP / %x21 / %x23-5B / %x5D-7E / obs-text
+
+				parameters      = *( OWS ";" OWS [ parameter ] )
+				parameter       = parameter-name "=" parameter-value
+				parameter-name  = token
+				parameter-value = ( token / quoted-string )
 			</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.20">RFC 2616 &#xA7;14.20. Expect</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.expect">RFC 7231 &#xA7;5.1.1. Expect</a>. The only recognized value for this header is "100-continue" (case-insensitive), and responding with 417 (Expectation Failed) is now optional (due to lack of widespread support in servers).</li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-expect">RFC 9110 &#xA7;10.1.1. Expect</a>. The list of tokens form (similar to RFC 2616) is restored.</li>
+			</ol>
 		</main>
 	</body>
 </html>
