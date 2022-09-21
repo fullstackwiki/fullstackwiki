@@ -53,8 +53,8 @@
 			<h2>History</h2>
 			<ol>
 				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.9">RFC 2616 &#xA7;14.9. Cache-Control</a></li>
-				<li>2014-06: <a href="https://httpwg.org/specs/rfc7234.html#header.cache-control">RFC 7234 &#xA7;5.2. Cache-Control</a></li>
-				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9111#name-cache-control">RFC 9111 &#xA7;5.2. Cache-Control</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7234.html#header.cache-control">RFC 7234: Hypertext Transfer Protocol (HTTP/1.1): Caching &#xA7;5.2. Cache-Control</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9111#name-cache-control">RFC 9111: HTTP Caching &#xA7;5.2. Cache-Control</a></li>
 			</ol>
 		</main>
 	</body>

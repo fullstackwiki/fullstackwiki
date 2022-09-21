@@ -37,7 +37,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-modified-since">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;3.3. If-Modified-Since</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.if-modified-since">RFC 9110: HTTP Semantics &#xA7;13.3.1. If-Modified-Since</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -47,11 +47,10 @@
 
 			<h2>History</h2>
 			<ol>
-				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.25">RFC 2616 &#xA7;14.25. If-Modified-Since</a></li>
-				<li>2014-06: Revised and split apart in <a href="https://httpwg.org/specs/rfc7232.html#header.if-modified-since">RFC 7232: Conditional Requests &#xA7;3.3. If-Modified-Since</a></li>
-				<li>2014-06: Moved back into HTTP Semantics as part of the new cluster, in <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-if-modified-since">RFC 9110: HTTP Semantics</a></li>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.25">RFC 2616 &#xA7;14.24. If-Modified-Since</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7232.html#header.if-modified-since">RFC 7232 &#xA7;3.3. If-Modified-Since</a>. Conditional requests is split into a separate document during the update.</li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#field.if-modified-since">RFC 9110 &#xA7;13.3.1. If-Modified-Since</a>. Conditional requests was moved back into core HTTP semantics.</li>
 			</ol>
-
 		</main>
 	</body>
 </html>

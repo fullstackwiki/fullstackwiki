@@ -43,7 +43,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7232.html#header.if-match">RFC 7232: HTTP/1.1 Conditional Requests &#xA7;3.1. If-Match</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match">RFC 9110: HTTP Semantics &#xA7;13.3.1. If-Match</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -60,6 +60,12 @@
 			<h3>Weak comparison</h3>
 			<p>With a weak comparison, the ETags must match, and may have a weak flag, which is otherwise ignored.</p>
 
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.24">RFC 2616 &#xA7;14.24. If-Match</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7232.html#header.if-match">RFC 7232 &#xA7;3.1. If-Match</a>. Conditional requests is split into a separate document during the update.</li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match">RFC 9110 &#xA7;13.3.1. If-Match</a>. Conditional requests was moved back into core HTTP semantics.</li>
+			</ol>
 		</main>
 	</body>
 </html>
