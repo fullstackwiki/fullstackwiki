@@ -15,8 +15,8 @@
 			<a rel="xht:describedby" href="" />
 
 			<h1>Allow</h1>
-			<p>The Allow response header lists all of the HTTP methods that may be used on the target resource, so that a client may select one understood by the server on subsequent requests. It is required in a <code>405 (Method Not Allowed)</code> response, and optional in other responses.</p>
-			<p>As a rule of thumb, any method not listed here will return <a href="../status-codes/405.xml">405 (Method Not Allowed)</a> or <code>501 (Not Implemented)</code>, and listed methods will never return <code>404 (Not Found)</code> or 405 (but may return other errors, such as <code>401 (Unauthorized)</code>).</p>
+			<p>The Allow response header lists HTTP methods supported by the target resource, so that a client may select one to use in subsequent requests. It is required in a <a href="../status-codes/405.xml">405 (Method Not Allowed)</a> response, and optional in other responses.</p>
+			<p>As a rule of thumb, any method not listed here will return <code>405 (Method Not Allowed)</code> or <code>501 (Not Implemented)</code>, and the listed methods will never return <code>404 (Not Found)</code> or 405 (but may return other errors, such as <code>401 (Unauthorized)</code>).</p>
 
 			<h2>Writing responses (servers)</h2>
 			<p>Servers should know which methods are valid on a given resource; all the different methods that the server logic can possibly execute. For each resource, the value of this header should always be the same (unless a security reason warrants otherwise). </p>
@@ -28,7 +28,7 @@
 				<dt>OPTIONS</dt>
 				<dd>Servers should typically always support OPTIONS, and should list OPTIONS.</dd>
 				<dt>PUT, PATCH</dt>
-				<dd>List PUT if the resource can be modified (by any user, not necessarially by the current user). List PATCH if the server additionally supports the PATCH method.</dd>
+				<dd>List PUT if the resource can be modified (by any user, not necessarily by the current user). List PATCH if the server additionally supports the PATCH method.</dd>
 				<dt>DELETE</dt>
 				<dd>List DELETE if the resource supports a DELETE request.</dd>
 				<dt>POST</dt>
@@ -60,7 +60,7 @@
 				<dt>Advertises</dt>
 				<dd property="w:HTTP-Header-advertises">HTTP method</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7231.html#header.allow">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.4.1. Allow</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-allow">RFC 9110: HTTP Semantics &#xA7;10.2.1. Allow</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -76,6 +76,13 @@
 				Content-Type: application/xhtml+xml
 				Allow: GET, HEAD, OPTIONS
 			</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.7">RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1 &#xA7;14.7. Allow</a>.</li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7231.html#header.allow">RFC 7231: HTTP/1.1 Semantics and Content &#xA7;7.4.1. Allow</a></li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-allow">RFC 9110: HTTP Semantics &#xA7;10.2.1. Allow</a></li>
+			</ol>
 		</main>
 	</body>
 </html>

@@ -36,7 +36,7 @@
 				<dt>Direction</dt>
 				<dd property="w:HTTP-Header-direction">Request</dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7235.html#header.authorization">RFC 7235: HTTP/1.1 Authentication &#xA7;4.2. Authorization</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-authorization">RFC 9110: HTTP Semantics &#xA7;11.6.2. Authorization</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -49,11 +49,20 @@
 			</pre>
 			<p><code>auth-scheme</code> is one of the registered values in the <a href="../authschemes/index.xml">Authentication Scheme Registry</a>.</p>
 
+			<h2>Implementations</h2>
+			<p>Most Web browsers will wait for a 401 (Unauthorized) status and WWW-Authenticate header before making a request with this header. This means it will make two requests before getting a usable one, every time it must request a resource.</p>
 
 			<h3>Example</h3>
 			<pre type="message/http">Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</pre>
 			<p>Here, the resource is being requested with a username <code>Aladdin</code> and password <code>open sesame</code>.</p>
 			<p>For more specific examples, consult the respective pages on each Authorization scheme.</p>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.8">RFC 2616 &#xA7;14.8. Authorization</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7235.html#header.authorization">RFC 7235 &#xA7;4.2. Authorization</a>. This header was split out from the core document.</li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-authorization">RFC 9110 &#xA7;11.6.2. Authorization</a>. Moved back into HTTP Semantics.</li>
+			</ol>
 		</main>
 	</body>
 </html>

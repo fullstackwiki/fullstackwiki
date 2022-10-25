@@ -31,7 +31,7 @@
 				<dt>Advertises</dt>
 				<dd property="w:HTTP-Header-advertises" resource="w:http/headers/Authorization"><a href="Authorization.xml">Authorization</a></dd>
 				<dt>Specification</dt>
-				<dd property="w:specification"><a href="https://httpwg.org/specs/rfc7235.html#header.www-authenticate">RFC 7235: HTTP/1.1 Authentication &#xA7;4.1. WWW-Authenticate</a></dd>
+				<dd property="w:specification"><a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-www-authenticate">RFC 9110: HTTP Semantics &#xA7;11.6.1. WWW-Authenticate</a></dd>
 			</dl>
 
 			<h2>Syntax</h2>
@@ -48,6 +48,13 @@
 			<pre type="message/http" w:space="indent">
 				WWW-Authenticate: Newauth realm="apps", type=1,
 					title="Login to \"apps\"", Basic realm="simple"</pre>
+
+			<h2>History</h2>
+			<ol>
+				<li>1999-06: <a href="https://www.rfc-editor.org/rfc/rfc2616.html#section-14.47">RFC 2616 &#xA7;14.47. WWW-Authenticate</a></li>
+				<li>2014-06: <a href="https://httpwg.org/specs/rfc7235.html#header.www-authenticate">RFC 7235 &#xA7;4.1. WWW-Authenticate</a>. This header was split out from the core document.</li>
+				<li>2022-06: <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-www-authenticate">RFC 9110 &#xA7;11.6.1. WWW-Authenticate</a>. Moved back into HTTP Semantics.</li>
+			</ol>
 		</main>
 	</body>
 </html>
